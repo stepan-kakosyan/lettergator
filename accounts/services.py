@@ -30,6 +30,7 @@ def send_activation_email(request, user):
         "accounts/emails/account_activation.txt",
         context,
     )
+
     html_body = render_to_string(
         "accounts/emails/account_activation.html",
         context,
