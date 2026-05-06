@@ -68,6 +68,7 @@
     const recipientPanel = document.getElementById("recipient-panel");
     const recipientInputs = document.getElementById("recipient-inputs");
     const recipientList = document.getElementById("id_recipient_list");
+    const timezoneHint = document.getElementById("timezone-hint");
     const addRecipient = document.getElementById("add-recipient");
     const helper = document.getElementById("recipient-helper");
 
@@ -119,13 +120,35 @@
       });
     }
 
-    function formatForDateTimeLocal(dateValue) {
+    function localOffsetString(dateValue) {
+      const offsetMinutes = -dateValue.getTimezoneOffset();
+      const sign = offsetMinutes >= 0 ? "+" : "-";
+      const abs = Math.abs(offsetMinutes);
+      const hours = String(Math.floor(abs / 60)).padStart(2, "0");
+      const minutes = String(abs % 60).padStart(2, "0");
+      return `${sign}${hours}:${minutes}`;
+    }
+
+    function formatIsoWithOffset(dateValue) {
       const year = dateValue.getFullYear();
       const month = String(dateValue.getMonth() + 1).padStart(2, "0");
       const day = String(dateValue.getDate()).padStart(2, "0");
       const hours = String(dateValue.getHours()).padStart(2, "0");
       const minutes = String(dateValue.getMinutes()).padStart(2, "0");
-      return `${year}-${month}-${day}T${hours}:${minutes}`;
+      const seconds = String(dateValue.getSeconds()).padStart(2, "0");
+      const offset = localOffsetString(dateValue);
+      return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${offset}`;
+    }
+
+    function initTimezoneHint() {
+      if (!timezoneHint) {
+        return;
+      }
+      const now = new Date();
+      timezoneHint.textContent = (
+        "Timezone-aware format: YYYY-MM-DDTHH:MM:SS+HH:MM. "
+        + `Current browser offset: ${localOffsetString(now)}.`
+      );
     }
 
     function initDatePresets() {
@@ -141,7 +164,7 @@
           const targetDate = new Date();
           targetDate.setMonth(targetDate.getMonth() + monthOffset);
 
-          deliveryAt.value = formatForDateTimeLocal(targetDate);
+          deliveryAt.value = formatIsoWithOffset(targetDate);
           deliveryAt.dispatchEvent(new Event("change", { bubbles: true }));
 
           presetButtons.forEach((item) => item.classList.remove("is-active"));
@@ -149,7 +172,7 @@
         });
       });
     }
-
+        initTimezoneHint();
     function syncRecipientList() {
       const values = Array.from(
         recipientInputs.querySelectorAll("input[data-recipient]"),
@@ -247,6 +270,7 @@
     });
 
     initBinaryToggles();
+    initBrowserTimezone();
     initDatePresets();
     toggleRecipientPanel();
   }

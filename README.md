@@ -17,7 +17,8 @@ LetterGator is a digital vault where users can write a message now and have it d
 
 ## Quick Start
 
-1. Ensure `.env` contains `SQLITE_NAME=db.sqlite3`.
+1. Ensure `.env` contains `SQLITE_NAME=db.sqlite3` and
+   `TIME_ZONE=Asia/Yerevan` (or your preferred IANA timezone).
 
 2. Build and run:
 
