@@ -125,7 +125,7 @@ jobs:
   debug:
     steps:
       - name: Debug SSH key format
-        run: |
+        script: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -1
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | wc -l
 
