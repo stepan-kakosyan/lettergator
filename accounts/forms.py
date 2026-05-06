@@ -59,3 +59,9 @@ class SecondaryEmailForm(forms.ModelForm):
         if not self.instance.pk and self.user.secondary_emails.count() >= 5:
             raise forms.ValidationError("You can only add up to 5 emails.")
         return cleaned_data
+
+
+class TestEmailForm(forms.Form):
+    to_email = forms.EmailField(label="Recipient email")
+    subject = forms.CharField(max_length=255)
+    message = forms.CharField(widget=forms.Textarea(attrs={"rows": 6}))

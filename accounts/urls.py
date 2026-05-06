@@ -8,12 +8,14 @@ from .views import (
     register_view,
     resend_activation_email_view,
     resend_pending_email_confirmation_view,
+    test_email_view,
 )
 
 urlpatterns = [
     path("register/", register_view, name="register"),
     path("login/", EmailLoginView.as_view(), name="login"),
     path("logout/", logout_view, name="logout"),
+    path("test-email/", test_email_view, name="test-email"),
     path(
         "activate/<uidb64>/<token>/",
         activate_account_view,
