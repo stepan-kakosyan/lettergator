@@ -123,6 +123,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
 
   debug:
+    runs-on: ubuntu-latest
     steps:
       - name: Debug SSH key format
         uses: appleboy/ssh-action@v1.2.0
