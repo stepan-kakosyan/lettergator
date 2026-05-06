@@ -38,6 +38,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     pending_email = models.EmailField(blank=True, default="")
     pending_email_requested_at = models.DateTimeField(null=True, blank=True)
     full_name = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=50, blank=True, default="")
+    address = models.TextField(blank=True, default="")
     email_verified = models.BooleanField(default=True)
     email_verified_at = models.DateTimeField(null=True, blank=True)
     email_reactivation_sent_at = models.DateTimeField(null=True, blank=True)

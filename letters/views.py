@@ -191,6 +191,8 @@ def dashboard_view(request):
                 requested_email = profile_form.cleaned_data["email"].strip().lower()
 
                 user.full_name = new_full_name
+                user.phone_number = profile_form.cleaned_data.get("phone_number", "")
+                user.address = profile_form.cleaned_data.get("address", "")
 
                 if requested_email != current_email:
                     user.pending_email = requested_email
@@ -198,6 +200,8 @@ def dashboard_view(request):
                     user.save(
                         update_fields=[
                             "full_name",
+                            "phone_number",
+                            "address",
                             "pending_email",
                             "pending_email_requested_at",
                         ]
@@ -212,7 +216,7 @@ def dashboard_view(request):
                         "Primary email will be updated after confirmation.",
                     )
                 else:
-                    user.save(update_fields=["full_name"])
+                    user.save(update_fields=["full_name", "phone_number", "address"])
                     messages.success(request, "Profile updated successfully.")
                 return redirect("dashboard_view")
 

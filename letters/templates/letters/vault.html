@@ -196,7 +196,7 @@
                             </td>
 
                             <td>
-                                <span class="text-sm font-medium text-gray-900">{{ letter.delivery_at|date:"M d, Y H:i" }}</span>
+                                <span class="text-sm font-medium text-gray-900 local-date" data-utc="{{ letter.delivery_at|date:'c' }}">{{ letter.delivery_at|date:"M d, Y H:i" }}</span>
                             </td>
 
                             <td>
@@ -218,7 +218,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-7 0h8"/>
                                         </svg>
                                     </button>
-                                    <span class="text-xs text-gray-600">Available until {{ letter.delete_until|date:"M d, Y H:i" }}</span>
+                                    <span class="text-xs text-gray-600">Available until <span class="local-date" data-utc="{{ letter.delete_until|date:'c' }}">{{ letter.delete_until|date:"M d, Y H:i" }}</span></span>
                                 </form>
                                 {% else %}
                                 <span class="text-sm text-gray-600">You cannot delete this letter.</span>
@@ -280,4 +280,16 @@
 
 {% block extra_js %}
 <script src="{% static 'js/landing.js' %}"></script>
+<script>
+(function () {
+    var fmt = new Intl.DateTimeFormat(undefined, {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+    });
+    document.querySelectorAll('.local-date[data-utc]').forEach(function (el) {
+        var d = new Date(el.dataset.utc);
+        if (!isNaN(d)) { el.textContent = fmt.format(d); }
+    });
+}());
+</script>
 {% endblock %}
