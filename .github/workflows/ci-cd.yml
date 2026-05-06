@@ -207,6 +207,15 @@ jobs:
           echo "SSH_PRIVATE_KEY line count: $line_count"
           echo "SSH_PRIVATE_KEY sha256: $key_sha"
 
+      - name: Print key fingerprint from secret
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > /tmp/k
+          chmod 600 /tmp/k
+          ssh-keygen -l -f /tmp/k
+          rm /tmp/k
+
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: validate_deploy_secrets
