@@ -93,14 +93,14 @@ def resend_activation_email_view(request):
     if user.email_verified:
         messages.info(request, "Your email is already verified.")
     else:
-        # try:
-        send_activation_email(request, user)
-        messages.success(request, "Activation email was sent again.")
-        # except Exception:
-        #     messages.error(
-        #         request,
-        #         "Unable to resend activation email right now.",
-        #     )
+        try:
+            send_activation_email(request, user)
+            messages.success(request, "Activation email was sent again.")
+        except Exception:
+            messages.error(
+                request,
+                "Unable to resend activation email right now.",
+            )
 
     next_url = request.POST.get("next", "")
     if next_url and url_has_allowed_host_and_scheme(
