@@ -168,6 +168,45 @@ jobs:
             exit 1
           fi
 
+      - name: Safe SSH key diagnostics
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          set -e
+
+          line_count=$(printf "%s" "$SSH_PRIVATE_KEY" | awk 'END{print NR}')
+          first_line=$(printf "%s" "$SSH_PRIVATE_KEY" | head -n 1)
+          last_line=$(printf "%s" "$SSH_PRIVATE_KEY" | tail -n 1)
+          key_sha=$(printf "%s" "$SSH_PRIVATE_KEY" | sha256sum | awk '{print $1}')
+
+          if [ "$line_count" -lt 3 ]; then
+            echo "ERROR: SSH_PRIVATE_KEY looks too short"
+            exit 1
+          fi
+
+          case "$first_line" in
+            "-----BEGIN OPENSSH PRIVATE KEY-----"|"-----BEGIN RSA PRIVATE KEY-----"|"-----BEGIN EC PRIVATE KEY-----"|"-----BEGIN PRIVATE KEY-----")
+              echo "OK: SSH_PRIVATE_KEY header looks valid"
+              ;;
+            *)
+              echo "ERROR: SSH_PRIVATE_KEY header is not recognized"
+              exit 1
+              ;;
+          esac
+
+          if [ "$last_line" = "-----END OPENSSH PRIVATE KEY-----" ] || \
+             [ "$last_line" = "-----END RSA PRIVATE KEY-----" ] || \
+             [ "$last_line" = "-----END EC PRIVATE KEY-----" ] || \
+             [ "$last_line" = "-----END PRIVATE KEY-----" ]; then
+            echo "OK: SSH_PRIVATE_KEY footer looks valid"
+          else
+            echo "ERROR: SSH_PRIVATE_KEY footer is not recognized"
+            exit 1
+          fi
+
+          echo "SSH_PRIVATE_KEY line count: $line_count"
+          echo "SSH_PRIVATE_KEY sha256: $key_sha"
+
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: validate_deploy_secrets
