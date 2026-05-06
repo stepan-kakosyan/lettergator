@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}LetterGator | Message to the Future{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <!-- Hero Section -->
+    <section class="flex flex-col items-center justify-center px-6 pt-12 pb-20 max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-3 fade-in-up delay-100">
+            Send your message <br> <span class="text-[#014421]">at the perfect time.</span>
+        </h1>
+        <p class="text-base md:text-lg italic text-[#014421] mb-8 fade-in-up delay-100" style="font-weight:400;">
+            Because some things are better left for later. See you later, Alligator!
+        </p>
+        <p class="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl fade-in-up delay-200">
+            A secure digital vault that stores your letters, files, and ideas,
+            then delivers them in the future on the exact day you choose.
+        </p>
+        <a
+            href="{% url 'letters-page' %}"
+            class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
+        >
+            Open Letters
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </a>
+    </section>
+
+    <!-- See why teaser -->
+    <section class="px-6 pb-20">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">See why</p>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
+                    Who writes letters like this?
+                </h2>
+                <p class="text-gray-600 mt-3">
+                    From personal milestones to team rituals — here are the moments people most often choose to write a letter for later.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <!-- Personal -->
+                <div class="border border-gray-200 rounded-2xl p-6 hover:border-[#014421] hover:shadow-md transition-all">
+                    <div class="text-2xl mb-3">🧍</div>
+                    <h3 class="text-base font-bold text-gray-900 mb-1">Personal</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Letters to your future self — written during a job change, a hard season, or a new beginning. Read when the dust settles.</p>
+                </div>
+                <!-- Family -->
+                <div class="border border-gray-200 rounded-2xl p-6 hover:border-[#014421] hover:shadow-md transition-all">
+                    <div class="text-2xl mb-3">👨‍👩‍👧</div>
+                    <h3 class="text-base font-bold text-gray-900 mb-1">Family</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Notes to a partner, a newborn, or your whole family — timed for anniversaries, birthdays, or the moments that matter most.</p>
+                </div>
+                <!-- Team -->
+                <div class="border border-gray-200 rounded-2xl p-6 hover:border-[#014421] hover:shadow-md transition-all">
+                    <div class="text-2xl mb-3">🏢</div>
+                    <h3 class="text-base font-bold text-gray-900 mb-1">Team</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Pre-launch messages, knowledge handovers, year-ahead commitments — delivered at exactly the right professional moment.</p>
+                </div>
+                <!-- Milestone -->
+                <div class="border border-gray-200 rounded-2xl p-6 hover:border-[#014421] hover:shadow-md transition-all">
+                    <div class="text-2xl mb-3">🏆</div>
+                    <h3 class="text-base font-bold text-gray-900 mb-1">Milestone</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Retirement, moving abroad, a difficult anniversary — letters that mark life's biggest turning points and arrive when they are needed.</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="{% url 'concept-page' %}" class="inline-flex items-center gap-2 text-sm font-semibold text-[#014421] border border-[#014421] px-5 py-2.5 rounded-xl hover:bg-[#014421] hover:text-white transition-colors">
+                    Explore all scenarios
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="px-6 pb-20">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">See how</p>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
+                    How your letter travels through time
+                </h2>
+                <p class="text-gray-600 mt-3">
+                    Four simple steps take your message from idea to inbox —
+                    on exactly the day and time you choose.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
+                    <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">1</div>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">Compose</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Write your message with no limits and save it to your account.</p>
+                </div>
+                <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
+                    <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">2</div>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">Seal</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Set privacy rules — block previews, lock edits, control deletion.</p>
+                </div>
+                <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
+                    <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">3</div>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">Schedule</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Pick the exact date — a preset milestone or a custom moment.</p>
+                </div>
+                <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
+                    <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">4</div>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">Deliver</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">LetterGator sends it automatically — with retry logic built in.</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="{% url 'how-page' %}" class="inline-flex items-center gap-2 text-sm font-semibold text-[#014421] border border-[#014421] px-5 py-2.5 rounded-xl hover:bg-[#014421] hover:text-white transition-colors">
+                    See the full journey
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

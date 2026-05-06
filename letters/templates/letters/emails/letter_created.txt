@@ -1,0 +1,43 @@
+Your letter is sealed — LetterGator
+
+Hi {{ user.full_name }},
+
+Your letter has been sealed and stored. Here is a summary of the details you set. The message content is kept private and will only be delivered on the scheduled date.
+
+---
+
+LETTER DETAILS
+
+Subject:           {{ letter.subject }}
+Scheduled delivery: {{ letter.delivery_at|date:"N j, Y \a\t g:i A" }}
+Recipients:
+{% if letter.send_to_me %}  Yourself ({{ user.email }})
+{% else %}{% for addr in letter.recipient_emails %}  {{ addr }}
+{% endfor %}{% endif %}
+Message preview:
+{% if letter.allow_sender_preview %}  Enabled — you can view your message before delivery in Letters.
+{% else %}  Disabled — message is sealed and not visible until delivery.
+{% endif %}
+
+---
+
+EDIT & DELETE CONTROLS
+
+Delete window: {% if letter.can_delete_early %}Enabled{% else %}Disabled{% endif %}
+
+{% if letter.can_delete_early %}You can delete this letter until {{ letter.delete_until|date:"N j, Y" }}. After that date deletion is permanently locked.
+{% else %}Deletion is permanently locked for this letter. It cannot be removed before or after delivery.
+{% endif %}
+
+Edit window: {% if letter.can_edit_early %}Enabled{% else %}Disabled{% endif %}
+
+{% if letter.can_edit_early %}You can edit this letter until {{ letter.edit_until|date:"N j, Y" }}. After that date the message is permanently locked.
+{% else %}Editing is permanently locked for this letter. The message cannot be changed.
+{% endif %}
+
+---
+
+Because some things are better left for later.
+See you later, Alligator!
+
+This is an automated confirmation from LetterGator. No action is required.

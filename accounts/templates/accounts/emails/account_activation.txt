@@ -1,0 +1,16 @@
+Welcome to LetterGator!
+
+Hi {{ user.full_name }},
+
+Thanks for joining LetterGator.
+
+Activate your account to unlock letter creation:
+{{ activation_url }}
+
+What LetterGator gives you:
+- Future-dated letter delivery
+- Privacy and edit/delete controls
+- Reliable delivery with retry logic
+
+Because some things are better left for later.
+See you later, Alligator!

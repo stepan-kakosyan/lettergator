@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}LetterGator | Account Activated{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="max-w-3xl mx-auto">
+        <div class="rounded-3xl border border-green-200 bg-green-50 p-8 md:p-10 text-center">
+            {% if already_verified %}
+            <p class="text-xs uppercase tracking-[0.2em] text-green-700 font-semibold">Already active</p>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-green-900 mt-2">
+                Your account is already activated
+            </h1>
+            <p class="text-green-800 mt-4 max-w-2xl mx-auto">
+                You are all set. You can continue writing letters anytime.
+            </p>
+            {% else %}
+            <p class="text-xs uppercase tracking-[0.2em] text-green-700 font-semibold">Success</p>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-green-900 mt-2">
+                Your account has been activated
+            </h1>
+            <p class="text-green-800 mt-4 max-w-2xl mx-auto">
+                Email verification is complete. You can now create and schedule letters.
+            </p>
+            {% endif %}
+
+            <div class="mt-8 flex flex-wrap justify-center gap-3">
+                <a
+                    href="{% url 'letter-create-page' %}"
+                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
+                >
+                    Create your first letter
+                </a>
+                <a
+                    href="{% url 'letters-page' %}"
+                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors"
+                >
+                    Go to Letters
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

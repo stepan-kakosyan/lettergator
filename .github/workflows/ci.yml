@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: lettergator_test
+          MYSQL_USER: lettergator
+          MYSQL_PASSWORD: lettergator
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      SECRET_KEY: ci-secret-key
+      DEBUG: "0"
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      DB_NAME: lettergator_test
+      DB_USER: lettergator
+      DB_PASSWORD: lettergator
+      DB_HOST: 127.0.0.1
+      DB_PORT: "3306"
+      TIME_ZONE: UTC
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install --no-cache-dir -r requirements.txt
+
+      - name: Wait for MySQL
+        run: |
+          python - <<'PY'
+          import time
+          import pymysql
+
+          for _ in range(30):
+              try:
+                  conn = pymysql.connect(
+                      host="127.0.0.1",
+                      user="lettergator",
+                      password="lettergator",
+                      database="lettergator_test",
+                      port=3306,
+                  )
+                  conn.close()
+                  print("MySQL is ready")
+                  break
+              except Exception:
+                  time.sleep(2)
+          else:
+              raise SystemExit("MySQL did not become ready in time")
+          PY
+
+      - name: Run migrations
+        run: python manage.py migrate --noinput
+
+      - name: Run Django checks
+        run: python manage.py check
+
+      - name: Run tests
+        run: python manage.py test

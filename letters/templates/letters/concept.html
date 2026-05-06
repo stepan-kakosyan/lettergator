@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}LetterGator | See why{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/concept.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Hidden CTA href for JS -->
+<span id="cg-cta-href" data-href="{% url 'letters-page' %}" hidden></span>
+
+<!-- Hero -->
+<section class="cg-hero px-6 pt-14 pb-10 md:pt-20 md:pb-14">
+    <div class="max-w-4xl mx-auto text-center">
+        <p class="cg-kicker">LetterGator See why</p>
+        <h1 class="cg-headline mt-4">
+            Why people send letters
+            <span class="cg-headline-accent block">into the future.</span>
+        </h1>
+        <p class="cg-subhead mt-6">
+            Explore scenarios by category. Click any scenario to read the full
+            story, timing, and delivery setup behind it.
+        </p>
+    </div>
+</section>
+
+<!-- Category sections -->
+<section class="cg-gallery-shell px-6 pb-20">
+    <div class="max-w-5xl mx-auto cg-sections-stack">
+
+        <!-- Personal -->
+        <div class="cg-cat-section">
+            <div class="cg-section-header personal">
+                <span class="section-emoji">&#9997;&#65039;</span>
+                <div class="section-header-body">
+                    <div class="section-name">Personal</div>
+                    <p class="section-desc">Write to who you'll become. Capture doubt, clarity, and conviction before life rewrites the memory.</p>
+                </div>
+                <span class="cat-badge personal">4 scenarios</span>
+            </div>
+            <div class="cg-explorer" id="explorer-personal" data-active-cat="personal">
+                <div class="cg-scenario-list" id="list-personal"></div>
+                <div class="cg-scenario-detail" id="detail-personal"></div>
+            </div>
+        </div>
+
+        <!-- Family -->
+        <div class="cg-cat-section">
+            <div class="cg-section-header family">
+                <span class="section-emoji">&#127968;</span>
+                <div class="section-header-body">
+                    <div class="section-name">Family</div>
+                    <p class="section-desc">Bridge the distance. Send words that will land on an anniversary, a birthday, or a day that needs them most.</p>
+                </div>
+                <span class="cat-badge family">3 scenarios</span>
+            </div>
+            <div class="cg-explorer" id="explorer-family" data-active-cat="family">
+                <div class="cg-scenario-list" id="list-family"></div>
+                <div class="cg-scenario-detail" id="detail-family"></div>
+            </div>
+        </div>
+
+        <!-- Team -->
+        <div class="cg-cat-section">
+            <div class="cg-section-header team">
+                <span class="section-emoji">&#128640;</span>
+                <div class="section-header-body">
+                    <div class="section-name">Team</div>
+                    <p class="section-desc">Preserve what the team knows today. Deliver it to the team that needs it tomorrow.</p>
+                </div>
+                <span class="cat-badge team">3 scenarios</span>
+            </div>
+            <div class="cg-explorer" id="explorer-team" data-active-cat="team">
+                <div class="cg-scenario-list" id="list-team"></div>
+                <div class="cg-scenario-detail" id="detail-team"></div>
+            </div>
+        </div>
+
+        <!-- Milestone -->
+        <div class="cg-cat-section">
+            <div class="cg-section-header milestone">
+                <span class="section-emoji">&#127942;</span>
+                <div class="section-header-body">
+                    <div class="section-name">Milestone</div>
+                    <p class="section-desc">Mark the moments that matter. Retirement, relocations, difficult dates &mdash; preserved and delivered when they count.</p>
+                </div>
+                <span class="cat-badge milestone">3 scenarios</span>
+            </div>
+            <div class="cg-explorer" id="explorer-milestone" data-active-cat="milestone">
+                <div class="cg-scenario-list" id="list-milestone"></div>
+                <div class="cg-scenario-detail" id="detail-milestone"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/concept.js' %}"></script>
+{% endblock %}

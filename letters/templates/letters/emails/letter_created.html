@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letter sealed and stored</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f8f6;font-family:Arial,sans-serif;color:#163222;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #dbe8df;border-radius:18px;overflow:hidden;">
+          <!-- Header -->
+          <tr>
+            <td style="background:#ffffff;border-bottom:1px solid #dbe8df;padding:28px 24px 20px 24px;text-align:center;">
+              <img src="{{ logo_url }}" alt="LetterGator logo" style="max-width:130px;height:auto;display:block;margin:0 auto 12px auto;">
+              <p style="margin:0;color:#036b35;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;">Letter confirmation</p>
+              <h1 style="margin:8px 0 0 0;color:#163222;font-size:28px;line-height:1.2;font-weight:800;">Your letter is sealed</h1>
+            </td>
+          </tr>
+          <!-- Intro -->
+          <tr>
+            <td style="padding:26px 26px 0 26px;">
+              <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;">Hi {{ user.full_name }},</p>
+              <p style="margin:0 0 20px 0;font-size:16px;line-height:1.6;">
+                Your letter has been sealed and stored. Here is a summary of the details you set. The message content is kept private and will only be delivered on the scheduled date.
+              </p>
+            </td>
+          </tr>
+          <!-- Letter details -->
+          <tr>
+            <td style="padding:0 26px 0 26px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f7fbf9;border:1px solid #dfebe4;border-radius:12px;overflow:hidden;">
+                <tr>
+                  <td style="padding:16px 18px 0 18px;">
+                    <p style="margin:0 0 4px 0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6f857a;font-weight:700;">Subject</p>
+                    <p style="margin:0 0 14px 0;font-size:15px;font-weight:700;color:#163222;">{{ letter.subject }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 18px 0 18px;">
+                    <p style="margin:0 0 4px 0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6f857a;font-weight:700;">Scheduled delivery</p>
+                    <p style="margin:0 0 14px 0;font-size:15px;font-weight:700;color:#163222;">{{ letter.delivery_at|date:"N j, Y \a\t g:i A" }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 18px 0 18px;">
+                    <p style="margin:0 0 4px 0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6f857a;font-weight:700;">Recipients</p>
+                    <p style="margin:0 0 14px 0;font-size:15px;color:#163222;">
+                      {% if letter.send_to_me %}
+                        Yourself ({{ user.email }})
+                      {% else %}
+                        {% for addr in letter.recipient_emails %}{{ addr }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                      {% endif %}
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 18px 16px 18px;">
+                    <p style="margin:0 0 4px 0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6f857a;font-weight:700;">Message preview</p>
+                    <p style="margin:0;font-size:14px;color:#496657;">
+                      {% if letter.allow_sender_preview %}
+                        Enabled — you can view your message before delivery in Letters.
+                      {% else %}
+                        Disabled — message is sealed and not visible until delivery.
+                      {% endif %}
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- Controls section -->
+          <tr>
+            <td style="padding:16px 26px 0 26px;">
+              <p style="margin:0 0 10px 0;font-size:13px;font-weight:700;color:#163222;text-transform:uppercase;letter-spacing:0.1em;">Edit &amp; Delete controls</p>
+              <!-- Delete -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom:10px;border:1px solid #e5ede8;border-radius:10px;">
+                <tr>
+                  <td style="padding:12px 16px;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="font-size:14px;font-weight:700;color:#163222;">Delete window</td>
+                        <td align="right">
+                          {% if letter.can_delete_early %}
+                            <span style="display:inline-block;background:#d1fae5;color:#065f46;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;">Enabled</span>
+                          {% else %}
+                            <span style="display:inline-block;background:#fee2e2;color:#991b1b;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;">Disabled</span>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="padding-top:6px;font-size:13px;color:#496657;line-height:1.5;">
+                          {% if letter.can_delete_early %}
+                            You can delete this letter until {{ letter.delete_until|date:"N j, Y" }}. After that date deletion is permanently locked.
+                          {% else %}
+                            Deletion is permanently locked for this letter. It cannot be removed before or after delivery.
+                          {% endif %}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              <!-- Edit -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5ede8;border-radius:10px;">
+                <tr>
+                  <td style="padding:12px 16px;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="font-size:14px;font-weight:700;color:#163222;">Edit window</td>
+                        <td align="right">
+                          {% if letter.can_edit_early %}
+                            <span style="display:inline-block;background:#d1fae5;color:#065f46;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;">Enabled</span>
+                          {% else %}
+                            <span style="display:inline-block;background:#fee2e2;color:#991b1b;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;">Disabled</span>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="padding-top:6px;font-size:13px;color:#496657;line-height:1.5;">
+                          {% if letter.can_edit_early %}
+                            You can edit this letter until {{ letter.edit_until|date:"N j, Y" }}. After that date the message is permanently locked.
+                          {% else %}
+                            Editing is permanently locked for this letter. The message cannot be changed.
+                          {% endif %}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:22px 26px 8px 26px;">
+              <p style="margin:0 0 6px 0;font-size:14px;line-height:1.6;color:#496657;">
+                Because some things are better left for later.<br>
+                <strong>See you later, Alligator!</strong>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 26px 24px 26px;">
+              <p style="margin:0;font-size:12px;line-height:1.6;color:#6f857a;">
+                This is an automated confirmation from LetterGator. No action is required.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

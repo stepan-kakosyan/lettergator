@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activate your account</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f8f6;font-family:Arial,sans-serif;color:#163222;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #dbe8df;border-radius:18px;overflow:hidden;">
+          <tr>
+            <td style="background:#ffffff;border-bottom:1px solid #dbe8df;padding:28px 24px 20px 24px;text-align:center;">
+              <img src="{{ logo_url }}" alt="LetterGator logo" style="max-width:130px;height:auto;display:block;margin:0 auto 12px auto;">
+              <p style="margin:0;color:#036b35;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;">Account activation</p>
+              <h1 style="margin:8px 0 0 0;color:#163222;font-size:28px;line-height:1.2;font-weight:800;">Welcome to {{ site_name }}</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:26px 26px 8px 26px;">
+              <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;">Hi {{ user.full_name }},</p>
+              <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;">
+                Thanks for registering. Confirm your email to unlock letter creation and start scheduling messages for future milestones.
+              </p>
+              <table role="presentation" cellspacing="0" cellpadding="0" style="margin:22px 0 20px 0;">
+                <tr>
+                  <td>
+                    <a href="{{ activation_url }}" target="_blank" style="display:inline-block;background:#014421;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:12px 18px;border-radius:10px;">
+                      Activate account
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f7fbf9;border:1px solid #dfebe4;border-radius:12px;padding:12px;">
+                <tr>
+                  <td style="font-size:14px;line-height:1.6;color:#355343;">
+                    <strong style="color:#163222;">What you get in LetterGator:</strong><br>
+                    Future-dated delivery, privacy controls, and reliable dispatch with fallback retries.
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:20px 0 6px 0;font-size:14px;line-height:1.6;color:#496657;">
+                Because some things are better left for later.<br>
+                <strong>See you later, Alligator!</strong>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 26px 24px 26px;">
+              <p style="margin:0;font-size:12px;line-height:1.6;color:#6f857a;word-break:break-all;">
+                If the button does not work, copy and paste this link into your browser:<br>
+                <a href="{{ activation_url }}" style="color:#014421;">{{ activation_url }}</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

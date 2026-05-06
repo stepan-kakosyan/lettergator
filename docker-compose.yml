@@ -1,0 +1,12 @@
+services:
+  backend:
+    build:
+      context: .
+    container_name: lettergator_backend
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    volumes:
+      - ./:/app
+    ports:
+      - "8040:8040"

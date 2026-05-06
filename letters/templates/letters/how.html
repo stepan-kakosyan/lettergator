@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}LetterGator | See how{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <!-- Hero -->
+    <section class="flex flex-col items-center justify-center px-6 pt-12 pb-16 max-w-4xl mx-auto text-center">
+        <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold mb-3 fade-in-up delay-100">How it works</p>
+        <h1 class="text-5xl md:text-6xl font-black tracking-tight text-gray-900 mb-5 fade-in-up delay-100">
+            Four steps. <span class="text-[#014421]">One future message.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-500 max-w-2xl fade-in-up delay-200">
+            From the moment you write to the moment it arrives — here is exactly
+            what happens to your letter along the way.
+        </p>
+    </section>
+
+    <!-- Stepper -->
+    <section class="px-6 pb-24">
+        <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
+
+            <div class="steps-list">
+
+                <!-- Step 1 -->
+                <div class="step-row">
+                    <div class="step-marker-col">
+                        <div class="step-circle">1</div>
+                        <div class="step-connector"></div>
+                    </div>
+                    <div class="step-body-col">
+                        <div class="step-inner">
+                            <div class="step-text">
+                                <p class="step-kicker">Compose</p>
+                                <h3 class="step-heading">Create a meaningful letter in minutes.</h3>
+                                <p class="step-desc">
+                                    Write your subject line and full message body. There are no character
+                                    limits — pour in as much as you need. The letter is immediately
+                                    attached to your account, safely stored, and ready for the next step.
+                                </p>
+                                <ul class="step-bullets">
+                                    <li>Rich message body with full text support</li>
+                                    <li>Clear subject line for recipient context</li>
+                                    <li>Auto-saved to your account dashboard</li>
+                                </ul>
+                            </div>
+                            <img src="{% static 'img/step1.png' %}" alt="Compose" class="step-img" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-row">
+                    <div class="step-marker-col">
+                        <div class="step-circle">2</div>
+                        <div class="step-connector"></div>
+                    </div>
+                    <div class="step-body-col">
+                        <div class="step-inner">
+                            <div class="step-text">
+                                <p class="step-kicker">Seal</p>
+                                <h3 class="step-heading">Choose privacy and ownership controls.</h3>
+                                <p class="step-desc">
+                                    Before scheduling, decide the rules that govern your letter.
+                                    Can you peek at the content before delivery? Should edits be
+                                    blocked once scheduled? These controls lock in your intentions
+                                    and prevent second-guessing.
+                                </p>
+                                <ul class="step-bullets">
+                                    <li>Toggle content preview on or off</li>
+                                    <li>Allow or block edits in the first month</li>
+                                    <li>Enable or disable early deletion</li>
+                                </ul>
+                            </div>
+                            <img src="{% static 'img/step2.png' %}" alt="Seal" class="step-img" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-row">
+                    <div class="step-marker-col">
+                        <div class="step-circle">3</div>
+                        <div class="step-connector"></div>
+                    </div>
+                    <div class="step-body-col">
+                        <div class="step-inner">
+                            <div class="step-text">
+                                <p class="step-kicker">Schedule</p>
+                                <h3 class="step-heading">Set exact timing for emotional impact.</h3>
+                                <p class="step-desc">
+                                    Pick the precise date and time your message should land.
+                                    Use quick-select presets — 1 month, 1 year, 5 years, 10 years —
+                                    or dial in a custom moment: a birthday, anniversary, or milestone
+                                    you already know is coming.
+                                </p>
+                                <ul class="step-bullets">
+                                    <li>Preset slots for common future milestones</li>
+                                    <li>Custom date-and-time picker for exact moments</li>
+                                    <li>Delivery time locked after confirmation</li>
+                                </ul>
+                            </div>
+                            <img src="{% static 'img/step3.png' %}" alt="Schedule" class="step-img" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="step-row is-last">
+                    <div class="step-marker-col">
+                        <div class="step-circle">4</div>
+                    </div>
+                    <div class="step-body-col">
+                        <div class="step-inner">
+                            <div class="step-text">
+                                <p class="step-kicker">Deliver</p>
+                                <h3 class="step-heading">Automatic delivery with fallback reliability.</h3>
+                                <p class="step-desc">
+                                    When the clock hits your chosen moment, LetterGator dispatches
+                                    your message to every selected recipient simultaneously.
+                                    Built-in retry logic protects against delivery failures so your
+                                    words arrive — no matter what happens between now and then.
+                                </p>
+                                <ul class="step-bullets">
+                                    <li>Sends to all selected recipients at once</li>
+                                    <li>Retry logic guards against delivery failures</li>
+                                    <li>Confirmation logged to your account history</li>
+                                </ul>
+                            </div>
+                            <img src="{% static 'img/step4.png' %}" alt="Deliver" class="step-img" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="px-6 pb-24 text-center">
+        <p class="text-gray-500 text-base mb-4">Ready to write your first letter?</p>
+        <a
+            href="{% url 'letters-page' %}"
+            class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
+        >
+            Open Letters
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+        </a>
+    </section>
+
+{% endblock %}

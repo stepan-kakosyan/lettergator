@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}LetterGator | Letters{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+<section id="letters" class="px-6 py-20">
+    <div class="w-full max-w-6xl mx-auto fade-in-up delay-300">
+        <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
+            <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">Letters</p>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
+                {% if guest_mode %}Letters Workspace Preview{% else %}Your Letters Workspace{% endif %}
+            </h1>
+            <p class="text-gray-600 mt-4 max-w-3xl">
+                {% if guest_mode %}
+                This page stores and manages your scheduled letters. Sign in to create
+                letters, manage recipients, and control edit/delete permissions.
+                {% else %}
+                Manage scheduled letters in one place. You can review recipients,
+                delivery timing, visibility, and perform edit/delete actions where
+                they are still permitted.
+                {% endif %}
+            </p>
+            {% if not guest_mode and email_verification_required %}
+            <div class="mt-6 rounded-2xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900">
+                <p class="font-semibold">Email verification required</p>
+                <p class="text-sm mt-1">
+                    You can explore Letters, but you must verify your email before creating
+                    a new letter.
+                </p>
+                <form method="post" action="{% url 'resend-activation-email' %}" class="mt-3">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button
+                        type="submit"
+                        class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-amber-500 text-amber-800 hover:bg-amber-100 transition-colors"
+                    >
+                        Resend activation email
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+            {% if guest_mode %}
+            <div class="mt-6 flex flex-wrap gap-3">
+                <a
+                    href="{% url 'login' %}"
+                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
+                >
+                    Login
+                </a>
+                <a
+                    href="{% url 'register' %}"
+                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors"
+                >
+                    Register
+                </a>
+            </div>
+            {% else %}
+            <a
+                href="{% url 'letter-create-page' %}"
+                class="inline-flex items-center justify-center mt-6 px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
+            >
+                Create Letter
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-6 md:p-8">
+            <h2 class="text-2xl font-black tracking-tight text-gray-900">
+                {% if guest_mode %}Why Sign In{% else %}Existing Letters{% endif %}
+            </h2>
+
+            {% if messages %}
+            <div class="mt-4 space-y-2">
+                {% for message in messages %}
+                <div class="rounded-xl px-4 py-3 text-sm font-medium {% if message.tags == 'success' %}bg-green-50 text-green-700{% else %}bg-gray-100 text-gray-700{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if guest_mode %}
+            <div class="mt-6 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
+                <h3 class="text-lg font-bold text-gray-900">Access required</h3>
+                <p class="text-gray-600 mt-2 max-w-2xl mx-auto">
+                    To view your personal letters table and decrypted previews (when allowed),
+                    please log in or create an account.
+                </p>
+                <div class="mt-5 flex flex-wrap justify-center gap-3">
+                    <a href="{% url 'login' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors">
+                        Login
+                    </a>
+                    <a href="{% url 'register' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors">
+                        Register
+                    </a>
+                </div>
+            </div>
+            {% elif letters %}
+            <div class="mt-6">
+                <table class="letters-table w-full">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Content</th>
+                            <th>Recipients</th>
+                            <th>Delivery Date</th>
+                            <th>Status</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for letter in letters %}
+                        <tr data-letter-id="{{ letter.id }}">
+                            <td>
+                                <div class="cell-main">
+                                    <span class="cell-icon" aria-hidden="true">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h8m-8 4h6M5 20h14a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+                                        </svg>
+                                    </span>
+                                    <span class="font-semibold text-gray-900">{{ letter.subject }}</span>
+                                </div>
+                            </td>
+
+                            <td>
+                                {% if letter.can_view_content %}
+                                <div class="content-cell">
+                                    <span class="text-gray-800" data-content-excerpt-id="{{ letter.id }}">{{ letter.display_excerpt }}</span>
+                                    <button
+                                        type="button"
+                                        class="table-link"
+                                        data-view-open
+                                        data-view-title="{{ letter.subject|escape }}"
+                                        data-view-message="{{ letter.display_message|escapejs }}"
+                                    >
+                                        Display More
+                                    </button>
+                                    {% if letter.can_be_edited_now %}
+                                    <button
+                                        type="button"
+                                        class="icon-btn"
+                                        title="Edit text"
+                                        aria-label="Edit letter text"
+                                        data-edit-open
+                                        data-edit-id="{{ letter.id }}"
+                                        data-edit-url="{% url 'letter-edit' letter.id %}"
+                                        data-edit-subject="{{ letter.subject|escape }}"
+                                        data-edit-message="{{ letter.display_message|escapejs }}"
+                                    >
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z"/>
+                                        </svg>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                                {% else %}
+                                <div class="content-cell">
+                                    <span class="font-semibold tracking-widest">**********</span>
+                                    {% if letter.can_be_edited_now %}
+                                    <button
+                                        type="button"
+                                        class="icon-btn"
+                                        title="Edit text"
+                                        aria-label="Edit letter text"
+                                        data-edit-open
+                                        data-edit-id="{{ letter.id }}"
+                                        data-edit-url="{% url 'letter-edit' letter.id %}"
+                                        data-edit-subject="{{ letter.subject|escape }}"
+                                        data-edit-message="{{ letter.display_message|escapejs }}"
+                                    >
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M16.5 3.5a2.121 2.121 0 113 3L12 14l-4 1 1-4 7.5-7.5z"/>
+                                        </svg>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if letter.send_to_me %}
+                                <span class="text-sm font-semibold text-gray-800">Only me</span>
+                                {% else %}
+                                <div class="recipient-list text-sm text-gray-700 space-y-1">
+                                    <p>{{ letter.recipient_email }}</p>
+                                    {% for extra in letter.recipient_emails %}
+                                    <p>{{ extra }}</p>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <span class="text-sm font-medium text-gray-900">{{ letter.delivery_at|date:"M d, Y H:i" }}</span>
+                            </td>
+
+                            <td>
+                                <span class="status-badge status-{{ letter.status_label|lower }}">{{ letter.status_label }}</span>
+                            </td>
+
+                            <td>
+                                {% if letter.can_be_deleted_now %}
+                                <form method="post" action="{% url 'letter-delete' letter.id %}" class="delete-cell-form">
+                                    {% csrf_token %}
+                                    <button
+                                        type="submit"
+                                        class="icon-btn danger"
+                                        title="Delete letter"
+                                        aria-label="Delete letter"
+                                        onclick="return confirm('Delete this letter permanently? This cannot be undone.')"
+                                    >
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-7 0h8"/>
+                                        </svg>
+                                    </button>
+                                    <span class="text-xs text-gray-600">Available until {{ letter.delete_until|date:"M d, Y H:i" }}</span>
+                                </form>
+                                {% else %}
+                                <span class="text-sm text-gray-600">You cannot delete this letter.</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="mt-6 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
+                <h3 class="text-lg font-bold text-gray-900">No letters yet</h3>
+                <p class="text-gray-600 mt-2">Create your first letter to start building your timeline.</p>
+                <a href="{% url 'letter-create-page' %}" class="inline-flex items-center justify-center mt-5 px-5 py-2.5 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors">
+                    Create Letter
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<div id="view-modal" class="preview-modal hidden" aria-hidden="true">
+    <div class="preview-backdrop" data-view-close></div>
+    <div class="preview-dialog" role="dialog" aria-modal="true" aria-labelledby="view-title">
+        <div class="flex items-center justify-between gap-3">
+            <h3 id="view-title" class="text-xl font-bold text-gray-900">Letter</h3>
+            <button type="button" class="preview-close" data-view-close aria-label="Close">
+                ×
+            </button>
+        </div>
+        <p id="view-body" class="text-gray-700 mt-4 whitespace-pre-wrap"></p>
+    </div>
+</div>
+
+<div id="edit-modal" class="preview-modal hidden" aria-hidden="true">
+    <div class="preview-backdrop" data-edit-close></div>
+    <div class="preview-dialog" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+        <div class="flex items-center justify-between gap-3">
+            <h3 id="edit-title" class="text-xl font-bold text-gray-900">Edit Letter Text</h3>
+            <button type="button" class="preview-close" data-edit-close aria-label="Close">
+                ×
+            </button>
+        </div>
+        <p id="edit-subject" class="text-sm text-gray-500 mt-2"></p>
+        <form id="edit-form" class="mt-4 space-y-3" method="post">
+            {% csrf_token %}
+            <textarea id="edit-textarea" name="message" class="edit-message" rows="8" required></textarea>
+            <div class="flex justify-end">
+                <button id="edit-save" type="submit" class="action-btn action-primary w-auto px-5">
+                    Save Text
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/landing.js' %}"></script>
+{% endblock %}

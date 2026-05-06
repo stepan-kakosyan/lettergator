@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+backend/.pytest_cache/
+backend/staticfiles/
+.vscode/

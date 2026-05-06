@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Profile Dashboard | LetterGator{% endblock %}
+
+{% block content %}
+<section class="min-h-screen bg-white px-6 py-10">
+    <div class="w-full max-w-4xl mx-auto">
+        <div class="mb-10 flex items-center justify-between gap-4">
+            <div class="min-w-0">
+                <h1 class="text-2xl md:text-3xl font-semibold text-[#014421] tracking-tight truncate">
+                    Profile Dashboard
+                </h1>
+                <p class="mt-1 text-sm md:text-base text-gray-600">
+                    Manage your primary profile details and backup email list.
+                </p>
+            </div>
+            <a
+                href="{% url 'logout' %}"
+                class="flex-shrink-0 inline-flex items-center gap-2 text-sm font-medium text-gray-500 border border-gray-200 px-3 py-2 rounded-lg hover:border-red-300 hover:text-red-600 transition-colors"
+            >
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"/>
+                </svg>
+                <span class="hidden sm:inline">Log out</span>
+                <span class="sm:hidden sr-only">Log out</span>
+            </a>
+        </div>
+
+        {% if messages %}
+        <div class="space-y-2 mb-6">
+            {% for message in messages %}
+            <p class="rounded-lg bg-green-50 text-green-700 px-4 py-3 text-sm">
+                {{ message }}
+            </p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if email_verification_required %}
+        <div class="mb-6 rounded-2xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900">
+            <p class="font-semibold">Verify your primary email to create letters</p>
+            <p class="text-sm mt-1">
+                You can still log in and manage your profile, but new letter creation is
+                locked until email verification is complete.
+            </p>
+            <form method="post" action="{% url 'resend-activation-email' %}" class="mt-3">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button
+                    type="submit"
+                    class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-amber-500 text-amber-800 hover:bg-amber-100 transition-colors"
+                >
+                    Resend activation email
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <article class="border border-gray-200 rounded-2xl p-6">
+                <h2 class="text-xl font-semibold text-gray-900">Profile details</h2>
+                <form method="post" class="mt-6 space-y-5" novalidate>
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_profile">
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ profile_form.full_name.id_for_label }}">
+                            Full name
+                        </label>
+                        <input
+                            type="text"
+                            name="{{ profile_form.full_name.html_name }}"
+                            id="{{ profile_form.full_name.id_for_label }}"
+                            value="{{ profile_form.full_name.value|default:'' }}"
+                            class="w-full border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2 focus:border-[#014421] focus:ring-0 focus:outline-none"
+                            autocomplete="name"
+                            required
+                        >
+                        {% for error in profile_form.full_name.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ profile_form.email.id_for_label }}">
+                            Primary email
+                        </label>
+                        <input
+                            type="email"
+                            name="{{ profile_form.email.html_name }}"
+                            id="{{ profile_form.email.id_for_label }}"
+                            value="{{ profile_form.email.value|default:'' }}"
+                            class="w-full border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2 focus:border-[#014421] focus:ring-0 focus:outline-none"
+                            autocomplete="email"
+                            required
+                        >
+                        {% for error in profile_form.email.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    {% for error in profile_form.non_field_errors %}
+                    <p class="text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+
+                    <button
+                        type="submit"
+                        class="w-full bg-[#014421] text-white py-3 rounded-lg font-medium hover:bg-[#023319] transition-colors"
+                    >
+                        Save profile
+                    </button>
+                </form>
+            </article>
+
+            <article class="border border-gray-200 rounded-2xl p-6">
+                <h2 class="text-xl font-semibold text-gray-900">Secondary email list</h2>
+                <p class="mt-2 text-sm text-gray-600">
+                    Add up to 5 backup email addresses for delivery fallback.
+                    Slots left: {{ secondary_slots_left }}
+                </p>
+
+                <form method="post" class="mt-6 space-y-4" novalidate>
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="add_secondary_email">
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ secondary_email_form.email.id_for_label }}">
+                            Add backup email
+                        </label>
+                        <input
+                            type="email"
+                            name="{{ secondary_email_form.email.html_name }}"
+                            id="{{ secondary_email_form.email.id_for_label }}"
+                            value="{{ secondary_email_form.email.value|default:'' }}"
+                            class="w-full border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2 focus:border-[#014421] focus:ring-0 focus:outline-none"
+                            autocomplete="email"
+                            placeholder="backup@example.com"
+                        >
+                        {% for error in secondary_email_form.email.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                        {% for error in secondary_email_form.non_field_errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full bg-[#014421] text-white py-3 rounded-lg font-medium hover:bg-[#023319] transition-colors"
+                    >
+                        Add secondary email
+                    </button>
+                </form>
+
+                <div class="mt-6 space-y-3">
+                    {% for email_item in secondary_emails %}
+                    <div class="flex items-center justify-between border border-gray-200 rounded-lg px-3 py-2">
+                        <span class="text-sm text-gray-700">{{ email_item.email }}</span>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="remove_secondary_email">
+                            <input type="hidden" name="secondary_email_id" value="{{ email_item.id }}">
+                            <button
+                                type="submit"
+                                class="text-sm text-red-600 hover:text-red-700"
+                            >
+                                Remove
+                            </button>
+                        </form>
+                    </div>
+                    {% empty %}
+                    <p class="text-sm text-gray-500">No secondary emails yet.</p>
+                    {% endfor %}
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+{% endblock %}
