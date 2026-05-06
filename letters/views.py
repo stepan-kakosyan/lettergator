@@ -229,6 +229,25 @@ def dashboard_view(request):
                 messages.success(request, "Secondary email added.")
                 return redirect("dashboard_view")
 
+        elif action == "cancel_pending_email_update":
+            user = request.user
+            if user.pending_email:
+                user.pending_email = ""
+                user.pending_email_requested_at = None
+                user.save(
+                    update_fields=[
+                        "pending_email",
+                        "pending_email_requested_at",
+                    ]
+                )
+                messages.success(
+                    request,
+                    "Pending email update canceled. Your current primary email was kept.",
+                )
+            else:
+                messages.info(request, "No pending email change found.")
+            return redirect("dashboard_view")
+
         elif action == "remove_secondary_email":
             secondary_email_id = request.POST.get("secondary_email_id")
             deleted, _ = SecondaryEmail.objects.filter(
