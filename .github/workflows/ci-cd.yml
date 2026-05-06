@@ -125,9 +125,10 @@ jobs:
   debug:
     steps:
       - name: Debug SSH key format
-        script: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -1
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | wc -l
+        with:
+          script: |
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -1
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" | wc -l
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
