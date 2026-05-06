@@ -1,4 +1,6 @@
 from datetime import datetime
+from zoneinfo import ZoneInfo
+from zoneinfo import ZoneInfoNotFoundError
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -10,6 +12,7 @@ from .models import Letter
 
 class LetterForm(forms.ModelForm):
     recipient_list = forms.CharField(required=False, widget=forms.HiddenInput())
+    browser_timezone = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Letter
@@ -31,8 +34,7 @@ class LetterForm(forms.ModelForm):
             ),
             "delivery_at": forms.DateTimeInput(
                 attrs={
-                    "type": "text",
-                    "placeholder": "2030-07-01T16:00:00+01:00",
+                    "type": "datetime-local",
                     "required": True,
                 }
             ),
@@ -55,22 +57,31 @@ class LetterForm(forms.ModelForm):
         self.fields["can_edit_early"].initial = False
         self.fields["allow_sender_preview"].initial = False
 
-    def clean_delivery_at(self):
-        raw_delivery_at = self.data.get(self.add_prefix("delivery_at"), "").strip()
-        normalized = raw_delivery_at.replace("Z", "+00:00")
+    def _get_browser_timezone(self):
+        tz_name = self.data.get(self.add_prefix("browser_timezone"), "").strip()
+        if not tz_name:
+            return timezone.get_current_timezone_name()
 
         try:
-            delivery_at = datetime.fromisoformat(normalized)
+            ZoneInfo(tz_name)
+        except ZoneInfoNotFoundError:
+            return timezone.get_current_timezone_name()
+
+        return tz_name
+
+    def clean_delivery_at(self):
+        raw_delivery_at = self.data.get(self.add_prefix("delivery_at"), "").strip()
+        tz_name = self._get_browser_timezone()
+
+        try:
+            delivery_at = datetime.fromisoformat(raw_delivery_at)
         except ValueError as exc:
             raise forms.ValidationError(
-                "Use ISO format with timezone, for example "
-                "2030-07-01T16:00:00+01:00."
+                "Enter a valid delivery date and time."
             ) from exc
 
         if delivery_at.tzinfo is None:
-            raise forms.ValidationError(
-                "Include timezone offset, for example +04:00 or Z."
-            )
+            delivery_at = timezone.make_aware(delivery_at, ZoneInfo(tz_name))
 
         if delivery_at <= timezone.now():
             raise forms.ValidationError(
