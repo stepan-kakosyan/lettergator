@@ -122,29 +122,66 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
 
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug SSH key format
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          script: |
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -1
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | wc -l
-
-  deploy:
+  validate_deploy_secrets:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: docker_hub
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validate required deploy secrets are present
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+        run: |
+          set -e
+
+          check_required() {
+            name="$1"
+            value="$2"
+            if [ -z "$value" ]; then
+              echo "MISSING: $name"
+              return 1
+            fi
+            echo "OK: $name is set"
+            return 0
+          }
+
+          failures=0
+          check_required "SSH_HOST" "$SSH_HOST" || failures=$((failures + 1))
+          check_required "SSH_USER" "$SSH_USER" || failures=$((failures + 1))
+          check_required "SSH_PRIVATE_KEY" "$SSH_PRIVATE_KEY" || failures=$((failures + 1))
+          check_required "SSH_PORT" "$SSH_PORT" || failures=$((failures + 1))
+          check_required "DEPLOY_PATH" "$DEPLOY_PATH" || failures=$((failures + 1))
+
+          if [ -z "$SSH_PASSPHRASE" ]; then
+            echo "INFO: SSH_PASSPHRASE is empty (this is fine for unencrypted keys)"
+          else
+            echo "OK: SSH_PASSPHRASE is set"
+          fi
+
+          if [ "$failures" -gt 0 ]; then
+            echo "Required secrets check failed"
+            exit 1
+          fi
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate_deploy_secrets
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Deploy to server via SSH
-      - name: Debug SSH key format
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT }}
           script_stop: true
           script: |
             set -e
