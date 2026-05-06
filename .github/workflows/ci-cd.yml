@@ -129,6 +129,9 @@ jobs:
 
     steps:
       - name: Deploy to server via SSH
+      - name: Debug SSH key format
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -1
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | wc -l
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
