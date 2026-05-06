@@ -122,6 +122,13 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
 
+  debug:
+    steps:
+      - name: Debug SSH key format
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -1
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | wc -l
+
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: docker_hub
@@ -130,7 +137,6 @@ jobs:
     steps:
       - name: Deploy to server via SSH
       - name: Debug SSH key format
-
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -138,8 +144,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script_stop: true
           script: |
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -1
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | wc -l
             set -e
             cd ${{ secrets.DEPLOY_PATH }}
             git fetch --all
