@@ -26,7 +26,7 @@ class EmailAuthenticationForm(AuthenticationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ["full_name", "email"]
+        fields = ["full_name", "email", "phone_number", "address"]
 
 
 class SecondaryEmailForm(forms.ModelForm):

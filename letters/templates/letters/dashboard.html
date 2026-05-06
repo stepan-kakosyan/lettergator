@@ -131,6 +131,49 @@
                         {% endfor %}
                     </div>
 
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ profile_form.phone_number.id_for_label }}">
+                            Phone number <span class="font-normal text-gray-400">(optional)</span>
+                        </label>
+                        <input
+                            type="tel"
+                            name="{{ profile_form.phone_number.html_name }}"
+                            id="{{ profile_form.phone_number.id_for_label }}"
+                            value="{{ profile_form.phone_number.value|default:'' }}"
+                            class="w-full border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2 focus:border-[#014421] focus:ring-0 focus:outline-none"
+                            autocomplete="tel"
+                            placeholder="+1 555 000 0000"
+                        >
+                        {% for error in profile_form.phone_number.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ profile_form.address.id_for_label }}">
+                            Mailing address <span class="font-normal text-gray-400">(optional)</span>
+                        </label>
+                        <textarea
+                            name="{{ profile_form.address.html_name }}"
+                            id="{{ profile_form.address.id_for_label }}"
+                            rows="3"
+                            class="w-full border border-gray-300 rounded-lg bg-transparent px-3 py-2 text-sm focus:border-[#014421] focus:ring-0 focus:outline-none resize-none"
+                            autocomplete="street-address"
+                            placeholder="Street, City, Country"
+                        >{{ profile_form.address.value|default:'' }}</textarea>
+                        {% for error in profile_form.address.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <div class="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-800">
+                        <p class="font-semibold">Why we ask for this</p>
+                        <p class="mt-1">Phone number and mailing address are completely optional today. In the
+                        future, if email delivery is no longer available, we may need alternative
+                        ways to reach you and ensure your letters are delivered — having multiple
+                        contact options gives your letters the best chance of arriving.</p>
+                    </div>
+
                     {% for error in profile_form.non_field_errors %}
                     <p class="text-sm text-red-600">{{ error }}</p>
                     {% endfor %}
