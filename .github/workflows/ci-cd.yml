@@ -248,7 +248,6 @@ jobs:
               echo "Clone the repository on the server first, or point DEPLOY_PATH to the cloned repo root"
               exit 1
             fi
-
             echo "Git repository detected"
             git remote -v
             git branch --show-current || true
