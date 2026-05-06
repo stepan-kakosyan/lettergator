@@ -63,16 +63,28 @@
                 A confirmation link was sent to <strong>{{ pending_primary_email }}</strong>.
                 Your primary email will not change until you click that link.
             </p>
-            <form method="post" action="{% url 'resend-pending-email-confirmation' %}" class="mt-3">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <button
-                    type="submit"
-                    class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-amber-500 text-amber-800 hover:bg-amber-100 transition-colors"
-                >
-                    Resend confirmation email
-                </button>
-            </form>
+            <div class="mt-3 flex flex-wrap gap-3">
+                <form method="post" action="{% url 'resend-pending-email-confirmation' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button
+                        type="submit"
+                        class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-amber-500 text-amber-800 hover:bg-amber-100 transition-colors"
+                    >
+                        Resend confirmation email
+                    </button>
+                </form>
+                <form method="post" action="{% url 'dashboard_view' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="cancel_pending_email_update">
+                    <button
+                        type="submit"
+                        class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-gray-300 text-gray-700 hover:bg-white transition-colors"
+                    >
+                        Cancel update, keep previous email as Primary
+                    </button>
+                </form>
+            </div>
         </div>
         {% endif %}
 
@@ -117,22 +129,6 @@
                         {% for error in profile_form.email.errors %}
                         <p class="mt-2 text-sm text-red-600">{{ error }}</p>
                         {% endfor %}
-                        {% if pending_primary_email %}
-                        <p class="mt-2 text-sm text-amber-700">
-                            Pending email confirmation: {{ pending_primary_email }}.
-                            We sent a confirmation link to this address.
-                        </p>
-                        <form method="post" action="{% url 'resend-pending-email-confirmation' %}" class="mt-3">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                            <button
-                                type="submit"
-                                class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-amber-500 text-amber-800 hover:bg-amber-100 transition-colors"
-                            >
-                                Resend confirmation to pending email
-                            </button>
-                        </form>
-                        {% endif %}
                     </div>
 
                     {% for error in profile_form.non_field_errors %}
