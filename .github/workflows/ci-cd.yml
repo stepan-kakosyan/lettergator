@@ -125,6 +125,7 @@ jobs:
   debug:
     steps:
       - name: Debug SSH key format
+        uses: appleboy/ssh-action@v1.2.0
         with:
           script: |
             echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -1
