@@ -135,7 +135,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
         run: |
           set -e
 
