@@ -179,6 +179,7 @@ def dashboard_view(request):
         action = request.POST.get("action", "")
 
         if action == "update_profile":
+            current_email = request.user.email.strip().lower()
             profile_form = UserProfileForm(
                 request.POST,
                 instance=request.user,
@@ -188,7 +189,6 @@ def dashboard_view(request):
                 user = request.user
                 new_full_name = profile_form.cleaned_data["full_name"]
                 requested_email = profile_form.cleaned_data["email"].strip().lower()
-                current_email = user.email.strip().lower()
 
                 user.full_name = new_full_name
 
