@@ -1,10 +1,14 @@
-name: CI
+name: CI CD
 
 on:
   push:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+
+env:
+  PYTHON_VERSION: "3.12"
+  DOCKER_IMAGE_NAME: lettergator-backend
 
 jobs:
   test:
@@ -44,7 +48,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
 
       - name: Install dependencies
@@ -76,8 +80,10 @@ jobs:
 
       - name: Grant MySQL test database privileges
         run: |
-          mysql -h 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON \`test\\_%\`.* TO 'lettergator'@'%';"
-          mysql -h 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON \`lettergator_test\`.* TO 'lettergator'@'%';"
+          mysql -h 127.0.0.1 -uroot -proot \
+            -e "GRANT ALL PRIVILEGES ON \`test\\_%\`.* TO 'lettergator'@'%';"
+          mysql -h 127.0.0.1 -uroot -proot \
+            -e "GRANT ALL PRIVILEGES ON \`lettergator_test\`.* TO 'lettergator'@'%';"
           mysql -h 127.0.0.1 -uroot -proot -e "FLUSH PRIVILEGES;"
 
       - name: Run migrations
@@ -88,3 +94,54 @@ jobs:
 
       - name: Run tests
         run: python manage.py test
+
+  docker_hub:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: docker_hub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT }}
+          script_stop: true
+          script: |
+            set -e
+            cd ${{ secrets.DEPLOY_PATH }}
+            git fetch --all
+            git reset --hard origin/main
+            docker compose down
+            docker compose up -d --build
+            docker image prune -f
