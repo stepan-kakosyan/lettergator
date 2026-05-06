@@ -137,6 +137,10 @@
                     </label>
                     {{ form.delivery_at }}
                     {{ form.delivery_at.errors }}
+                    <p class="mt-2 text-xs text-gray-500" id="timezone-hint">
+                        Include timezone in ISO format, for example
+                        2030-07-01T16:00:00+01:00.
+                    </p>
                     <div class="preset-row mt-4" role="group" aria-label="Quick date presets">
                         <button type="button" class="preset-btn" data-date-months="1">1 month</button>
                         <button type="button" class="preset-btn" data-date-months="6">6 months</button>

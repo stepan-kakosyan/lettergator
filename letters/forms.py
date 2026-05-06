@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -29,7 +31,8 @@ class LetterForm(forms.ModelForm):
             ),
             "delivery_at": forms.DateTimeInput(
                 attrs={
-                    "type": "datetime-local",
+                    "type": "text",
+                    "placeholder": "2030-07-01T16:00:00+01:00",
                     "required": True,
                 }
             ),
@@ -53,9 +56,26 @@ class LetterForm(forms.ModelForm):
         self.fields["allow_sender_preview"].initial = False
 
     def clean_delivery_at(self):
-        delivery_at = self.cleaned_data["delivery_at"]
+        raw_delivery_at = self.data.get(self.add_prefix("delivery_at"), "").strip()
+        normalized = raw_delivery_at.replace("Z", "+00:00")
+
+        try:
+            delivery_at = datetime.fromisoformat(normalized)
+        except ValueError as exc:
+            raise forms.ValidationError(
+                "Use ISO format with timezone, for example "
+                "2030-07-01T16:00:00+01:00."
+            ) from exc
+
+        if delivery_at.tzinfo is None:
+            raise forms.ValidationError(
+                "Include timezone offset, for example +04:00 or Z."
+            )
+
         if delivery_at <= timezone.now():
-            raise forms.ValidationError("Delivery date and time must be in the future.")
+            raise forms.ValidationError(
+                "Delivery date and time must be in the future."
+            )
         return delivery_at
 
     def clean(self):
