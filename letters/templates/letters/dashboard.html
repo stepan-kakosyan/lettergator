@@ -56,6 +56,26 @@
         </div>
         {% endif %}
 
+        {% if pending_primary_email %}
+        <div class="mb-6 rounded-2xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900">
+            <p class="font-semibold">Confirm your new email address</p>
+            <p class="text-sm mt-1">
+                A confirmation link was sent to <strong>{{ pending_primary_email }}</strong>.
+                Your primary email will not change until you click that link.
+            </p>
+            <form method="post" action="{% url 'resend-pending-email-confirmation' %}" class="mt-3">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button
+                    type="submit"
+                    class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-amber-500 text-amber-800 hover:bg-amber-100 transition-colors"
+                >
+                    Resend confirmation email
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <article class="border border-gray-200 rounded-2xl p-6">
                 <h2 class="text-xl font-semibold text-gray-900">Profile details</h2>
@@ -97,6 +117,22 @@
                         {% for error in profile_form.email.errors %}
                         <p class="mt-2 text-sm text-red-600">{{ error }}</p>
                         {% endfor %}
+                        {% if pending_primary_email %}
+                        <p class="mt-2 text-sm text-amber-700">
+                            Pending email confirmation: {{ pending_primary_email }}.
+                            We sent a confirmation link to this address.
+                        </p>
+                        <form method="post" action="{% url 'resend-pending-email-confirmation' %}" class="mt-3">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button
+                                type="submit"
+                                class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-amber-500 text-amber-800 hover:bg-amber-100 transition-colors"
+                            >
+                                Resend confirmation to pending email
+                            </button>
+                        </form>
+                        {% endif %}
                     </div>
 
                     {% for error in profile_form.non_field_errors %}

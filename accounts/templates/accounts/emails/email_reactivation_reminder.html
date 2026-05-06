@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Re-confirm your email</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f8f6;font-family:Arial,sans-serif;color:#163222;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #dbe8df;border-radius:18px;overflow:hidden;">
+          <tr>
+            <td style="background:#ffffff;border-bottom:1px solid #dbe8df;padding:28px 24px 20px 24px;text-align:center;">
+              <img src="{{ logo_url }}" alt="LetterGator logo" style="max-width:130px;height:auto;display:block;margin:0 auto 12px auto;">
+              <p style="margin:0;color:#036b35;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;">Annual confirmation</p>
+              <h1 style="margin:8px 0 0 0;color:#163222;font-size:28px;line-height:1.2;font-weight:800;">Please re-confirm your email</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:26px 26px 8px 26px;">
+              <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;">Hi {{ user.full_name }},</p>
+              <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;">
+                We periodically ask users to re-confirm their email so future
+                letters can be delivered reliably.
+              </p>
+              <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;">
+                If you plan to change your email soon, we recommend updating it
+                in your Profile Dashboard first.
+              </p>
+              <table role="presentation" cellspacing="0" cellpadding="0" style="margin:22px 0 20px 0;">
+                <tr>
+                  <td>
+                    <a href="{{ activation_url }}" target="_blank" style="display:inline-block;background:#014421;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:12px 18px;border-radius:10px;">
+                      Re-confirm email
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 26px 24px 26px;">
+              <p style="margin:0;font-size:12px;line-height:1.6;color:#6f857a;word-break:break-all;">
+                If the button does not work, copy and paste this link into your browser:<br>
+                <a href="{{ activation_url }}" style="color:#014421;">{{ activation_url }}</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

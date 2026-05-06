@@ -1,0 +1,14 @@
+Please re-confirm your LetterGator email
+
+Hi {{ user.full_name }},
+
+We periodically ask users to re-confirm their email so we can make sure
+future letters can be delivered successfully.
+
+Please confirm your email here:
+{{ activation_url }}
+
+If you plan to change your email soon, we recommend updating it from your
+Profile Dashboard.
+
+See you later, Alligator!

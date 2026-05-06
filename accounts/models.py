@@ -35,9 +35,12 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
+    pending_email = models.EmailField(blank=True, default="")
+    pending_email_requested_at = models.DateTimeField(null=True, blank=True)
     full_name = models.CharField(max_length=255)
     email_verified = models.BooleanField(default=True)
     email_verified_at = models.DateTimeField(null=True, blank=True)
+    email_reactivation_sent_at = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)

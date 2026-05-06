@@ -7,6 +7,8 @@ from django.views.decorators.http import require_POST
 from accounts.forms import SecondaryEmailForm, UserProfileForm
 from accounts.models import SecondaryEmail
 from accounts.services import send_letter_created_email
+from accounts.tasks import send_pending_email_confirmation_task
+from django.utils import timezone
 
 from .forms import LetterForm, LetterMessageEditForm
 from .models import Letter
@@ -183,8 +185,32 @@ def dashboard_view(request):
                 prefix="profile",
             )
             if profile_form.is_valid():
-                profile_form.save()
-                messages.success(request, "Profile updated successfully.")
+                user = request.user
+                new_full_name = profile_form.cleaned_data["full_name"]
+                requested_email = profile_form.cleaned_data["email"].strip().lower()
+                current_email = user.email.strip().lower()
+
+                user.full_name = new_full_name
+
+                if requested_email != current_email:
+                    user.pending_email = requested_email
+                    user.pending_email_requested_at = timezone.now()
+                    user.save(
+                        update_fields=[
+                            "full_name",
+                            "pending_email",
+                            "pending_email_requested_at",
+                        ]
+                    )
+                    send_pending_email_confirmation_task.delay(user.id)
+                    messages.success(
+                        request,
+                        "Confirmation link queued for your new email. "
+                        "Primary email will be updated after confirmation.",
+                    )
+                else:
+                    user.save(update_fields=["full_name"])
+                    messages.success(request, "Profile updated successfully.")
                 return redirect("dashboard_view")
 
         elif action == "add_secondary_email":
@@ -217,5 +243,6 @@ def dashboard_view(request):
         "secondary_emails": secondary_emails,
         "secondary_slots_left": max(0, 5 - secondary_emails.count()),
         "email_verification_required": not request.user.email_verified,
+        "pending_primary_email": request.user.pending_email,
     }
     return render(request, "letters/dashboard.html", context)
