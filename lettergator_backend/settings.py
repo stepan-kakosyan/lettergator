@@ -3,6 +3,7 @@ from pathlib import Path
 from datetime import timedelta
 
 import pymysql
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -131,6 +132,7 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv(
     "DEFAULT_FROM_EMAIL", EMAIL_HOST_USER or "no-reply@lettergator.local"
 )
+SITE_URL = os.getenv("SITE_URL", "http://localhost:8040")
 
 LETTER_MESSAGE_ENCRYPTION_KEY = os.getenv("LETTER_MESSAGE_ENCRYPTION_KEY", "")
 
@@ -174,3 +176,23 @@ if _cors_allowed_origins:
     ]
 else:
     CORS_ALLOW_ALL_ORIGINS = DEBUG
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.getenv(
+    "CELERY_RESULT_BACKEND",
+    CELERY_BROKER_URL,
+)
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BEAT_SCHEDULE = {
+    "queue-due-letters-every-10-minutes": {
+        "task": "letters.tasks.queue_due_letters_task",
+        "schedule": crontab(minute="*/10"),
+    },
+    "send-email-reactivation-reminders-every-morning": {
+        "task": "accounts.tasks.send_email_reactivation_reminders_task",
+        "schedule": crontab(hour=8, minute=0),
+    },
+}

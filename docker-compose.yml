@@ -1,4 +1,9 @@
 services:
+  redis:
+    image: redis:7-alpine
+    container_name: lettergator_redis
+    restart: unless-stopped
+
   backend:
     build:
       context: .
@@ -10,3 +15,43 @@ services:
       - ./:/app
     ports:
       - "8040:8040"
+    depends_on:
+      - redis
+
+  celery_worker:
+    build:
+      context: .
+    container_name: lettergator_celery_worker
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    entrypoint: []
+    command:
+      - celery
+      - -A
+      - lettergator_backend
+      - worker
+      - --loglevel=info
+    volumes:
+      - ./:/app
+    depends_on:
+      - redis
+
+  celery_beat:
+    build:
+      context: .
+    container_name: lettergator_celery_beat
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    entrypoint: []
+    command:
+      - celery
+      - -A
+      - lettergator_backend
+      - beat
+      - --loglevel=info
+    volumes:
+      - ./:/app
+    depends_on:
+      - redis

@@ -1,0 +1,13 @@
+Confirm your new email on LetterGator
+
+Hi {{ user.full_name }},
+
+You requested to change your primary email on LetterGator.
+Please confirm this new email address to complete the update:
+{{ activation_url }}
+
+Your current primary email will remain active until confirmation.
+
+If you did not request this change, ignore this email.
+
+See you later, Alligator!

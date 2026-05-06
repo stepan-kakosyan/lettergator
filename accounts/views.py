@@ -14,6 +14,7 @@ from django.views.decorators.http import require_POST
 from .forms import EmailAuthenticationForm, UserRegistrationForm
 from .models import CustomUser
 from .services import send_activation_email
+from .tasks import send_pending_email_confirmation_task
 
 
 def register_view(request):
@@ -74,15 +75,55 @@ def activate_account_view(request, uidb64, token):
         return render(request, "accounts/activation_invalid.html")
 
     already_verified = user.email_verified
-    if not already_verified:
-        user.email_verified = True
-        user.email_verified_at = timezone.now()
-        user.save(update_fields=["email_verified", "email_verified_at"])
+    user.email_verified = True
+    user.email_verified_at = timezone.now()
+    user.email_reactivation_sent_at = None
+    user.save(
+        update_fields=[
+            "email_verified",
+            "email_verified_at",
+            "email_reactivation_sent_at",
+        ]
+    )
 
     context = {
         "already_verified": already_verified,
     }
     return render(request, "accounts/activation_success.html", context)
+
+
+def confirm_pending_email_view(request, uidb64, token):
+    user = None
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = CustomUser.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        user = None
+
+    if not user or not default_token_generator.check_token(user, token):
+        return render(request, "accounts/activation_invalid.html")
+
+    if not user.pending_email:
+        return render(request, "accounts/activation_invalid.html")
+
+    user.email = user.pending_email
+    user.pending_email = ""
+    user.pending_email_requested_at = None
+    user.email_verified = True
+    user.email_verified_at = timezone.now()
+    user.email_reactivation_sent_at = None
+    user.save(
+        update_fields=[
+            "email",
+            "pending_email",
+            "pending_email_requested_at",
+            "email_verified",
+            "email_verified_at",
+            "email_reactivation_sent_at",
+        ]
+    )
+
+    return render(request, "accounts/activation_success.html")
 
 
 @login_required
@@ -101,6 +142,30 @@ def resend_activation_email_view(request):
                 request,
                 "Unable to resend activation email right now.",
             )
+
+    next_url = request.POST.get("next", "")
+    if next_url and url_has_allowed_host_and_scheme(
+        next_url,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        return redirect(next_url)
+    return redirect("dashboard_view")
+
+
+@login_required
+@require_POST
+def resend_pending_email_confirmation_view(request):
+    user = request.user
+
+    if not user.pending_email:
+        messages.info(request, "No pending email change found.")
+    else:
+        send_pending_email_confirmation_task.delay(user.id)
+        messages.success(
+            request,
+            "Confirmation email has been queued for your pending address.",
+        )
 
     next_url = request.POST.get("next", "")
     if next_url and url_has_allowed_host_and_scheme(
