@@ -202,7 +202,10 @@ def dashboard_view(request):
                             "pending_email_requested_at",
                         ]
                     )
-                    send_pending_email_confirmation_task.delay(user.id)
+                    send_pending_email_confirmation_task.delay(
+                        user.id,
+                        request.build_absolute_uri("/"),
+                    )
                     messages.success(
                         request,
                         "Confirmation link queued for your new email. "
