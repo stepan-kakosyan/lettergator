@@ -231,7 +231,27 @@ jobs:
           script_stop: true
           script: |
             set -e
+
+            echo "Deploy path: ${{ secrets.DEPLOY_PATH }}"
+
+            if [ ! -d "${{ secrets.DEPLOY_PATH }}" ]; then
+              echo "ERROR: DEPLOY_PATH does not exist on server"
+              exit 1
+            fi
+
             cd ${{ secrets.DEPLOY_PATH }}
+            echo "Current directory: $(pwd)"
+            ls -la
+
+            if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+              echo "ERROR: DEPLOY_PATH exists but is not a Git repository"
+              echo "Clone the repository on the server first, or point DEPLOY_PATH to the cloned repo root"
+              exit 1
+            fi
+
+            echo "Git repository detected"
+            git remote -v
+            git branch --show-current || true
             git fetch --all
             git reset --hard origin/main
             docker compose down
