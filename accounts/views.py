@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView
+from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -10,8 +11,9 @@ from django.utils.encoding import force_str
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.http import require_POST
+from django.conf import settings
 
-from .forms import EmailAuthenticationForm, UserRegistrationForm
+from .forms import EmailAuthenticationForm, TestEmailForm, UserRegistrationForm
 from .models import CustomUser
 from .services import send_activation_email
 from .tasks import send_pending_email_confirmation_task
@@ -178,3 +180,33 @@ def resend_pending_email_confirmation_view(request):
     ):
         return redirect(next_url)
     return redirect("dashboard_view")
+
+
+@login_required
+def test_email_view(request):
+    initial_data = {
+        "to_email": request.user.email,
+        "subject": "LetterGator test email",
+        "message": "If you received this email, delivery is working.",
+    }
+
+    form = TestEmailForm(request.POST or None, initial=initial_data)
+
+    if request.method == "POST" and form.is_valid():
+        try:
+            send_mail(
+                subject=form.cleaned_data["subject"],
+                message=form.cleaned_data["message"],
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[form.cleaned_data["to_email"]],
+                fail_silently=False,
+            )
+            messages.success(request, "Test email sent successfully.")
+            return redirect("test-email")
+        except Exception as exc:
+            messages.error(
+                request,
+                f"Unable to send test email: {exc}",
+            )
+
+    return render(request, "accounts/test_email.html", {"form": form})
