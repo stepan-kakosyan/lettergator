@@ -74,6 +74,12 @@ jobs:
               raise SystemExit("MySQL did not become ready in time")
           PY
 
+      - name: Grant MySQL test database privileges
+        run: |
+          mysql -h 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON \`test\\_%\`.* TO 'lettergator'@'%';"
+          mysql -h 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON \`lettergator_test\`.* TO 'lettergator'@'%';"
+          mysql -h 127.0.0.1 -uroot -proot -e "FLUSH PRIVILEGES;"
+
       - name: Run migrations
         run: python manage.py migrate --noinput
 
