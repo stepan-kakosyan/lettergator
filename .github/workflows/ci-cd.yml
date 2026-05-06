@@ -122,102 +122,9 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
 
-  validate_deploy_secrets:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: docker_hub
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Validate required deploy secrets are present
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-        run: |
-          set -e
-
-          check_required() {
-            name="$1"
-            value="$2"
-            if [ -z "$value" ]; then
-              echo "MISSING: $name"
-              return 1
-            fi
-            echo "OK: $name is set"
-            return 0
-          }
-
-          failures=0
-          check_required "SSH_HOST" "$SSH_HOST" || failures=$((failures + 1))
-          check_required "SSH_USER" "$SSH_USER" || failures=$((failures + 1))
-          check_required "SSH_PRIVATE_KEY" "$SSH_PRIVATE_KEY" || failures=$((failures + 1))
-          check_required "SSH_PORT" "$SSH_PORT" || failures=$((failures + 1))
-          check_required "DEPLOY_PATH" "$DEPLOY_PATH" || failures=$((failures + 1))
-
-          if [ -z "$SSH_PASSPHRASE" ]; then
-            echo "INFO: SSH_PASSPHRASE is empty (this is fine for unencrypted keys)"
-          else
-            echo "OK: SSH_PASSPHRASE is set"
-          fi
-
-          if [ "$failures" -gt 0 ]; then
-            echo "Required secrets check failed"
-            exit 1
-          fi
-
-      - name: Safe SSH key diagnostics
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          set -e
-
-          line_count=$(printf "%s" "$SSH_PRIVATE_KEY" | awk 'END{print NR}')
-          first_line=$(printf "%s" "$SSH_PRIVATE_KEY" | head -n 1)
-          last_line=$(printf "%s" "$SSH_PRIVATE_KEY" | tail -n 1)
-          key_sha=$(printf "%s" "$SSH_PRIVATE_KEY" | sha256sum | awk '{print $1}')
-
-          if [ "$line_count" -lt 3 ]; then
-            echo "ERROR: SSH_PRIVATE_KEY looks too short"
-            exit 1
-          fi
-
-          case "$first_line" in
-            "-----BEGIN OPENSSH PRIVATE KEY-----"|"-----BEGIN RSA PRIVATE KEY-----"|"-----BEGIN EC PRIVATE KEY-----"|"-----BEGIN PRIVATE KEY-----")
-              echo "OK: SSH_PRIVATE_KEY header looks valid"
-              ;;
-            *)
-              echo "ERROR: SSH_PRIVATE_KEY header is not recognized"
-              exit 1
-              ;;
-          esac
-
-          if [ "$last_line" = "-----END OPENSSH PRIVATE KEY-----" ] || \
-             [ "$last_line" = "-----END RSA PRIVATE KEY-----" ] || \
-             [ "$last_line" = "-----END EC PRIVATE KEY-----" ] || \
-             [ "$last_line" = "-----END PRIVATE KEY-----" ]; then
-            echo "OK: SSH_PRIVATE_KEY footer looks valid"
-          else
-            echo "ERROR: SSH_PRIVATE_KEY footer is not recognized"
-            exit 1
-          fi
-
-          echo "SSH_PRIVATE_KEY line count: $line_count"
-          echo "SSH_PRIVATE_KEY sha256: $key_sha"
-
-      - name: Print key fingerprint from secret
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          echo "$SSH_PRIVATE_KEY" > /tmp/k
-          chmod 600 /tmp/k
-          ssh-keygen -l -f /tmp/k
-          rm /tmp/k
-
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: validate_deploy_secrets
+    needs: docker_hub
     runs-on: ubuntu-latest
 
     steps:
@@ -231,27 +138,7 @@ jobs:
           script_stop: true
           script: |
             set -e
-
-            echo "Deploy path: ${{ secrets.DEPLOY_PATH }}"
-
-            if [ ! -d "${{ secrets.DEPLOY_PATH }}" ]; then
-              echo "ERROR: DEPLOY_PATH does not exist on server"
-              exit 1
-            fi
-
             cd ${{ secrets.DEPLOY_PATH }}
-            echo "Current directory: $(pwd)"
-            ls -la
-
-            if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-              echo "ERROR: DEPLOY_PATH exists but is not a Git repository"
-              echo "Clone the repository on the server first, or point DEPLOY_PATH to the cloned repo root"
-              exit 1
-            fi
-
-            echo "Git repository detected"
-            git remote -v
-            git branch --show-current || true
             git fetch --all
             git reset --hard origin/main
             docker compose down
