@@ -30,6 +30,7 @@
         >
             {% csrf_token %}
             {{ form.recipient_list }}
+            {{ form.browser_timezone }}
 
             {% if form.non_field_errors %}
             <div class="bg-red-50 text-red-700 text-sm font-semibold rounded-xl px-4 py-3 mb-5">
@@ -137,10 +138,6 @@
                     </label>
                     {{ form.delivery_at }}
                     {{ form.delivery_at.errors }}
-                    <p class="mt-2 text-xs text-gray-500" id="timezone-hint">
-                        Include timezone in ISO format, for example
-                        2030-07-01T16:00:00+01:00.
-                    </p>
                     <div class="preset-row mt-4" role="group" aria-label="Quick date presets">
                         <button type="button" class="preset-btn" data-date-months="1">1 month</button>
                         <button type="button" class="preset-btn" data-date-months="6">6 months</button>
