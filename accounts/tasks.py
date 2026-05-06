@@ -10,7 +10,7 @@ from .services import send_pending_email_confirmation_email
 
 
 @shared_task(bind=True, max_retries=5)
-def send_pending_email_confirmation_task(self, user_id):
+def send_pending_email_confirmation_task(self, user_id, base_url=None):
     user_model = get_user_model()
     try:
         user = user_model.objects.get(id=user_id)
@@ -21,7 +21,7 @@ def send_pending_email_confirmation_task(self, user_id):
         return
 
     try:
-        send_pending_email_confirmation_email(None, user)
+        send_pending_email_confirmation_email(None, user, base_url=base_url)
     except Exception as exc:
         if self.request.retries >= self.max_retries:
             raise

@@ -161,7 +161,10 @@ def resend_pending_email_confirmation_view(request):
     if not user.pending_email:
         messages.info(request, "No pending email change found.")
     else:
-        send_pending_email_confirmation_task.delay(user.id)
+        send_pending_email_confirmation_task.delay(
+            user.id,
+            request.build_absolute_uri("/"),
+        )
         messages.success(
             request,
             "Confirmation email has been queued for your pending address.",

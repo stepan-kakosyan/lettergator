@@ -9,9 +9,11 @@ from django.templatetags.static import static
 from urllib.parse import urljoin
 
 
-def _build_absolute_url(request, path):
+def _build_absolute_url(request, path, base_url=None):
     if request is not None:
         return request.build_absolute_uri(path)
+    if base_url:
+        return urljoin(base_url.rstrip("/") + "/", path.lstrip("/"))
     base_url = getattr(settings, "SITE_URL", "http://localhost:8040")
     return urljoin(base_url.rstrip("/") + "/", path.lstrip("/"))
 
@@ -54,7 +56,7 @@ def send_activation_email(request, user):
     message.send(fail_silently=False)
 
 
-def send_pending_email_confirmation_email(request, user):
+def send_pending_email_confirmation_email(request, user, base_url=None):
     if not user.pending_email:
         return
 
@@ -64,8 +66,8 @@ def send_pending_email_confirmation_email(request, user):
         "confirm-pending-email",
         kwargs={"uidb64": uidb64, "token": token},
     )
-    activation_url = _build_absolute_url(request, activation_path)
-    logo_url = _build_absolute_url(request, static("img/logo.png"))
+    activation_url = _build_absolute_url(request, activation_path, base_url)
+    logo_url = _build_absolute_url(request, static("img/logo.png"), base_url)
 
     context = {
         "user": user,
