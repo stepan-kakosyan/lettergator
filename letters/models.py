@@ -83,6 +83,32 @@ class Letter(models.Model):
         return "Scheduled"
 
 
+class CeleryTaskLog(models.Model):
+    STATUS_STARTED = "started"
+    STATUS_SUCCESS = "success"
+    STATUS_FAILURE = "failure"
+    STATUS_CHOICES = [
+        (STATUS_STARTED, "Started"),
+        (STATUS_SUCCESS, "Success"),
+        (STATUS_FAILURE, "Failure"),
+    ]
+
+    task_name = models.CharField(max_length=200)
+    task_id = models.CharField(max_length=200, blank=True, default="")
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default=STATUS_STARTED
+    )
+    detail = models.TextField(blank=True, default="")
+    started_at = models.DateTimeField(auto_now_add=True)
+    finished_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-started_at"]
+
+    def __str__(self):
+        return f"{self.task_name} [{self.status}] @ {self.started_at:%Y-%m-%d %H:%M:%S}"
+
+
 class ContactTicket(models.Model):
     STATUS_OPEN = "open"
     STATUS_CLOSED = "closed"
