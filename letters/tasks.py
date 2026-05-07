@@ -181,6 +181,7 @@ def queue_arweave_backup_task(self):
 
 @shared_task(bind=True, max_retries=5)
 def backup_letter_to_arweave_task(self, letter_id):
+
     log = CeleryTaskLog.objects.create(
         task_name="backup_letter_to_arweave_task",
         task_id=self.request.id or "",
