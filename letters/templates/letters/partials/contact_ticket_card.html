@@ -1,0 +1,78 @@
+<article id="ticket-{{ ticket.id }}" class="bg-white border border-gray-200 rounded-2xl p-6">
+    <div class="flex items-start justify-between gap-4">
+        <div>
+            <h3 class="text-lg font-semibold text-gray-900">{{ ticket.subject }}</h3>
+            <p class="text-xs text-gray-500 mt-1">
+                {{ ticket.created_at|date:"M d, Y H:i" }} | {{ ticket.email }}
+            </p>
+        </div>
+        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold {% if ticket.status == 'open' %}bg-green-100 text-green-800{% else %}bg-gray-100 text-gray-700{% endif %}">
+            {{ ticket.get_status_display }}
+        </span>
+    </div>
+
+    <div class="mt-4 rounded-xl bg-gray-50 px-4 py-3 text-sm text-gray-700 whitespace-pre-wrap">
+        {{ ticket.message }}
+    </div>
+
+    <div class="mt-5 space-y-3">
+        <h4 class="text-sm font-semibold text-gray-900">Comments</h4>
+        {% for comment in ticket.comments.all %}
+        <div class="rounded-xl border px-4 py-3 text-sm {% if comment.is_admin_comment %}border-amber-200 bg-amber-50{% else %}border-gray-200 bg-white{% endif %}">
+            <div class="flex items-center justify-between gap-3 mb-1">
+                <span class="font-semibold text-gray-800">
+                    {% if comment.is_admin_comment %}
+                    Admin
+                    {% elif comment.author %}
+                    {{ comment.author.full_name|default:comment.author.email }}
+                    {% else %}
+                    {{ comment.commenter_email }}
+                    {% endif %}
+                </span>
+                <span class="text-xs text-gray-500">{{ comment.created_at|date:"M d, Y H:i" }}</span>
+            </div>
+            <p class="text-gray-700 whitespace-pre-wrap">{{ comment.message }}</p>
+        </div>
+        {% empty %}
+        <p class="text-sm text-gray-500">No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <form
+        method="post"
+        action="{% url 'contact-ticket-comment' ticket.id %}"
+        class="mt-5 space-y-3"
+        hx-post="{% url 'contact-ticket-comment' ticket.id %}"
+        hx-target="#ticket-{{ ticket.id }}"
+        hx-swap="outerHTML"
+    >
+        {% csrf_token %}
+        <label class="block text-sm font-medium text-gray-700" for="comment-message-{{ ticket.id }}">
+            Add comment
+        </label>
+        <textarea
+            id="comment-message-{{ ticket.id }}"
+            name="message"
+            rows="3"
+            class="w-full border border-gray-300 rounded-lg bg-transparent px-3 py-2 text-sm focus:border-[#014421] focus:ring-0 focus:outline-none resize-none"
+            placeholder="Write your comment..."
+            required
+        >{% if panel_comment_form and panel_comment_form.data.message %}{{ panel_comment_form.data.message }}{% endif %}</textarea>
+        {% if panel_comment_form %}
+            {% for error in panel_comment_form.message.errors %}
+            <p class="text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+            {% for error in panel_comment_form.non_field_errors %}
+            <p class="text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <div class="flex justify-end">
+            <button
+                type="submit"
+                class="bg-[#014421] text-white py-2.5 px-5 rounded-lg font-medium hover:bg-[#023319] transition-colors"
+            >
+                Add comment
+            </button>
+        </div>
+    </form>
+</article>

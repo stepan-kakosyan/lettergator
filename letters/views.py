@@ -1,19 +1,30 @@
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http import JsonResponse
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
-from accounts.forms import SecondaryEmailForm, UserProfileForm
+from accounts.forms import (
+    DashboardPasswordChangeForm,
+    SecondaryEmailForm,
+    UserProfileForm,
+)
 from accounts.models import SecondaryEmail
 from accounts.services import send_letter_created_email
 from accounts.tasks import send_pending_email_confirmation_task
 from django.utils import timezone
 
-from .forms import LetterForm, LetterMessageEditForm
-from .models import Letter
+from .forms import (
+    ContactTicketCommentForm,
+    ContactTicketForm,
+    LetterForm,
+    LetterMessageEditForm,
+)
+from .models import ContactTicket, Letter
 
 
 def landing_page(request):
@@ -174,6 +185,158 @@ def privacy_page(request):
     return render(request, "letters/privacy.html")
 
 
+def _visible_contact_tickets_for_request(request):
+    if not request.user.is_authenticated:
+        return ContactTicket.objects.none()
+    normalized_email = request.user.email.strip().lower()
+    return ContactTicket.objects.filter(
+        Q(user=request.user) | Q(email__iexact=normalized_email)
+    ).distinct().order_by("-created_at")
+
+
+def contact_page(request):
+    form = ContactTicketForm(
+        request.POST or None,
+        user=request.user,
+    )
+    panel_message = ""
+    panel_message_level = "success"
+
+    if request.method == "POST" and form.is_valid():
+        ticket = form.save(commit=False)
+        if request.user.is_authenticated:
+            ticket.user = request.user
+        ticket.email = form.cleaned_data["email"]
+        ticket.save()
+        panel_message = "Your message was sent. We will get back to you soon."
+        panel_message_level = "success"
+        form = ContactTicketForm(user=request.user)
+
+    tickets = _visible_contact_tickets_for_request(request)
+    context = {
+        "contact_form": form,
+        "tickets": tickets,
+        "panel_message": panel_message,
+        "panel_message_level": panel_message_level,
+        "comment_form": ContactTicketCommentForm(),
+    }
+    return render(request, "letters/contact.html", context)
+
+
+@login_required
+@require_POST
+def contact_ticket_comment_view(request, ticket_id):
+    ticket = get_object_or_404(
+        ContactTicket,
+        Q(id=ticket_id),
+        Q(user=request.user) | Q(email__iexact=request.user.email.strip().lower()),
+    )
+    form = ContactTicketCommentForm(request.POST)
+    panel_comment_form = form
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.ticket = ticket
+        comment.author = request.user
+        comment.commenter_email = request.user.email.strip().lower()
+        comment.is_admin_comment = request.user.is_staff
+        comment.save()
+        panel_comment_form = ContactTicketCommentForm()
+
+    context = {
+        "ticket": ticket,
+        "comment_form": ContactTicketCommentForm(),
+        "panel_comment_form": panel_comment_form,
+    }
+    return render(request, "letters/partials/contact_ticket_card.html", context)
+
+
+@login_required
+def dashboard_password_change_view(request):
+    expanded = request.GET.get("expanded") == "1"
+    password_change_form = DashboardPasswordChangeForm(
+        request.user,
+        prefix="password",
+    )
+
+    if request.method == "POST":
+        expanded = True
+        password_change_form = DashboardPasswordChangeForm(
+            request.user,
+            request.POST,
+            prefix="password",
+        )
+        if password_change_form.is_valid():
+            user = password_change_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Password updated successfully.")
+            return HttpResponse(
+                status=204,
+                headers={"HX-Redirect": reverse("dashboard_view")},
+            )
+
+    context = {
+        "password_change_form": password_change_form,
+        "password_form_expanded": expanded,
+    }
+    return render(
+        request,
+        "letters/partials/password_change_panel.html",
+        context,
+    )
+
+
+@login_required
+def dashboard_secondary_emails_view(request):
+    panel_message = ""
+    panel_message_level = "success"
+    secondary_email_form = SecondaryEmailForm(
+        user=request.user,
+        prefix="secondary",
+    )
+
+    if request.method == "POST":
+        action = request.POST.get("action", "add_secondary_email")
+        if action == "add_secondary_email":
+            secondary_email_form = SecondaryEmailForm(
+                request.POST,
+                user=request.user,
+                prefix="secondary",
+            )
+            if secondary_email_form.is_valid():
+                secondary_email = secondary_email_form.save(commit=False)
+                secondary_email.user = request.user
+                secondary_email.save()
+                secondary_email_form = SecondaryEmailForm(
+                    user=request.user,
+                    prefix="secondary",
+                )
+                panel_message = "Secondary email added."
+                panel_message_level = "success"
+        elif action == "remove_secondary_email":
+            secondary_email_id = request.POST.get("secondary_email_id")
+            deleted, _ = SecondaryEmail.objects.filter(
+                id=secondary_email_id,
+                user=request.user,
+            ).delete()
+            if deleted:
+                panel_message = "Secondary email removed."
+                panel_message_level = "success"
+
+    secondary_emails = request.user.secondary_emails.all()
+    context = {
+        "secondary_email_form": secondary_email_form,
+        "secondary_emails": secondary_emails,
+        "secondary_slots_left": max(0, 5 - secondary_emails.count()),
+        "panel_message": panel_message,
+        "panel_message_level": panel_message_level,
+    }
+    return render(
+        request,
+        "letters/partials/secondary_email_panel.html",
+        context,
+    )
+
+
 @login_required
 def dashboard_view(request):
     profile_form = UserProfileForm(instance=request.user, prefix="profile")
@@ -227,19 +390,6 @@ def dashboard_view(request):
                     messages.success(request, "Profile updated successfully.")
                 return redirect("dashboard_view")
 
-        elif action == "add_secondary_email":
-            secondary_email_form = SecondaryEmailForm(
-                request.POST,
-                user=request.user,
-                prefix="secondary",
-            )
-            if secondary_email_form.is_valid():
-                secondary_email = secondary_email_form.save(commit=False)
-                secondary_email.user = request.user
-                secondary_email.save()
-                messages.success(request, "Secondary email added.")
-                return redirect("dashboard_view")
-
         elif action == "cancel_pending_email_update":
             user = request.user
             if user.pending_email:
@@ -257,16 +407,6 @@ def dashboard_view(request):
                 )
             else:
                 messages.info(request, "No pending email change found.")
-            return redirect("dashboard_view")
-
-        elif action == "remove_secondary_email":
-            secondary_email_id = request.POST.get("secondary_email_id")
-            deleted, _ = SecondaryEmail.objects.filter(
-                id=secondary_email_id,
-                user=request.user,
-            ).delete()
-            if deleted:
-                messages.success(request, "Secondary email removed.")
             return redirect("dashboard_view")
 
     secondary_emails = request.user.secondary_emails.all()

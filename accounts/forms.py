@@ -1,5 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordChangeForm,
+    PasswordResetForm,
+    SetPasswordForm,
+    UserCreationForm,
+)
 
 from .models import CustomUser, SecondaryEmail
 
@@ -65,3 +71,71 @@ class TestEmailForm(forms.Form):
     to_email = forms.EmailField(label="Recipient email")
     subject = forms.CharField(max_length=255)
     message = forms.CharField(widget=forms.Textarea(attrs={"rows": 6}))
+
+
+class PasswordRecoveryRequestForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["email"].widget.attrs.update(
+            {
+                "autocomplete": "email",
+                "placeholder": "you@example.com",
+                "class": (
+                    "w-full border-0 border-b-2 border-gray-300 "
+                    "bg-transparent px-0 py-2 focus:border-[#014421] "
+                    "focus:ring-0 focus:outline-none"
+                ),
+            }
+        )
+
+
+class PasswordRecoverySetForm(SetPasswordForm):
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(user, *args, **kwargs)
+        self.fields["new_password1"].widget.attrs.update(
+            {
+                "autocomplete": "new-password",
+                "class": (
+                    "w-full border-0 border-b-2 border-gray-300 "
+                    "bg-transparent px-0 py-2 focus:border-[#014421] "
+                    "focus:ring-0 focus:outline-none"
+                ),
+            }
+        )
+        self.fields["new_password2"].widget.attrs.update(
+            {
+                "autocomplete": "new-password",
+                "class": (
+                    "w-full border-0 border-b-2 border-gray-300 "
+                    "bg-transparent px-0 py-2 focus:border-[#014421] "
+                    "focus:ring-0 focus:outline-none"
+                ),
+            }
+        )
+
+
+class DashboardPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(user, *args, **kwargs)
+        field_classes = (
+            "w-full border-0 border-b-2 border-gray-300 bg-transparent px-0 "
+            "py-2 focus:border-[#014421] focus:ring-0 focus:outline-none"
+        )
+        self.fields["old_password"].widget.attrs.update(
+            {
+                "autocomplete": "current-password",
+                "class": field_classes,
+            }
+        )
+        self.fields["new_password1"].widget.attrs.update(
+            {
+                "autocomplete": "new-password",
+                "class": field_classes,
+            }
+        )
+        self.fields["new_password2"].widget.attrs.update(
+            {
+                "autocomplete": "new-password",
+                "class": field_classes,
+            }
+        )
