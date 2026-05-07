@@ -140,13 +140,14 @@ def queue_arweave_backup_task(self):
     )
     try:
         now = timezone.now()
-        one_year_after = now + timedelta(days=364)
+        one_year_ago = now - timedelta(days=365)
         window_closed_before = now - timedelta(days=30)
 
         eligible_letters = Letter.objects.filter(
             Q(arweave_tx_id__isnull=True) | Q(arweave_tx_id=""),
-            delivery_at__gt=one_year_after,
+            delivery_at__lte=one_year_ago,
             is_deleted=False,
+            is_delivered=True,
         ).filter(
             Q(can_edit_early=False) | Q(created_at__lte=window_closed_before),
             Q(can_delete_early=False) | Q(created_at__lte=window_closed_before),
@@ -200,14 +201,31 @@ def backup_letter_to_arweave_task(self, letter_id):
 
         tx_id = upload_letter_to_arweave(letter)
         if not tx_id:
+            current_attempt = self.request.retries + 1
+            total_attempts = self.max_retries + 1
+
+            if self.request.retries >= self.max_retries:
+                log.status = CeleryTaskLog.STATUS_FAILURE
+                log.detail = (
+                    f"letter_id={letter_id}: upload returned no tx id, "
+                    f"attempt {current_attempt}/{total_attempts} "
+                    "(max retries reached)."
+                )
+                log.finished_at = timezone.now()
+                log.save(update_fields=["status", "detail", "finished_at"])
+                return
+
             log.status = CeleryTaskLog.STATUS_FAILURE
             log.detail = (
                 f"letter_id={letter_id}: upload returned no tx id, "
-                f"attempt {self.request.retries + 1}/{self.max_retries + 1}."
+                f"attempt {current_attempt}/{total_attempts}."
             )
             log.finished_at = timezone.now()
             log.save(update_fields=["status", "detail", "finished_at"])
-            raise self.retry(countdown=300)
+            raise self.retry(
+                exc=RuntimeError("upload returned no tx id"),
+                countdown=300,
+            )
 
         Letter.objects.filter(
             pk=letter.pk,
