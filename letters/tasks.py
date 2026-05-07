@@ -140,12 +140,12 @@ def queue_arweave_backup_task(self):
     )
     try:
         now = timezone.now()
-        one_year_ago = now - timedelta(days=365)
+        one_year_after = now + timedelta(days=364)
         window_closed_before = now - timedelta(days=30)
 
         eligible_letters = Letter.objects.filter(
             Q(arweave_tx_id__isnull=True) | Q(arweave_tx_id=""),
-            delivery_at__lte=one_year_ago,
+            delivery_at__gt=one_year_after,
             is_deleted=False,
         ).filter(
             Q(can_edit_early=False) | Q(created_at__lte=window_closed_before),
