@@ -2,11 +2,13 @@ from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMessage
+from django.db.models import Q
 from django.utils import timezone
 
 from celery import shared_task
 
 from .models import Letter
+from .utils import upload_letter_to_arweave
 
 
 def _unique_emails(emails):
@@ -117,3 +119,57 @@ def deliver_letter_task(self, letter_id):
     letter.is_delivered = True
     letter.has_delivery_issue = False
     letter.save(update_fields=["is_delivered", "has_delivery_issue"])
+
+
+@shared_task
+def queue_arweave_backup_task():
+    """
+    Nightly selector for Arweave backups.
+
+    Eligibility rules:
+    - No existing Arweave transaction id.
+    - Letter is at least 1 year past its scheduled delivery date.
+    - Skip while early edit/delete windows are still open.
+    """
+    now = timezone.now()
+    one_year_ago = now - timedelta(days=365)
+    window_closed_before = now - timedelta(days=30)
+
+    eligible_letters = Letter.objects.filter(
+        Q(arweave_tx_id__isnull=True) | Q(arweave_tx_id=""),
+        delivery_at__lte=one_year_ago,
+        is_deleted=False,
+    ).filter(
+        Q(can_edit_early=False) | Q(created_at__lte=window_closed_before),
+        Q(can_delete_early=False) | Q(created_at__lte=window_closed_before),
+    )
+
+    queued_count = 0
+    for letter_id in eligible_letters.values_list("id", flat=True):
+        backup_letter_to_arweave_task.delay(letter_id)
+        queued_count += 1
+
+    return queued_count
+
+
+@shared_task(bind=True, max_retries=5)
+def backup_letter_to_arweave_task(self, letter_id):
+    try:
+        letter = Letter.objects.select_related("user").get(id=letter_id)
+    except Letter.DoesNotExist:
+        return
+
+    if letter.arweave_tx_id:
+        return
+
+    tx_id = upload_letter_to_arweave(letter)
+    if not tx_id:
+        # Network failures are retried; utility remains idempotent and will
+        # skip if another worker already persisted a transaction id.
+        raise self.retry(countdown=300)
+
+    Letter.objects.filter(
+        pk=letter.pk,
+    ).filter(
+        Q(arweave_tx_id__isnull=True) | Q(arweave_tx_id=""),
+    ).update(arweave_tx_id=tx_id)
