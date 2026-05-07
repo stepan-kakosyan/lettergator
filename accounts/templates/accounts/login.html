@@ -3,14 +3,23 @@
 {% block title %}Login | LetterGator{% endblock %}
 
 {% block content %}
-<section class="min-h-screen flex items-center justify-center px-6">
+<section id="login-shell" class="min-h-screen flex items-center justify-center px-6">
     <div class="w-full max-w-md">
         <div class="text-center mb-10">
             <h1 class="text-3xl font-semibold text-[#014421] tracking-tight">Welcome back</h1>
             <p class="text-sm text-gray-500 mt-2">Login to access your letters.</p>
         </div>
 
-        <form method="post" class="space-y-6" novalidate>
+        <form
+            method="post"
+            action="{% url 'login' %}"
+            class="space-y-6"
+            novalidate
+            hx-post="{% url 'login' %}"
+            hx-target="#login-shell"
+            hx-select="#login-shell"
+            hx-swap="outerHTML"
+        >
             {% csrf_token %}
 
             <div>

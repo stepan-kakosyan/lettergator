@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<div id="letters-shell">
 <section id="letters" class="px-6 py-20">
     <div class="w-full max-w-6xl mx-auto fade-in-up delay-300">
         <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
@@ -32,7 +33,15 @@
                     You can explore Letters, but you must verify your email before creating
                     a new letter.
                 </p>
-                <form method="post" action="{% url 'resend-activation-email' %}" class="mt-3">
+                <form
+                    method="post"
+                    action="{% url 'resend-activation-email' %}"
+                    class="mt-3"
+                    hx-post="{% url 'resend-activation-email' %}"
+                    hx-target="#letters-shell"
+                    hx-select="#letters-shell"
+                    hx-swap="outerHTML"
+                >
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <button
@@ -205,7 +214,15 @@
 
                             <td>
                                 {% if letter.can_be_deleted_now %}
-                                <form method="post" action="{% url 'letter-delete' letter.id %}" class="delete-cell-form">
+                                <form
+                                    method="post"
+                                    action="{% url 'letter-delete' letter.id %}"
+                                    class="delete-cell-form"
+                                    hx-post="{% url 'letter-delete' letter.id %}"
+                                    hx-target="#letters-shell"
+                                    hx-select="#letters-shell"
+                                    hx-swap="outerHTML"
+                                >
                                     {% csrf_token %}
                                     <button
                                         type="submit"
@@ -241,6 +258,7 @@
         </div>
     </div>
 </section>
+</div>
 
 <div id="view-modal" class="preview-modal hidden" aria-hidden="true">
     <div class="preview-backdrop" data-view-close></div>

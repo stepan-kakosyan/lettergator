@@ -3,7 +3,7 @@
 {% block title %}Profile Dashboard | LetterGator{% endblock %}
 
 {% block content %}
-<section class="min-h-screen bg-white px-6 py-10">
+<section id="dashboard-shell" class="min-h-screen bg-white px-6 py-10">
     <div class="w-full max-w-4xl mx-auto">
         <div class="mb-10 flex items-center justify-between gap-4">
             <div class="min-w-0">
@@ -43,7 +43,15 @@
                 You can still log in and manage your profile, but new letter creation is
                 locked until email verification is complete.
             </p>
-            <form method="post" action="{% url 'resend-activation-email' %}" class="mt-3">
+            <form
+                method="post"
+                action="{% url 'resend-activation-email' %}"
+                class="mt-3"
+                hx-post="{% url 'resend-activation-email' %}"
+                hx-target="#dashboard-shell"
+                hx-select="#dashboard-shell"
+                hx-swap="outerHTML"
+            >
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
                 <button
@@ -64,7 +72,14 @@
                 Your primary email will not change until you click that link.
             </p>
             <div class="mt-3 flex flex-wrap gap-3">
-                <form method="post" action="{% url 'resend-pending-email-confirmation' %}">
+                <form
+                    method="post"
+                    action="{% url 'resend-pending-email-confirmation' %}"
+                    hx-post="{% url 'resend-pending-email-confirmation' %}"
+                    hx-target="#dashboard-shell"
+                    hx-select="#dashboard-shell"
+                    hx-swap="outerHTML"
+                >
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <button
@@ -74,7 +89,14 @@
                         Resend confirmation email
                     </button>
                 </form>
-                <form method="post" action="{% url 'dashboard_view' %}">
+                <form
+                    method="post"
+                    action="{% url 'dashboard_view' %}"
+                    hx-post="{% url 'dashboard_view' %}"
+                    hx-target="#dashboard-shell"
+                    hx-select="#dashboard-shell"
+                    hx-swap="outerHTML"
+                >
                     {% csrf_token %}
                     <input type="hidden" name="action" value="cancel_pending_email_update">
                     <button
@@ -90,8 +112,49 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <article class="border border-gray-200 rounded-2xl p-6">
-                <h2 class="text-xl font-semibold text-gray-900">Profile details</h2>
-                <form method="post" class="mt-6 space-y-5" novalidate>
+                <div class="flex items-center justify-between gap-3">
+                    <h2 class="text-xl font-semibold text-gray-900">Profile details</h2>
+                    <button
+                        type="button"
+                        data-profile-edit-open
+                        class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                        Edit profile
+                    </button>
+                </div>
+
+                <div id="profile-view-panel" class="mt-6 space-y-4">
+                    <div>
+                        <p class="text-xs uppercase tracking-wide text-gray-400">Full name</p>
+                        <p class="mt-1 text-sm text-gray-800">{{ request.user.full_name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-wide text-gray-400">Primary email</p>
+                        <p class="mt-1 text-sm text-gray-800">{{ request.user.email }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-wide text-gray-400">Phone number</p>
+                        <p class="mt-1 text-sm text-gray-800">{{ request.user.phone_number|default:'Not set' }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-wide text-gray-400">Mailing address</p>
+                        <p class="mt-1 text-sm text-gray-800 whitespace-pre-wrap">{{ request.user.address|default:'Not set' }}</p>
+                    </div>
+                </div>
+
+                <form
+                    id="profile-edit-form"
+                    data-profile-edit-form
+                    data-profile-has-errors="{% if profile_form.errors or profile_form.non_field_errors %}true{% else %}false{% endif %}"
+                    method="post"
+                    action="{% url 'dashboard_view' %}"
+                    class="mt-6 space-y-5 hidden"
+                    novalidate
+                    hx-post="{% url 'dashboard_view' %}"
+                    hx-target="#dashboard-shell"
+                    hx-select="#dashboard-shell"
+                    hx-swap="outerHTML"
+                >
                     {% csrf_token %}
                     <input type="hidden" name="action" value="update_profile">
 
@@ -184,6 +247,14 @@
                     >
                         Save profile
                     </button>
+
+                    <button
+                        type="button"
+                        data-profile-edit-close
+                        class="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                    >
+                        Cancel edit
+                    </button>
                 </form>
             </article>
 
@@ -194,7 +265,16 @@
                     Slots left: {{ secondary_slots_left }}
                 </p>
 
-                <form method="post" class="mt-6 space-y-4" novalidate>
+                <form
+                    method="post"
+                    action="{% url 'dashboard_view' %}"
+                    class="mt-6 space-y-4"
+                    novalidate
+                    hx-post="{% url 'dashboard_view' %}"
+                    hx-target="#dashboard-shell"
+                    hx-select="#dashboard-shell"
+                    hx-swap="outerHTML"
+                >
                     {% csrf_token %}
                     <input type="hidden" name="action" value="add_secondary_email">
 
@@ -231,7 +311,14 @@
                     {% for email_item in secondary_emails %}
                     <div class="flex items-center justify-between border border-gray-200 rounded-lg px-3 py-2">
                         <span class="text-sm text-gray-700">{{ email_item.email }}</span>
-                        <form method="post">
+                        <form
+                            method="post"
+                            action="{% url 'dashboard_view' %}"
+                            hx-post="{% url 'dashboard_view' %}"
+                            hx-target="#dashboard-shell"
+                            hx-select="#dashboard-shell"
+                            hx-swap="outerHTML"
+                        >
                             {% csrf_token %}
                             <input type="hidden" name="action" value="remove_secondary_email">
                             <input type="hidden" name="secondary_email_id" value="{{ email_item.id }}">
@@ -251,4 +338,41 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    var openButton = document.querySelector('[data-profile-edit-open]');
+    var closeButton = document.querySelector('[data-profile-edit-close]');
+    var viewPanel = document.getElementById('profile-view-panel');
+    var editForm = document.querySelector('[data-profile-edit-form]');
+
+    if (!openButton || !closeButton || !viewPanel || !editForm) {
+        return;
+    }
+
+    function setEditMode(enabled) {
+        viewPanel.classList.toggle('hidden', enabled);
+        editForm.classList.toggle('hidden', !enabled);
+        openButton.classList.toggle('hidden', enabled);
+        if (enabled) {
+            var firstInput = editForm.querySelector('input, textarea');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        }
+    }
+
+    openButton.addEventListener('click', function () {
+        setEditMode(true);
+    });
+
+    closeButton.addEventListener('click', function () {
+        setEditMode(false);
+    });
+
+    setEditMode(editForm.dataset.profileHasErrors === 'true');
+}());
+</script>
 {% endblock %}

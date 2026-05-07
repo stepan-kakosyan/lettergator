@@ -3,7 +3,7 @@
 {% block title %}Test Email | LetterGator{% endblock %}
 
 {% block content %}
-<section class="min-h-screen bg-white px-6 py-10">
+<section id="test-email-shell" class="min-h-screen bg-white px-6 py-10">
     <div class="w-full max-w-2xl mx-auto">
         <h1 class="text-2xl md:text-3xl font-semibold text-[#014421]">
             Test Email Sender
@@ -22,7 +22,16 @@
         </div>
         {% endif %}
 
-        <form method="post" class="mt-6 border border-gray-200 rounded-2xl p-6 space-y-5" novalidate>
+        <form
+            method="post"
+            action="{% url 'test-email' %}"
+            class="mt-6 border border-gray-200 rounded-2xl p-6 space-y-5"
+            novalidate
+            hx-post="{% url 'test-email' %}"
+            hx-target="#test-email-shell"
+            hx-select="#test-email-shell"
+            hx-swap="outerHTML"
+        >
             {% csrf_token %}
 
             <div>

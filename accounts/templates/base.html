@@ -7,6 +7,7 @@
     <title>{% block title %}LetterGator{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-white text-gray-900 antialiased selection:bg-[#014421] selection:text-white min-h-screen flex flex-col">
@@ -15,6 +16,59 @@
         {% block content %}{% endblock %}
     </main>
     {% include "partials/footer.html" %}
+    <script>
+    (function () {
+        function setButtonLoadingState(button, isLoading) {
+            if (!button) {
+                return;
+            }
+
+            if (isLoading) {
+                if (!button.dataset.originalText) {
+                    button.dataset.originalText = button.innerHTML;
+                }
+                button.disabled = true;
+                button.classList.add('opacity-60', 'cursor-not-allowed');
+            } else {
+                button.disabled = false;
+                button.classList.remove('opacity-60', 'cursor-not-allowed');
+                if (button.dataset.originalText) {
+                    button.innerHTML = button.dataset.originalText;
+                    delete button.dataset.originalText;
+                }
+            }
+        }
+
+        function setFormSubmittingState(form, isLoading) {
+            if (!form) {
+                return;
+            }
+
+            form.querySelectorAll('button[type="submit"]').forEach(
+                function (button) {
+                    setButtonLoadingState(button, isLoading);
+                }
+            );
+            form.querySelectorAll('input[type="submit"]').forEach(
+                function (input) {
+                    input.disabled = isLoading;
+                }
+            );
+        }
+
+        document.body.addEventListener('htmx:beforeRequest', function (event) {
+            var element = event.detail.elt || event.target;
+            var form = element.closest ? element.closest('form') : null;
+            setFormSubmittingState(form, true);
+        });
+
+        document.body.addEventListener('htmx:afterRequest', function (event) {
+            var element = event.detail.elt || event.target;
+            var form = element.closest ? element.closest('form') : null;
+            setFormSubmittingState(form, false);
+        });
+    }());
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

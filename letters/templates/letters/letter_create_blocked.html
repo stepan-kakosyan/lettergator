@@ -3,6 +3,7 @@
 {% block title %}LetterGator | Verify Email{% endblock %}
 
 {% block content %}
+<div id="letters-shell">
 <section class="px-6 py-20">
     <div class="max-w-3xl mx-auto">
         <div class="rounded-3xl border border-amber-300 bg-amber-50 p-8 md:p-10">
@@ -16,7 +17,14 @@
             </p>
 
             <div class="mt-8 flex flex-wrap gap-3">
-                <form method="post" action="{% url 'resend-activation-email' %}">
+                <form
+                    method="post"
+                    action="{% url 'resend-activation-email' %}"
+                    hx-post="{% url 'resend-activation-email' %}"
+                    hx-target="#letters-shell"
+                    hx-select="#letters-shell"
+                    hx-swap="outerHTML"
+                >
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <button
@@ -36,4 +44,5 @@
         </div>
     </div>
 </section>
+</div>
 {% endblock %}

@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<div id="letter-create-shell">
 <section class="px-6 py-20">
     <div class="w-full max-w-3xl mx-auto relative fade-in-up delay-300">
         <div class="text-center mb-8">
@@ -27,6 +28,11 @@
             id="vault-form"
             class="bg-white border border-gray-200 rounded-3xl p-8 text-left envelope-container"
             method="post"
+            action="{% url 'letter-create-page' %}"
+            hx-post="{% url 'letter-create-page' %}"
+            hx-target="#letter-create-shell"
+            hx-select="#letter-create-shell"
+            hx-swap="outerHTML"
         >
             {% csrf_token %}
             {{ form.recipient_list }}
@@ -157,6 +163,7 @@
         </form>
     </div>
 </section>
+</div>
 {% endblock %}
 
 {% block extra_js %}

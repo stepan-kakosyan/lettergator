@@ -267,6 +267,7 @@
     const editSubject = document.getElementById("edit-subject");
     const editForm = document.getElementById("edit-form");
     const editTextarea = document.getElementById("edit-textarea");
+    const editSaveButton = document.getElementById("edit-save");
 
     if (
       !viewModal
@@ -276,6 +277,7 @@
       || !editSubject
       || !editForm
       || !editTextarea
+      || !editSaveButton
     ) {
       return;
     }
@@ -313,6 +315,8 @@
       editForm.action = "";
       editSubject.textContent = "";
       editTextarea.value = "";
+      editSaveButton.disabled = false;
+      editSaveButton.classList.remove("opacity-60", "cursor-not-allowed");
     }
 
     viewOpeners.forEach((button) => {
@@ -366,6 +370,9 @@
         return;
       }
 
+      editSaveButton.disabled = true;
+      editSaveButton.classList.add("opacity-60", "cursor-not-allowed");
+
       const formData = new FormData(editForm);
       fetch(editForm.action, {
         method: "POST",
@@ -378,6 +385,11 @@
         .then((payload) => {
           if (!payload.ok) {
             window.alert(payload.error || "Unable to update letter text.");
+            editSaveButton.disabled = false;
+            editSaveButton.classList.remove(
+              "opacity-60",
+              "cursor-not-allowed",
+            );
             return;
           }
 
@@ -408,6 +420,11 @@
         })
         .catch(() => {
           window.alert("Unable to update letter text.");
+          editSaveButton.disabled = false;
+          editSaveButton.classList.remove(
+            "opacity-60",
+            "cursor-not-allowed",
+          );
         });
     });
   }

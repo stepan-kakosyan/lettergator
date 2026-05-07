@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from accounts.forms import SecondaryEmailForm, UserProfileForm
@@ -75,6 +77,11 @@ def create_letter_page(request):
         send_letter_created_email(request, request.user, letter)
 
         messages.success(request, "Letter created and added to your list.")
+        if request.headers.get("HX-Request") == "true":
+            return HttpResponse(
+                status=204,
+                headers={"HX-Redirect": reverse("letters-page")},
+            )
         return redirect("letters-page")
 
     context = {

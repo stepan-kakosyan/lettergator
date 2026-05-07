@@ -4,7 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.encoding import force_str
@@ -21,6 +23,11 @@ from .tasks import send_pending_email_confirmation_task
 
 def register_view(request):
     if request.user.is_authenticated:
+        if request.headers.get("HX-Request") == "true":
+            return HttpResponse(
+                status=204,
+                headers={"HX-Redirect": reverse("landing-page")},
+            )
         return redirect("landing-page")
 
     form = UserRegistrationForm(request.POST or None)
@@ -46,6 +53,11 @@ def register_view(request):
                 "Account created, but activation email could not be sent.",
             )
 
+        if request.headers.get("HX-Request") == "true":
+            return HttpResponse(
+                status=204,
+                headers={"HX-Redirect": reverse("dashboard_view")},
+            )
         return redirect("dashboard_view")
 
     return render(request, "accounts/register.html", {"form": form})
@@ -58,6 +70,15 @@ class EmailLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy("landing-page")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.request.headers.get("HX-Request") == "true":
+            return HttpResponse(
+                status=204,
+                headers={"HX-Redirect": str(self.get_success_url())},
+            )
+        return response
 
 
 def logout_view(request):

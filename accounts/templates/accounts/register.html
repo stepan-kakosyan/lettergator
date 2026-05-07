@@ -3,14 +3,23 @@
 {% block title %}Register | LetterGator{% endblock %}
 
 {% block content %}
-<section class="min-h-screen flex items-center justify-center px-6">
+<section id="register-shell" class="min-h-screen flex items-center justify-center px-6">
     <div class="w-full max-w-md">
         <div class="text-center mb-10">
             <h1 class="text-3xl font-semibold text-[#014421] tracking-tight">Create account</h1>
             <p class="text-sm text-gray-500 mt-2">Secure your future letters.</p>
         </div>
 
-        <form method="post" class="space-y-6" novalidate>
+        <form
+            method="post"
+            action="{% url 'register' %}"
+            class="space-y-6"
+            novalidate
+            hx-post="{% url 'register' %}"
+            hx-target="#register-shell"
+            hx-select="#register-shell"
+            hx-swap="outerHTML"
+        >
             {% csrf_token %}
 
             <div>
