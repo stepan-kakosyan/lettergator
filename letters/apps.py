@@ -8,4 +8,3 @@ class LettersConfig(AppConfig):
     def ready(self):
         # Import registers Django system checks for this app.
         from . import checks  # noqa: F401
-        from . import signals  # noqa: F401

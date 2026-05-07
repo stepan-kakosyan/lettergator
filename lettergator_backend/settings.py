@@ -196,28 +196,14 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
-CELERY_TASK_ALWAYS_EAGER = (
-    os.getenv(
-        "CELERY_TASK_ALWAYS_EAGER",
-        "1" if DEBUG else "0",
-    )
-    == "1"
-)
-CELERY_TASK_EAGER_PROPAGATES = (
-    os.getenv(
-        "CELERY_TASK_EAGER_PROPAGATES",
-        "0",
-    )
-    == "1"
-)
 CELERY_BEAT_SCHEDULE = {
     "queue-due-letters-every-10-minutes": {
         "task": "letters.tasks.queue_due_letters_task",
         "schedule": crontab(minute="*/10"),
     },
-    "queue-arweave-backups-nightly": {
+    "queue-arweave-backups-every-10-minutes": {
         "task": "letters.tasks.queue_arweave_backup_task",
-        "schedule": crontab(hour=2, minute=0),
+        "schedule": crontab(minute="*/10"),
     },
     "send-email-reactivation-reminders-every-morning": {
         "task": "accounts.tasks.send_email_reactivation_reminders_task",
