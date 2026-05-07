@@ -1,16 +1,24 @@
 import base64
 import hashlib
+import logging
 
 from cryptography.fernet import Fernet, InvalidToken
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
 ENCRYPTION_PREFIX = "enc:v1:"
+logger = logging.getLogger(__name__)
 
 
 def _build_fernet_key():
     configured_key = getattr(settings, "LETTER_MESSAGE_ENCRYPTION_KEY", "")
     if configured_key:
         return configured_key.encode("utf-8")
+
+    if not settings.DEBUG:
+        raise ImproperlyConfigured(
+            "LETTER_MESSAGE_ENCRYPTION_KEY is required when DEBUG=False."
+        )
 
     # Dev fallback so local setup works without extra env setup.
     digest = hashlib.sha256(settings.SECRET_KEY.encode("utf-8")).digest()
@@ -30,7 +38,7 @@ def encrypt_message(plain_text):
     return f"{ENCRYPTION_PREFIX}{token.decode('utf-8')}"
 
 
-def decrypt_message(stored_value):
+def decrypt_message(stored_value, letter_id=None):
     if not stored_value:
         return ""
     if not is_encrypted_message(stored_value):
@@ -40,5 +48,11 @@ def decrypt_message(stored_value):
     try:
         plain_bytes = _fernet().decrypt(token.encode("utf-8"))
     except InvalidToken:
+        logger.critical(
+            "Failed to decrypt letter content due to InvalidToken. "
+            "letter_id=%s",
+            letter_id,
+            exc_info=True,
+        )
         return ""
     return plain_bytes.decode("utf-8")

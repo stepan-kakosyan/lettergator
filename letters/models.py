@@ -40,7 +40,7 @@ class Letter(models.Model):
         self.message = encrypt_message(plain_text or "")
 
     def get_message(self):
-        return decrypt_message(self.message or "")
+        return decrypt_message(self.message or "", letter_id=self.id)
 
     @property
     def message_is_encrypted(self):

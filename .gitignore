@@ -7,3 +7,5 @@ __pycache__/
 backend/.pytest_cache/
 backend/staticfiles/
 .vscode/
+.venv/
+env/
