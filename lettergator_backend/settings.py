@@ -107,11 +107,15 @@ TIME_ZONE = os.getenv("TIME_ZONE", "UTC")
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "/static/"
+STATIC_URL = os.getenv("STATIC_URL", "/static/")
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
+WHITENOISE_MANIFEST_STRICT = False
+WHITENOISE_USE_FINDERS = (
+    os.getenv("WHITENOISE_USE_FINDERS", "1") == "1"
 )
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
