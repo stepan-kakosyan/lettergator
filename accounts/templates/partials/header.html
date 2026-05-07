@@ -18,6 +18,14 @@
         <div class="flex items-center gap-3">
             {% if request.user.is_authenticated %}
             <a
+                href="{% url 'balance-page' %}"
+                class="w-10 h-10 rounded-full border border-[#014421] text-[#014421] flex items-center justify-center hover:bg-[#014421] hover:text-white transition-all font-black"
+                aria-label="Open balance page"
+                title="Balance: ${{ request.user.balance|floatformat:2 }}"
+            >
+                $
+            </a>
+            <a
                 href="{% url 'dashboard_view' %}"
                 class="w-10 h-10 rounded-full border border-[#014421] text-[#014421] flex items-center justify-center hover:bg-[#014421] hover:text-white transition-all"
                 aria-label="Open profile dashboard"

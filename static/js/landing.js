@@ -71,6 +71,7 @@
     const browserTimezone = document.getElementById("id_browser_timezone");
     const addRecipient = document.getElementById("add-recipient");
     const helper = document.getElementById("recipient-helper");
+    const longScheduleHelper = document.getElementById("long-schedule-helper");
 
     if (
       !form
@@ -91,6 +92,8 @@
     }
 
     const MAX_RECIPIENTS = 5;
+    const lockLongSchedules =
+      form.dataset.lowBalanceForLong === "1";
 
     function initBinaryToggles() {
       const toggleGroups = document.querySelectorAll("[data-toggle-field]");
@@ -142,8 +145,30 @@
 
       const presetButtons = document.querySelectorAll("[data-date-months]");
 
+      if (lockLongSchedules) {
+        const maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() + 364);
+        deliveryAt.max = formatForDateTimeLocal(maxDate);
+
+        presetButtons.forEach((button) => {
+          const monthOffset = Number(button.getAttribute("data-date-months"));
+          if (monthOffset >= 12) {
+            button.disabled = true;
+            button.classList.add("opacity-40", "cursor-not-allowed");
+          }
+        });
+
+        if (longScheduleHelper) {
+          longScheduleHelper.textContent =
+            "Top up to at least $1.00 to unlock 1 year+ schedules.";
+        }
+      }
+
       presetButtons.forEach((button) => {
         button.addEventListener("click", function () {
+          if (this.disabled) {
+            return;
+          }
           const monthOffset = Number(this.getAttribute("data-date-months"));
           const targetDate = new Date();
           targetDate.setMonth(targetDate.getMonth() + monthOffset);
@@ -253,10 +278,81 @@
       }
     });
 
+    function initScheduleCostDisplay() {
+      const sealBtn = document.getElementById("seal-btn");
+      const costPanel = document.getElementById("schedule-cost-panel");
+      const costValue = document.getElementById("schedule-cost-value");
+      const balanceWarning = document.getElementById("balance-warning");
+
+      if (!sealBtn || !costPanel || !costValue || !balanceWarning) {
+        return;
+      }
+
+      const userBalance = parseFloat(form.dataset.userBalance || "0");
+      const ratePerYear = parseFloat(form.dataset.ratePerYear || "0.50");
+      const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+
+      function addYears(date, yearsToAdd) {
+        const result = new Date(date.getTime());
+        const originalMonth = result.getMonth();
+        result.setFullYear(result.getFullYear() + yearsToAdd);
+        if (result.getMonth() !== originalMonth) {
+          result.setDate(0);
+        }
+        return result;
+      }
+
+      function computeCost() {
+        if (!deliveryAt || !deliveryAt.value) {
+          return 0;
+        }
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        const deliveryDate = new Date(deliveryAt.value);
+        deliveryDate.setHours(0, 0, 0, 0);
+        const diffMs = deliveryDate.getTime() - now.getTime();
+        if (diffMs < ONE_YEAR_MS) {
+          return 0;
+        }
+
+        let years = deliveryDate.getFullYear() - now.getFullYear();
+        if (addYears(now, years) < deliveryDate) {
+          years += 1;
+        }
+
+        return years * ratePerYear;
+      }
+
+      function updateCostDisplay() {
+        const cost = computeCost();
+        if (cost > 0) {
+          costPanel.classList.remove("hidden");
+          costValue.textContent = "$" + cost.toFixed(2);
+        } else {
+          costPanel.classList.add("hidden");
+        }
+        if (cost > userBalance) {
+          balanceWarning.classList.remove("hidden");
+          sealBtn.disabled = true;
+          sealBtn.classList.add("opacity-50", "cursor-not-allowed");
+        } else {
+          balanceWarning.classList.add("hidden");
+          sealBtn.disabled = false;
+          sealBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        }
+      }
+
+      if (deliveryAt) {
+        deliveryAt.addEventListener("change", updateCostDisplay);
+        updateCostDisplay();
+      }
+    }
+
     initBinaryToggles();
     setBrowserTimezone();
     initDatePresets();
     toggleRecipientPanel();
+    initScheduleCostDisplay();
   }
 
   function initLettersPageInteractions() {

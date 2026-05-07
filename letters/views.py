@@ -1,23 +1,30 @@
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.http import JsonResponse
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from accounts.forms import (
+    BalanceTopUpForm,
     DashboardPasswordChangeForm,
     SecondaryEmailForm,
     UserProfileForm,
 )
-from accounts.models import SecondaryEmail
+from accounts.models import BalanceTransaction, SecondaryEmail
 from accounts.services import send_letter_created_email
 from accounts.tasks import send_pending_email_confirmation_task
 from django.utils import timezone
 
+from .billing import (
+    MIN_LONG_SCHEDULE_BALANCE_USD,
+    RATE_PER_YEAR_USD,
+)
+from decimal import Decimal
 from .forms import (
     ContactTicketCommentForm,
     ContactTicketForm,
@@ -66,6 +73,7 @@ def letters_page(request):
         "letters": letters,
         "guest_mode": guest_mode,
         "email_verification_required": email_verification_required,
+        "min_long_schedule_balance": MIN_LONG_SCHEDULE_BALANCE_USD,
     }
     return render(request, "letters/vault.html", context)
 
@@ -84,21 +92,70 @@ def create_letter_page(request):
     )
 
     if request.method == "POST" and form.is_valid():
-        letter = form.save()
-        send_letter_created_email(request, request.user, letter)
+        try:
+            letter = form.save()
+        except ValidationError as exc:
+            form.add_error(None, " ".join(exc.messages))
+        else:
+            schedule_cost = form.cleaned_data.get("_schedule_cost", Decimal("0.00"))
+            send_letter_created_email(request, request.user, letter)
 
-        messages.success(request, "Letter created and added to your list.")
-        if request.headers.get("HX-Request") == "true":
-            return HttpResponse(
-                status=204,
-                headers={"HX-Redirect": reverse("letters-page")},
-            )
-        return redirect("letters-page")
+            if request.headers.get("HX-Request") == "true":
+                return render(
+                    request,
+                    "letters/partials/letter_saved_modal.html",
+                    {
+                        "letter_subject": letter.subject,
+                        "schedule_cost": schedule_cost if schedule_cost else None,
+                        "new_balance": request.user.balance,
+                    },
+                )
 
+            messages.success(request, "Letter created and added to your list.")
+            return redirect("letters-page")
+
+    user_balance = request.user.balance
+    low_balance_for_long_schedule = (
+        user_balance < MIN_LONG_SCHEDULE_BALANCE_USD
+    )
     context = {
         "form": form,
+        "user_balance": user_balance,
+        "long_schedule_rate": RATE_PER_YEAR_USD,
+        "min_long_schedule_balance": MIN_LONG_SCHEDULE_BALANCE_USD,
+        "low_balance_for_long_schedule": low_balance_for_long_schedule,
     }
     return render(request, "letters/letter_create.html", context)
+
+
+@login_required
+def balance_page(request):
+    form = BalanceTopUpForm(request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        amount = form.cleaned_data["amount"]
+        with transaction.atomic():
+            locked_user = get_user_model().objects.select_for_update().get(
+                pk=request.user.pk
+            )
+            locked_user.balance += amount
+            locked_user.save(update_fields=["balance"])
+            request.user.balance = locked_user.balance
+            BalanceTransaction.objects.create(
+                user=locked_user,
+                amount=amount,
+                reason="Manual balance top-up",
+            )
+
+        messages.success(request, f"${amount:.2f} added to your balance.")
+        return redirect("balance-page")
+
+    transactions = BalanceTransaction.objects.filter(user=request.user)
+    context = {
+        "balance_form": form,
+        "transactions": transactions,
+    }
+    return render(request, "letters/balance.html", context)
 
 
 @require_POST
