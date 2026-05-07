@@ -29,6 +29,9 @@ class Letter(models.Model):
     is_deleted = models.BooleanField(default=False)
     has_delivery_issue = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    arweave_tx_id = models.CharField(
+        max_length=100, null=True, blank=True
+    )
 
     class Meta:
         ordering = ["delivery_at", "created_at"]

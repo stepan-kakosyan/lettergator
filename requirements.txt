@@ -9,3 +9,4 @@ gunicorn>=22.0,<23.0
 whitenoise>=6.7.0,<7.0
 celery>=5.4.0,<6.0
 redis>=5.0.0,<6.0
+arweave-python-client
