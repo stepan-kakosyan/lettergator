@@ -7,19 +7,40 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 
+def _response_status_code(response):
+    status_code = getattr(response, "status_code", None)
+    if status_code is not None:
+        return status_code
+    if isinstance(response, dict):
+        return response.get("status_code") or response.get("status")
+    return None
+
+
 def _response_is_success(response):
     """Handle both requests.Response-like and simple return values."""
-    status_code = getattr(response, "status_code", None)
+    status_code = _response_status_code(response)
     if status_code is not None:
         return status_code in (200, 201, 202)
     if response is True:
         return True
+    if isinstance(response, str):
+        return bool(response.strip())
+    if isinstance(response, dict):
+        tx_hint = response.get("id") or response.get("tx_id")
+        return bool(tx_hint)
     return False
 
 
 def _response_error_text(response):
     text = getattr(response, "text", "")
     return text[:500] if text else ""
+
+
+def _normalize_tx_id(tx_id):
+    if isinstance(tx_id, bytes):
+        tx_id = tx_id.decode("utf-8", errors="ignore")
+    tx_id = str(tx_id or "").strip()
+    return tx_id or None
 
 
 def upload_letter_to_arweave(letter):
@@ -78,11 +99,25 @@ def upload_letter_to_arweave(letter):
 
         for attempt in range(1, max_attempts + 1):
             response = transaction.send()
+            tx_id = _normalize_tx_id(transaction.id)
+
             if _response_is_success(response):
-                tx_id = transaction.id
                 logger.info(
                     "Letter %s backed up to Arweave (tx %s).",
                     letter.id,
+                    tx_id,
+                )
+                return tx_id
+
+            status_code = _response_status_code(response)
+            if tx_id and status_code is None and response is not False:
+                logger.info(
+                    (
+                        "Arweave upload for letter %s returned a non-standard "
+                        "response type (%s); accepting tx id %s."
+                    ),
+                    letter.id,
+                    type(response).__name__,
                     tx_id,
                 )
                 return tx_id
@@ -95,7 +130,7 @@ def upload_letter_to_arweave(letter):
                 attempt,
                 max_attempts,
                 letter.id,
-                getattr(response, "status_code", "unknown"),
+                status_code if status_code is not None else "unknown",
                 _response_error_text(response),
             )
 

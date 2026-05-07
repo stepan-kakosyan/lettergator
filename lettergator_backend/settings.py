@@ -107,7 +107,9 @@ TIME_ZONE = os.getenv("TIME_ZONE", "UTC")
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = os.getenv("STATIC_URL", "/static/")
+STATIC_URL = os.getenv("STATIC_URL", "/static/").strip() or "/static/"
+if not STATIC_URL.endswith("/"):
+    STATIC_URL = f"{STATIC_URL}/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATICFILES_STORAGE = (
