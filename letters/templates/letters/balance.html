@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}LetterGator | Balance{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="w-full max-w-6xl mx-auto fade-in-up delay-300 space-y-6">
+
+        <!-- Header -->
+        <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
+            <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">Billing</p>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">Balance</h1>
+            <p class="text-gray-600 mt-3">
+                Current balance:
+                <span class="font-black text-gray-900 text-lg">${{ request.user.balance|floatformat:2 }}</span>
+            </p>
+
+            {% if messages %}
+            <div class="mt-4 space-y-2">
+                {% for message in messages %}
+                <div class="rounded-xl px-4 py-3 text-sm font-medium {% if message.tags == 'success' %}bg-green-50 text-green-700{% else %}bg-gray-100 text-gray-700{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Two-column layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+
+            <!-- LEFT: Add Funds -->
+            <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10 space-y-6">
+                <div>
+                    <h2 class="text-2xl font-black tracking-tight text-gray-900">Add Funds</h2>
+                    <p class="text-gray-500 text-sm mt-1">Top up your balance to schedule letters beyond one year.</p>
+                </div>
+
+                <!-- How pricing works -->
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-3">
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-bold">How pricing works</p>
+                    <p class="text-sm text-gray-700">
+                        Scheduling a letter <strong>under 1 year</strong> is always <strong>free</strong>.
+                        For letters delivered <strong>1 year or more</strong> from today, a small fee applies — charged per full calendar year.
+                    </p>
+                    <ul class="text-sm text-gray-700 space-y-1">
+                        <li class="flex justify-between"><span>1 year away</span><span class="font-semibold text-gray-900">$0.50</span></li>
+                        <li class="flex justify-between"><span>2 years away</span><span class="font-semibold text-gray-900">$1.00</span></li>
+                        <li class="flex justify-between"><span>5 years away</span><span class="font-semibold text-gray-900">$2.50</span></li>
+                        <li class="flex justify-between"><span>10 years away</span><span class="font-semibold text-gray-900">$5.00</span></li>
+                    </ul>
+                    <p class="text-xs text-gray-500">Fee = number of calendar years × $0.50. Charged once when you seal and store the letter.</p>
+                </div>
+
+                <!-- Quick estimate calculator -->
+                <div class="space-y-3">
+                    <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">Quick estimate</p>
+                    <div class="flex items-center gap-3">
+                        <label class="text-sm text-gray-600 whitespace-nowrap">Years from now:</label>
+                        <input
+                            id="calc-years"
+                            type="number"
+                            min="1"
+                            max="50"
+                            value="1"
+                            class="w-24 border-0 border-b-2 border-gray-300 bg-transparent px-0 py-1 text-sm focus:border-[#014421] focus:ring-0 focus:outline-none"
+                        >
+                    </div>
+                    <p class="text-sm text-gray-700">
+                        Estimated cost:
+                        <span id="calc-result" class="font-black text-gray-900">$0.50</span>
+                    </p>
+                </div>
+
+                <!-- Form -->
+                <form method="post" class="space-y-4">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2" for="{{ balance_form.amount.id_for_label }}">
+                            Amount (USD)
+                        </label>
+                        {{ balance_form.amount }}
+                        {% if balance_form.amount.errors %}
+                        <div class="text-sm text-red-600 mt-1">{{ balance_form.amount.errors|join:", " }}</div>
+                        {% endif %}
+                    </div>
+                    <!-- Quick-fill buttons -->
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" data-fill="1.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$1</button>
+                        <button type="button" data-fill="2.50" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$2.50</button>
+                        <button type="button" data-fill="5.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$5</button>
+                        <button type="button" data-fill="10.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$10</button>
+                    </div>
+                    <button
+                        type="submit"
+                        class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
+                    >
+                        Add Funds
+                    </button>
+                </form>
+            </div>
+
+            <!-- RIGHT: Transaction History -->
+            <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
+                <h2 class="text-2xl font-black tracking-tight text-gray-900">Transaction History</h2>
+
+                {% if transactions %}
+                <div class="mt-5 overflow-x-auto">
+                    <table class="letters-table w-full">
+                        <thead>
+                            <tr>
+                                <th>Amount</th>
+                                <th>Reason</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tx in transactions %}
+                            <tr>
+                                <td>
+                                    <span class="font-semibold {% if tx.amount >= 0 %}text-emerald-700{% else %}text-red-700{% endif %}">
+                                        {% if tx.amount >= 0 %}+{% endif %}${{ tx.amount|floatformat:2 }}
+                                    </span>
+                                </td>
+                                <td>{{ tx.reason }}</td>
+                                <td>
+                                    <span class="text-sm font-medium text-gray-900 local-date" data-utc="{{ tx.created_at|date:'c' }}">
+                                        {{ tx.created_at|date:"M d, Y" }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="mt-5 border border-dashed border-gray-300 rounded-2xl p-6 text-center text-gray-600">
+                    No transactions yet.
+                </div>
+                {% endif %}
+            </div>
+
+        </div><!-- end grid -->
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    // Local date formatting
+    var fmt = new Intl.DateTimeFormat(undefined, {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+    });
+    document.querySelectorAll('.local-date[data-utc]').forEach(function (el) {
+        var d = new Date(el.dataset.utc);
+        if (!isNaN(d)) { el.textContent = fmt.format(d); }
+    });
+
+    // Quick-fill buttons
+    document.querySelectorAll('.quick-fill').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var amountInput = document.getElementById('{{ balance_form.amount.id_for_label }}');
+            if (amountInput) { amountInput.value = btn.dataset.fill; }
+        });
+    });
+
+    // Quick estimate calculator
+    var calcYears = document.getElementById('calc-years');
+    var calcResult = document.getElementById('calc-result');
+    var RATE = 0.50;
+    function updateEstimate() {
+        var years = parseInt(calcYears.value, 10);
+        if (isNaN(years) || years < 1) { calcResult.textContent = '$0.00'; return; }
+        calcResult.textContent = '$' + (years * RATE).toFixed(2);
+    }
+    if (calcYears) {
+        calcYears.addEventListener('input', updateEstimate);
+        updateEstimate();
+    }
+}());
+</script>
+{% endblock %}

@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.utils import timezone
 from rest_framework import serializers
 
@@ -108,7 +109,12 @@ class LetterCreateSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         form = validated_data["_bound_form"]
-        return form.save()
+        try:
+            return form.save()
+        except DjangoValidationError as exc:
+            raise serializers.ValidationError(
+                {"non_field_errors": [str(exc)]}
+            ) from exc
 
 
 class LetterMessageUpdateSerializer(serializers.Serializer):

@@ -1,12 +1,22 @@
 from datetime import datetime
+from decimal import Decimal
 from zoneinfo import ZoneInfo
 from zoneinfo import ZoneInfoNotFoundError
 
 from django import forms
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.db import transaction
 from django.utils import timezone
 
+from accounts.models import BalanceTransaction
+
+from .billing import (
+    MIN_LONG_SCHEDULE_BALANCE_USD,
+    compute_schedule_cost,
+    long_schedule_cutoff,
+)
 from .models import ContactTicket, ContactTicketComment, Letter
 
 
@@ -131,8 +141,30 @@ class LetterForm(forms.ModelForm):
             except ValidationError:
                 raise forms.ValidationError(f"Invalid email: {email}")
 
+        delivery_at = cleaned_data.get("delivery_at")
+        balance = Decimal("0.00")
+        if self.user and self.user.is_authenticated:
+            balance = self.user.balance
+
+        if delivery_at and delivery_at.date() >= long_schedule_cutoff():
+            if balance < MIN_LONG_SCHEDULE_BALANCE_USD:
+                raise forms.ValidationError(
+                    "Top up to at least $1.00 to unlock 1 year+ scheduling."
+                )
+
+        schedule_cost = Decimal("0.00")
+        if delivery_at:
+            schedule_cost = compute_schedule_cost(delivery_at)
+        if schedule_cost > balance:
+            raise forms.ValidationError(
+                "Insufficient balance for this schedule. "
+                f"Required: ${schedule_cost:.2f}. "
+                f"Available: ${balance:.2f}."
+            )
+
         cleaned_data["_recipients"] = recipients
         cleaned_data["sender_email"] = sender_email
+        cleaned_data["_schedule_cost"] = schedule_cost
         return cleaned_data
 
     def save(self, commit=True):
@@ -146,7 +178,36 @@ class LetterForm(forms.ModelForm):
         instance.recipient_emails = recipients[1:]
 
         if commit:
-            instance.save()
+            schedule_cost = self.cleaned_data.get("_schedule_cost", Decimal("0.00"))
+            with transaction.atomic():
+                if (
+                    schedule_cost > 0
+                    and self.user
+                    and self.user.is_authenticated
+                ):
+                    locked_user = get_user_model().objects.select_for_update().get(
+                        pk=self.user.pk
+                    )
+                    if locked_user.balance < schedule_cost:
+                        raise forms.ValidationError(
+                            "Insufficient balance for this schedule. "
+                            f"Required: ${schedule_cost:.2f}. "
+                            f"Available: ${locked_user.balance:.2f}."
+                        )
+                    locked_user.balance -= schedule_cost
+                    locked_user.save(update_fields=["balance"])
+                    self.user.balance = locked_user.balance
+                    BalanceTransaction.objects.create(
+                        user=locked_user,
+                        amount=-schedule_cost,
+                        reason=(
+                            "Letter scheduling charge "
+                            f"for '{instance.subject[:80]}'"
+                        ),
+                    )
+                    instance.user = locked_user
+
+                instance.save()
         return instance
 
 

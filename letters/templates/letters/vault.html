@@ -26,6 +26,17 @@
                 they are still permitted.
                 {% endif %}
             </p>
+            {% if not guest_mode %}
+            <div class="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-emerald-900">
+                <p class="font-semibold">Long-term schedule policy</p>
+                <p class="text-sm mt-1">
+                    Scheduling letters for one year and beyond uses your balance.
+                    The rate is $0.50 per year. Keep at least
+                    ${{ min_long_schedule_balance|floatformat:2 }}
+                    to unlock 1 year+ scheduling options.
+                </p>
+            </div>
+            {% endif %}
             {% if not guest_mode and email_verification_required %}
             <div class="mt-6 rounded-2xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900">
                 <p class="font-semibold">Email verification required</p>

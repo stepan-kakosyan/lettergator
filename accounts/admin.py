@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser, SecondaryEmail
+from .models import BalanceTransaction, CustomUser, SecondaryEmail
 
 
 @admin.register(CustomUser)
@@ -11,6 +11,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = (
         "email",
         "full_name",
+        "balance",
         "email_verified",
         "is_staff",
         "is_active",
@@ -20,7 +21,12 @@ class CustomUserAdmin(UserAdmin):
         (
             "Personal info",
             {
-                "fields": ("full_name", "email_verified", "email_verified_at"),
+                "fields": (
+                    "full_name",
+                    "balance",
+                    "email_verified",
+                    "email_verified_at",
+                ),
             },
         ),
         (
@@ -61,3 +67,10 @@ class CustomUserAdmin(UserAdmin):
 class SecondaryEmailAdmin(admin.ModelAdmin):
     list_display = ("user", "email", "created_at")
     search_fields = ("user__email", "email")
+
+
+@admin.register(BalanceTransaction)
+class BalanceTransactionAdmin(admin.ModelAdmin):
+    list_display = ("user", "amount", "reason", "created_at")
+    list_filter = ("created_at",)
+    search_fields = ("user__email", "reason")

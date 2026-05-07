@@ -40,6 +40,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=50, blank=True, default="")
     address = models.TextField(blank=True, default="")
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     email_verified = models.BooleanField(default=True)
     email_verified_at = models.DateTimeField(null=True, blank=True)
     email_reactivation_sent_at = models.DateTimeField(null=True, blank=True)
@@ -79,3 +80,21 @@ class SecondaryEmail(models.Model):
 
     def __str__(self):
         return f"{self.user.email} -> {self.email}"
+
+
+class BalanceTransaction(models.Model):
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name="balance_transactions",
+    )
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    reason = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at", "-id"]
+
+    def __str__(self):
+        sign = "+" if self.amount >= 0 else ""
+        return f"{self.user.email}: {sign}{self.amount}"

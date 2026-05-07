@@ -6,6 +6,7 @@ from django.contrib.auth.forms import (
     SetPasswordForm,
     UserCreationForm,
 )
+from decimal import Decimal
 
 from .models import CustomUser, SecondaryEmail
 
@@ -137,5 +138,27 @@ class DashboardPasswordChangeForm(PasswordChangeForm):
             {
                 "autocomplete": "new-password",
                 "class": field_classes,
+            }
+        )
+
+
+class BalanceTopUpForm(forms.Form):
+    amount = forms.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        min_value=Decimal("0.50"),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["amount"].widget.attrs.update(
+            {
+                "step": "0.50",
+                "placeholder": "10.00",
+                "class": (
+                    "w-full border-0 border-b-2 border-gray-300 "
+                    "bg-transparent px-0 py-2 focus:border-[#014421] "
+                    "focus:ring-0 focus:outline-none"
+                ),
             }
         )

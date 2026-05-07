@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    balance_page,
     contact_page,
     contact_ticket_comment_view,
     concept_page,
@@ -28,6 +29,7 @@ urlpatterns = [
     path("concept/", concept_page, name="concept-page"),
     path("privacy/", privacy_page, name="privacy-page"),
     path("dashboard/", dashboard_view, name="dashboard_view"),
+    path("balance/", balance_page, name="balance-page"),
     path(
         "dashboard/password-change/",
         dashboard_password_change_view,

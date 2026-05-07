@@ -2,7 +2,7 @@ import base64
 import hashlib
 import logging
 
-from cryptography.fernet import Fernet, InvalidToken
+from cryptography.fernet import Fernet, InvalidToken, MultiFernet
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -10,23 +10,33 @@ ENCRYPTION_PREFIX = "enc:v1:"
 logger = logging.getLogger(__name__)
 
 
-def _build_fernet_key():
+def _secret_key_derived_fernet():
+    """Always-available fallback key derived from SECRET_KEY (used for old data)."""
+    digest = hashlib.sha256(settings.SECRET_KEY.encode("utf-8")).digest()
+    return Fernet(base64.urlsafe_b64encode(digest))
+
+
+def _fernet():
+    """
+    Returns a MultiFernet that tries the configured primary key first,
+    then falls back to the SECRET_KEY-derived key so letters encrypted
+    before LETTER_MESSAGE_ENCRYPTION_KEY was set can still be decrypted.
+    In production (DEBUG=False) the primary key is required.
+    """
     configured_key = getattr(settings, "LETTER_MESSAGE_ENCRYPTION_KEY", "")
+    fallback = _secret_key_derived_fernet()
+
     if configured_key:
-        return configured_key.encode("utf-8")
+        primary = Fernet(configured_key.encode("utf-8"))
+        return MultiFernet([primary, fallback])
 
     if not settings.DEBUG:
         raise ImproperlyConfigured(
             "LETTER_MESSAGE_ENCRYPTION_KEY is required when DEBUG=False."
         )
 
-    # Dev fallback so local setup works without extra env setup.
-    digest = hashlib.sha256(settings.SECRET_KEY.encode("utf-8")).digest()
-    return base64.urlsafe_b64encode(digest)
-
-
-def _fernet():
-    return Fernet(_build_fernet_key())
+    # Dev-only: use SECRET_KEY-derived key as sole key.
+    return MultiFernet([fallback])
 
 
 def is_encrypted_message(value):
