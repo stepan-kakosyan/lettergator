@@ -139,6 +139,14 @@ def queue_arweave_backup_task(self):
         status=CeleryTaskLog.STATUS_STARTED,
     )
     try:
+        # TEMPORARY SAFETY STOP: Arweave backup queueing disabled.
+        log.status = CeleryTaskLog.STATUS_SUCCESS
+        log.detail = "Arweave backup queue is temporarily disabled."
+        log.finished_at = timezone.now()
+        log.save(update_fields=["status", "detail", "finished_at"])
+        return 0
+
+        # Re-enable block below when Arweave flow is verified.
         now = timezone.now()
         one_year_ago = now - timedelta(days=365)
         window_closed_before = now - timedelta(days=30)
@@ -180,6 +188,16 @@ def backup_letter_to_arweave_task(self, letter_id):
         detail=f"letter_id={letter_id}",
     )
     try:
+        # TEMPORARY SAFETY STOP: Arweave upload task execution disabled.
+        log.status = CeleryTaskLog.STATUS_SUCCESS
+        log.detail = (
+            f"letter_id={letter_id}: Arweave backup is temporarily disabled."
+        )
+        log.finished_at = timezone.now()
+        log.save(update_fields=["status", "detail", "finished_at"])
+        return
+
+        # Re-enable block below when Arweave flow is verified.
         try:
             letter = Letter.objects.select_related("user").get(id=letter_id)
         except Letter.DoesNotExist:

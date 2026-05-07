@@ -207,10 +207,11 @@ CELERY_BEAT_SCHEDULE = {
         "task": "letters.tasks.queue_due_letters_task",
         "schedule": crontab(minute="*/10"),
     },
-    "queue-arweave-backups-every-10-minutes": {
-        "task": "letters.tasks.queue_arweave_backup_task",
-        "schedule": crontab(minute="*/10"),
-    },
+    # TEMPORARY SAFETY STOP: Arweave backups are paused until manually re-enabled.
+    # "queue-arweave-backups-every-10-minutes": {
+    #     "task": "letters.tasks.queue_arweave_backup_task",
+    #     "schedule": crontab(minute="*/10"),
+    # },
     "send-email-reactivation-reminders-every-morning": {
         "task": "accounts.tasks.send_email_reactivation_reminders_task",
         "schedule": crontab(hour=8, minute=0),

@@ -20,11 +20,17 @@ def enqueue_arweave_backup_in_debug(sender, instance, created, **kwargs):
     if not settings.DEBUG or not created or instance.arweave_tx_id:
         return
 
-    def _enqueue_after_commit():
-        backup_letter_to_arweave_task.delay(instance.id)
-        logger.info(
-            "Queued debug Arweave backup task for letter %s.",
-            instance.id,
-        )
+    # TEMPORARY SAFETY STOP: disable automatic Arweave enqueue in signal.
+    # def _enqueue_after_commit():
+    #     backup_letter_to_arweave_task.delay(instance.id)
+    #     logger.info(
+    #         "Queued debug Arweave backup task for letter %s.",
+    #         instance.id,
+    #     )
+    #
+    # transaction.on_commit(_enqueue_after_commit)
 
-    transaction.on_commit(_enqueue_after_commit)
+    logger.warning(
+        "Arweave backup enqueue is temporarily disabled for letter %s.",
+        instance.id,
+    )
