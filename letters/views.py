@@ -47,6 +47,7 @@ def _get_visible_letters_for_request(request):
 
 
 def _can_access_letter(request, letter):
+
     return letter.user_id == request.user.id
 
 
