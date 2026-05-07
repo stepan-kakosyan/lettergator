@@ -1,0 +1,81 @@
+<article id="secondary-email-panel" class="border border-gray-200 rounded-2xl p-6">
+    <h2 class="text-xl font-semibold text-gray-900">Secondary email list</h2>
+    <p class="mt-2 text-sm text-gray-600">
+        Add up to 5 backup email addresses for delivery fallback.
+        Slots left: {{ secondary_slots_left }}
+    </p>
+
+    {% if panel_message %}
+    <p class="mt-4 rounded-lg px-4 py-3 text-sm {% if panel_message_level == 'success' %}bg-green-50 text-green-700{% else %}bg-red-50 text-red-700{% endif %}">
+        {{ panel_message }}
+    </p>
+    {% endif %}
+
+    <form
+        method="post"
+        action="{% url 'dashboard-secondary-emails' %}"
+        class="mt-6 space-y-4"
+        novalidate
+        hx-post="{% url 'dashboard-secondary-emails' %}"
+        hx-target="#secondary-email-panel"
+        hx-swap="outerHTML"
+    >
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add_secondary_email">
+
+        <div>
+            <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ secondary_email_form.email.id_for_label }}">
+                Add backup email
+            </label>
+            <input
+                type="email"
+                name="{{ secondary_email_form.email.html_name }}"
+                id="{{ secondary_email_form.email.id_for_label }}"
+                value="{{ secondary_email_form.email.value|default:'' }}"
+                class="w-full border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2 focus:border-[#014421] focus:ring-0 focus:outline-none"
+                autocomplete="email"
+                placeholder="backup@example.com"
+            >
+            {% for error in secondary_email_form.email.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+            {% for error in secondary_email_form.non_field_errors %}
+            <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <button
+            type="submit"
+            class="w-full bg-[#014421] text-white py-3 rounded-lg font-medium hover:bg-[#023319] transition-colors"
+        >
+            Add secondary email
+        </button>
+    </form>
+
+    <div class="mt-6 space-y-3">
+        {% for email_item in secondary_emails %}
+        <div class="flex items-center justify-between border border-gray-200 rounded-lg px-3 py-2">
+            <span class="text-sm text-gray-700">{{ email_item.email }}</span>
+            <form
+                method="post"
+                action="{% url 'dashboard-secondary-emails' %}"
+                hx-post="{% url 'dashboard-secondary-emails' %}"
+                hx-target="#secondary-email-panel"
+                hx-swap="outerHTML"
+            >
+                {% csrf_token %}
+                <input type="hidden" name="action" value="remove_secondary_email">
+                <input type="hidden" name="secondary_email_id" value="{{ email_item.id }}">
+                <button
+                    type="submit"
+                    class="text-sm text-red-600 hover:text-red-700"
+                >
+                    Remove
+                </button>
+            </form>
+        </div>
+        {% empty %}
+        <p class="text-sm text-gray-500">No secondary emails yet.</p>
+        {% endfor %}
+    </div>
+</article>

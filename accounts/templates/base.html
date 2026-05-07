@@ -18,6 +18,66 @@
     {% include "partials/footer.html" %}
     <script>
     (function () {
+        function initToggleFlow(root, config) {
+            var openButton = root.querySelector(config.openSelector);
+            var closeButton = root.querySelector(config.closeSelector);
+            var viewPanel = root.querySelector('#' + config.viewPanelId);
+            var editForm = root.querySelector(config.formSelector);
+
+            if (!openButton || !closeButton || !viewPanel || !editForm) {
+                return;
+            }
+
+            if (editForm.dataset.toggleInitialized === 'true') {
+                return;
+            }
+
+            function setEditMode(enabled) {
+                viewPanel.classList.toggle('hidden', enabled);
+                editForm.classList.toggle('hidden', !enabled);
+                openButton.classList.toggle('hidden', enabled);
+                if (enabled) {
+                    var firstInput = editForm.querySelector('input, textarea');
+                    if (firstInput) {
+                        firstInput.focus();
+                    }
+                }
+            }
+
+            openButton.addEventListener('click', function () {
+                setEditMode(true);
+            });
+
+            closeButton.addEventListener('click', function () {
+                setEditMode(false);
+            });
+
+            editForm.dataset.toggleInitialized = 'true';
+            setEditMode(editForm.dataset[config.errorDataset] === 'true');
+        }
+
+        function initDashboardToggles(root) {
+            initToggleFlow(root, {
+                openSelector: '[data-profile-edit-open]',
+                closeSelector: '[data-profile-edit-close]',
+                viewPanelId: 'profile-view-panel',
+                formSelector: '[data-profile-edit-form]',
+                errorDataset: 'profileHasErrors'
+            });
+
+            initToggleFlow(root, {
+                openSelector: '[data-password-edit-open]',
+                closeSelector: '[data-password-edit-close]',
+                viewPanelId: 'password-view-panel',
+                formSelector: '[data-password-edit-form]',
+                errorDataset: 'passwordHasErrors'
+            });
+        }
+
+        function initPageBehaviors(root) {
+            initDashboardToggles(root || document);
+        }
+
         function setButtonLoadingState(button, isLoading) {
             if (!button) {
                 return;
@@ -67,6 +127,12 @@
             var form = element.closest ? element.closest('form') : null;
             setFormSubmittingState(form, false);
         });
+
+        document.body.addEventListener('htmx:afterSwap', function (event) {
+            initPageBehaviors(event.target || document);
+        });
+
+        initPageBehaviors(document);
     }());
     </script>
     {% block extra_js %}{% endblock %}

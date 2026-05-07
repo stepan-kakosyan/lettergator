@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.utils import timezone
 
-from .models import Letter
+from .models import ContactTicket, ContactTicketComment, Letter
 
 
 class LetterForm(forms.ModelForm):
@@ -160,3 +160,86 @@ class LetterMessageEditForm(forms.Form):
             }
         ),
     )
+
+
+class ContactTicketForm(forms.ModelForm):
+    class Meta:
+        model = ContactTicket
+        fields = ["email", "subject", "message"]
+        widgets = {
+            "email": forms.EmailInput(
+                attrs={
+                    "placeholder": "you@example.com",
+                    "autocomplete": "email",
+                }
+            ),
+            "subject": forms.TextInput(
+                attrs={
+                    "placeholder": "What do you need help with?",
+                }
+            ),
+            "message": forms.Textarea(
+                attrs={
+                    "placeholder": "Describe your issue or question.",
+                    "rows": 5,
+                }
+            ),
+        }
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+        base_input_classes = (
+            "w-full border-0 border-b-2 border-gray-300 bg-transparent px-0 "
+            "py-2 focus:border-[#014421] focus:ring-0 focus:outline-none"
+        )
+        self.fields["subject"].widget.attrs.update({"class": base_input_classes})
+        self.fields["message"].widget.attrs.update(
+            {
+                "class": (
+                    "w-full border border-gray-300 rounded-lg bg-transparent px-3 "
+                    "py-2 text-sm focus:border-[#014421] focus:ring-0 "
+                    "focus:outline-none resize-none"
+                )
+            }
+        )
+
+        if self.user and self.user.is_authenticated:
+            self.fields["email"].required = False
+            self.fields["email"].widget = forms.HiddenInput()
+        else:
+            self.fields["email"].required = True
+            self.fields["email"].widget.attrs.update({"class": base_input_classes})
+
+    def clean_email(self):
+        if self.user and self.user.is_authenticated:
+            return self.user.email.strip().lower()
+        email = self.cleaned_data["email"].strip().lower()
+        return email
+
+
+class ContactTicketCommentForm(forms.ModelForm):
+    class Meta:
+        model = ContactTicketComment
+        fields = ["message"]
+        widgets = {
+            "message": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "placeholder": "Add a comment...",
+                }
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["message"].widget.attrs.update(
+            {
+                "class": (
+                    "w-full border border-gray-300 rounded-lg bg-transparent px-3 "
+                    "py-2 text-sm focus:border-[#014421] focus:ring-0 "
+                    "focus:outline-none resize-none"
+                )
+            }
+        )

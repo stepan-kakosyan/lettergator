@@ -4,7 +4,7 @@
     <div class="max-w-5xl mx-auto flex justify-between items-center gap-3">
         <a href="{% url 'landing-page' %}" class="inline-flex items-center gap-2" aria-label="LetterGator home">
             <img src="{% static 'img/logo.png' %}" alt="LetterGator logo" class="h-[80px] w-auto">
-            <span class="text-2xl font-black tracking-tighter text-[#014421]">LetterGator.</span>
+            <span class="text-2xl font-black tracking-tighter text-[#014421]">LetterGator</span>
         </a>
 
         <!-- Desktop nav -->
@@ -12,7 +12,7 @@
             <a href="{% url 'concept-page' %}" class="hover:text-[#014421] transition-colors">See why</a>
             <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors">See how</a>
             <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors">Letters</a>
-            <a href="{% url 'privacy-page' %}" class="hover:text-[#014421] transition-colors">Privacy</a>
+            <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors">Contact</a>
         </nav>
 
         <div class="flex items-center gap-3">
@@ -58,6 +58,7 @@
             <a href="{% url 'concept-page' %}" class="hover:text-[#014421] transition-colors py-1">See why</a>
             <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1">See how</a>
             <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors py-1">Letters</a>
+            <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors py-1">Contact</a>
             <a href="{% url 'privacy-page' %}" class="hover:text-[#014421] transition-colors py-1">Privacy</a>
             {% if not request.user.is_authenticated %}
             <hr class="border-gray-100">
