@@ -29,6 +29,9 @@ class Letter(models.Model):
     is_deleted = models.BooleanField(default=False)
     has_delivery_issue = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    arweave_tx_id = models.CharField(
+        max_length=100, null=True, blank=True
+    )
 
     class Meta:
         ordering = ["delivery_at", "created_at"]
@@ -78,6 +81,32 @@ class Letter(models.Model):
         if self.is_delivered:
             return "Delivered"
         return "Scheduled"
+
+
+class CeleryTaskLog(models.Model):
+    STATUS_STARTED = "started"
+    STATUS_SUCCESS = "success"
+    STATUS_FAILURE = "failure"
+    STATUS_CHOICES = [
+        (STATUS_STARTED, "Started"),
+        (STATUS_SUCCESS, "Success"),
+        (STATUS_FAILURE, "Failure"),
+    ]
+
+    task_name = models.CharField(max_length=200)
+    task_id = models.CharField(max_length=200, blank=True, default="")
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default=STATUS_STARTED
+    )
+    detail = models.TextField(blank=True, default="")
+    started_at = models.DateTimeField(auto_now_add=True)
+    finished_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-started_at"]
+
+    def __str__(self):
+        return f"{self.task_name} [{self.status}] @ {self.started_at:%Y-%m-%d %H:%M:%S}"
 
 
 class ContactTicket(models.Model):

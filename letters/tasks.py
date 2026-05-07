@@ -2,11 +2,15 @@ from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMessage
+from django.db.models import Q
 from django.utils import timezone
 
 from celery import shared_task
 
-from .models import Letter
+from django.utils import timezone
+
+from .models import CeleryTaskLog, Letter
+from .utils import upload_letter_to_arweave
 
 
 def _unique_emails(emails):
@@ -117,3 +121,126 @@ def deliver_letter_task(self, letter_id):
     letter.is_delivered = True
     letter.has_delivery_issue = False
     letter.save(update_fields=["is_delivered", "has_delivery_issue"])
+
+
+@shared_task(bind=True)
+def queue_arweave_backup_task(self):
+    """
+    Periodic selector for Arweave backups.
+
+    Eligibility rules:
+    - No existing Arweave transaction id.
+    - Letter is at least 1 year past its scheduled delivery date.
+    - Skip while early edit/delete windows are still open.
+    """
+    log = CeleryTaskLog.objects.create(
+        task_name="queue_arweave_backup_task",
+        task_id=self.request.id or "",
+        status=CeleryTaskLog.STATUS_STARTED,
+    )
+    try:
+        now = timezone.now()
+        one_year_ago = now - timedelta(days=365)
+        window_closed_before = now - timedelta(days=30)
+
+        eligible_letters = Letter.objects.filter(
+            Q(arweave_tx_id__isnull=True) | Q(arweave_tx_id=""),
+            delivery_at__lte=one_year_ago,
+            is_deleted=False,
+            is_delivered=True,
+        ).filter(
+            Q(can_edit_early=False) | Q(created_at__lte=window_closed_before),
+            Q(can_delete_early=False) | Q(created_at__lte=window_closed_before),
+        )
+
+        queued_count = 0
+        for letter_id in eligible_letters.values_list("id", flat=True):
+            backup_letter_to_arweave_task.delay(letter_id)
+            queued_count += 1
+
+        log.status = CeleryTaskLog.STATUS_SUCCESS
+        log.detail = f"Queued {queued_count} letter(s) for Arweave backup."
+        log.finished_at = timezone.now()
+        log.save(update_fields=["status", "detail", "finished_at"])
+        return queued_count
+    except Exception as exc:
+        log.status = CeleryTaskLog.STATUS_FAILURE
+        log.detail = str(exc)
+        log.finished_at = timezone.now()
+        log.save(update_fields=["status", "detail", "finished_at"])
+        raise
+
+
+@shared_task(bind=True, max_retries=5)
+def backup_letter_to_arweave_task(self, letter_id):
+    log = CeleryTaskLog.objects.create(
+        task_name="backup_letter_to_arweave_task",
+        task_id=self.request.id or "",
+        status=CeleryTaskLog.STATUS_STARTED,
+        detail=f"letter_id={letter_id}",
+    )
+    try:
+        try:
+            letter = Letter.objects.select_related("user").get(id=letter_id)
+        except Letter.DoesNotExist:
+            log.status = CeleryTaskLog.STATUS_FAILURE
+            log.detail = f"letter_id={letter_id} not found."
+            log.finished_at = timezone.now()
+            log.save(update_fields=["status", "detail", "finished_at"])
+            return
+
+        if letter.arweave_tx_id:
+            log.status = CeleryTaskLog.STATUS_SUCCESS
+            log.detail = (
+                f"letter_id={letter_id} already backed up "
+                f"(tx {letter.arweave_tx_id}), skipped."
+            )
+            log.finished_at = timezone.now()
+            log.save(update_fields=["status", "detail", "finished_at"])
+            return
+
+        tx_id = upload_letter_to_arweave(letter)
+        if not tx_id:
+            current_attempt = self.request.retries + 1
+            total_attempts = self.max_retries + 1
+
+            if self.request.retries >= self.max_retries:
+                log.status = CeleryTaskLog.STATUS_FAILURE
+                log.detail = (
+                    f"letter_id={letter_id}: upload returned no tx id, "
+                    f"attempt {current_attempt}/{total_attempts} "
+                    "(max retries reached)."
+                )
+                log.finished_at = timezone.now()
+                log.save(update_fields=["status", "detail", "finished_at"])
+                return
+
+            log.status = CeleryTaskLog.STATUS_FAILURE
+            log.detail = (
+                f"letter_id={letter_id}: upload returned no tx id, "
+                f"attempt {current_attempt}/{total_attempts}."
+            )
+            log.finished_at = timezone.now()
+            log.save(update_fields=["status", "detail", "finished_at"])
+            raise self.retry(
+                exc=RuntimeError("upload returned no tx id"),
+                countdown=300,
+            )
+
+        Letter.objects.filter(
+            pk=letter.pk,
+        ).filter(
+            Q(arweave_tx_id__isnull=True) | Q(arweave_tx_id=""),
+        ).update(arweave_tx_id=tx_id)
+
+        log.status = CeleryTaskLog.STATUS_SUCCESS
+        log.detail = f"letter_id={letter_id} backed up, tx={tx_id}."
+        log.finished_at = timezone.now()
+        log.save(update_fields=["status", "detail", "finished_at"])
+    except Exception as exc:
+        if not getattr(exc, '__class__', None).__name__ == "Retry":
+            log.status = CeleryTaskLog.STATUS_FAILURE
+            log.detail = f"letter_id={letter_id}: {exc}"
+            log.finished_at = timezone.now()
+            log.save(update_fields=["status", "detail", "finished_at"])
+        raise

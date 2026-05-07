@@ -107,11 +107,17 @@ TIME_ZONE = os.getenv("TIME_ZONE", "UTC")
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "/static/"
+STATIC_URL = os.getenv("STATIC_URL", "/static/").strip() or "/static/"
+if not STATIC_URL.endswith("/"):
+    STATIC_URL = f"{STATIC_URL}/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
+WHITENOISE_MANIFEST_STRICT = False
+WHITENOISE_USE_FINDERS = (
+    os.getenv("WHITENOISE_USE_FINDERS", "1") == "1"
 )
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -141,6 +147,10 @@ DEFAULT_FROM_EMAIL = os.getenv(
 SITE_URL = os.getenv("SITE_URL", "http://localhost:8040")
 
 LETTER_MESSAGE_ENCRYPTION_KEY = os.getenv("LETTER_MESSAGE_ENCRYPTION_KEY", "")
+
+ARWEAVE_KEY_FILE = os.getenv(
+    "ARWEAVE_KEY_FILE", str(BASE_DIR / "arweave_key.json")
+)
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -195,6 +205,10 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BEAT_SCHEDULE = {
     "queue-due-letters-every-10-minutes": {
         "task": "letters.tasks.queue_due_letters_task",
+        "schedule": crontab(minute="*/10"),
+    },
+    "queue-arweave-backups-every-10-minutes": {
+        "task": "letters.tasks.queue_arweave_backup_task",
         "schedule": crontab(minute="*/10"),
     },
     "send-email-reactivation-reminders-every-morning": {
