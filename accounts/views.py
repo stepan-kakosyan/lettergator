@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
+from django.db import transaction as db_transaction
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -16,7 +17,8 @@ from django.views.decorators.http import require_POST
 from django.conf import settings
 
 from .forms import EmailAuthenticationForm, TestEmailForm, UserRegistrationForm
-from .models import BalanceTransaction, CustomUser
+from .google_auth import exchange_code_for_user_info, generate_state, get_authorization_url
+from .models import BalanceTransaction, CustomUser, LoginEvent
 from .services import send_activation_email
 from .tasks import send_pending_email_confirmation_task
 
@@ -73,6 +75,10 @@ class EmailLoginView(LoginView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        LoginEvent.objects.create(
+            user=self.request.user,
+            method=LoginEvent.Method.MANUAL,
+        )
         if self.request.headers.get("HX-Request") == "true":
             return HttpResponse(
                 status=204,
@@ -243,3 +249,93 @@ def test_email_view(request):
             )
 
     return render(request, "accounts/test_email.html", {"form": form})
+
+
+def _google_redirect_uri(request):
+    return request.build_absolute_uri(reverse("google-callback"))
+
+
+def google_login_view(request):
+    """Redirect user to Google's OAuth2 authorization page."""
+    if request.user.is_authenticated:
+        return redirect("landing-page")
+    state = generate_state()
+    request.session["google_oauth_state"] = state
+    redirect_uri = _google_redirect_uri(request)
+    return redirect(get_authorization_url(redirect_uri, state))
+
+
+def google_callback_view(request):
+    """Handle the OAuth2 callback from Google."""
+    error = request.GET.get("error")
+    if error:
+        messages.error(request, f"Google sign-in was cancelled or failed: {error}")
+        return redirect("login")
+
+    state = request.GET.get("state", "")
+    stored_state = request.session.pop("google_oauth_state", None)
+    if not stored_state or state != stored_state:
+        messages.error(request, "Invalid OAuth state. Please try again.")
+        return redirect("login")
+
+    code = request.GET.get("code")
+    if not code:
+        messages.error(request, "No authorisation code received from Google.")
+        return redirect("login")
+
+    try:
+        redirect_uri = _google_redirect_uri(request)
+        user_info = exchange_code_for_user_info(code, redirect_uri)
+    except ValueError as exc:
+        messages.error(request, f"Google sign-in failed: {exc}")
+        return redirect("login")
+
+    email = (user_info.get("email") or "").strip().lower()
+    if not email:
+        messages.error(request, "Google did not return an email address.")
+        return redirect("login")
+
+    full_name = (
+        user_info.get("name")
+        or user_info.get("given_name")
+        or email.split("@")[0]
+    ).strip()
+
+    user = CustomUser.objects.filter(email=email).first()
+    is_new = user is None
+
+    if is_new:
+        with db_transaction.atomic():
+            user = CustomUser(
+                email=email,
+                full_name=full_name,
+                email_verified=True,
+                email_verified_at=timezone.now(),
+            )
+            user.set_unusable_password()
+            user.balance = 2
+            user.save()
+            BalanceTransaction.objects.create(
+                user=user,
+                amount=2,
+                reason="Welcome gift for email verification",
+            )
+    else:
+        # Ensure email is marked verified for existing users logging in via Google
+        if not user.email_verified:
+            user.email_verified = True
+            user.email_verified_at = timezone.now()
+            user.save(update_fields=["email_verified", "email_verified_at"])
+
+    login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+    LoginEvent.objects.create(user=user, method=LoginEvent.Method.GOOGLE)
+
+    if is_new:
+        messages.success(
+            request,
+            "Account created with Google. Welcome — $2.00 has been added to your balance!",
+        )
+    else:
+        messages.success(request, "Signed in with Google.")
+
+    return redirect("landing-page")

@@ -98,3 +98,30 @@ class BalanceTransaction(models.Model):
     def __str__(self):
         sign = "+" if self.amount >= 0 else ""
         return f"{self.user.email}: {sign}{self.amount}"
+
+
+class LoginEvent(models.Model):
+    class Method(models.TextChoices):
+        MANUAL = "manual", "Manual"
+        GOOGLE = "google", "Google"
+
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name="login_events",
+    )
+    method = models.CharField(
+        max_length=20,
+        choices=Method.choices,
+        default=Method.MANUAL,
+    )
+    logged_in_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-logged_in_at"]
+
+    def __str__(self):
+        return (
+            f"{self.user.email} via {self.get_method_display()} "
+            f"at {self.logged_in_at:%Y-%m-%d %H:%M}"
+        )

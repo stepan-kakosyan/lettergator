@@ -6,6 +6,8 @@ from .views import (
     EmailLoginView,
     activate_account_view,
     confirm_pending_email_view,
+    google_callback_view,
+    google_login_view,
     logout_view,
     register_view,
     resend_activation_email_view,
@@ -51,6 +53,8 @@ urlpatterns = [
         name="password_reset_confirm",
     ),
     path("logout/", logout_view, name="logout"),
+    path("google/login/", google_login_view, name="google-login"),
+    path("google/callback/", google_callback_view, name="google-callback"),
     path("test-email/", test_email_view, name="test-email"),
     path(
         "activate/<uidb64>/<token>/",

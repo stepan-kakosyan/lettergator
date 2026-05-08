@@ -146,6 +146,9 @@ DEFAULT_FROM_EMAIL = os.getenv(
 )
 SITE_URL = os.getenv("SITE_URL", "http://localhost:8040")
 
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "")
+
 LETTER_MESSAGE_ENCRYPTION_KEY = os.getenv("LETTER_MESSAGE_ENCRYPTION_KEY", "")
 
 ARWEAVE_KEY_FILE = os.getenv(
