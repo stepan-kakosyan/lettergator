@@ -32,53 +32,26 @@
         </div>
 
         <!-- Two-column layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
 
-            <!-- LEFT: Add Funds -->
-            <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10 space-y-6">
+            <!-- Add Funds: first on mobile, right column on desktop -->
+            <div class="order-first md:order-last bg-white border border-gray-200 rounded-3xl p-5 md:p-6 space-y-4">
                 <div>
-                    <h2 class="text-2xl font-black tracking-tight text-gray-900">Add Funds</h2>
+                    <h2 class="text-xl font-black tracking-tight text-gray-900">Add Funds</h2>
                     <p class="text-gray-500 text-sm mt-1">Top up your balance to schedule letters beyond one year.</p>
                 </div>
 
                 <!-- How pricing works -->
-                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-3">
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 space-y-2">
                     <p class="text-xs uppercase tracking-widest text-[#014421] font-bold">How pricing works</p>
-                    <p class="text-sm text-gray-700">
-                        Scheduling a letter <strong>under 1 year</strong> is always <strong>free</strong>.
-                        For letters delivered <strong>1 year or more</strong> from today, a small fee applies — charged per full calendar year.
-                    </p>
                     <ul class="text-sm text-gray-700 space-y-1">
-                        <li class="flex justify-between"><span>1 year away</span><span class="font-semibold text-gray-900">$0.50</span></li>
-                        <li class="flex justify-between"><span>2 years away</span><span class="font-semibold text-gray-900">$1.00</span></li>
-                        <li class="flex justify-between"><span>5 years away</span><span class="font-semibold text-gray-900">$2.50</span></li>
-                        <li class="flex justify-between"><span>10 years away</span><span class="font-semibold text-gray-900">$5.00</span></li>
+                        <li>Letters delivered <strong>under 1 year</strong> from today are <strong>free</strong>.</li>
+                        <li>Letters delivered <strong>1 year or more</strong> from today cost <strong>$0.50 per year</strong>.</li>
                     </ul>
-                    <p class="text-xs text-gray-500">Fee = number of calendar years × $0.50. Charged once when you seal and store the letter.</p>
-                </div>
-
-                <!-- Quick estimate calculator -->
-                <div class="space-y-3">
-                    <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">Quick estimate</p>
-                    <div class="flex items-center gap-3">
-                        <label class="text-sm text-gray-600 whitespace-nowrap">Years from now:</label>
-                        <input
-                            id="calc-years"
-                            type="number"
-                            min="1"
-                            max="50"
-                            value="1"
-                            class="w-24 border-0 border-b-2 border-gray-300 bg-transparent px-0 py-1 text-sm focus:border-[#014421] focus:ring-0 focus:outline-none"
-                        >
-                    </div>
-                    <p class="text-sm text-gray-700">
-                        Estimated cost:
-                        <span id="calc-result" class="font-black text-gray-900">$0.50</span>
-                    </p>
                 </div>
 
                 <!-- Form -->
-                <form method="post" class="space-y-4">
+                <form method="post" class="space-y-3">
                     {% csrf_token %}
                     <div>
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2" for="{{ balance_form.amount.id_for_label }}">
@@ -98,15 +71,15 @@
                     </div>
                     <button
                         type="submit"
-                        class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
+                        class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#014421] text-white text-sm font-semibold hover:bg-[#023319] transition-colors"
                     >
                         Add Funds
                     </button>
                 </form>
             </div>
 
-            <!-- RIGHT: Transaction History -->
-            <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
+            <!-- Transaction History: second on mobile, left column on desktop -->
+            <div class="order-last md:order-first bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
                 <h2 class="text-2xl font-black tracking-tight text-gray-900">Transaction History</h2>
 
                 {% if transactions %}
@@ -171,19 +144,6 @@
         });
     });
 
-    // Quick estimate calculator
-    var calcYears = document.getElementById('calc-years');
-    var calcResult = document.getElementById('calc-result');
-    var RATE = 0.50;
-    function updateEstimate() {
-        var years = parseInt(calcYears.value, 10);
-        if (isNaN(years) || years < 1) { calcResult.textContent = '$0.00'; return; }
-        calcResult.textContent = '$' + (years * RATE).toFixed(2);
-    }
-    if (calcYears) {
-        calcYears.addEventListener('input', updateEstimate);
-        updateEstimate();
-    }
 }());
 </script>
 {% endblock %}
