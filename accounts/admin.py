@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import BalanceTransaction, CustomUser, SecondaryEmail
+from .models import BalanceTransaction, CustomUser, LoginEvent, SecondaryEmail
 
 
 @admin.register(CustomUser)
@@ -74,3 +74,10 @@ class BalanceTransactionAdmin(admin.ModelAdmin):
     list_display = ("user", "amount", "reason", "created_at")
     list_filter = ("created_at",)
     search_fields = ("user__email", "reason")
+
+
+@admin.register(LoginEvent)
+class LoginEventAdmin(admin.ModelAdmin):
+    list_display = ("user", "method", "logged_in_at")
+    list_filter = ("method", "logged_in_at")
+    search_fields = ("user__email",)
