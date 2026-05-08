@@ -9,17 +9,17 @@
 
         <!-- Desktop nav -->
         <nav class="hidden md:flex gap-8 text-sm font-medium text-gray-500">
-            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors">See why</a>
-            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors">See how</a>
-            <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors">Letters</a>
-            <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors">Contact</a>
+            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'why-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">See why</a>
+            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">See how</a>
+            <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'letters-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">Letters</a>
+            <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'contact-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">Contact</a>
         </nav>
 
         <div class="flex items-center gap-3">
             {% if request.user.is_authenticated %}
             <a
                 href="{% url 'balance-page' %}"
-                class="w-10 h-10 rounded-full border border-[#014421] text-[#014421] flex items-center justify-center hover:bg-[#014421] hover:text-white transition-all font-black"
+                class="w-10 h-10 rounded-full border border-[#014421] flex items-center justify-center transition-all font-black {% if request.resolver_match.url_name == 'balance-page' %}bg-[#014421] text-white{% else %}text-[#014421] hover:bg-[#014421] hover:text-white{% endif %}"
                 aria-label="Open balance page"
                 title="Balance: ${{ request.user.balance|floatformat:2 }}"
             >
@@ -27,7 +27,7 @@
             </a>
             <a
                 href="{% url 'dashboard_view' %}"
-                class="w-10 h-10 rounded-full border border-[#014421] text-[#014421] flex items-center justify-center hover:bg-[#014421] hover:text-white transition-all"
+                class="w-10 h-10 rounded-full border border-[#014421] flex items-center justify-center transition-all {% if request.resolver_match.url_name == 'dashboard_view' %}bg-[#014421] text-white{% else %}text-[#014421] hover:bg-[#014421] hover:text-white{% endif %}"
                 aria-label="Open profile dashboard"
                 title="Profile"
             >
@@ -63,11 +63,11 @@
         class="md:hidden hidden absolute left-0 right-0 top-full z-50 bg-white border-b border-gray-100 shadow-lg px-6 py-5"
     >
         <nav class="flex flex-col gap-4 text-sm font-medium text-gray-600">
-            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors py-1">See why</a>
-            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1">See how</a>
-            <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors py-1">Letters</a>
-            <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors py-1">Contact</a>
-            <a href="{% url 'privacy-page' %}" class="hover:text-[#014421] transition-colors py-1">Privacy</a>
+            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'why-page' %}text-[#014421] font-semibold{% endif %}">See why</a>
+            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] font-semibold{% endif %}">See how</a>
+            <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'letters-page' %}text-[#014421] font-semibold{% endif %}">Letters</a>
+            <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'contact-page' %}text-[#014421] font-semibold{% endif %}">Contact</a>
+            <a href="{% url 'privacy-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'privacy-page' %}text-[#014421] font-semibold{% endif %}">Privacy</a>
             {% if not request.user.is_authenticated %}
             <hr class="border-gray-100">
             <a href="{% url 'login' %}" class="font-bold text-[#014421]">Login</a>

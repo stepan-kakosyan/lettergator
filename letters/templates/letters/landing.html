@@ -12,7 +12,16 @@
 
     <!-- Hero Section -->
     <section class="flex flex-col items-center justify-center px-6 pt-12 pb-20 max-w-4xl mx-auto text-center">
-        <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-3 fade-in-up delay-100">
+        {% if request.user.is_authenticated %}
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-3 fade-in-up delay-100">
+            Hi {{ request.user.full_name|default:request.user.email }}, now you can <br>
+            <span class="text-[#014421]">send your letter at a perfect time.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl fade-in-up delay-200">
+            You have <span class="font-semibold text-[#014421]">${{ request.user.balance }}</span> at your balance for creating long term letters.
+        </p>
+        {% else %}
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-3 fade-in-up delay-100">
             Send your message <br> <span class="text-[#014421]">at the perfect time.</span>
         </h1>
         <p class="text-base md:text-lg italic text-[#014421] mb-8 fade-in-up delay-100" style="font-weight:400;">
@@ -22,11 +31,12 @@
             A secure digital vault that stores your letters, files, and ideas,
             then delivers them in the future on the exact day you choose.
         </p>
+        {% endif %}
         <a
             href="{% url 'letters-page' %}"
             class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
         >
-            Open Letters
+            {% if request.user.is_authenticated %}Go to my letters{% else %}Open Letters{% endif %}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
