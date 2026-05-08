@@ -5,6 +5,7 @@ from datetime import timedelta
 import pymysql
 from celery.schedules import crontab
 from dotenv import load_dotenv
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 pymysql.install_as_MySQLdb()
@@ -37,11 +38,13 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "accounts.middleware.UserLanguageMiddleware",
 ]
 
 ROOT_URLCONF = "lettergator_backend.urls"
@@ -53,10 +56,11 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
+                    "django.template.context_processors.request",
+                    "django.template.context_processors.i18n",
+                    "django.contrib.auth.context_processors.auth",
+                    "django.contrib.messages.context_processors.messages",
+                ],
         },
     },
 ]
@@ -102,9 +106,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "en-us"
+LANGUAGES = [
+    ("en", _("English")),
+    ("ru", _("Russian")),
+    ("hy", _("Armenian")),
+]
+LANGUAGE_CODE = "en"
 TIME_ZONE = os.getenv("TIME_ZONE", "UTC")
 USE_I18N = True
+USE_L10N = True
+LOCALE_PATHS = [BASE_DIR / "locale"]
 USE_TZ = True
 
 STATIC_URL = os.getenv("STATIC_URL", "/static/").strip() or "/static/"

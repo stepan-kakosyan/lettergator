@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2">
+  <!-- Russian flag: white / blue / red horizontal stripes -->
+  <rect width="3" height="0.667" y="0"     fill="#FFFFFF"/>
+  <rect width="3" height="0.667" y="0.667" fill="#0039A6"/>
+  <rect width="3" height="0.666" y="1.334" fill="#D52B1E"/>
+</svg>

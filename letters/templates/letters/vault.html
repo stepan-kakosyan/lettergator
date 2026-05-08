@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}LetterGator | Letters{% endblock %}
+{% block title %}LetterGator | {% trans "Letters" %}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
@@ -14,35 +14,28 @@
         <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
             <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">Letters</p>
             <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-                {% if guest_mode %}Letters Workspace Preview{% else %}Your Letters Workspace{% endif %}
+                {% if guest_mode %}{% trans "Letters Workspace Preview" %}{% else %}{% trans "Your Letters Workspace" %}{% endif %}
             </h1>
             <p class="text-gray-600 mt-4 max-w-3xl">
                 {% if guest_mode %}
-                This page stores and manages your scheduled letters. Sign in to create
-                letters, manage recipients, and control edit/delete permissions.
+                {% trans "This page stores and manages your scheduled letters. Sign in to create letters, manage recipients, and control edit/delete permissions." %}
                 {% else %}
-                Manage scheduled letters in one place. You can review recipients,
-                delivery timing, visibility, and perform edit/delete actions where
-                they are still permitted.
+                {% trans "Manage scheduled letters in one place. You can review recipients, delivery timing, visibility, and perform edit/delete actions where they are still permitted." %}
                 {% endif %}
             </p>
             {% if not guest_mode %}
             <div class="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-emerald-900">
-                <p class="font-semibold">Long-term schedule policy</p>
+                <p class="font-semibold">{% trans "Long-term schedule policy" %}</p>
                 <p class="text-sm mt-1">
-                    Scheduling letters for one year and beyond uses your balance.
-                    The rate is $0.50 per year. Keep at least
-                    ${{ min_long_schedule_balance|floatformat:2 }}
-                    to unlock 1 year+ scheduling options.
+                    {% blocktrans with balance=min_long_schedule_balance|floatformat:2 %}Scheduling letters for one year and beyond uses your balance. The rate is $0.50 per year. Keep at least ${{ balance }} to unlock 1 year+ scheduling options.{% endblocktrans %}
                 </p>
             </div>
             {% endif %}
             {% if not guest_mode and email_verification_required %}
             <div class="mt-6 rounded-2xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900">
-                <p class="font-semibold">Email verification required</p>
+                <p class="font-semibold">{% trans "Email verification required" %}</p>
                 <p class="text-sm mt-1">
-                    You can explore Letters, but you must verify your email before creating
-                    a new letter.
+                    {% trans "You can explore Letters, but you must verify your email before creating a new letter." %}
                 </p>
                 <form
                     method="post"
@@ -59,7 +52,7 @@
                         type="submit"
                         class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold border border-amber-500 text-amber-800 hover:bg-amber-100 transition-colors"
                     >
-                        Resend activation email
+                        {% trans "Resend activation email" %}
                     </button>
                 </form>
             </div>
@@ -70,13 +63,13 @@
                     href="{% url 'login' %}"
                     class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
                 >
-                    Login
+                    {% trans "Login" %}
                 </a>
                 <a
                     href="{% url 'register' %}"
                     class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors"
                 >
-                    Register
+                    {% trans "Register" %}
                 </a>
             </div>
             {% else %}
@@ -84,14 +77,14 @@
                 href="{% url 'letter-create-page' %}"
                 class="inline-flex items-center justify-center mt-6 px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
             >
-                Create Letter
+                {% trans "Create Letter" %}
             </a>
             {% endif %}
         </div>
 
         <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-6 md:p-8">
             <h2 class="text-2xl font-black tracking-tight text-gray-900">
-                {% if guest_mode %}Why Sign In{% else %}Existing Letters{% endif %}
+                {% if guest_mode %}{% trans "Why Sign In" %}{% else %}{% trans "Existing Letters" %}{% endif %}
             </h2>
 
             {% if messages %}
@@ -106,17 +99,16 @@
 
             {% if guest_mode %}
             <div class="mt-6 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
-                <h3 class="text-lg font-bold text-gray-900">Access required</h3>
+                <h3 class="text-lg font-bold text-gray-900">{% trans "Access required" %}</h3>
                 <p class="text-gray-600 mt-2 max-w-2xl mx-auto">
-                    To view your personal letters table and decrypted previews (when allowed),
-                    please log in or create an account.
+                    {% trans "To view your personal letters table and decrypted previews (when allowed), please log in or create an account." %}
                 </p>
                 <div class="mt-5 flex flex-wrap justify-center gap-3">
                     <a href="{% url 'login' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors">
-                        Login
+                        {% trans "Login" %}
                     </a>
                     <a href="{% url 'register' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors">
-                        Register
+                        {% trans "Register" %}
                     </a>
                 </div>
             </div>
@@ -125,12 +117,12 @@
                 <table class="letters-table w-full">
                     <thead>
                         <tr>
-                            <th>Subject</th>
-                            <th>Content</th>
-                            <th>Recipients</th>
-                            <th>Delivery Date</th>
-                            <th>Status</th>
-                            <th>Delete</th>
+                            <th>{% trans "Subject" %}</th>
+                            <th>{% trans "Content" %}</th>
+                            <th>{% trans "Recipients" %}</th>
+                            <th>{% trans "Delivery Date" %}</th>
+                            <th>{% trans "Status" %}</th>
+                            <th>{% trans "Delete" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -158,7 +150,7 @@
                                         data-view-title="{{ letter.subject|escape }}"
                                         data-view-message="{{ letter.display_message|escapejs }}"
                                     >
-                                        Display More
+                                        {% trans "Display More" %}
                                     </button>
                                     {% if letter.can_be_edited_now %}
                                     <button
@@ -204,7 +196,7 @@
 
                             <td>
                                 {% if letter.send_to_me %}
-                                <span class="text-sm font-semibold text-gray-800">Only me</span>
+                                <span class="text-sm font-semibold text-gray-800">{% trans "Only me" %}</span>
                                 {% else %}
                                 <div class="recipient-list text-sm text-gray-700 space-y-1">
                                     <p>{{ letter.recipient_email }}</p>
@@ -240,16 +232,16 @@
                                         class="icon-btn danger"
                                         title="Delete letter"
                                         aria-label="Delete letter"
-                                        onclick="return confirm('Delete this letter permanently? This cannot be undone.')"
+                                        onclick="return confirm('{% trans "Delete this letter permanently? This cannot be undone." %}')"
                                     >
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-7 0h8"/>
                                         </svg>
                                     </button>
-                                    <span class="text-xs text-gray-600">Available until <span class="local-date" data-utc="{{ letter.delete_until|date:'c' }}">{{ letter.delete_until|date:"M d, Y H:i" }}</span></span>
+                                    <span class="text-xs text-gray-600">{% trans "Available until" %} <span class="local-date" data-utc="{{ letter.delete_until|date:'c' }}">{{ letter.delete_until|date:"M d, Y H:i" }}</span></span>
                                 </form>
                                 {% else %}
-                                <span class="text-sm text-gray-600">You cannot delete this letter.</span>
+                                <span class="text-sm text-gray-600">{% trans "You cannot delete this letter." %}</span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -259,10 +251,10 @@
             </div>
             {% else %}
             <div class="mt-6 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
-                <h3 class="text-lg font-bold text-gray-900">No letters yet</h3>
-                <p class="text-gray-600 mt-2">Create your first letter to start building your timeline.</p>
+                <h3 class="text-lg font-bold text-gray-900">{% trans "No letters yet" %}</h3>
+                <p class="text-gray-600 mt-2">{% trans "Create your first letter to start building your timeline." %}</p>
                 <a href="{% url 'letter-create-page' %}" class="inline-flex items-center justify-center mt-5 px-5 py-2.5 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors">
-                    Create Letter
+                    {% trans "Create Letter" %}
                 </a>
             </div>
             {% endif %}
@@ -275,7 +267,7 @@
     <div class="preview-backdrop" data-view-close></div>
     <div class="preview-dialog" role="dialog" aria-modal="true" aria-labelledby="view-title">
         <div class="flex items-center justify-between gap-3">
-            <h3 id="view-title" class="text-xl font-bold text-gray-900">Letter</h3>
+            <h3 id="view-title" class="text-xl font-bold text-gray-900">{% trans "Letter" %}</h3>
             <button type="button" class="preview-close" data-view-close aria-label="Close">
                 ×
             </button>
@@ -288,7 +280,7 @@
     <div class="preview-backdrop" data-edit-close></div>
     <div class="preview-dialog" role="dialog" aria-modal="true" aria-labelledby="edit-title">
         <div class="flex items-center justify-between gap-3">
-            <h3 id="edit-title" class="text-xl font-bold text-gray-900">Edit Letter Text</h3>
+            <h3 id="edit-title" class="text-xl font-bold text-gray-900">{% trans "Edit Letter Text" %}</h3>
             <button type="button" class="preview-close" data-edit-close aria-label="Close">
                 ×
             </button>
@@ -299,7 +291,7 @@
             <textarea id="edit-textarea" name="message" class="edit-message" rows="8" required></textarea>
             <div class="flex justify-end">
                 <button id="edit-save" type="submit" class="action-btn action-primary w-auto px-5">
-                    Save Text
+                    {% trans "Save Text" %}
                 </button>
             </div>
         </form>

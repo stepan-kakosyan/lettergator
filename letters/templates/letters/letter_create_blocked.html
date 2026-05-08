@@ -1,19 +1,19 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}LetterGator | Verify Email{% endblock %}
+{% block title %}LetterGator | {% trans "Verify Email" %}{% endblock %}
 
 {% block content %}
 <div id="letters-shell">
 <section class="px-6 py-20">
     <div class="max-w-3xl mx-auto">
         <div class="rounded-3xl border border-amber-300 bg-amber-50 p-8 md:p-10">
-            <p class="text-xs uppercase tracking-[0.2em] text-amber-700 font-semibold">Email verification required</p>
+            <p class="text-xs uppercase tracking-[0.2em] text-amber-700 font-semibold">{% trans "Email verification required" %}</p>
             <h1 class="text-3xl md:text-4xl font-black tracking-tight text-amber-900 mt-2">
-                Verify your email before creating a letter
+                {% trans "Verify your email before creating a letter" %}
             </h1>
             <p class="text-amber-800 mt-4 max-w-2xl">
-                Your account is active and you can browse the app, but letter creation is
-                locked until you confirm your email address.
+                {% trans "Your account is active and you can browse the app, but letter creation is locked until you confirm your email address." %}
             </p>
 
             <div class="mt-8 flex flex-wrap gap-3">
@@ -31,14 +31,14 @@
                         type="submit"
                         class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-amber-600 text-white font-semibold hover:bg-amber-700 transition-colors"
                     >
-                        Resend activation email
+                        {% trans "Resend activation email" %}
                     </button>
                 </form>
                 <a
                     href="{% url 'letters-page' %}"
                     class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-amber-600 text-amber-800 font-semibold hover:bg-amber-100 transition-colors"
                 >
-                    Back to Letters
+                    {% trans "Back to Letters" %}
                 </a>
             </div>
         </div>

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% load static %}
+{% load static i18n %}
 
-{% block title %}LetterGator | Message to the Future{% endblock %}
+{% block title %}LetterGator | {% trans "Message to the Future" %}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
@@ -13,30 +13,33 @@
     <!-- Hero Section -->
     <section class="flex flex-col items-center justify-center px-6 pt-12 pb-20 max-w-4xl mx-auto text-center">
         {% if request.user.is_authenticated %}
+        {% with display_name=request.user.full_name|default:request.user.email %}
         <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-3 fade-in-up delay-100">
-            Hi {{ request.user.full_name|default:request.user.email }}, now you can <br>
-            <span class="text-[#014421]">send your letter at a perfect time.</span>
+            {% blocktrans with name=display_name %}Hi {{ name }}, now you can{% endblocktrans %} <br>
+            <span class="text-[#014421]">{% trans "send your letter at a perfect time." %}</span>
         </h1>
+        {% endwith %}
+        {% with balance=request.user.balance|floatformat:2 %}
         <p class="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl fade-in-up delay-200">
-            You have <span class="font-semibold text-[#014421]">${{ request.user.balance }}</span> at your balance for creating long term letters.
+            {% blocktrans %}You have <span class="font-semibold text-[#014421]">${{ balance }}</span> at your balance for creating long term letters.{% endblocktrans %}
         </p>
+        {% endwith %}
         {% else %}
         <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-3 fade-in-up delay-100">
-            Send your message <br> <span class="text-[#014421]">at the perfect time.</span>
+            {% trans "Send your message" %} <br> <span class="text-[#014421]">{% trans "at the perfect time." %}</span>
         </h1>
         <p class="text-base md:text-lg italic text-[#014421] mb-8 fade-in-up delay-100" style="font-weight:400;">
-            Because some things are better left for later. See you later, Alligator!
+            {% trans "Because some things are better left for later. See you later, Alligator!" %}
         </p>
         <p class="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl fade-in-up delay-200">
-            A secure digital vault that stores your letters, files, and ideas,
-            then delivers them in the future on the exact day you choose.
+            {% trans "A secure digital vault that stores your letters, files, and ideas, then delivers them in the future on the exact day you choose." %}
         </p>
         {% endif %}
         <a
             href="{% url 'letters-page' %}"
             class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
         >
-            {% if request.user.is_authenticated %}Go to my letters{% else %}Open Letters{% endif %}
+            {% if request.user.is_authenticated %}{% trans "Go to my letters" %}{% else %}{% trans "Open Letters" %}{% endif %}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
@@ -47,12 +50,12 @@
     <section class="px-6 pb-20">
         <div class="max-w-4xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">See why</p>
+                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "See why" %}</p>
                 <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-                    Who writes letters like this?
+                    {% trans "Who writes letters like this?" %}
                 </h2>
                 <p class="text-gray-600 mt-3">
-                    From personal milestones to team rituals — here are the moments people most often choose to write a letter for later.
+                    {% trans "From personal milestones to team rituals — here are the moments people most often choose to write a letter for later." %}
                 </p>
             </div>
 
@@ -60,32 +63,32 @@
                 <!-- Personal -->
                 <div class="border border-gray-200 rounded-2xl p-6 hover:border-[#014421] hover:shadow-md transition-all">
                     <div class="text-2xl mb-3">🧍</div>
-                    <h3 class="text-base font-bold text-gray-900 mb-1">Personal</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Letters to your future self — written during a job change, a hard season, or a new beginning. Read when the dust settles.</p>
+                    <h3 class="text-base font-bold text-gray-900 mb-1">{% trans "Personal" %}</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Letters to your future self — written during a job change, a hard season, or a new beginning. Read when the dust settles." %}</p>
                 </div>
                 <!-- Family -->
                 <div class="border border-gray-200 rounded-2xl p-6 hover:border-[#014421] hover:shadow-md transition-all">
                     <div class="text-2xl mb-3">👨‍👩‍👧</div>
-                    <h3 class="text-base font-bold text-gray-900 mb-1">Family</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Notes to a partner, a newborn, or your whole family — timed for anniversaries, birthdays, or the moments that matter most.</p>
+                    <h3 class="text-base font-bold text-gray-900 mb-1">{% trans "Family" %}</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Notes to a partner, a newborn, or your whole family — timed for anniversaries, birthdays, or the moments that matter most." %}</p>
                 </div>
                 <!-- Team -->
                 <div class="border border-gray-200 rounded-2xl p-6 hover:border-[#014421] hover:shadow-md transition-all">
                     <div class="text-2xl mb-3">🏢</div>
-                    <h3 class="text-base font-bold text-gray-900 mb-1">Team</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Pre-launch messages, knowledge handovers, year-ahead commitments — delivered at exactly the right professional moment.</p>
+                    <h3 class="text-base font-bold text-gray-900 mb-1">{% trans "Team" %}</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Pre-launch messages, knowledge handovers, year-ahead commitments — delivered at exactly the right professional moment." %}</p>
                 </div>
                 <!-- Milestone -->
                 <div class="border border-gray-200 rounded-2xl p-6 hover:border-[#014421] hover:shadow-md transition-all">
                     <div class="text-2xl mb-3">🏆</div>
-                    <h3 class="text-base font-bold text-gray-900 mb-1">Milestone</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Retirement, moving abroad, a difficult anniversary — letters that mark life's biggest turning points and arrive when they are needed.</p>
+                    <h3 class="text-base font-bold text-gray-900 mb-1">{% trans "Milestone" %}</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Retirement, moving abroad, a difficult anniversary — letters that mark life's biggest turning points and arrive when they are needed." %}</p>
                 </div>
             </div>
 
             <div class="text-center">
                 <a href="{% url 'why-page' %}" class="inline-flex items-center gap-2 text-sm font-semibold text-[#014421] border border-[#014421] px-5 py-2.5 rounded-xl hover:bg-[#014421] hover:text-white transition-colors">
-                    Explore all scenarios
+                    {% trans "Explore all scenarios" %}
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                     </svg>
@@ -97,42 +100,41 @@
     <section class="px-6 pb-20">
         <div class="max-w-4xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">See how</p>
+                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "See how" %}</p>
                 <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-                    How your letter travels through time
+                    {% trans "How your letter travels through time" %}
                 </h2>
                 <p class="text-gray-600 mt-3">
-                    Four simple steps take your message from idea to inbox —
-                    on exactly the day and time you choose.
+                    {% trans "Four simple steps take your message from idea to inbox — on exactly the day and time you choose." %}
                 </p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
                     <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">1</div>
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">Compose</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">Write your message with no limits and save it to your account.</p>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">{% trans "Compose" %}</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Write your message with no limits and save it to your account." %}</p>
                 </div>
                 <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
                     <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">2</div>
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">Seal</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">Set privacy rules — block previews, lock edits, control deletion.</p>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">{% trans "Seal" %}</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Set privacy rules — block previews, lock edits, control deletion." %}</p>
                 </div>
                 <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
                     <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">3</div>
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">Schedule</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">Pick the exact date — a preset milestone or a custom moment.</p>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">{% trans "Schedule" %}</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Pick the exact date — a preset milestone or a custom moment." %}</p>
                 </div>
                 <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
                     <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">4</div>
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">Deliver</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">LetterGator sends it automatically — with retry logic built in.</p>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">{% trans "Deliver" %}</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "LetterGator sends it automatically — with retry logic built in." %}</p>
                 </div>
             </div>
 
             <div class="text-center">
                 <a href="{% url 'how-page' %}" class="inline-flex items-center gap-2 text-sm font-semibold text-[#014421] border border-[#014421] px-5 py-2.5 rounded-xl hover:bg-[#014421] hover:text-white transition-colors">
-                    See the full journey
+                    {% trans "See the full journey" %}
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                     </svg>
@@ -145,12 +147,12 @@
     <section class="px-6 pb-24">
         <div class="max-w-4xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">FAQ</p>
+                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "FAQ" %}</p>
                 <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-                    Common questions
+                    {% trans "Common questions" %}
                 </h2>
                 <p class="text-gray-600 mt-3">
-                    Everything users usually ask before sending their first future letter.
+                    {% trans "Everything users usually ask before sending their first future letter." %}
                 </p>
             </div>
 

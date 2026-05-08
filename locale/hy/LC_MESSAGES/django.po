@@ -1,0 +1,751 @@
+msgid ""
+msgstr ""
+"Language: hy\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "1 month"
+msgstr "1 ամիս"
+
+msgid "1 year"
+msgstr "1 տարի"
+
+msgid "1 year and longer schedules consume your USD balance."
+msgstr "1 տարի և ավելի պլանները օգտագործում են ձեր USD հաշվեկշիռը։"
+
+msgid "10 years"
+msgstr "10 տարի"
+
+msgid "5 years"
+msgstr "5 տարի"
+
+msgid "6 months"
+msgstr "6 ամիս"
+
+msgid ""
+"A confirmation link was sent to <strong>%(email)s</strong>. Your primary "
+"email will not change until you click that link."
+msgstr ""
+"Hav'аstaroomi kapy ooghаrkval e <strong>%(email)s</strong>: Kizor' e-poste "
+"ch'i p'okhvelu minch' chi sghmel ayn kapy:"
+
+msgid ""
+"A secure digital vault that stores your letters, files, and ideas, then "
+"delivers them in the future on the exact day you choose."
+msgstr ""
+"Ապահով թվային պահոց, որը պահպանում է ձեր նամակները, ֆայլերն ու գաղափարները, "
+"ապա ուղարկում դրանք ապագայում՝ ձեր ընտրած օրը:"
+
+msgid "Access required"
+msgstr "Պահանջվում է հասանելիություն"
+
+msgid "Account Activated"
+msgstr "Հաշիվը ակտիվացված է"
+
+msgid "Activation Link Error"
+msgstr "Ակտիվացման հղման սխալ"
+
+msgid "Activation failed"
+msgstr "Ակտիվացումը ձախողվեց"
+
+msgid "Add Email"
+msgstr "Ավելացնել էլ. փոստ"
+
+msgid "Add Funds"
+msgstr "Լրացնել հաշվեկշիռը"
+
+msgid "Add Funds — Coming Soon"
+msgstr "Լրացնել հաշվեկշիռը — Շուտով"
+
+msgid "Add at least one recipient when \"Send to me\" is disabled."
+msgstr "Ավելացրեք առնվազն մեկ ստացող, եթե «Ուղարկել ինձ»-ը անջատված է։"
+
+msgid "Add backup email"
+msgstr "Ավելացնել պահուստային էլ. փոստ"
+
+msgid "Add comment"
+msgstr "Ավելացնել մեկնաբանություն"
+
+msgid "Add secondary email"
+msgstr "Ավելացնել լրացուցիչ էլ. փոստ"
+
+msgid "Add up to 5 backup email addresses for delivery fallback."
+msgstr "Ավելացրեք մինչև 5 պահուստային էլ. փոստ՝ առաքման ապահովման համար։"
+
+msgid "Admin"
+msgstr "Ադմին"
+
+msgid "All rights reserved."
+msgstr "Բոլոր իրավունքները պաշտպանված են:"
+
+msgid "Allow Delete (1 Month Window)"
+msgstr "Թույլատրել ջնջում (1 ամսվա պատուհան)"
+
+msgid "Allow Edit (1 Month Window)"
+msgstr "Թույլատրել խմբագրում (1 ամսվա պատուհան)"
+
+msgid "Already active"
+msgstr "Արդեն ակտիվ"
+
+msgid "Already have an account?"
+msgstr "Արդեն ունե՞ք հաշիվ"
+
+msgid "Amount"
+msgstr "Գումար"
+
+msgid "Amount (USD)"
+msgstr "Գումար (USD)"
+
+msgid "Armenian"
+msgstr "Հայերեն"
+
+msgid "Available until"
+msgstr "Հասանելի է մինչև"
+
+msgid "Back to Letters"
+msgstr "Վերադառնալ Նամակներ"
+
+msgid "Back to home"
+msgstr "Վերադառնալ գլխավոր էջ"
+
+msgid "Back to login"
+msgstr "Վերադառնալ մուտք"
+
+msgid "Balance"
+msgstr "Հաշվեկշիռ"
+
+msgid "Balance usage for long-term delivery"
+msgstr "Հաշվեկշռի օգտագործում՝ երկարաժամկետ առաքման համար"
+
+msgid ""
+"Because some things are better left for later. See you later, Alligator!"
+msgstr ""
+"Որովհետև որոշ բաներ ավելի լավ է թողնել հետոյին: See you later, Alligator!"
+
+msgid "Billing"
+msgstr "Վճարումներ"
+
+msgid "Cancel"
+msgstr "Չեղարկել"
+
+msgid "Cancel edit"
+msgstr "Չեղարկել խմբագրումը"
+
+msgid "Cancel update, keep previous email as Primary"
+msgstr "Չեղարկել փոփոխությունը, պահել նախորդ էլ. փոստը որպես հիմնական"
+
+msgid "Change password"
+msgstr "Փոխել գաղտնաբառը"
+
+msgid "Check your email"
+msgstr "Ստուգեք ձեր էլ. փոստը"
+
+msgid "Comments"
+msgstr "Մեկնաբանություններ"
+
+msgid "Common questions"
+msgstr "Հաճախ տրվող հարցեր"
+
+msgid "Compose"
+msgstr "Գրել"
+
+msgid "Configure delivery, privacy, and control options before sealing."
+msgstr "Կարգավորեք առաքման, գաղտնիության և վերահսկման պարամետրերը մինչև կնքումը։"
+
+msgid "Confirm password"
+msgstr "Հաստատել գաղտնաբառը"
+
+msgid "Confirm your new email address"
+msgstr "Հաստատեք ձեր նոր էլ. փոստի հասցեն"
+
+msgid "Contact"
+msgstr "Կապ"
+
+msgid "Contact Us"
+msgstr "Կապ մեզ հետ"
+
+msgid "Content"
+msgstr "Բովանդակություն"
+
+msgid "Continue with Google"
+msgstr "Շարունակել Google-ով"
+
+msgid "Create Another"
+msgstr "Ստեղծել ևս մեկը"
+
+msgid "Create Letter"
+msgstr "Ստեղծել նամակ"
+
+msgid "Create a new password"
+msgstr "Ստեղծել նոր գաղտնաբառ"
+
+msgid "Create account"
+msgstr "Ստեղծել հաշիվ"
+
+msgid "Create your first letter"
+msgstr "Ստեղծեք ձեր առաջին նամակը"
+
+msgid "Create your first letter to start building your timeline."
+msgstr "Ստեղծեք ձեր առաջին նամակը՝ ձեր ժամանակագիծը սկսելու համար։"
+
+msgid "Current balance:"
+msgstr "Ընթացիկ հաշվեկշիռը:"
+
+msgid "Current password"
+msgstr "Ընթացիկ գաղտնաբառ"
+
+msgid "Date"
+msgstr "Ամսաթիվ"
+
+msgid "Delete"
+msgstr "Ջնջել"
+
+msgid "Delete this letter permanently? This cannot be undone."
+msgstr "Ջնջե՞լ այս նամակը ընդմիշտ։ Այս գործողությունը հնարավոր չէ հետարկել։"
+
+msgid "Deliver"
+msgstr "Առաքել"
+
+msgid "Delivery Date"
+msgstr "Առաքման ամսաթիվ"
+
+msgid "Delivery Date And Time"
+msgstr "Առաքման ամսաթիվ և ժամ"
+
+msgid "Display More"
+msgstr "Ցույց տալ ավելին"
+
+msgid "Edit Letter Text"
+msgstr "Խմբագրել նամակի տեքստը"
+
+msgid "Edit profile"
+msgstr "Խմբագրել պրոֆիլը"
+
+msgid "Email"
+msgstr "Էլ. փոստ"
+
+msgid ""
+"Email verification is complete. You can now create and schedule letters."
+msgstr "Էլ. փոստի հաստատումն ավարտված է։ Այժմ կարող եք ստեղծել և պլանավորել նամակներ։"
+
+msgid "Email verification required"
+msgstr "Պահանջվում է էլ. փոստի հաստատում"
+
+msgid "English"
+msgstr "Անգլերեն"
+
+msgid "Enter your email and we will send password recovery instructions."
+msgstr "Մուտքագրեք ձեր էլ. փոստը, և մենք կուղարկենք վերականգնման հրահանգներ:"
+
+msgid "Everything users usually ask before sending their first future letter."
+msgstr ""
+"Այն ամենը, ինչ սովորաբար հարցնում են օգտատերերը նախքան իրենց առաջին «ապագա» "
+"նամակն ուղարկելը:"
+
+msgid "Existing Letters"
+msgstr "Գոյություն ունեցող նամակներ"
+
+msgid "Explore all scenarios"
+msgstr "Բացահայտել բոլոր տարբերակները"
+
+msgid "FAQ"
+msgstr "ՀՏՀ"
+
+msgid "Family"
+msgstr "Ընտանեկան"
+
+msgid "Forgot Password"
+msgstr "Մոռացե՞լ եք գաղտնաբառը"
+
+msgid "Forgot password?"
+msgstr "Մոռացե՞լ եք գաղտնաբառը"
+
+msgid ""
+"Four simple steps take your message from idea to inbox — on exactly the day "
+"and time you choose."
+msgstr ""
+"Չորս պարզ քայլ՝ ձեր ուղերձը գաղափարից մինչև ստացողի էլ. փոստ հասցնելու "
+"համար՝ հենց ձեր ընտրած օրն ու ժամին:"
+
+msgid ""
+"From personal milestones to team rituals — here are the moments people most "
+"often choose to write a letter for later."
+msgstr ""
+"Անձնական նվաճումներից մինչև թիմային ավանդույթներ. ահա այն պահերը, երբ մարդիկ"
+" ամենից հաճախ որոշում են նամակ գրել ապագային:"
+
+msgid "Full name"
+msgstr "Անուն Ազգանուն"
+
+msgid "Go to Letters"
+msgstr "Անցնել Նամակներ"
+
+msgid "Go to my letters"
+msgstr "Իմ նամակները"
+
+msgid "Hi %(name)s, now you can"
+msgstr "Ողջույն %(name)s, այժմ դուք կարող եք"
+
+msgid "How pricing works"
+msgstr "Ինչպես է աշխատում գնագոյացումը"
+
+msgid "How your letter travels through time"
+msgstr "Ինչպես է ձեր նամակը ճամփորդում ժամանակի միջով"
+
+msgid ""
+"If enabled, deletion is available only in the first month after creation."
+msgstr "Եթե միացված է, ջնջումը հասանելի է միայն ստեղծումից հետո առաջին ամսվա ընթացքում։"
+
+msgid ""
+"If enabled, editing is available only in the first month after creation."
+msgstr "Եթե միացված է, խմբագրումը հասանելի է միայն ստեղծումից հետո առաջին ամսվա ընթացքում։"
+
+msgid "If enabled, you can preview your message before it is delivered."
+msgstr "Եթե միացված է, կարող եք նախադիտել հաղորդագրությունը մինչև առաքումը։"
+
+msgid "Letter"
+msgstr "Նամակ"
+
+msgid "Letter sealed and stored!"
+msgstr "Նամակը կնքված և պահված է։"
+
+msgid "LetterGator sends it automatically — with retry logic built in."
+msgstr ""
+"LetterGator-ն այն ուղարկում է ավտոմատ կերպով՝ կրկնակի փորձերի ներկառուցված "
+"տրամաբանությամբ:"
+
+msgid "Letters"
+msgstr "Նամակներ"
+
+msgid "Letters Workspace Preview"
+msgstr "Նամակների աշխատանքային տարածքի նախադիտում"
+
+msgid ""
+"Letters delivered <strong>1 year or more</strong> from today cost "
+"<strong>$0.50 per year</strong>."
+msgstr "Այսօրվանից <strong>1 տարի կամ ավելի</strong> ժամկետով առաքվող նամակները արժեն <strong>$0.50 տարեկան</strong>։"
+
+msgid ""
+"Letters delivered <strong>under 1 year</strong> from today are "
+"<strong>free</strong>."
+msgstr "Այսօրվանից <strong>մինչև 1 տարի</strong> առաքվող նամակները <strong>անվճար</strong> են։"
+
+msgid ""
+"Letters to your future self — written during a job change, a hard season, or"
+" a new beginning. Read when the dust settles."
+msgstr ""
+"Նամակներ ձեր ապագա «ես»-ին՝ գրված աշխատանքի փոփոխության, դժվար ժամանակների "
+"կամ նոր սկզբի պահին: Կարդացեք, երբ ամեն ինչ հանդարտվի:"
+
+msgid ""
+"Log in to your account and request a new activation email from your "
+"dashboard or letters page."
+msgstr "Մուտք գործեք ձեր հաշիվ և պահանջեք նոր ակտիվացման նամակ ձեր վահանակից կամ Նամակներ էջից։"
+
+msgid "Log out"
+msgstr "Ելք"
+
+msgid "Login"
+msgstr "Մուտք"
+
+msgid "Login to access your letters."
+msgstr "Մուտք գործեք՝ ձեր նամակներին հասանելիություն ստանալու համար:"
+
+msgid "Long-term schedule policy"
+msgstr "Երկարաժամկետ պլանավորման քաղաքականություն"
+
+msgid "Mailing address"
+msgstr "Փոստային հասցե"
+
+msgid ""
+"Manage scheduled letters in one place. You can review recipients, delivery "
+"timing, visibility, and perform edit/delete actions where they are still "
+"permitted."
+msgstr "Կառավարեք պլանավորված նամակները մեկ վայրից։ Կարող եք դիտել ստացողներին, առաքման ժամանակը, տեսանելիությունը և կատարել խմբագրման/ջնջման գործողություններ այնտեղ, որտեղ դրանք դեռ թույլատրված են։"
+
+msgid "Manage your primary profile details and backup email list."
+msgstr "Կառավարեք հիմնական պրոֆիլի տվյալները և պահուստային էլ. փոստերի ցանկը։"
+
+msgid "Message"
+msgstr "Հաղորդագրություն"
+
+msgid "Message to the Future"
+msgstr "Ուղերձ ապագային"
+
+msgid "Milestone"
+msgstr "Իրադարձային"
+
+msgid "Need an account?"
+msgstr "Չունե՞ք հաշիվ"
+
+msgid "New password"
+msgstr "Նոր գաղտնաբառ"
+
+msgid "No"
+msgstr "Ոչ"
+
+msgid "No comments yet."
+msgstr "Մեկնաբանություններ դեռ չկան։"
+
+msgid "No contact tickets yet. Send your first message above."
+msgstr "Դիմումներ դեռ չկան։ Վերևում ուղարկեք ձեր առաջին հաղորդագրությունը։"
+
+msgid "No letters yet"
+msgstr "Նամակներ դեռ չկան"
+
+msgid "No secondary emails yet."
+msgstr "Լրացուցիչ էլ. փոստեր դեռ չկան։"
+
+msgid "No transactions yet."
+msgstr "Գործարքներ դեռ չկան։"
+
+msgid "Not set"
+msgstr "Սահմանված չէ"
+
+msgid ""
+"Notes to a partner, a newborn, or your whole family — timed for "
+"anniversaries, birthdays, or the moments that matter most."
+msgstr ""
+"Գրառումներ զուգընկերոջը, նորածնին կամ ամբողջ ընտանիքին՝ նախատեսված "
+"տարեդարձերի, ծննդյան օրերի կամ ամենակարևոր պահերի համար:"
+
+msgid "Only me"
+msgstr "Միայն ես"
+
+msgid "Open Letters"
+msgstr "Բացել նամակները"
+
+msgid "Password"
+msgstr "Գաղտնաբառ"
+
+msgid "Password is hidden for security."
+msgstr "Գաղտնաբառը անվտանգության համար թաքցված է։"
+
+msgid "Personal"
+msgstr "Անձնական"
+
+msgid "Phone number"
+msgstr "Հեռախոսահամար"
+
+msgid ""
+"Phone number and mailing address are completely optional today. In the "
+"future, if email delivery is no longer available, we may need alternative "
+"ways to reach you and ensure your letters are delivered — having multiple "
+"contact options gives your letters the best chance of arriving."
+msgstr "Հեռախոսահամարն ու փոստային հասցեն այսօր ամբողջությամբ ըստ ցանկության են։ Ապագայում, եթե էլ. փոստով առաքումը հասանելի չլինի, մեզ կարող են պետք գալ ձեզ հետ կապի այլ եղանակներ՝ նամակների առաքումը ապահովելու համար։ Մի քանի կապի տարբերակ ունենալը մեծացնում է նամակների հասնելու հավանականությունը։"
+
+msgid "Pick the exact date — a preset milestone or a custom moment."
+msgstr ""
+"Ընտրեք ճշգրիտ ամսաթիվը՝ նախապես սահմանված իրադարձություն կամ հատուկ պահ:"
+
+msgid ""
+"Pre-launch messages, knowledge handovers, year-ahead commitments — delivered"
+" at exactly the right professional moment."
+msgstr ""
+"Ուղերձներ նախագծի մեկնարկից առաջ, փորձի փոխանցում կամ տարեկան "
+"պարտավորություններ. առաքվում են մասնագիտական հենց այն պահին, երբ անհրաժեշտ "
+"է:"
+
+msgid "Primary email"
+msgstr "Հիմնական էլ. փոստ"
+
+msgid "Privacy"
+msgstr "Գաղտնիություն"
+
+msgid "Profile Dashboard"
+msgstr "Պրոֆիլի վահանակ"
+
+msgid "Profile details"
+msgstr "Պրոֆիլի տվյալներ"
+
+msgid "Reason"
+msgstr "Պատճառ"
+
+msgid "Recipient Emails (max 5)"
+msgstr "Ստացողների էլ. փոստեր (առավելագույնը 5)"
+
+msgid "Recipients"
+msgstr "Ստացողներ"
+
+msgid "Recovery Email Sent"
+msgstr "Վերականգնման նամակ ուղարկված է"
+
+msgid "Register"
+msgstr "Գրանցվել"
+
+msgid "Remaining balance:"
+msgstr "Մնացած հաշվեկշիռը:"
+
+msgid "Remembered your password?"
+msgstr "Հիշե՞լ եք ձեր գաղտնաբառը:"
+
+msgid "Remove"
+msgstr "Հեռացնել"
+
+msgid "Request a new reset link"
+msgstr "Հայցել նոր հղում"
+
+msgid "Resend activation email"
+msgstr "Կրկին ուղարկել ակտիվացման նամակը"
+
+msgid "Resend confirmation email"
+msgstr "Կրկին ուղարկել հաստատման նամակը"
+
+msgid "Reset your password"
+msgstr "Վերականգնել գաղտնաբառը"
+
+msgid ""
+"Retirement, moving abroad, a difficult anniversary — letters that mark "
+"life's biggest turning points and arrive when they are needed."
+msgstr ""
+"Թոշակի անցնելը, արտերկիր տեղափոխվելը կամ կարևոր տարելիցը. նամակներ, որոնք "
+"նշանավորում են կյանքի շրջադարձային պահերը և հասնում են այն ժամանակ, երբ "
+"դրանց կարիքն ամենաշատն է:"
+
+msgid "Russian"
+msgstr "Русский"
+
+msgid "Save Text"
+msgstr "Պահպանել տեքստը"
+
+msgid "Save profile"
+msgstr "Պահպանել պրոֆիլը"
+
+msgid "Schedule"
+msgstr "Պլանավորել"
+
+msgid "Scheduling cost:"
+msgstr "Պլանավորման արժեքը:"
+
+msgid ""
+"Scheduling letters for one year and beyond uses your balance. The rate is "
+"$0.50 per year. Keep at least $%(balance)s to unlock 1 year+ scheduling "
+"options."
+msgstr "Մեկ տարի և ավելի ժամկետով նամակների պլանավորումը օգտագործում է ձեր հաշվեկշիռը։ Սակագինը՝ տարեկան $0.50։ Պահեք առնվազն $%(balance)s՝ 1+ տարվա պլանավորման տարբերակները բացելու համար։"
+
+msgid "Seal"
+msgstr "Կնքել"
+
+msgid "Seal and Store"
+msgstr "Կնքել և պահել"
+
+msgid "Secondary email list"
+msgstr "Լրացուցիչ էլ. փոստերի ցանկ"
+
+msgid "Secure your future letters."
+msgstr "Ապահովագրեք ձեր ապագա նամակները:"
+
+msgid "See Message Before Delivery"
+msgstr "Տեսնել հաղորդագրությունը առաքումից առաջ"
+
+msgid "See how"
+msgstr "Ինչպե՞ս"
+
+msgid "See the full journey"
+msgstr "Տեսնել ամբողջ ընթացքը"
+
+msgid "See why"
+msgstr "Ինչո՞ւ"
+
+msgid "Selected by default. Choose No to send to other recipients."
+msgstr "Լռելյայն ընտրված է։ Ընտրեք «Ոչ», եթե ցանկանում եք ուղարկել այլ ստացողների։"
+
+msgid "Send Message"
+msgstr "Ուղարկել հաղորդագրությունը"
+
+msgid "Send To Me"
+msgstr "Ուղարկել ինձ"
+
+msgid "Send recovery email"
+msgstr "Ուղարկել վերականգնման նամակ"
+
+msgid ""
+"Send us your question, issue, or suggestion. We will reply as soon as "
+"possible."
+msgstr "Ուղարկեք ձեր հարցը, խնդիրը կամ առաջարկը։ Մենք կպատասխանենք հնարավորինս արագ։"
+
+msgid "Send your message"
+msgstr "Ուղարկեք ձեր ուղերձը"
+
+msgid "Sending as: <strong>%(email)s</strong>"
+msgstr "Ուղարկվում է՝ <strong>%(email)s</strong>"
+
+msgid "Set New Password"
+msgstr "Սահմանել նոր գաղտնաբառ"
+
+msgid "Set privacy rules — block previews, lock edits, control deletion."
+msgstr ""
+"Սահմանեք գաղտնիության կանոններ՝ արգելեք նախադիտումը, կողպեք խմբագրումը, "
+"վերահսկեք ջնջումը:"
+
+msgid "Set your new password, then sign in with it."
+msgstr "Սահմանեք նոր գաղտնաբառ, ապա մուտք գործեք:"
+
+msgid "Show"
+msgstr "Տեսնել"
+
+msgid "Show password"
+msgstr "Ցույց տալ գաղտնաբառը"
+
+msgid "Slots left:"
+msgstr "Մնացած տեղեր:"
+
+msgid "Status"
+msgstr "Կարգավիճակ"
+
+msgid "Subject"
+msgstr "Թեմա"
+
+msgid "Success"
+msgstr "Հաջողություն"
+
+msgid "Support"
+msgstr "Աջակցություն"
+
+msgid "Team"
+msgstr "Թիմային"
+
+msgid "Terms"
+msgstr "Պայմաններ"
+
+msgid "This activation link is invalid or expired"
+msgstr "Այս ակտիվացման հղումն անվավեր է կամ ժամկետանց"
+
+msgid ""
+"This page stores and manages your scheduled letters. Sign in to create "
+"letters, manage recipients, and control edit/delete permissions."
+msgstr "Այս էջում պահվում և կառավարվում են ձեր պլանավորված նամակները։ Մուտք գործեք՝ նամակներ ստեղծելու, ստացողներին կառավարելու և խմբագրման/ջնջման իրավունքները վերահսկելու համար։"
+
+msgid "This recovery link is invalid or already used."
+msgstr "Այս վերականգնման հղումն անվավեր է կամ արդեն օգտագործվել է:"
+
+msgid "Tickets are matched by your user account and your primary email."
+msgstr "Դիմումները կապված են ձեր օգտահաշվի և հիմնական էլ. փոստի հետ։"
+
+msgid ""
+"To view your personal letters table and decrypted previews (when allowed), "
+"please log in or create an account."
+msgstr "Ձեր անձնական նամակների աղյուսակը և վերծանված նախադիտումները (երբ թույլատրված է) տեսնելու համար մուտք գործեք կամ ստեղծեք հաշիվ։"
+
+msgid "Top up balance"
+msgstr "Լրացնել հաշվեկշիռը"
+
+msgid "Top up your balance to schedule letters beyond one year."
+msgstr "Լրացրեք հաշվեկշիռը՝ մեկ տարուց ավելի ուշ նամակներ պլանավորելու համար։"
+
+msgid "Transaction History"
+msgstr "Գործարքների պատմություն"
+
+msgid "Update password"
+msgstr "Թարմացնել գաղտնաբառը"
+
+msgid "Update your account password."
+msgstr "Թարմացրեք ձեր հաշվի գաղտնաբառը։"
+
+msgid "Verify Email"
+msgstr "Հաստատել էլ. փոստը"
+
+msgid "Verify your email before creating a letter"
+msgstr "Նամակ ստեղծելուց առաջ հաստատեք ձեր էլ. փոստը"
+
+msgid "Verify your primary email to create letters"
+msgstr "Նամակ ստեղծելու համար հաստատեք ձեր հիմնական էլ. փոստը"
+
+msgid "View My Letters"
+msgstr "Դիտել իմ նամակները"
+
+msgid ""
+"We sent password recovery instructions. Open the email and click the "
+"recovery button to continue."
+msgstr ""
+"Մենք ուղարկեցինք վերականգնման հրահանգներ: Բացեք նամակը և սեղմեք կոճակը:"
+
+msgid "Welcome back"
+msgstr "Բարի վերադարձ"
+
+msgid "Who writes letters like this?"
+msgstr "Ովքե՞ր են գրում նման նամակներ"
+
+msgid "Why Sign In"
+msgstr "Ինչու մուտք գործել"
+
+msgid "Why we ask for this"
+msgstr "Ինչու ենք սա հարցնում"
+
+msgid "Write your comment..."
+msgstr "Գրեք ձեր մեկնաբանությունը..."
+
+msgid "Write your message with no limits and save it to your account."
+msgstr "Գրեք ձեր ուղերձը առանց սահմանափակումների և պահպանեք այն ձեր հաշվում:"
+
+msgid "Yes"
+msgstr "Այո"
+
+msgid "You are all set. You can continue writing letters anytime."
+msgstr "Ամեն ինչ պատրաստ է: Կարող եք գրել նամակներ ցանկացած ժամանակ:"
+
+msgid ""
+"You can explore Letters, but you must verify your email before creating a "
+"new letter."
+msgstr "Կարող եք ուսումնասիրել Նամակներ բաժինը, բայց նոր նամակ ստեղծելուց առաջ պետք է հաստատեք ձեր էլ. փոստը։"
+
+msgid ""
+"You can still log in and manage your profile, but new letter creation is "
+"locked until email verification is complete."
+msgstr "Դուք դեռ կարող եք մուտք գործել և կառավարել պրոֆիլը, բայց նոր նամակի ստեղծումը փակ է մինչև էլ. փոստի հաստատումը։"
+
+msgid "You cannot delete this letter."
+msgstr "Դուք չեք կարող ջնջել այս նամակը։"
+
+msgid ""
+"You have <span class=\"font-semibold text-[#014421]\">$%(balance)s</span> at"
+" your balance for creating long term letters."
+msgstr ""
+"Դուք ունեք <span class=\"font-semibold text-[#014421]\">$%(balance)s</span> "
+"հաշվեկշիռ՝ երկարաժամկետ նամակներ ստեղծելու համար:"
+
+msgid "Your Letters Workspace"
+msgstr "Ձեր նամակների աշխատանքային տարածքը"
+
+msgid "Your account has been activated"
+msgstr "Ձեր հաշիվը հաջողությամբ ակտիվացվել է"
+
+msgid ""
+"Your account is active and you can browse the app, but letter creation is "
+"locked until you confirm your email address."
+msgstr "Ձեր հաշիվը ակտիվ է, և կարող եք օգտվել հավելվածից, բայց նամակ ստեղծելը փակ է մինչև էլ. փոստի հաստատումը։"
+
+msgid "Your account is already activated"
+msgstr "Ձեր հաշիվն արդեն ակտիվացված է"
+
+msgid "Your balance is not enough for this schedule."
+msgstr "Ձեր հաշվեկշիռը բավարար չէ այս պլանի համար։"
+
+msgid "Your contact tickets"
+msgstr "Ձեր դիմումները"
+
+msgid ""
+"Your letter <span class=\"font-semibold\">&ldquo;%(subject)s&rdquo;</span> "
+"has been saved."
+msgstr ""
+"Dzerr namaкn <span class=\"font-semibold\">&ldquo;%(subject)s&rdquo;</span> "
+"pahvats e:"
+
+msgid "at the perfect time."
+msgstr "ճիշտ ժամանակին:"
+
+msgid "optional"
+msgstr "ըստ ցանկության"
+
+msgid "or"
+msgstr "կամ"
+
+msgid "send your letter at a perfect time."
+msgstr "ուղարկել ձեր նամակը ճիշտ ժամանակին:"
+
+msgid "was deducted from your balance."
+msgstr "պակասեցվեց ձեր հաշվեկշռից։"
+
+msgid "will be deducted from your balance on save."
+msgstr "կպակասեցվի ձեր հաշվեկշռից՝ պահպանելիս։"

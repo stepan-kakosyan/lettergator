@@ -1,3 +1,4 @@
+{% load i18n %}
 <div id="letter-create-shell">
 <section class="px-6 py-20">
     <div class="w-full max-w-3xl mx-auto fade-in-up delay-300">
@@ -7,15 +8,15 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
             </div>
-            <h2 class="text-2xl font-black tracking-tight text-gray-900">Letter sealed and stored!</h2>
+            <h2 class="text-2xl font-black tracking-tight text-gray-900">{% trans "Letter sealed and stored!" %}</h2>
             <p class="text-gray-600 mt-3">
-                Your letter <span class="font-semibold">&ldquo;{{ letter_subject }}&rdquo;</span> has been saved.
+                {% blocktrans with subject=letter_subject %}Your letter <span class="font-semibold">&ldquo;{{ subject }}&rdquo;</span> has been saved.{% endblocktrans %}
             </p>
             {% if schedule_cost %}
             <div class="mt-4 inline-block rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm text-emerald-900">
                 <span class="font-semibold text-red-700">-${{ schedule_cost|floatformat:2 }}</span>
-                was deducted from your balance.
-                Remaining balance:
+                {% trans "was deducted from your balance." %}
+                {% trans "Remaining balance:" %}
                 <span class="font-semibold">${{ new_balance|floatformat:2 }}</span>.
             </div>
             {% endif %}
@@ -24,13 +25,13 @@
                     href="{% url 'letters-page' %}"
                     class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
                 >
-                    View My Letters
+                    {% trans "View My Letters" %}
                 </a>
                 <a
                     href="{% url 'letter-create-page' %}"
                     class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors"
                 >
-                    Create Another
+                    {% trans "Create Another" %}
                 </a>
             </div>
         </div>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}LetterGator | Create Letter{% endblock %}
+{% block title %}LetterGator | {% trans "Create Letter" %}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
@@ -12,15 +12,15 @@
 <section class="px-6 py-20">
     <div class="w-full max-w-3xl mx-auto relative fade-in-up delay-300">
         <div class="text-center mb-8">
-            <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">Letters</p>
+            <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">{% trans "Letters" %}</p>
             <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-                Create Letter
+                {% trans "Create Letter" %}
             </h1>
             <p class="text-gray-600 mt-2">
-                Configure delivery, privacy, and control options before sealing.
+                {% trans "Configure delivery, privacy, and control options before sealing." %}
             </p>
             <a href="{% url 'letters-page' %}" class="inline-flex items-center mt-4 text-sm font-semibold text-[#014421] hover:underline">
-                Back to Letters
+                {% trans "Back to Letters" %}
             </a>
         </div>
 
@@ -51,7 +51,7 @@
             {% endif %}
 
             <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-emerald-900 mb-5">
-                <p class="font-semibold">Balance usage for long-term delivery</p>
+                <p class="font-semibold">{% trans "Balance usage for long-term delivery" %}</p>
                 <p class="text-sm mt-1">
                     Your balance: <span class="font-bold">${{ user_balance|floatformat:2 }}</span>.
                     Scheduling from 1 year and beyond costs
@@ -70,7 +70,7 @@
             <div class="flex flex-col gap-6">
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2" for="{{ form.subject.id_for_label }}">
-                        Subject
+                        {% trans "Subject" %}
                     </label>
                     {{ form.subject }}
                     {{ form.subject.errors }}
@@ -79,81 +79,81 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="option-row">
                         <div class="option-copy">
-                            <p class="option-title">Send To Me</p>
+                            <p class="option-title">{% trans "Send To Me" %}</p>
                             <p class="option-desc">
-                                Selected by default. Choose No to send to other recipients.
+                                {% trans "Selected by default. Choose No to send to other recipients." %}
                             </p>
                         </div>
                         <div class="binary-toggle" data-toggle-field="id_send_to_me">
                             {{ form.send_to_me }}
-                            <button type="button" class="toggle-btn" data-toggle-value="true">Yes</button>
-                            <button type="button" class="toggle-btn" data-toggle-value="false">No</button>
+                            <button type="button" class="toggle-btn" data-toggle-value="true">{% trans "Yes" %}</button>
+                            <button type="button" class="toggle-btn" data-toggle-value="false">{% trans "No" %}</button>
                         </div>
                     </div>
 
                     <div class="option-row">
                         <div class="option-copy">
-                            <p class="option-title">Allow Delete (1 Month Window)</p>
+                            <p class="option-title">{% trans "Allow Delete (1 Month Window)" %}</p>
                             <p class="option-desc">
-                                If enabled, deletion is available only in the first month after creation.
+                                {% trans "If enabled, deletion is available only in the first month after creation." %}
                             </p>
                         </div>
                         <div class="binary-toggle" data-toggle-field="id_can_delete_early">
                             {{ form.can_delete_early }}
-                            <button type="button" class="toggle-btn" data-toggle-value="true">Yes</button>
-                            <button type="button" class="toggle-btn" data-toggle-value="false">No</button>
+                            <button type="button" class="toggle-btn" data-toggle-value="true">{% trans "Yes" %}</button>
+                            <button type="button" class="toggle-btn" data-toggle-value="false">{% trans "No" %}</button>
                         </div>
                     </div>
 
                     <div class="option-row">
                         <div class="option-copy">
-                            <p class="option-title">Allow Edit (1 Month Window)</p>
+                            <p class="option-title">{% trans "Allow Edit (1 Month Window)" %}</p>
                             <p class="option-desc">
-                                If enabled, editing is available only in the first month after creation.
+                                {% trans "If enabled, editing is available only in the first month after creation." %}
                             </p>
                         </div>
                         <div class="binary-toggle" data-toggle-field="id_can_edit_early">
                             {{ form.can_edit_early }}
-                            <button type="button" class="toggle-btn" data-toggle-value="true">Yes</button>
-                            <button type="button" class="toggle-btn" data-toggle-value="false">No</button>
+                            <button type="button" class="toggle-btn" data-toggle-value="true">{% trans "Yes" %}</button>
+                            <button type="button" class="toggle-btn" data-toggle-value="false">{% trans "No" %}</button>
                         </div>
                     </div>
 
                     <div class="option-row">
                         <div class="option-copy">
-                            <p class="option-title">See Message Before Delivery</p>
+                            <p class="option-title">{% trans "See Message Before Delivery" %}</p>
                             <p class="option-desc">
-                                If enabled, you can preview your message before it is delivered.
+                                {% trans "If enabled, you can preview your message before it is delivered." %}
                             </p>
                         </div>
                         <div class="binary-toggle" data-toggle-field="id_allow_sender_preview">
                             {{ form.allow_sender_preview }}
-                            <button type="button" class="toggle-btn" data-toggle-value="true">Yes</button>
-                            <button type="button" class="toggle-btn" data-toggle-value="false">No</button>
+                            <button type="button" class="toggle-btn" data-toggle-value="true">{% trans "Yes" %}</button>
+                            <button type="button" class="toggle-btn" data-toggle-value="false">{% trans "No" %}</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="recipient-panel" class="recipient-panel hidden">
                     <div class="flex items-center justify-between gap-3 mb-3">
-                        <p class="text-sm font-semibold text-gray-700">Recipient Emails (max 5)</p>
+                        <p class="text-sm font-semibold text-gray-700">{% trans "Recipient Emails (max 5)" %}</p>
                         <button
                             id="add-recipient"
                             type="button"
                             class="text-sm font-semibold text-[#014421] hover:underline"
                         >
-                            Add Email
+                            {% trans "Add Email" %}
                         </button>
                     </div>
                     <div id="recipient-inputs" class="flex flex-col gap-3"></div>
                     <p id="recipient-helper" class="text-xs text-gray-500 mt-2">
-                        Add at least one recipient when "Send to me" is disabled.
+                        {% trans 'Add at least one recipient when "Send to me" is disabled.' %}
                     </p>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2" for="{{ form.message.id_for_label }}">
-                        Message
+                        {% trans "Message" %}
                     </label>
                     {{ form.message }}
                     {{ form.message.errors }}
@@ -161,34 +161,34 @@
 
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2" for="{{ form.delivery_at.id_for_label }}">
-                        Delivery Date And Time
+                        {% trans "Delivery Date And Time" %}
                     </label>
                     {{ form.delivery_at }}
                     {{ form.delivery_at.errors }}
                     <p id="long-schedule-helper" class="text-xs text-gray-500 mt-2">
-                        1 year and longer schedules consume your USD balance.
+                        {% trans "1 year and longer schedules consume your USD balance." %}
                     </p>
                     <div class="preset-row mt-4" role="group" aria-label="Quick date presets">
-                        <button type="button" class="preset-btn" data-date-months="1">1 month</button>
-                        <button type="button" class="preset-btn" data-date-months="6">6 months</button>
-                        <button type="button" class="preset-btn" data-date-months="12" {% if low_balance_for_long_schedule %}disabled{% endif %}>1 year</button>
-                        <button type="button" class="preset-btn" data-date-months="60" {% if low_balance_for_long_schedule %}disabled{% endif %}>5 years</button>
-                        <button type="button" class="preset-btn" data-date-months="120" {% if low_balance_for_long_schedule %}disabled{% endif %}>10 years</button>
+                        <button type="button" class="preset-btn" data-date-months="1">{% trans "1 month" %}</button>
+                        <button type="button" class="preset-btn" data-date-months="6">{% trans "6 months" %}</button>
+                        <button type="button" class="preset-btn" data-date-months="12" {% if low_balance_for_long_schedule %}disabled{% endif %}>{% trans "1 year" %}</button>
+                        <button type="button" class="preset-btn" data-date-months="60" {% if low_balance_for_long_schedule %}disabled{% endif %}>{% trans "5 years" %}</button>
+                        <button type="button" class="preset-btn" data-date-months="120" {% if low_balance_for_long_schedule %}disabled{% endif %}>{% trans "10 years" %}</button>
                     </div>
                 </div>
 
                 <div class="flex justify-end">
                     <button id="seal-btn" type="submit" class="bg-[#014421] text-white font-medium px-8 py-3 rounded-xl hover:bg-[#023319] hover:shadow-lg transform hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                        <span>Seal and Store</span>
+                        <span>{% trans "Seal and Store" %}</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                     </button>
                 </div>
                 <div id="schedule-cost-panel" class="hidden rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900 flex items-center justify-between gap-3">
-                    <span>Scheduling cost: <span id="schedule-cost-value" class="font-black">$0.00</span> &mdash; will be deducted from your balance on save.</span>
+                    <span>{% trans "Scheduling cost:" %} <span id="schedule-cost-value" class="font-black">$0.00</span> &mdash; {% trans "will be deducted from your balance on save." %}</span>
                 </div>
                 <div id="balance-warning" class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-semibold flex items-center justify-between gap-3">
-                    <span>Your balance is not enough for this schedule.</span>
-                    <a href="{% url 'balance-page' %}" class="underline whitespace-nowrap">Top up balance</a>
+                    <span>{% trans "Your balance is not enough for this schedule." %}</span>
+                    <a href="{% url 'balance-page' %}" class="underline whitespace-nowrap">{% trans "Top up balance" %}</a>
                 </div>
             </div>
         </form>

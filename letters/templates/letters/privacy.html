@@ -1,50 +1,61 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}LetterGator | Privacy{% endblock %}
+{% block title %}{% trans "LetterGator | Privacy" %}{% endblock %}
 
 {% block content %}
 <section class="px-6 py-20">
     <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
-        <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">Privacy</p>
+        <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">{% trans "Privacy" %}</p>
         <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-            How LetterGator protects your data
+            {% trans "How LetterGator protects your data" %}
         </h1>
         <p class="text-gray-600 mt-4">
+            {% blocktrans trimmed %}
             Your letters are encrypted before storage and decrypted only inside
             authorized application flows. We use strict access controls so each
             user can only interact with their own letters.
+            {% endblocktrans %}
         </p>
 
         <div class="mt-8 space-y-6">
             <article>
-                <h2 class="text-xl font-bold text-gray-900">1. Encrypted storage</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "1. Encrypted storage" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
+                    {% blocktrans trimmed %}
                     Letter content is encrypted at rest. Database access alone does not
                     reveal readable message text.
+                    {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">2. Ownership checks</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "2. Ownership checks" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
+                    {% blocktrans trimmed %}
                     Letters are linked to your user account by user ID. Access to list,
                     edit, and delete operations is validated against ownership.
+                    {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">3. Controlled preview</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "3. Controlled preview" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
+                    {% blocktrans trimmed %}
                     Message previews are available only when your letter settings allow
                     sender preview, or after delivery according to application rules.
+                    {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">4. Operational security</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "4. Operational security" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
+                    {% blocktrans trimmed %}
                     Encryption keys are managed through server configuration and are not
                     stored in the database alongside encrypted messages.
+                    {% endblocktrans %}
                 </p>
             </article>
         </div>
@@ -54,7 +65,7 @@
                 href="{% url 'letters-page' %}"
                 class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
             >
-                Go to Letters
+                {% trans "Go to Letters" %}
             </a>
         </div>
     </div>

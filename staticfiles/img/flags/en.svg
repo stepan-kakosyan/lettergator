@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 36">
+  <!-- Union Jack (UK flag) -->
+  <rect width="60" height="36" fill="#012169"/>
+  <!-- White diagonal X -->
+  <path d="M0,0 L60,36 M60,0 L0,36" stroke="#FFFFFF" stroke-width="7.2"/>
+  <!-- Red diagonal X (offset for proper union jack) -->
+  <path d="M0,0 L60,36" stroke="#C8102E" stroke-width="4.8" stroke-dasharray="0"/>
+  <path d="M60,0 L0,36" stroke="#C8102E" stroke-width="4.8"/>
+  <!-- Clip upper-left and lower-right quadrant red diagonals (simplified) -->
+  <!-- White horizontal + vertical cross -->
+  <rect x="0" y="14.4" width="60" height="7.2" fill="#FFFFFF"/>
+  <rect x="26.4" y="0" width="7.2" height="36" fill="#FFFFFF"/>
+  <!-- Red horizontal + vertical cross -->
+  <rect x="0" y="15.6" width="60" height="4.8" fill="#C8102E"/>
+  <rect x="27.6" y="0" width="4.8" height="36" fill="#C8102E"/>
+</svg>

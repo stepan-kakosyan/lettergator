@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}LetterGator | Balance{% endblock %}
+{% block title %}LetterGator | {% trans "Balance" %}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
@@ -13,10 +13,10 @@
 
         <!-- Header -->
         <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
-            <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">Billing</p>
-            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">Balance</h1>
+            <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">{% trans "Billing" %}</p>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">{% trans "Balance" %}</h1>
             <p class="text-gray-600 mt-3">
-                Current balance:
+                {% trans "Current balance:" %}
                 <span class="font-black text-gray-900 text-lg">${{ request.user.balance|floatformat:2 }}</span>
             </p>
 
@@ -37,16 +37,16 @@
             <!-- Add Funds: first on mobile, right column on desktop -->
             <div class="order-first md:order-last bg-white border border-gray-200 rounded-3xl p-5 md:p-6 space-y-4">
                 <div>
-                    <h2 class="text-xl font-black tracking-tight text-gray-900">Add Funds</h2>
-                    <p class="text-gray-500 text-sm mt-1">Top up your balance to schedule letters beyond one year.</p>
+                    <h2 class="text-xl font-black tracking-tight text-gray-900">{% trans "Add Funds" %}</h2>
+                    <p class="text-gray-500 text-sm mt-1">{% trans "Top up your balance to schedule letters beyond one year." %}</p>
                 </div>
 
                 <!-- How pricing works -->
                 <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 space-y-2">
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-bold">How pricing works</p>
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-bold">{% trans "How pricing works" %}</p>
                     <ul class="text-sm text-gray-700 space-y-1">
-                        <li>Letters delivered <strong>under 1 year</strong> from today are <strong>free</strong>.</li>
-                        <li>Letters delivered <strong>1 year or more</strong> from today cost <strong>$0.50 per year</strong>.</li>
+                        <li>{% blocktrans %}Letters delivered <strong>under 1 year</strong> from today are <strong>free</strong>.{% endblocktrans %}</li>
+                        <li>{% blocktrans %}Letters delivered <strong>1 year or more</strong> from today cost <strong>$0.50 per year</strong>.{% endblocktrans %}</li>
                     </ul>
                 </div>
 
@@ -55,7 +55,7 @@
                     {% csrf_token %}
                     <div>
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2" for="{{ balance_form.amount.id_for_label }}">
-                            Amount (USD)
+                            {% trans "Amount (USD)" %}
                         </label>
                         {{ balance_form.amount }}
                         {% if balance_form.amount.errors %}
@@ -75,23 +75,23 @@
                         class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-gray-300 text-gray-500 text-sm font-semibold cursor-not-allowed"
                         title="Payments are coming soon"
                     >
-                        Add Funds — Coming Soon
+                        {% trans "Add Funds — Coming Soon" %}
                     </button>
                 </form>
             </div>
 
             <!-- Transaction History: second on mobile, left column on desktop -->
             <div class="order-last md:order-first bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
-                <h2 class="text-2xl font-black tracking-tight text-gray-900">Transaction History</h2>
+                <h2 class="text-2xl font-black tracking-tight text-gray-900">{% trans "Transaction History" %}</h2>
 
                 {% if transactions %}
                 <div class="mt-5 overflow-x-auto">
                     <table class="letters-table w-full">
                         <thead>
                             <tr>
-                                <th>Amount</th>
-                                <th>Reason</th>
-                                <th>Date</th>
+                                <th>{% trans "Amount" %}</th>
+                                <th>{% trans "Reason" %}</th>
+                                <th>{% trans "Date" %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -115,7 +115,7 @@
                 </div>
                 {% else %}
                 <div class="mt-5 border border-dashed border-gray-300 rounded-2xl p-6 text-center text-gray-600">
-                    No transactions yet.
+                    {% trans "No transactions yet." %}
                 </div>
                 {% endif %}
             </div>

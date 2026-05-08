@@ -1,8 +1,9 @@
+{% load i18n %}
 <article id="secondary-email-panel" class="border border-gray-200 rounded-2xl p-6">
-    <h2 class="text-xl font-semibold text-gray-900">Secondary email list</h2>
+    <h2 class="text-xl font-semibold text-gray-900">{% trans "Secondary email list" %}</h2>
     <p class="mt-2 text-sm text-gray-600">
-        Add up to 5 backup email addresses for delivery fallback.
-        Slots left: {{ secondary_slots_left }}
+        {% trans "Add up to 5 backup email addresses for delivery fallback." %}
+        {% trans "Slots left:" %} {{ secondary_slots_left }}
     </p>
 
     {% if panel_message %}
@@ -25,7 +26,7 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ secondary_email_form.email.id_for_label }}">
-                Add backup email
+                {% trans "Add backup email" %}
             </label>
             <input
                 type="email"
@@ -48,7 +49,7 @@
             type="submit"
             class="w-full bg-[#014421] text-white py-3 rounded-lg font-medium hover:bg-[#023319] transition-colors"
         >
-            Add secondary email
+            {% trans "Add secondary email" %}
         </button>
     </form>
 
@@ -70,12 +71,12 @@
                     type="submit"
                     class="text-sm text-red-600 hover:text-red-700"
                 >
-                    Remove
+                    {% trans "Remove" %}
                 </button>
             </form>
         </div>
         {% empty %}
-        <p class="text-sm text-gray-500">No secondary emails yet.</p>
+        <p class="text-sm text-gray-500">{% trans "No secondary emails yet." %}</p>
         {% endfor %}
     </div>
 </article>

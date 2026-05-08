@@ -1,0 +1,1826 @@
+# Russian translations for LetterGator.
+# Copyright (C) 2026 LetterGator
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-08 15:52+0000\n"
+"Language: ru\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: accounts/templates/accounts/activation_invalid.html:4
+msgid "Activation Link Error"
+msgstr "Ошибка ссылки активации"
+
+#: accounts/templates/accounts/activation_invalid.html:10
+msgid "Activation failed"
+msgstr "Активация не удалась"
+
+#: accounts/templates/accounts/activation_invalid.html:12
+msgid "This activation link is invalid or expired"
+msgstr "Эта ссылка активации недействительна или устарела"
+
+#: accounts/templates/accounts/activation_invalid.html:15
+msgid ""
+"Log in to your account and request a new activation email from your "
+"dashboard or letters page."
+msgstr ""
+"Войдите в аккаунт и запросите новое письмо активации с панели управления или "
+"страницы писем."
+
+#: accounts/templates/accounts/activation_invalid.html:22
+#: accounts/templates/accounts/login.html:4
+#: accounts/templates/accounts/login.html:85
+#: accounts/templates/accounts/register.html:148
+#: accounts/templates/partials/header.html:42
+#: accounts/templates/partials/header.html:113
+#: letters/templates/letters/vault.html:66
+#: letters/templates/letters/vault.html:108
+msgid "Login"
+msgstr "Войти"
+
+#: accounts/templates/accounts/activation_invalid.html:28
+msgid "Back to home"
+msgstr "На главную"
+
+# --- Activation ---
+#: accounts/templates/accounts/activation_success.html:4
+msgid "Account Activated"
+msgstr "Аккаунт активирован"
+
+#: accounts/templates/accounts/activation_success.html:11
+msgid "Already active"
+msgstr "Уже активирован"
+
+#: accounts/templates/accounts/activation_success.html:13
+msgid "Your account is already activated"
+msgstr "Ваш аккаунт уже активирован"
+
+#: accounts/templates/accounts/activation_success.html:16
+msgid "You are all set. You can continue writing letters anytime."
+msgstr "Всё готово. Вы можете продолжать писать письма в любое время."
+
+#: accounts/templates/accounts/activation_success.html:19
+msgid "Success"
+msgstr "Успешно"
+
+#: accounts/templates/accounts/activation_success.html:21
+msgid "Your account has been activated"
+msgstr "Ваш аккаунт успешно активирован"
+
+#: accounts/templates/accounts/activation_success.html:24
+msgid ""
+"Email verification is complete. You can now create and schedule letters."
+msgstr "Email подтверждён. Теперь вы можете создавать и планировать письма."
+
+#: accounts/templates/accounts/activation_success.html:33
+msgid "Create your first letter"
+msgstr "Создать первое письмо"
+
+#: accounts/templates/accounts/activation_success.html:39
+#: letters/templates/letters/privacy.html:68
+#: letters/templates/letters/terms.html:178
+msgid "Go to Letters"
+msgstr "Перейти к письмам"
+
+# --- Login page ---
+#: accounts/templates/accounts/login.html:10
+msgid "Welcome back"
+msgstr "С возвращением"
+
+#: accounts/templates/accounts/login.html:11
+msgid "Login to access your letters."
+msgstr "Войдите, чтобы получить доступ к своим письмам."
+
+#: accounts/templates/accounts/login.html:28
+#: accounts/templates/accounts/password_reset_form.html:26
+#: accounts/templates/accounts/register.html:46
+#: letters/templates/letters/contact.html:39
+msgid "Email"
+msgstr "Электронная почта"
+
+#: accounts/templates/accounts/login.html:46
+#: accounts/templates/accounts/register.html:64
+msgid "Password"
+msgstr "Пароль"
+
+#: accounts/templates/accounts/login.html:61
+#: accounts/templates/accounts/register.html:79
+#: accounts/templates/accounts/register.html:106
+msgid "Show password"
+msgstr "Показать пароль"
+
+#: accounts/templates/accounts/login.html:63
+#: accounts/templates/accounts/register.html:81
+#: accounts/templates/accounts/register.html:108
+msgid "Show"
+msgstr "Показать"
+
+#: accounts/templates/accounts/login.html:73
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: accounts/templates/accounts/login.html:90
+msgid "or"
+msgstr "или"
+
+#: accounts/templates/accounts/login.html:104
+#: accounts/templates/accounts/register.html:143
+msgid "Continue with Google"
+msgstr "Войти через Google"
+
+#: accounts/templates/accounts/login.html:108
+msgid "Need an account?"
+msgstr "Нужен аккаунт?"
+
+#: accounts/templates/accounts/login.html:109
+#: accounts/templates/accounts/register.html:4
+#: accounts/templates/accounts/register.html:124
+#: letters/templates/letters/vault.html:72
+#: letters/templates/letters/vault.html:111
+msgid "Register"
+msgstr "Регистрация"
+
+#: accounts/templates/accounts/password_reset_confirm.html:4
+msgid "Set New Password"
+msgstr "Установить новый пароль"
+
+#: accounts/templates/accounts/password_reset_confirm.html:11
+msgid "Create a new password"
+msgstr "Создать новый пароль"
+
+#: accounts/templates/accounts/password_reset_confirm.html:14
+msgid "Set your new password, then sign in with it."
+msgstr "Установите новый пароль, затем войдите с ним."
+
+#: accounts/templates/accounts/password_reset_confirm.html:27
+#: letters/templates/letters/partials/password_change_panel.html:54
+msgid "New password"
+msgstr "Новый пароль"
+
+#: accounts/templates/accounts/password_reset_confirm.html:40
+#: accounts/templates/accounts/register.html:91
+#: letters/templates/letters/partials/password_change_panel.html:71
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+#: accounts/templates/accounts/password_reset_confirm.html:56
+#: letters/templates/letters/partials/password_change_panel.html:104
+msgid "Update password"
+msgstr "Обновить пароль"
+
+#: accounts/templates/accounts/password_reset_confirm.html:61
+msgid "This recovery link is invalid or already used."
+msgstr "Эта ссылка для восстановления недействительна или уже использована."
+
+#: accounts/templates/accounts/password_reset_confirm.html:63
+msgid "Request a new reset link"
+msgstr "Запросить новую ссылку"
+
+#: accounts/templates/accounts/password_reset_done.html:4
+msgid "Recovery Email Sent"
+msgstr "Письмо для восстановления отправлено"
+
+#: accounts/templates/accounts/password_reset_done.html:10
+msgid "Check your email"
+msgstr "Проверьте почту"
+
+#: accounts/templates/accounts/password_reset_done.html:13
+msgid ""
+"We sent password recovery instructions. Open the email and click the "
+"recovery button to continue."
+msgstr ""
+"Мы отправили инструкции по восстановлению пароля. Откройте письмо и нажмите "
+"кнопку для продолжения."
+
+#: accounts/templates/accounts/password_reset_done.html:19
+#: accounts/templates/accounts/password_reset_form.html:48
+msgid "Back to login"
+msgstr "Вернуться к входу"
+
+# --- Password Reset ---
+#: accounts/templates/accounts/password_reset_form.html:4
+msgid "Forgot Password"
+msgstr "Забыли пароль"
+
+#: accounts/templates/accounts/password_reset_form.html:11
+msgid "Reset your password"
+msgstr "Сбросить пароль"
+
+#: accounts/templates/accounts/password_reset_form.html:14
+msgid "Enter your email and we will send password recovery instructions."
+msgstr "Введите ваш email, и мы отправим инструкции по восстановлению пароля."
+
+#: accounts/templates/accounts/password_reset_form.html:42
+msgid "Send recovery email"
+msgstr "Отправить письмо для восстановления"
+
+#: accounts/templates/accounts/password_reset_form.html:46
+msgid "Remembered your password?"
+msgstr "Вспомнили пароль?"
+
+# --- Register page ---
+#: accounts/templates/accounts/register.html:10
+msgid "Create account"
+msgstr "Создать аккаунт"
+
+#: accounts/templates/accounts/register.html:11
+msgid "Secure your future letters."
+msgstr "Обеспечьте сохранность ваших писем в будущее."
+
+#: accounts/templates/accounts/register.html:28
+#: letters/templates/letters/dashboard.html:127
+#: letters/templates/letters/dashboard.html:162
+msgid "Full name"
+msgstr "Имя и фамилия"
+
+#: accounts/templates/accounts/register.html:147
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+# --- Footer ---
+#: accounts/templates/partials/footer.html:4
+msgid "All rights reserved."
+msgstr "Все права защищены."
+
+#: accounts/templates/partials/footer.html:6
+msgid "Terms"
+msgstr "Условия"
+
+#: accounts/templates/partials/footer.html:7
+#: accounts/templates/partials/header.html:110
+#: letters/templates/letters/privacy.html:9
+msgid "Privacy"
+msgstr "Конфиденциальность"
+
+#: accounts/templates/partials/footer.html:8
+#: letters/templates/letters/faq.html:14
+#: letters/templates/letters/landing.html:150
+msgid "FAQ"
+msgstr "Вопросы и ответы"
+
+# --- Navigation ---
+#: accounts/templates/partials/header.html:13
+#: accounts/templates/partials/header.html:106
+#: letters/templates/letters/landing.html:53
+msgid "See why"
+msgstr "Зачем"
+
+#: accounts/templates/partials/header.html:14
+#: accounts/templates/partials/header.html:107
+#: letters/templates/letters/landing.html:103
+msgid "See how"
+msgstr "Как"
+
+#: accounts/templates/partials/header.html:15
+#: accounts/templates/partials/header.html:108
+#: letters/templates/letters/letter_create.html:15
+#: letters/templates/letters/vault.html:4
+msgid "Letters"
+msgstr "Письма"
+
+#: accounts/templates/partials/header.html:16
+#: accounts/templates/partials/header.html:109
+#: letters/templates/letters/terms.html:166
+msgid "Contact"
+msgstr "Контакты"
+
+# --- Languages ---
+#: lettergator_backend/settings.py:110
+msgid "English"
+msgstr "English"
+
+#: lettergator_backend/settings.py:111
+msgid "Russian"
+msgstr "Русский"
+
+#: lettergator_backend/settings.py:112
+msgid "Armenian"
+msgstr "Հայերեն"
+
+# --- Balance ---
+#: letters/templates/letters/balance.html:4
+#: letters/templates/letters/balance.html:17
+msgid "Balance"
+msgstr "Баланс"
+
+#: letters/templates/letters/balance.html:16
+msgid "Billing"
+msgstr "Оплата"
+
+#: letters/templates/letters/balance.html:19
+msgid "Current balance:"
+msgstr "Текущий баланс:"
+
+#: letters/templates/letters/balance.html:40
+msgid "Add Funds"
+msgstr "Пополнить баланс"
+
+#: letters/templates/letters/balance.html:41
+msgid "Top up your balance to schedule letters beyond one year."
+msgstr "Пополните баланс, чтобы планировать письма дольше одного года."
+
+#: letters/templates/letters/balance.html:46
+msgid "How pricing works"
+msgstr "Как работает оплата"
+
+#: letters/templates/letters/balance.html:48
+msgid ""
+"Letters delivered <strong>under 1 year</strong> from today are <strong>free</"
+"strong>."
+msgstr ""
+"Письма с доставкой <strong>менее 1 года</strong> — <strong>бесплатно</"
+"strong>."
+
+#: letters/templates/letters/balance.html:49
+msgid ""
+"Letters delivered <strong>1 year or more</strong> from today cost "
+"<strong>$0.50 per year</strong>."
+msgstr ""
+"Письма с доставкой <strong>1 год и более</strong> стоят <strong>$0.50 в год</"
+"strong>."
+
+#: letters/templates/letters/balance.html:58
+msgid "Amount (USD)"
+msgstr "Сумма (USD)"
+
+#: letters/templates/letters/balance.html:78
+msgid "Add Funds — Coming Soon"
+msgstr "Пополнить баланс — скоро"
+
+#: letters/templates/letters/balance.html:85
+msgid "Transaction History"
+msgstr "История транзакций"
+
+#: letters/templates/letters/balance.html:92
+msgid "Amount"
+msgstr "Сумма"
+
+#: letters/templates/letters/balance.html:93
+msgid "Reason"
+msgstr "Причина"
+
+#: letters/templates/letters/balance.html:94
+msgid "Date"
+msgstr "Дата"
+
+#: letters/templates/letters/balance.html:118
+msgid "No transactions yet."
+msgstr "Транзакций пока нет."
+
+#: letters/templates/letters/concept.html:4
+msgid "LetterGator | See why"
+msgstr ""
+
+#: letters/templates/letters/concept.html:18
+msgid "LetterGator See why"
+msgstr ""
+
+#: letters/templates/letters/concept.html:20
+msgid "Why people send letters"
+msgstr ""
+
+# --- Landing: hero ---
+#: letters/templates/letters/concept.html:21
+#, fuzzy
+#| msgid "Message to the Future"
+msgid "into the future."
+msgstr "Послание в будущее"
+
+#: letters/templates/letters/concept.html:24
+msgid ""
+"Explore scenarios by category. Click any scenario to read the full story, "
+"timing, and delivery setup behind it."
+msgstr ""
+
+#: letters/templates/letters/concept.html:41
+#: letters/templates/letters/landing.html:66
+msgid "Personal"
+msgstr "Личное"
+
+#: letters/templates/letters/concept.html:42
+msgid ""
+"Write to who you'll become. Capture doubt, clarity, and conviction before "
+"life rewrites the memory."
+msgstr ""
+
+#: letters/templates/letters/concept.html:44
+#, fuzzy
+#| msgid "Explore all scenarios"
+msgid "4 scenarios"
+msgstr "Посмотреть все варианты"
+
+#: letters/templates/letters/concept.html:57
+#: letters/templates/letters/landing.html:72
+msgid "Family"
+msgstr "Семья"
+
+#: letters/templates/letters/concept.html:58
+msgid ""
+"Bridge the distance. Send words that will land on an anniversary, a "
+"birthday, or a day that needs them most."
+msgstr ""
+
+#: letters/templates/letters/concept.html:60
+#: letters/templates/letters/concept.html:76
+#: letters/templates/letters/concept.html:92
+#, fuzzy
+#| msgid "Explore all scenarios"
+msgid "3 scenarios"
+msgstr "Посмотреть все варианты"
+
+#: letters/templates/letters/concept.html:73
+#: letters/templates/letters/landing.html:78
+msgid "Team"
+msgstr "Команда"
+
+#: letters/templates/letters/concept.html:74
+msgid ""
+"Preserve what the team knows today. Deliver it to the team that needs it "
+"tomorrow."
+msgstr ""
+
+#: letters/templates/letters/concept.html:89
+#: letters/templates/letters/landing.html:84
+msgid "Milestone"
+msgstr "События"
+
+#: letters/templates/letters/concept.html:90
+msgid "Mark the moments that matter. Retirement, relocations, difficult dates"
+msgstr ""
+
+#: letters/templates/letters/concept.html:90
+msgid "preserved and delivered when they count."
+msgstr ""
+
+# --- Contact ---
+#: letters/templates/letters/contact.html:4
+#: letters/templates/letters/contact.html:12
+msgid "Contact Us"
+msgstr "Связаться с нами"
+
+#: letters/templates/letters/contact.html:10
+msgid "Support"
+msgstr "Поддержка"
+
+#: letters/templates/letters/contact.html:15
+msgid ""
+"Send us your question, issue, or suggestion. We will reply as soon as "
+"possible."
+msgstr ""
+"Отправьте нам вопрос, проблему или предложение. Мы ответим как можно скорее."
+
+#: letters/templates/letters/contact.html:49
+#, python-format
+msgid "Sending as: <strong>%(email)s</strong>"
+msgstr "Отправляется как: <strong>%(email)s</strong>"
+
+#: letters/templates/letters/contact.html:55
+#: letters/templates/letters/letter_create.html:73
+#: letters/templates/letters/vault.html:120
+msgid "Subject"
+msgstr "Тема"
+
+#: letters/templates/letters/contact.html:65
+#: letters/templates/letters/letter_create.html:156
+msgid "Message"
+msgstr "Сообщение"
+
+#: letters/templates/letters/contact.html:82
+msgid "Send Message"
+msgstr "Отправить сообщение"
+
+#: letters/templates/letters/contact.html:90
+msgid "Your contact tickets"
+msgstr "Ваши обращения"
+
+#: letters/templates/letters/contact.html:92
+msgid "Tickets are matched by your user account and your primary email."
+msgstr "Обращения привязаны к вашему аккаунту и основному email."
+
+#: letters/templates/letters/contact.html:100
+msgid "No contact tickets yet. Send your first message above."
+msgstr "Обращений пока нет. Отправьте первое сообщение выше."
+
+# --- Dashboard ---
+#: letters/templates/letters/dashboard.html:4
+#: letters/templates/letters/dashboard.html:12
+msgid "Profile Dashboard"
+msgstr "Личный кабинет"
+
+#: letters/templates/letters/dashboard.html:15
+msgid "Manage your primary profile details and backup email list."
+msgstr "Управляйте данными профиля и списком резервных email."
+
+#: letters/templates/letters/dashboard.html:25
+#: letters/templates/letters/dashboard.html:26
+msgid "Log out"
+msgstr "Выйти"
+
+#: letters/templates/letters/dashboard.html:42
+msgid "Verify your primary email to create letters"
+msgstr "Подтвердите основной email для создания писем"
+
+#: letters/templates/letters/dashboard.html:44
+msgid ""
+"You can still log in and manage your profile, but new letter creation is "
+"locked until email verification is complete."
+msgstr ""
+"Вы можете входить и управлять профилем, но создание новых писем "
+"заблокировано до подтверждения email."
+
+#: letters/templates/letters/dashboard.html:69
+msgid "Confirm your new email address"
+msgstr "Подтвердите новый адрес email"
+
+#: letters/templates/letters/dashboard.html:71
+#, python-format
+msgid ""
+"A confirmation link was sent to <strong>%(email)s</strong>. Your primary "
+"email will not change until you click that link."
+msgstr ""
+"Ссылка подтверждения отправлена на <strong>%(email)s</strong>. Основной "
+"email не изменится, пока вы не нажмёте на неё."
+
+#: letters/templates/letters/dashboard.html:88
+msgid "Resend confirmation email"
+msgstr "Повторно отправить письмо подтверждения"
+
+#: letters/templates/letters/dashboard.html:105
+msgid "Cancel update, keep previous email as Primary"
+msgstr "Отменить изменение, оставить предыдущий email"
+
+#: letters/templates/letters/dashboard.html:115
+msgid "Profile details"
+msgstr "Данные профиля"
+
+#: letters/templates/letters/dashboard.html:121
+msgid "Edit profile"
+msgstr "Редактировать профиль"
+
+#: letters/templates/letters/dashboard.html:131
+#: letters/templates/letters/dashboard.html:180
+msgid "Primary email"
+msgstr "Основной email"
+
+#: letters/templates/letters/dashboard.html:135
+#: letters/templates/letters/dashboard.html:198
+msgid "Phone number"
+msgstr "Номер телефона"
+
+#: letters/templates/letters/dashboard.html:136
+#: letters/templates/letters/dashboard.html:140
+msgid "Not set"
+msgstr "Не указано"
+
+#: letters/templates/letters/dashboard.html:139
+#: letters/templates/letters/dashboard.html:216
+msgid "Mailing address"
+msgstr "Почтовый адрес"
+
+#: letters/templates/letters/dashboard.html:198
+#: letters/templates/letters/dashboard.html:216
+msgid "optional"
+msgstr "необязательно"
+
+#: letters/templates/letters/dashboard.html:232
+msgid "Why we ask for this"
+msgstr "Зачем мы спрашиваем"
+
+#: letters/templates/letters/dashboard.html:233
+msgid ""
+"Phone number and mailing address are completely optional today. In the "
+"future, if email delivery is no longer available, we may need alternative "
+"ways to reach you and ensure your letters are delivered — having multiple "
+"contact options gives your letters the best chance of arriving."
+msgstr ""
+"Номер телефона и почтовый адрес полностью необязательны. В будущем, если "
+"доставка по email станет недоступной, нам могут понадобиться альтернативные "
+"способы связи."
+
+#: letters/templates/letters/dashboard.html:244
+msgid "Save profile"
+msgstr "Сохранить профиль"
+
+#: letters/templates/letters/dashboard.html:252
+msgid "Cancel edit"
+msgstr "Отменить"
+
+#: letters/templates/letters/faq.html:4
+msgid "LetterGator | FAQ"
+msgstr ""
+
+# --- Landing: FAQ section ---
+#: letters/templates/letters/faq.html:16
+#: letters/templates/letters/landing.html:152
+msgid "Common questions"
+msgstr "Частые вопросы"
+
+#: letters/templates/letters/faq.html:19
+#, fuzzy
+#| msgid ""
+#| "Everything users usually ask before sending their first future letter."
+msgid ""
+"Everything you might want to know before sending your first future letter."
+msgstr ""
+"Все, что обычно интересует пользователей перед отправкой их первого письма в "
+"будущее."
+
+#: letters/templates/letters/faq.html:29
+msgid "1. How much does LetterGator cost, and when is it charged?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:34
+msgid ""
+"Scheduling a letter for under 1 year is free. For schedules at 1 year or "
+"beyond, the price is $0.50 per year. The total is charged once when you "
+"click Seal and Store, not every month. You can always write letters without "
+"paying; payment is only required for long-term scheduling. To unlock 1 year+ "
+"scheduling options, keep at least $1.00 in your balance."
+msgstr ""
+
+#: letters/templates/letters/faq.html:46
+msgid "2. How reliable is delivery, and what backup details can I provide?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:51
+msgid ""
+"LetterGator is built for reliable future delivery with retry logic if a "
+"first attempt fails. You can send to yourself or to other recipients, and "
+"add up to 5 recipient emails. For additional account-level safety, you may "
+"provide a phone number and address in your profile. If provided, those "
+"details help us keep your account contact information complete for "
+"exceptional support and verification situations."
+msgstr ""
+
+#: letters/templates/letters/faq.html:64
+msgid "3. Can I change, delete, or preview a letter after I create it?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:69
+msgid ""
+"You control this at creation time. If you enable Allow Edit and/or Allow "
+"Delete, those actions are available only during the first 30 days after the "
+"letter is created. If you leave either option disabled, that action is not "
+"available after creation at all. Message preview works the same way: if See "
+"Message Before Delivery is enabled, you can view your content before "
+"delivery; if disabled, the content stays sealed until delivery."
+msgstr ""
+
+#: letters/templates/letters/faq.html:82
+msgid "4. How do you make sure my email is still valid in future years?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:87
+msgid ""
+"To keep long-term delivery dependable, we send a re-confirmation email "
+"roughly once a year so you can confirm your address and stay connected with "
+"us. This also acts as a reminder to update your account details if your "
+"email changes. If you plan to switch email providers, you can update your "
+"email in your profile and confirm the new address so future letters continue "
+"to route correctly."
+msgstr ""
+
+#: letters/templates/letters/faq.html:100
+msgid ""
+"5. Is my message content private, and what happens if your database is lost?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:105
+msgid ""
+"Every message is encrypted before it is stored. The content is unreadable to "
+"anyone who has access to our database — it can only be decrypted at the "
+"moment of delivery. For permanent resilience, the encrypted message data is "
+"also written to Arweave — a decentralised blockchain storage network built "
+"to keep data available permanently. Even if our own database were ever lost "
+"or destroyed, the encrypted letter data is preserved on the blockchain and "
+"cannot disappear."
+msgstr ""
+
+#: letters/templates/letters/faq.html:119
+msgid "6. Can I attach files to a letter?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:124
+msgid ""
+"Not yet — letters currently support a rich text body only. File attachments "
+"are planned for a near-future version. You will be able to attach videos, "
+"audio recordings, images, and other files directly to your letter so the "
+"recipient receives everything in one delivery. We will announce this feature "
+"as soon as it is available."
+msgstr ""
+
+#: letters/templates/letters/faq.html:139
+msgid "Still have questions?"
+msgstr ""
+
+# --- Contact ---
+#: letters/templates/letters/faq.html:144
+#, fuzzy
+#| msgid "Contact Us"
+msgid "Contact us"
+msgstr "Связаться с нами"
+
+#: letters/templates/letters/how.html:5
+msgid "LetterGator | See how"
+msgstr ""
+
+#: letters/templates/letters/how.html:15
+#, fuzzy
+#| msgid "How pricing works"
+msgid "How it works"
+msgstr "Как работает оплата"
+
+#: letters/templates/letters/how.html:17
+msgid "Four steps."
+msgstr ""
+
+#: letters/templates/letters/how.html:17
+#, fuzzy
+#| msgid "Send your message"
+msgid "One future message."
+msgstr "Отправьте свое послание"
+
+#: letters/templates/letters/how.html:20
+msgid ""
+"From the moment you write to the moment it arrives — here is exactly what "
+"happens to your letter along the way."
+msgstr ""
+
+#: letters/templates/letters/how.html:42 letters/templates/letters/how.html:57
+#: letters/templates/letters/landing.html:115
+msgid "Compose"
+msgstr "Написать"
+
+#: letters/templates/letters/how.html:43
+msgid "Create a meaningful letter in minutes."
+msgstr ""
+
+#: letters/templates/letters/how.html:45
+msgid ""
+"Write your subject line and full message body. There are no character limits "
+"— pour in as much as you need. The letter is immediately attached to your "
+"account, safely stored, and ready for the next step."
+msgstr ""
+
+#: letters/templates/letters/how.html:52
+msgid "Rich message body with full text support"
+msgstr ""
+
+#: letters/templates/letters/how.html:53
+msgid "Clear subject line for recipient context"
+msgstr ""
+
+#: letters/templates/letters/how.html:54
+#, fuzzy
+#| msgid "Update your account password."
+msgid "Auto-saved to your account dashboard"
+msgstr "Обновите пароль вашего аккаунта."
+
+#: letters/templates/letters/how.html:71 letters/templates/letters/how.html:87
+#: letters/templates/letters/landing.html:120
+msgid "Seal"
+msgstr "Запечатать"
+
+#: letters/templates/letters/how.html:72
+msgid "Choose privacy and ownership controls."
+msgstr ""
+
+#: letters/templates/letters/how.html:74
+msgid ""
+"Before scheduling, decide the rules that govern your letter. Can you peek at "
+"the content before delivery? Should edits be blocked once scheduled? These "
+"controls lock in your intentions and prevent second-guessing."
+msgstr ""
+
+#: letters/templates/letters/how.html:82
+msgid "Toggle content preview on or off"
+msgstr ""
+
+#: letters/templates/letters/how.html:83
+msgid "Allow or block edits in the first month"
+msgstr ""
+
+#: letters/templates/letters/how.html:84
+msgid "Enable or disable early deletion"
+msgstr ""
+
+#: letters/templates/letters/how.html:101
+#: letters/templates/letters/how.html:117
+#: letters/templates/letters/landing.html:125
+msgid "Schedule"
+msgstr "Запланировать"
+
+#: letters/templates/letters/how.html:102
+msgid "Set exact timing for emotional impact."
+msgstr ""
+
+#: letters/templates/letters/how.html:104
+msgid ""
+"Pick the precise date and time your message should land. Use quick-select "
+"presets — 1 month, 1 year, 5 years, 10 years — or dial in a custom moment: a "
+"birthday, anniversary, or milestone you already know is coming."
+msgstr ""
+
+#: letters/templates/letters/how.html:112
+msgid "Preset slots for common future milestones"
+msgstr ""
+
+#: letters/templates/letters/how.html:113
+msgid "Custom date-and-time picker for exact moments"
+msgstr ""
+
+#: letters/templates/letters/how.html:114
+msgid "Delivery time locked after confirmation"
+msgstr ""
+
+#: letters/templates/letters/how.html:130
+#: letters/templates/letters/how.html:146
+#: letters/templates/letters/landing.html:130
+msgid "Deliver"
+msgstr "Доставить"
+
+#: letters/templates/letters/how.html:131
+msgid "Automatic delivery with fallback reliability."
+msgstr ""
+
+#: letters/templates/letters/how.html:133
+msgid ""
+"When the clock hits your chosen moment, LetterGator dispatches your message "
+"to every selected recipient simultaneously. Built-in retry logic protects "
+"against delivery failures so your words arrive — no matter what happens "
+"between now and then."
+msgstr ""
+
+#: letters/templates/letters/how.html:141
+msgid "Sends to all selected recipients at once"
+msgstr ""
+
+#: letters/templates/letters/how.html:142
+msgid "Retry logic guards against delivery failures"
+msgstr ""
+
+#: letters/templates/letters/how.html:143
+msgid "Confirmation logged to your account history"
+msgstr ""
+
+#: letters/templates/letters/how.html:159
+msgid "Letter creation form"
+msgstr ""
+
+#: letters/templates/letters/how.html:160
+msgid "Every field explained"
+msgstr ""
+
+#: letters/templates/letters/how.html:162
+msgid ""
+"This is a full guide to every setting in the Create Letter page, including "
+"what each field controls and how pricing is calculated."
+msgstr ""
+
+#: letters/templates/letters/how.html:171
+#, fuzzy
+#| msgid "Content"
+msgid "Content fields"
+msgstr "Содержимое"
+
+#: letters/templates/letters/how.html:173
+#, fuzzy
+#| msgid "Subject"
+msgid "Subject:"
+msgstr "Тема"
+
+#: letters/templates/letters/how.html:173
+msgid ""
+"The title of your letter, used for quick identification in your list and "
+"confirmation messages."
+msgstr ""
+
+#: letters/templates/letters/how.html:174
+#, fuzzy
+#| msgid "Message"
+msgid "Message:"
+msgstr "Сообщение"
+
+#: letters/templates/letters/how.html:174
+msgid ""
+"The full text body that will be stored securely and delivered at the "
+"scheduled time."
+msgstr ""
+
+#: letters/templates/letters/how.html:175
+#, fuzzy
+#| msgid "Delivery Date And Time"
+msgid "Delivery Date and Time:"
+msgstr "Дата и время доставки"
+
+#: letters/templates/letters/how.html:175
+msgid "The exact future moment when LetterGator sends your message."
+msgstr ""
+
+#: letters/templates/letters/how.html:180
+#, fuzzy
+#| msgid "Recipients"
+msgid "Recipient fields"
+msgstr "Получатели"
+
+#: letters/templates/letters/how.html:182
+#, fuzzy
+#| msgid "Send To Me"
+msgid "Send To Me:"
+msgstr "Отправить себе"
+
+#: letters/templates/letters/how.html:182
+msgid "If Yes, the letter is sent to your account email."
+msgstr ""
+
+#: letters/templates/letters/how.html:183
+#, fuzzy
+#| msgid "Recipient Emails (max 5)"
+msgid "Recipient Emails:"
+msgstr "Email получателей (макс. 5)"
+
+#: letters/templates/letters/how.html:183
+msgid "Shown when Send To Me is No. Add up to 5 valid recipient emails."
+msgstr ""
+
+#: letters/templates/letters/how.html:184
+msgid "Browser timezone:"
+msgstr ""
+
+#: letters/templates/letters/how.html:184
+msgid ""
+"Captured automatically so your selected delivery time is interpreted "
+"correctly."
+msgstr ""
+
+#: letters/templates/letters/how.html:189
+msgid "Control settings"
+msgstr ""
+
+#: letters/templates/letters/how.html:191
+#, fuzzy
+#| msgid "Allow Delete (1 Month Window)"
+msgid "Allow Delete (1 Month Window):"
+msgstr "Разрешить удаление (в течение 1 месяца)"
+
+#: letters/templates/letters/how.html:191
+msgid ""
+"Lets you delete the letter only during the first 30 days after creation. If "
+"this is disabled, the letter cannot be deleted after creation at all."
+msgstr ""
+
+#: letters/templates/letters/how.html:192
+#, fuzzy
+#| msgid "Allow Edit (1 Month Window)"
+msgid "Allow Edit (1 Month Window):"
+msgstr "Разрешить редактирование (в течение 1 месяца)"
+
+#: letters/templates/letters/how.html:192
+msgid ""
+"Lets you edit the message only during the first 30 days after creation. If "
+"this is disabled, the message cannot be edited after creation at all."
+msgstr ""
+
+#: letters/templates/letters/how.html:193
+#, fuzzy
+#| msgid "See Message Before Delivery"
+msgid "See Message Before Delivery:"
+msgstr "Просмотреть сообщение до доставки"
+
+#: letters/templates/letters/how.html:193
+#, fuzzy
+#| msgid "If enabled, you can preview your message before it is delivered."
+msgid "If enabled, you can preview your own message before its delivery time."
+msgstr "Если включено, вы можете просмотреть сообщение перед доставкой."
+
+#: letters/templates/letters/how.html:198
+#, fuzzy
+#| msgid "Remaining balance:"
+msgid "Pricing and balance"
+msgstr "Остаток баланса:"
+
+#: letters/templates/letters/how.html:200
+#, fuzzy
+#| msgid "1 year"
+msgid "Under 1 year:"
+msgstr "1 год"
+
+#: letters/templates/letters/how.html:200
+msgid "Free."
+msgstr ""
+
+#: letters/templates/letters/how.html:201
+msgid "1 year or more:"
+msgstr ""
+
+#: letters/templates/letters/how.html:201
+msgid "$0.50 per year."
+msgstr ""
+
+#: letters/templates/letters/how.html:202
+msgid "Minimum balance to unlock 1 year+ dates:"
+msgstr ""
+
+#: letters/templates/letters/how.html:202
+msgid "$1.00."
+msgstr ""
+
+#: letters/templates/letters/how.html:203
+msgid "Charge timing:"
+msgstr ""
+
+#: letters/templates/letters/how.html:203
+msgid "The scheduling cost is deducted once when you save (Seal and Store)."
+msgstr ""
+
+#: letters/templates/letters/how.html:209
+msgid "What happens when you submit"
+msgstr ""
+
+#: letters/templates/letters/how.html:211
+msgid ""
+"The form validates required fields, recipient emails, and future delivery "
+"time."
+msgstr ""
+
+#: letters/templates/letters/how.html:212
+msgid ""
+"If your selected schedule has a cost, your balance is checked before "
+"creation."
+msgstr ""
+
+#: letters/templates/letters/how.html:213
+msgid ""
+"On success, the letter is sealed and stored, and the scheduling charge (if "
+"any) is logged in your balance history."
+msgstr ""
+
+#: letters/templates/letters/how.html:221
+#, fuzzy
+#| msgid "Create your first letter"
+msgid "Ready to write your first letter?"
+msgstr "Создать первое письмо"
+
+#: letters/templates/letters/how.html:226
+#: letters/templates/letters/landing.html:42
+msgid "Open Letters"
+msgstr "Открыть письма"
+
+# --- Landing: hero ---
+#: letters/templates/letters/landing.html:5
+msgid "Message to the Future"
+msgstr "Послание в будущее"
+
+#: letters/templates/letters/landing.html:18
+#, python-format
+msgid "Hi %(name)s, now you can"
+msgstr "Привет, %(name)s, теперь вы можете"
+
+#: letters/templates/letters/landing.html:19
+msgid "send your letter at a perfect time."
+msgstr "отправьте письмо в идеальный момент."
+
+#: letters/templates/letters/landing.html:24
+#, python-format
+msgid ""
+"You have <span class=\"font-semibold text-[#014421]\">$%(balance)s</span> at "
+"your balance for creating long term letters."
+msgstr ""
+"На вашем балансе <span class=\"font-semibold text-[#014421]\">$%(balance)s</"
+"span> для создания долгосрочных писем."
+
+#: letters/templates/letters/landing.html:29
+msgid "Send your message"
+msgstr "Отправьте свое послание"
+
+#: letters/templates/letters/landing.html:29
+msgid "at the perfect time."
+msgstr "в нужный момент."
+
+#: letters/templates/letters/landing.html:32
+msgid ""
+"Because some things are better left for later. See you later, Alligator!"
+msgstr ""
+"Потому что некоторые вещи лучше оставить на потом. See you later, Alligator!"
+
+#: letters/templates/letters/landing.html:35
+msgid ""
+"A secure digital vault that stores your letters, files, and ideas, then "
+"delivers them in the future on the exact day you choose."
+msgstr ""
+"Надежное цифровое хранилище для ваших писем, файлов и идей, которое доставит "
+"их в будущем точно в выбранный вами день."
+
+#: letters/templates/letters/landing.html:42
+msgid "Go to my letters"
+msgstr "К моим письмам"
+
+# --- Landing: See why section ---
+#: letters/templates/letters/landing.html:55
+msgid "Who writes letters like this?"
+msgstr "Кто пишет такие письма?"
+
+#: letters/templates/letters/landing.html:58
+msgid ""
+"From personal milestones to team rituals — here are the moments people most "
+"often choose to write a letter for later."
+msgstr ""
+"От личных достижений до командных ритуалов — вот моменты, когда люди чаще "
+"всего решают написать письмо в будущее."
+
+#: letters/templates/letters/landing.html:67
+msgid ""
+"Letters to your future self — written during a job change, a hard season, or "
+"a new beginning. Read when the dust settles."
+msgstr ""
+"Письма самому себе в будущее — написанные при смене работы, в трудные "
+"времена или в начале нового пути. Прочтите, когда все уляжется."
+
+#: letters/templates/letters/landing.html:73
+msgid ""
+"Notes to a partner, a newborn, or your whole family — timed for "
+"anniversaries, birthdays, or the moments that matter most."
+msgstr ""
+"Записки партнеру, новорожденному или всей семье — приуроченные к годовщинам, "
+"дням рождения или самым важным моментам жизни."
+
+#: letters/templates/letters/landing.html:79
+msgid ""
+"Pre-launch messages, knowledge handovers, year-ahead commitments — delivered "
+"at exactly the right professional moment."
+msgstr ""
+"Сообщения перед запуском проекта, передача знаний или обязательства на год "
+"вперед — доставляются именно в нужный рабочий момент."
+
+#: letters/templates/letters/landing.html:85
+msgid ""
+"Retirement, moving abroad, a difficult anniversary — letters that mark "
+"life's biggest turning points and arrive when they are needed."
+msgstr ""
+"Выход на пенсию, переезд за границу или важная дата — письма, которые "
+"отмечают главные повороты судьбы и приходят тогда, когда они нужнее всего."
+
+#: letters/templates/letters/landing.html:91
+msgid "Explore all scenarios"
+msgstr "Посмотреть все варианты"
+
+# --- Landing: See how section ---
+#: letters/templates/letters/landing.html:105
+msgid "How your letter travels through time"
+msgstr "Как ваше письмо путешествует во времени"
+
+#: letters/templates/letters/landing.html:108
+msgid ""
+"Four simple steps take your message from idea to inbox — on exactly the day "
+"and time you choose."
+msgstr ""
+"Четыре простых шага от идеи до доставки во входящие — точно в назначенный "
+"вами день и час."
+
+#: letters/templates/letters/landing.html:116
+msgid "Write your message with no limits and save it to your account."
+msgstr "Напишите сообщение без ограничений и сохраните его в своем аккаунте."
+
+#: letters/templates/letters/landing.html:121
+msgid "Set privacy rules — block previews, lock edits, control deletion."
+msgstr ""
+"Установите правила приватности: запрет предпросмотра, блокировка правок, "
+"контроль удаления."
+
+#: letters/templates/letters/landing.html:126
+msgid "Pick the exact date — a preset milestone or a custom moment."
+msgstr "Выберите точную дату: предустановленное событие или особый момент."
+
+#: letters/templates/letters/landing.html:131
+msgid "LetterGator sends it automatically — with retry logic built in."
+msgstr ""
+"LetterGator отправит его автоматически с помощью встроенной логики повторных "
+"попыток."
+
+#: letters/templates/letters/landing.html:137
+msgid "See the full journey"
+msgstr "Посмотреть весь путь"
+
+#: letters/templates/letters/landing.html:155
+msgid "Everything users usually ask before sending their first future letter."
+msgstr ""
+"Все, что обычно интересует пользователей перед отправкой их первого письма в "
+"будущее."
+
+# --- Letter Create ---
+#: letters/templates/letters/letter_create.html:4
+#: letters/templates/letters/letter_create.html:17
+#: letters/templates/letters/vault.html:80
+#: letters/templates/letters/vault.html:257
+msgid "Create Letter"
+msgstr "Создать письмо"
+
+#: letters/templates/letters/letter_create.html:20
+msgid "Configure delivery, privacy, and control options before sealing."
+msgstr ""
+"Настройте доставку, конфиденциальность и параметры управления перед "
+"отправкой."
+
+#: letters/templates/letters/letter_create.html:23
+#: letters/templates/letters/letter_create_blocked.html:41
+msgid "Back to Letters"
+msgstr "К письмам"
+
+#: letters/templates/letters/letter_create.html:54
+msgid "Balance usage for long-term delivery"
+msgstr "Использование баланса для долгосрочной доставки"
+
+#: letters/templates/letters/letter_create.html:82
+msgid "Send To Me"
+msgstr "Отправить себе"
+
+#: letters/templates/letters/letter_create.html:84
+msgid "Selected by default. Choose No to send to other recipients."
+msgstr ""
+"Выбрано по умолчанию. Выберите Нет, чтобы отправить другим получателям."
+
+#: letters/templates/letters/letter_create.html:89
+#: letters/templates/letters/letter_create.html:103
+#: letters/templates/letters/letter_create.html:117
+#: letters/templates/letters/letter_create.html:131
+msgid "Yes"
+msgstr "Да"
+
+#: letters/templates/letters/letter_create.html:90
+#: letters/templates/letters/letter_create.html:104
+#: letters/templates/letters/letter_create.html:118
+#: letters/templates/letters/letter_create.html:132
+msgid "No"
+msgstr "Нет"
+
+#: letters/templates/letters/letter_create.html:96
+msgid "Allow Delete (1 Month Window)"
+msgstr "Разрешить удаление (в течение 1 месяца)"
+
+#: letters/templates/letters/letter_create.html:98
+msgid ""
+"If enabled, deletion is available only in the first month after creation."
+msgstr "Если включено, удаление доступно только в первый месяц после создания."
+
+#: letters/templates/letters/letter_create.html:110
+msgid "Allow Edit (1 Month Window)"
+msgstr "Разрешить редактирование (в течение 1 месяца)"
+
+#: letters/templates/letters/letter_create.html:112
+msgid ""
+"If enabled, editing is available only in the first month after creation."
+msgstr ""
+"Если включено, редактирование доступно только в первый месяц после создания."
+
+#: letters/templates/letters/letter_create.html:124
+msgid "See Message Before Delivery"
+msgstr "Просмотреть сообщение до доставки"
+
+#: letters/templates/letters/letter_create.html:126
+msgid "If enabled, you can preview your message before it is delivered."
+msgstr "Если включено, вы можете просмотреть сообщение перед доставкой."
+
+#: letters/templates/letters/letter_create.html:139
+msgid "Recipient Emails (max 5)"
+msgstr "Email получателей (макс. 5)"
+
+#: letters/templates/letters/letter_create.html:145
+msgid "Add Email"
+msgstr "Добавить email"
+
+#: letters/templates/letters/letter_create.html:150
+msgid "Add at least one recipient when \"Send to me\" is disabled."
+msgstr "Добавьте хотя бы одного получателя, если «Отправить себе» отключено."
+
+#: letters/templates/letters/letter_create.html:164
+msgid "Delivery Date And Time"
+msgstr "Дата и время доставки"
+
+#: letters/templates/letters/letter_create.html:169
+msgid "1 year and longer schedules consume your USD balance."
+msgstr "Расписание на 1 год и дольше использует ваш USD баланс."
+
+#: letters/templates/letters/letter_create.html:172
+msgid "1 month"
+msgstr "1 месяц"
+
+#: letters/templates/letters/letter_create.html:173
+msgid "6 months"
+msgstr "6 месяцев"
+
+#: letters/templates/letters/letter_create.html:174
+msgid "1 year"
+msgstr "1 год"
+
+#: letters/templates/letters/letter_create.html:175
+msgid "5 years"
+msgstr "5 лет"
+
+#: letters/templates/letters/letter_create.html:176
+msgid "10 years"
+msgstr "10 лет"
+
+#: letters/templates/letters/letter_create.html:182
+msgid "Seal and Store"
+msgstr "Запечатать и сохранить"
+
+#: letters/templates/letters/letter_create.html:187
+msgid "Scheduling cost:"
+msgstr "Стоимость планирования:"
+
+#: letters/templates/letters/letter_create.html:187
+msgid "will be deducted from your balance on save."
+msgstr "будет списано с вашего баланса при сохранении."
+
+#: letters/templates/letters/letter_create.html:190
+msgid "Your balance is not enough for this schedule."
+msgstr "Вашего баланса недостаточно для этого расписания."
+
+#: letters/templates/letters/letter_create.html:191
+msgid "Top up balance"
+msgstr "Пополнить баланс"
+
+#: letters/templates/letters/letter_create_blocked.html:4
+msgid "Verify Email"
+msgstr "Подтвердить Email"
+
+#: letters/templates/letters/letter_create_blocked.html:11
+#: letters/templates/letters/vault.html:36
+msgid "Email verification required"
+msgstr "Требуется подтверждение Email"
+
+#: letters/templates/letters/letter_create_blocked.html:13
+msgid "Verify your email before creating a letter"
+msgstr "Подтвердите Email перед созданием письма"
+
+#: letters/templates/letters/letter_create_blocked.html:16
+msgid ""
+"Your account is active and you can browse the app, but letter creation is "
+"locked until you confirm your email address."
+msgstr ""
+"Ваш аккаунт активен и вы можете пользоваться приложением, но создание писем "
+"заблокировано до подтверждения email."
+
+#: letters/templates/letters/letter_create_blocked.html:34
+#: letters/templates/letters/vault.html:55
+msgid "Resend activation email"
+msgstr "Повторно отправить письмо активации"
+
+#: letters/templates/letters/partials/contact_ticket_card.html:20
+msgid "Comments"
+msgstr "Комментарии"
+
+#: letters/templates/letters/partials/contact_ticket_card.html:26
+msgid "Admin"
+msgstr "Администратор"
+
+#: letters/templates/letters/partials/contact_ticket_card.html:38
+msgid "No comments yet."
+msgstr "Комментариев пока нет."
+
+#: letters/templates/letters/partials/contact_ticket_card.html:52
+#: letters/templates/letters/partials/contact_ticket_card.html:75
+msgid "Add comment"
+msgstr "Добавить комментарий"
+
+#: letters/templates/letters/partials/contact_ticket_card.html:59
+msgid "Write your comment..."
+msgstr "Напишите комментарий..."
+
+#: letters/templates/letters/partials/letter_saved_modal.html:11
+msgid "Letter sealed and stored!"
+msgstr "Письмо запечатано и сохранено!"
+
+#: letters/templates/letters/partials/letter_saved_modal.html:13
+#, python-format
+msgid ""
+"Your letter <span class=\"font-semibold\">&ldquo;%(subject)s&rdquo;</span> "
+"has been saved."
+msgstr ""
+"Ваше письмо <span class=\"font-semibold\">&ldquo;%(subject)s&rdquo;</span> "
+"сохранено."
+
+#: letters/templates/letters/partials/letter_saved_modal.html:18
+msgid "was deducted from your balance."
+msgstr "было списано с вашего баланса."
+
+#: letters/templates/letters/partials/letter_saved_modal.html:19
+msgid "Remaining balance:"
+msgstr "Остаток баланса:"
+
+#: letters/templates/letters/partials/letter_saved_modal.html:28
+msgid "View My Letters"
+msgstr "Просмотреть мои письма"
+
+#: letters/templates/letters/partials/letter_saved_modal.html:34
+msgid "Create Another"
+msgstr "Создать ещё"
+
+#: letters/templates/letters/partials/password_change_panel.html:5
+#: letters/templates/letters/partials/password_change_panel.html:18
+msgid "Change password"
+msgstr "Сменить пароль"
+
+#: letters/templates/letters/partials/password_change_panel.html:7
+msgid "Update your account password."
+msgstr "Обновите пароль вашего аккаунта."
+
+#: letters/templates/letters/partials/password_change_panel.html:37
+msgid "Current password"
+msgstr "Текущий пароль"
+
+#: letters/templates/letters/partials/password_change_panel.html:98
+msgid "Cancel"
+msgstr "Отмена"
+
+#: letters/templates/letters/partials/password_change_panel.html:110
+msgid "Password is hidden for security."
+msgstr "Пароль скрыт в целях безопасности."
+
+# --- Partials ---
+#: letters/templates/letters/partials/secondary_email_panel.html:3
+msgid "Secondary email list"
+msgstr "Список дополнительных email"
+
+#: letters/templates/letters/partials/secondary_email_panel.html:5
+msgid "Add up to 5 backup email addresses for delivery fallback."
+msgstr "Добавьте до 5 резервных адресов email для резервной доставки."
+
+#: letters/templates/letters/partials/secondary_email_panel.html:6
+msgid "Slots left:"
+msgstr "Осталось мест:"
+
+#: letters/templates/letters/partials/secondary_email_panel.html:29
+msgid "Add backup email"
+msgstr "Добавить резервный email"
+
+#: letters/templates/letters/partials/secondary_email_panel.html:52
+msgid "Add secondary email"
+msgstr "Добавить"
+
+#: letters/templates/letters/partials/secondary_email_panel.html:74
+msgid "Remove"
+msgstr "Удалить"
+
+#: letters/templates/letters/partials/secondary_email_panel.html:79
+msgid "No secondary emails yet."
+msgstr "Дополнительных email пока нет."
+
+#: letters/templates/letters/privacy.html:4
+msgid "LetterGator | Privacy"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:11
+msgid "How LetterGator protects your data"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:14
+msgid ""
+"Your letters are encrypted before storage and decrypted only inside "
+"authorized application flows. We use strict access controls so each user can "
+"only interact with their own letters."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:23
+msgid "1. Encrypted storage"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:25
+msgid ""
+"Letter content is encrypted at rest. Database access alone does not reveal "
+"readable message text."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:33
+msgid "2. Ownership checks"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:35
+msgid ""
+"Letters are linked to your user account by user ID. Access to list, edit, "
+"and delete operations is validated against ownership."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:43
+msgid "3. Controlled preview"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:45
+msgid ""
+"Message previews are available only when your letter settings allow sender "
+"preview, or after delivery according to application rules."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:53
+msgid "4. Operational security"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:55
+msgid ""
+"Encryption keys are managed through server configuration and are not stored "
+"in the database alongside encrypted messages."
+msgstr ""
+
+#: letters/templates/letters/terms.html:4
+msgid "LetterGator | Terms of Service"
+msgstr ""
+
+#: letters/templates/letters/terms.html:9
+msgid "Legal"
+msgstr ""
+
+#: letters/templates/letters/terms.html:11
+msgid "Terms of Service"
+msgstr ""
+
+#: letters/templates/letters/terms.html:13
+msgid "Last updated: May 2026"
+msgstr ""
+
+#: letters/templates/letters/terms.html:15
+msgid ""
+"By creating an account or using LetterGator, you agree to the following "
+"terms. Please read them carefully before using the service."
+msgstr ""
+
+#: letters/templates/letters/terms.html:24
+msgid "1. Service description"
+msgstr ""
+
+#: letters/templates/letters/terms.html:26
+msgid ""
+"LetterGator is a time-delayed letter delivery service. You compose a "
+"message, choose a future delivery date, and the platform delivers it to the "
+"specified recipients when that date arrives. The service is intended for "
+"personal, family, and professional use only."
+msgstr ""
+
+#: letters/templates/letters/terms.html:36
+msgid "2. Account eligibility"
+msgstr ""
+
+#: letters/templates/letters/terms.html:38
+msgid ""
+"You must be at least 18 years old to create an account. You are responsible "
+"for keeping your login credentials confidential and for all activity that "
+"occurs under your account."
+msgstr ""
+
+#: letters/templates/letters/terms.html:47
+msgid "3. Acceptable use"
+msgstr ""
+
+#: letters/templates/letters/terms.html:49
+msgid ""
+"You agree not to use LetterGator to send spam, harassing content, illegal "
+"material, or any content that violates the rights of others. Letters sent "
+"through the platform must have a legitimate, consented recipient. We reserve "
+"the right to terminate accounts that violate these rules."
+msgstr ""
+
+#: letters/templates/letters/terms.html:60
+msgid "4. Pricing and billing"
+msgstr ""
+
+#: letters/templates/letters/terms.html:62
+msgid ""
+"Letters scheduled for delivery within 1 year of creation are free. Letters "
+"scheduled 1 year or more in the future incur a fee of $0.50 per year of the "
+"schedule. This charge is deducted once from your balance when you confirm "
+"the letter. There are no recurring subscription fees; you only pay for what "
+"you schedule."
+msgstr ""
+
+#: letters/templates/letters/terms.html:73
+#, fuzzy
+#| msgid "Delivery Date"
+msgid "5. Delivery commitment"
+msgstr "Дата доставки"
+
+#: letters/templates/letters/terms.html:75
+msgid ""
+"We make reasonable efforts to deliver letters on the scheduled date using "
+"automated systems with retry logic. However, we cannot guarantee delivery in "
+"cases where a recipient's email address is no longer valid, their inbox "
+"rejects messages, or extraordinary technical circumstances arise. We will "
+"flag delivery issues in your account."
+msgstr ""
+
+#: letters/templates/letters/terms.html:87
+msgid "6. Message content and encryption"
+msgstr ""
+
+#: letters/templates/letters/terms.html:89
+msgid ""
+"Your message content is encrypted before storage. LetterGator staff cannot "
+"read the contents of your letters. You remain solely responsible for the "
+"content you write. Additionally, encrypted letter data is backed up to "
+"Arweave, a permanent decentralised blockchain storage network, to ensure "
+"long-term availability of your letters even in unexpected situations."
+msgstr ""
+
+#: letters/templates/letters/terms.html:101
+msgid "7. Edit and deletion rights"
+msgstr ""
+
+#: letters/templates/letters/terms.html:103
+msgid ""
+"If you enable the Allow Edit or Allow Delete options when creating a letter, "
+"those actions are available only during the first 30 days after creation. "
+"Once the window expires, or if the options were not enabled, the letter is "
+"permanently locked until delivery."
+msgstr ""
+
+#: letters/templates/letters/terms.html:113
+msgid "8. Account and email validity"
+msgstr ""
+
+#: letters/templates/letters/terms.html:115
+msgid ""
+"To keep your letters deliverable over long timeframes, we send an annual re-"
+"confirmation email to verify your address is still active. You can update "
+"your email address in your profile at any time; the new address must be "
+"confirmed before it becomes active for delivery. You may also provide a "
+"phone number and address in your profile as supplementary contact "
+"information."
+msgstr ""
+
+#: letters/templates/letters/terms.html:127
+msgid "9. Termination"
+msgstr ""
+
+#: letters/templates/letters/terms.html:129
+msgid ""
+"You may close your account at any time by contacting us. Upon account "
+"closure, undelivered letters will no longer be dispatched. We reserve the "
+"right to suspend or terminate accounts that breach these terms without prior "
+"notice."
+msgstr ""
+
+#: letters/templates/letters/terms.html:139
+msgid "10. Limitation of liability"
+msgstr ""
+
+#: letters/templates/letters/terms.html:141
+msgid ""
+"LetterGator is provided \"as is\". To the maximum extent permitted by "
+"applicable law, we are not liable for indirect, incidental, or consequential "
+"damages arising from your use of the service, including missed deliveries or "
+"loss of content beyond our reasonable control."
+msgstr ""
+
+#: letters/templates/letters/terms.html:152
+msgid "11. Changes to these terms"
+msgstr ""
+
+#: letters/templates/letters/terms.html:154
+msgid ""
+"We may update these terms from time to time. If material changes are made, "
+"we will notify you by email. Continued use of the service after such notice "
+"constitutes acceptance of the updated terms."
+msgstr ""
+
+#: letters/templates/letters/terms.html:163
+#, fuzzy
+#| msgid "Contact"
+msgid "12. Contact"
+msgstr "Контакты"
+
+#: letters/templates/letters/terms.html:165
+msgid "If you have questions about these terms, please use the"
+msgstr ""
+
+#: letters/templates/letters/terms.html:167
+msgid "page to get in touch with us."
+msgstr ""
+
+# --- Vault ---
+#: letters/templates/letters/vault.html:17
+msgid "Letters Workspace Preview"
+msgstr "Предпросмотр рабочего пространства писем"
+
+#: letters/templates/letters/vault.html:17
+msgid "Your Letters Workspace"
+msgstr "Мои письма"
+
+#: letters/templates/letters/vault.html:21
+msgid ""
+"This page stores and manages your scheduled letters. Sign in to create "
+"letters, manage recipients, and control edit/delete permissions."
+msgstr ""
+"Эта страница хранит и управляет вашими запланированными письмами. Войдите, "
+"чтобы создавать письма, управлять получателями и контролировать разрешения."
+
+#: letters/templates/letters/vault.html:23
+msgid ""
+"Manage scheduled letters in one place. You can review recipients, delivery "
+"timing, visibility, and perform edit/delete actions where they are still "
+"permitted."
+msgstr ""
+"Управляйте запланированными письмами в одном месте. Просматривайте "
+"получателей, время доставки и выполняйте действия там, где они разрешены."
+
+#: letters/templates/letters/vault.html:28
+msgid "Long-term schedule policy"
+msgstr "Политика долгосрочного планирования"
+
+#: letters/templates/letters/vault.html:30
+#, python-format
+msgid ""
+"Scheduling letters for one year and beyond uses your balance. The rate is "
+"$0.50 per year. Keep at least $%(balance)s to unlock 1 year+ scheduling "
+"options."
+msgstr ""
+"Планирование писем на один год и дольше использует ваш баланс. Тариф: $0.50 "
+"в год. Держите не менее $%(balance)s для разблокировки."
+
+#: letters/templates/letters/vault.html:38
+msgid ""
+"You can explore Letters, but you must verify your email before creating a "
+"new letter."
+msgstr ""
+"Вы можете просматривать письма, но для создания нового необходимо "
+"подтвердить email."
+
+#: letters/templates/letters/vault.html:87
+msgid "Why Sign In"
+msgstr "Зачем входить"
+
+#: letters/templates/letters/vault.html:87
+msgid "Existing Letters"
+msgstr "Существующие письма"
+
+#: letters/templates/letters/vault.html:102
+msgid "Access required"
+msgstr "Требуется доступ"
+
+#: letters/templates/letters/vault.html:104
+msgid ""
+"To view your personal letters table and decrypted previews (when allowed), "
+"please log in or create an account."
+msgstr ""
+"Для просмотра личных писем и расшифрованных превью войдите или создайте "
+"аккаунт."
+
+#: letters/templates/letters/vault.html:121
+msgid "Content"
+msgstr "Содержимое"
+
+#: letters/templates/letters/vault.html:122
+msgid "Recipients"
+msgstr "Получатели"
+
+#: letters/templates/letters/vault.html:123
+msgid "Delivery Date"
+msgstr "Дата доставки"
+
+#: letters/templates/letters/vault.html:124
+msgid "Status"
+msgstr "Статус"
+
+#: letters/templates/letters/vault.html:125
+msgid "Delete"
+msgstr "Удалить"
+
+#: letters/templates/letters/vault.html:153
+msgid "Display More"
+msgstr "Показать больше"
+
+#: letters/templates/letters/vault.html:199
+msgid "Only me"
+msgstr "Только мне"
+
+#: letters/templates/letters/vault.html:235
+msgid "Delete this letter permanently? This cannot be undone."
+msgstr "Удалить это письмо навсегда? Это действие необратимо."
+
+#: letters/templates/letters/vault.html:241
+msgid "Available until"
+msgstr "Доступно до"
+
+#: letters/templates/letters/vault.html:244
+msgid "You cannot delete this letter."
+msgstr "Вы не можете удалить это письмо."
+
+#: letters/templates/letters/vault.html:254
+msgid "No letters yet"
+msgstr "Писем пока нет"
+
+#: letters/templates/letters/vault.html:255
+msgid "Create your first letter to start building your timeline."
+msgstr "Создайте первое письмо, чтобы начать свою временную шкалу."
+
+#: letters/templates/letters/vault.html:270
+msgid "Letter"
+msgstr "Письмо"
+
+#: letters/templates/letters/vault.html:283
+msgid "Edit Letter Text"
+msgstr "Редактировать текст письма"
+
+#: letters/templates/letters/vault.html:294
+msgid "Save Text"
+msgstr "Сохранить текст"

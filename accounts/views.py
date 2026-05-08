@@ -10,6 +10,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils import translation
 from django.utils.encoding import force_str
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.http import urlsafe_base64_decode
@@ -90,6 +91,38 @@ class EmailLoginView(LoginView):
 def logout_view(request):
     logout(request)
     return redirect("landing-page")
+
+
+_VALID_LANGS = {"en", "ru", "hy"}
+
+
+def set_language_view(request):
+    """Switch UI language. Saves to user.language for logged-in users;
+    always sets Django's language cookie for guests."""
+    lang = request.GET.get("lang", "en")
+    if lang not in _VALID_LANGS:
+        lang = "en"
+
+    if request.user.is_authenticated:
+        request.user.language = lang
+        request.user.save(update_fields=["language"])
+
+    referer = request.META.get("HTTP_REFERER", "/")
+    if not url_has_allowed_host_and_scheme(referer, allowed_hosts={request.get_host()}):
+        referer = "/"
+
+    response = redirect(referer)
+    response.set_cookie(
+        settings.LANGUAGE_COOKIE_NAME,
+        lang,
+        max_age=settings.LANGUAGE_COOKIE_AGE,
+        path=settings.LANGUAGE_COOKIE_PATH,
+        domain=settings.LANGUAGE_COOKIE_DOMAIN,
+        secure=settings.LANGUAGE_COOKIE_SECURE,
+        samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+    )
+    translation.activate(lang)
+    return response
 
 
 def activate_account_view(request, uidb64, token):

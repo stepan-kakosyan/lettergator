@@ -34,6 +34,12 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    LANGUAGE_CHOICES = [
+        ("en", "English"),
+        ("ru", "Russian"),
+        ("hy", "Armenian"),
+    ]
+
     email = models.EmailField(unique=True)
     pending_email = models.EmailField(blank=True, default="")
     pending_email_requested_at = models.DateTimeField(null=True, blank=True)
@@ -41,6 +47,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=50, blank=True, default="")
     address = models.TextField(blank=True, default="")
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    language = models.CharField(
+        max_length=5, choices=LANGUAGE_CHOICES, default="en"
+    )
     email_verified = models.BooleanField(default=True)
     email_verified_at = models.DateTimeField(null=True, blank=True)
     email_reactivation_sent_at = models.DateTimeField(null=True, blank=True)

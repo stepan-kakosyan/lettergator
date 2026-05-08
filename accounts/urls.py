@@ -12,6 +12,7 @@ from .views import (
     register_view,
     resend_activation_email_view,
     resend_pending_email_confirmation_view,
+    set_language_view,
     test_email_view,
 )
 
@@ -53,6 +54,7 @@ urlpatterns = [
         name="password_reset_confirm",
     ),
     path("logout/", logout_view, name="logout"),
+    path("set-language/", set_language_view, name="set-language"),
     path("google/login/", google_login_view, name="google-login"),
     path("google/callback/", google_callback_view, name="google-callback"),
     path("test-email/", test_email_view, name="test-email"),
