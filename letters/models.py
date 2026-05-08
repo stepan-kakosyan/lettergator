@@ -32,6 +32,9 @@ class Letter(models.Model):
     arweave_tx_id = models.CharField(
         max_length=100, null=True, blank=True
     )
+    idempotency_key = models.CharField(
+        max_length=64, blank=True, default="", db_index=True
+    )
 
     class Meta:
         ordering = ["delivery_at", "created_at"]

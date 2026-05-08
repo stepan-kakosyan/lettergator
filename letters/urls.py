@@ -11,10 +11,12 @@ from .views import (
     dashboard_view,
     delete_letter_view,
     edit_letter_view,
+    faq_page,
     how_page,
     landing_page,
     letters_page,
     privacy_page,
+    terms_page,
 )
 
 urlpatterns = [
@@ -26,8 +28,10 @@ urlpatterns = [
     path("vault/", letters_page, name="vault-page"),
     path("how/", how_page, name="how-page"),
     path("contact/", contact_page, name="contact-page"),
-    path("concept/", concept_page, name="concept-page"),
+    path("why/", concept_page, name="why-page"),
     path("privacy/", privacy_page, name="privacy-page"),
+    path("faq/", faq_page, name="faq-page"),
+    path("terms/", terms_page, name="terms-page"),
     path("dashboard/", dashboard_view, name="dashboard_view"),
     path("balance/", balance_page, name="balance-page"),
     path(

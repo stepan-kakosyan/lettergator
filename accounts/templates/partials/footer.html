@@ -2,8 +2,9 @@
     <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
         <p>&copy; 2026 LetterGator. All rights reserved.</p>
         <div class="flex gap-4 mt-4 md:mt-0">
-            <a href="#" class="hover:text-gray-900 transition-colors">Terms</a>
+            <a href="{% url 'terms-page' %}" class="hover:text-gray-900 transition-colors">Terms</a>
             <a href="{% url 'privacy-page' %}" class="hover:text-gray-900 transition-colors">Privacy</a>
+            <a href="{% url 'faq-page' %}" class="hover:text-gray-900 transition-colors">FAQ</a>
         </div>
     </div>
 </footer>

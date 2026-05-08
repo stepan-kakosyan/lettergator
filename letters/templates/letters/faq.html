@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}LetterGator | FAQ{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <!-- Hero -->
+    <section class="flex flex-col items-center justify-center px-6 pt-12 pb-16 max-w-4xl mx-auto text-center">
+        <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold mb-3 fade-in-up delay-100">FAQ</p>
+        <h1 class="text-5xl md:text-6xl font-black tracking-tight text-gray-900 mb-5 fade-in-up delay-100">
+            Common questions
+        </h1>
+        <p class="text-lg md:text-xl text-gray-500 max-w-2xl fade-in-up delay-200">
+            Everything you might want to know before sending your first future letter.
+        </p>
+    </section>
+
+    <!-- Accordion -->
+    <section class="px-6 pb-24">
+        <div class="max-w-4xl mx-auto space-y-3">
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">1. How much does LetterGator cost, and when is it charged?</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    Scheduling a letter for under 1 year is free. For schedules at 1 year or
+                    beyond, the price is $0.50 per year. The total is charged once when you click
+                    Seal and Store, not every month. You can always write letters without paying;
+                    payment is only required for long-term scheduling. To unlock 1 year+
+                    scheduling options, keep at least $1.00 in your balance.
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">2. How reliable is delivery, and what backup details can I provide?</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    LetterGator is built for reliable future delivery with retry logic if a first
+                    attempt fails. You can send to yourself or to other recipients, and add up to
+                    5 recipient emails. For additional account-level safety, you may provide a
+                    phone number and address in your profile. If provided, those details help us
+                    keep your account contact information complete for exceptional support and
+                    verification situations.
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">3. Can I change, delete, or preview a letter after I create it?</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    You control this at creation time. If you enable Allow Edit and/or Allow
+                    Delete, those actions are available only during the first 30 days after the
+                    letter is created. If you leave either option disabled, that action is not
+                    available after creation at all. Message preview works the same way: if See
+                    Message Before Delivery is enabled, you can view your content before delivery;
+                    if disabled, the content stays sealed until delivery.
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">4. How do you make sure my email is still valid in future years?</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    To keep long-term delivery dependable, we send a re-confirmation email roughly
+                    once a year so you can confirm your address and stay connected with us. This
+                    also acts as a reminder to update your account details if your email changes.
+                    If you plan to switch email providers, you can update your email in your
+                    profile and confirm the new address so future letters continue to route
+                    correctly.
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">5. Is my message content private, and what happens if your database is lost?</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    Every message is encrypted before it is stored. The content is unreadable to
+                    anyone who has access to our database — it can only be decrypted at the moment
+                    of delivery. For permanent resilience, the encrypted message data is also
+                    written to Arweave — a decentralised blockchain storage network built to keep
+                    data available permanently. Even if our own database were ever lost or
+                    destroyed, the encrypted letter data is preserved on the blockchain and cannot
+                    disappear.
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">6. Can I attach files to a letter?</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    Not yet — letters currently support a rich text body only. File attachments
+                    are planned for a near-future version. You will be able to attach videos,
+                    audio recordings, images, and other files directly to your letter so the
+                    recipient receives everything in one delivery. We will announce this feature
+                    as soon as it is available.
+                </p>
+            </details>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="px-6 pb-24 text-center">
+        <p class="text-gray-500 text-base mb-4">Still have questions?</p>
+        <a
+            href="{% url 'contact-page' %}"
+            class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
+        >
+            Contact us
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+        </a>
+    </section>
+
+{% endblock %}

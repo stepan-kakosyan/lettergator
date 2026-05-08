@@ -142,6 +142,68 @@
         </div>
     </section>
 
+    <!-- Form guide -->
+    <section class="px-6 pb-16">
+        <div class="max-w-5xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
+            <div class="mb-8">
+                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">Letter creation form</p>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">Every field explained</h2>
+                <p class="text-gray-600 mt-3 max-w-3xl">
+                    This is a full guide to every setting in the Create Letter page,
+                    including what each field controls and how pricing is calculated.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="rounded-2xl border border-gray-200 p-5">
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Content fields</p>
+                    <ul class="mt-3 space-y-3 text-sm text-gray-700">
+                        <li><strong>Subject:</strong> The title of your letter, used for quick identification in your list and confirmation messages.</li>
+                        <li><strong>Message:</strong> The full text body that will be stored securely and delivered at the scheduled time.</li>
+                        <li><strong>Delivery Date and Time:</strong> The exact future moment when LetterGator sends your message.</li>
+                    </ul>
+                </div>
+
+                <div class="rounded-2xl border border-gray-200 p-5">
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Recipient fields</p>
+                    <ul class="mt-3 space-y-3 text-sm text-gray-700">
+                        <li><strong>Send To Me:</strong> If Yes, the letter is sent to your account email.</li>
+                        <li><strong>Recipient Emails:</strong> Shown when Send To Me is No. Add up to 5 valid recipient emails.</li>
+                        <li><strong>Browser timezone:</strong> Captured automatically so your selected delivery time is interpreted correctly.</li>
+                    </ul>
+                </div>
+
+                <div class="rounded-2xl border border-gray-200 p-5">
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Control settings</p>
+                    <ul class="mt-3 space-y-3 text-sm text-gray-700">
+                        <li><strong>Allow Delete (1 Month Window):</strong> Lets you delete the letter only during the first 30 days after creation. If this is disabled, the letter cannot be deleted after creation at all.</li>
+                        <li><strong>Allow Edit (1 Month Window):</strong> Lets you edit the message only during the first 30 days after creation. If this is disabled, the message cannot be edited after creation at all.</li>
+                        <li><strong>See Message Before Delivery:</strong> If enabled, you can preview your own message before its delivery time.</li>
+                    </ul>
+                </div>
+
+                <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+                    <p class="text-xs uppercase tracking-widest text-[#014421] font-bold">Pricing and balance</p>
+                    <ul class="mt-3 space-y-3 text-sm text-gray-700">
+                        <li><strong>Under 1 year:</strong> Free.</li>
+                        <li><strong>1 year or more:</strong> $0.50 per year.</li>
+                        <li><strong>Minimum balance to unlock 1 year+ dates:</strong> $1.00.</li>
+                        <li><strong>Charge timing:</strong> The scheduling cost is deducted once when you save (Seal and Store).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 rounded-2xl border border-gray-200 p-5">
+                <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">What happens when you submit</p>
+                <ul class="mt-3 space-y-2 text-sm text-gray-700">
+                    <li>The form validates required fields, recipient emails, and future delivery time.</li>
+                    <li>If your selected schedule has a cost, your balance is checked before creation.</li>
+                    <li>On success, the letter is sealed and stored, and the scheduling charge (if any) is logged in your balance history.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA -->
     <section class="px-6 pb-24 text-center">
         <p class="text-gray-500 text-base mb-4">Ready to write your first letter?</p>

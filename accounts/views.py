@@ -16,7 +16,7 @@ from django.views.decorators.http import require_POST
 from django.conf import settings
 
 from .forms import EmailAuthenticationForm, TestEmailForm, UserRegistrationForm
-from .models import CustomUser
+from .models import BalanceTransaction, CustomUser
 from .services import send_activation_email
 from .tasks import send_pending_email_confirmation_task
 
@@ -108,6 +108,18 @@ def activate_account_view(request, uidb64, token):
             "email_reactivation_sent_at",
         ]
     )
+
+    if not already_verified:
+        from django.db import transaction as db_transaction
+        with db_transaction.atomic():
+            gift_amount = 2
+            user.balance += gift_amount
+            user.save(update_fields=["balance"])
+            BalanceTransaction.objects.create(
+                user=user,
+                amount=gift_amount,
+                reason="Welcome gift for email verification",
+            )
 
     context = {
         "already_verified": already_verified,

@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}LetterGator | Terms of Service{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
+        <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">Legal</p>
+        <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
+            Terms of Service
+        </h1>
+        <p class="text-gray-500 text-sm mt-2">Last updated: May 2026</p>
+        <p class="text-gray-600 mt-4">
+            By creating an account or using LetterGator, you agree to the following
+            terms. Please read them carefully before using the service.
+        </p>
+
+        <div class="mt-8 space-y-6">
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">1. Service description</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    LetterGator is a time-delayed letter delivery service. You compose a
+                    message, choose a future delivery date, and the platform delivers it
+                    to the specified recipients when that date arrives. The service is
+                    intended for personal, family, and professional use only.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">2. Account eligibility</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    You must be at least 18 years old to create an account. You are
+                    responsible for keeping your login credentials confidential and for
+                    all activity that occurs under your account.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">3. Acceptable use</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    You agree not to use LetterGator to send spam, harassing content,
+                    illegal material, or any content that violates the rights of others.
+                    Letters sent through the platform must have a legitimate, consented
+                    recipient. We reserve the right to terminate accounts that violate
+                    these rules.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">4. Pricing and billing</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    Letters scheduled for delivery within 1 year of creation are free.
+                    Letters scheduled 1 year or more in the future incur a fee of $0.50
+                    per year of the schedule. This charge is deducted once from your
+                    balance when you confirm the letter. There are no recurring
+                    subscription fees; you only pay for what you schedule.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">5. Delivery commitment</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    We make reasonable efforts to deliver letters on the scheduled date
+                    using automated systems with retry logic. However, we cannot
+                    guarantee delivery in cases where a recipient's email address is no
+                    longer valid, their inbox rejects messages, or extraordinary
+                    technical circumstances arise. We will flag delivery issues in your
+                    account.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">6. Message content and encryption</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    Your message content is encrypted before storage. LetterGator staff
+                    cannot read the contents of your letters. You remain solely
+                    responsible for the content you write. Additionally, encrypted
+                    letter data is backed up to Arweave, a permanent decentralised
+                    blockchain storage network, to ensure long-term availability of
+                    your letters even in unexpected situations.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">7. Edit and deletion rights</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    If you enable the Allow Edit or Allow Delete options when creating a
+                    letter, those actions are available only during the first 30 days
+                    after creation. Once the window expires, or if the options were not
+                    enabled, the letter is permanently locked until delivery.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">8. Account and email validity</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    To keep your letters deliverable over long timeframes, we send an
+                    annual re-confirmation email to verify your address is still active.
+                    You can update your email address in your profile at any time;
+                    the new address must be confirmed before it becomes active for
+                    delivery. You may also provide a phone number and address in your
+                    profile as supplementary contact information.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">9. Termination</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    You may close your account at any time by contacting us. Upon
+                    account closure, undelivered letters will no longer be dispatched.
+                    We reserve the right to suspend or terminate accounts that breach
+                    these terms without prior notice.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">10. Limitation of liability</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    LetterGator is provided "as is". To the maximum extent permitted by
+                    applicable law, we are not liable for indirect, incidental, or
+                    consequential damages arising from your use of the service,
+                    including missed deliveries or loss of content beyond our
+                    reasonable control.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">11. Changes to these terms</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    We may update these terms from time to time. If material changes
+                    are made, we will notify you by email. Continued use of the service
+                    after such notice constitutes acceptance of the updated terms.
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">12. Contact</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    If you have questions about these terms, please use the
+                    <a href="{% url 'contact-page' %}" class="text-[#014421] font-semibold hover:underline">Contact</a>
+                    page to get in touch with us.
+                </p>
+            </article>
+
+        </div>
+
+        <div class="mt-10 pt-6 border-t border-gray-100">
+            <a
+                href="{% url 'letters-page' %}"
+                class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
+            >
+                Go to Letters
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

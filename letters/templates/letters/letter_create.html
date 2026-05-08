@@ -40,6 +40,7 @@
             {% csrf_token %}
             {{ form.recipient_list }}
             {{ form.browser_timezone }}
+            {{ form.idempotency_key }}
 
             {% if form.non_field_errors %}
             <div class="bg-red-50 text-red-700 text-sm font-semibold rounded-xl px-4 py-3 mb-5">
@@ -198,4 +199,15 @@
 
 {% block extra_js %}
 <script src="{% static 'js/landing.js' %}"></script>
+<script>
+(function () {
+    var keyField = document.getElementById('id_idempotency_key');
+    if (keyField && !keyField.value) {
+        keyField.value = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11)
+            .replace(/[018]/g, function (c) {
+                return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+            });
+    }
+}());
+</script>
 {% endblock %}

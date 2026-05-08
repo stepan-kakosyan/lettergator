@@ -42,6 +42,14 @@ def how_page(request):
     return render(request, "letters/how.html")
 
 
+def faq_page(request):
+    return render(request, "letters/faq.html")
+
+
+def terms_page(request):
+    return render(request, "letters/terms.html")
+
+
 def _get_visible_letters_for_request(request):
     return Letter.objects.filter(user=request.user).order_by("-created_at")
 

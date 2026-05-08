@@ -23,6 +23,7 @@ from .models import ContactTicket, ContactTicketComment, Letter
 class LetterForm(forms.ModelForm):
     recipient_list = forms.CharField(required=False, widget=forms.HiddenInput())
     browser_timezone = forms.CharField(required=False, widget=forms.HiddenInput())
+    idempotency_key = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Letter
@@ -168,7 +169,23 @@ class LetterForm(forms.ModelForm):
         return cleaned_data
 
     def save(self, commit=True):
-        instance = super().save(commit=False)
+        ikey = self.cleaned_data.get("idempotency_key", "").strip()
+        existing = None
+        if ikey and self.user and self.user.is_authenticated:
+            existing = (
+                Letter.objects.filter(
+                    user=self.user,
+                    idempotency_key=ikey,
+                    is_delivered=False,
+                    is_deleted=False,
+                ).first()
+            )
+
+        if existing:
+            instance = existing
+        else:
+            instance = super().save(commit=False)
+
         if self.user and self.user.is_authenticated:
             instance.user = self.user
         instance.sender_email = self.cleaned_data.get("sender_email", "")
@@ -176,6 +193,15 @@ class LetterForm(forms.ModelForm):
         recipients = self.cleaned_data.get("_recipients", [])
         instance.recipient_email = recipients[0]
         instance.recipient_emails = recipients[1:]
+        if ikey:
+            instance.idempotency_key = ikey
+        # Copy over model fields from cleaned data when updating an existing record
+        if existing:
+            for field in [
+                "subject", "send_to_me", "delivery_at",
+                "can_delete_early", "can_edit_early", "allow_sender_preview",
+            ]:
+                setattr(instance, field, self.cleaned_data[field])
 
         if commit:
             schedule_cost = self.cleaned_data.get("_schedule_cost", Decimal("0.00"))
