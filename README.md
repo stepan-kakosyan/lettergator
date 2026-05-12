@@ -52,6 +52,23 @@ You can later trigger this command with Celery Beat, cron, or a scheduled contai
 
 - Django migrations are run automatically on backend container startup through `entrypoint.sh`.
 
+## .env.example (Lemon Squeezy top-ups)
+
+Track the following variables in your `.env` (also provided in `.env.example`):
+
+- `LEMONSQUEEZY_API_KEY`
+- `LEMONSQUEEZY_WEBHOOK_SECRET`
+- `LEMONSQUEEZY_STORE_ID`
+- `LEMONSQUEEZY_VARIANT_ID` (Pay-What-You-Want top-up variant)
+
+Webhook endpoint to configure in Lemon Squeezy dashboard:
+
+- `/payment/webhooks/lemonsqueezy/`
+
+Subscribed webhook event:
+
+- `order_created`
+
 ## GitHub Actions CI/CD
 
 Two workflows are included in `.github/workflows/`:

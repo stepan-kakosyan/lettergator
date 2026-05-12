@@ -71,9 +71,16 @@ class SecondaryEmailAdmin(admin.ModelAdmin):
 
 @admin.register(BalanceTransaction)
 class BalanceTransactionAdmin(admin.ModelAdmin):
-    list_display = ("user", "amount", "reason", "created_at")
-    list_filter = ("created_at",)
-    search_fields = ("user__email", "reason")
+    list_display = (
+        "user",
+        "amount",
+        "transaction_type",
+        "external_id",
+        "reason",
+        "created_at",
+    )
+    list_filter = ("transaction_type", "created_at")
+    search_fields = ("user__email", "reason", "external_id")
 
 
 @admin.register(LoginEvent)

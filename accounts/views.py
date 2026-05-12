@@ -157,6 +157,7 @@ def activate_account_view(request, uidb64, token):
             BalanceTransaction.objects.create(
                 user=user,
                 amount=gift_amount,
+                transaction_type=BalanceTransaction.TYPE_CREDIT,
                 reason="Welcome gift for email verification",
             )
 
@@ -351,6 +352,7 @@ def google_callback_view(request):
             BalanceTransaction.objects.create(
                 user=user,
                 amount=2,
+                transaction_type=BalanceTransaction.TYPE_CREDIT,
                 reason="Welcome gift for email verification",
             )
     else:

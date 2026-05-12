@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}LetterGator | {% trans "Payment Received" %}{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="w-full max-w-2xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-10 text-center space-y-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">{% trans "Payment" %}</p>
+        <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900">
+            {% trans "Payment successful" %}
+        </h1>
+        <p class="text-gray-600">
+            {% trans "Thanks. Your payment is being processed and your balance should update within a few moments." %}
+        </p>
+        <p class="text-sm text-gray-600 bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+            {% trans "To unlock 1 year+ scheduling, make sure your balance reaches at least $1.00." %}
+        </p>
+        <div class="pt-2 flex flex-wrap justify-center gap-3">
+            <a href="{% url 'balance-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#014421] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+                {% trans "Back to Balance" %}
+            </a>
+            <a href="{% url 'letter-create-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-700 hover:border-[#014421] hover:text-[#014421] transition-colors">
+                {% trans "Create a Letter" %}
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

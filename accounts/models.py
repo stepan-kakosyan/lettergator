@@ -92,12 +92,32 @@ class SecondaryEmail(models.Model):
 
 
 class BalanceTransaction(models.Model):
+    TYPE_CREDIT = "credit"
+    TYPE_DEBIT = "debit"
+    TYPE_ADJUSTMENT = "adjustment"
+    TYPE_CHOICES = [
+        (TYPE_CREDIT, "Credit"),
+        (TYPE_DEBIT, "Debit"),
+        (TYPE_ADJUSTMENT, "Adjustment"),
+    ]
+
     user = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
         related_name="balance_transactions",
     )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    transaction_type = models.CharField(
+        max_length=20,
+        choices=TYPE_CHOICES,
+        default=TYPE_ADJUSTMENT,
+    )
+    external_id = models.CharField(
+        max_length=128,
+        null=True,
+        blank=True,
+        unique=True,
+    )
     reason = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 

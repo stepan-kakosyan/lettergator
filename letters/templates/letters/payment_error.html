@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}LetterGator | {% trans "Payment Not Completed" %}{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="w-full max-w-2xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-10 text-center space-y-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">{% trans "Payment" %}</p>
+        <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900">
+            {% trans "Payment was not completed" %}
+        </h1>
+        <p class="text-gray-600">
+            {% trans "The checkout was cancelled or failed before confirmation." %}
+        </p>
+        <div class="pt-2 flex flex-wrap justify-center gap-3">
+            <a href="{% url 'dashboard_view' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#014421] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+                {% trans "Back to Dashboard" %}
+            </a>
+            <a href="{% url 'balance-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-700 hover:border-[#014421] hover:text-[#014421] transition-colors">
+                {% trans "Try Again" %}
+            </a>
+            <a href="{% url 'contact-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-700 hover:border-[#014421] hover:text-[#014421] transition-colors">
+                {% trans "Contact Support" %}
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

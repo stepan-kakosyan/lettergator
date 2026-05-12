@@ -1,12 +1,22 @@
+import hashlib
+import hmac
+import json
+import logging
+from decimal import Decimal, InvalidOperation
+
+import requests
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.db import transaction
-from django.http import HttpResponse, JsonResponse
+from django.db import IntegrityError, transaction
 from django.db.models import Q
+from django.db.models import F
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from accounts.forms import (
@@ -24,7 +34,6 @@ from .billing import (
     MIN_LONG_SCHEDULE_BALANCE_USD,
     RATE_PER_YEAR_USD,
 )
-from decimal import Decimal
 from .forms import (
     ContactTicketCommentForm,
     ContactTicketForm,
@@ -32,6 +41,8 @@ from .forms import (
     LetterMessageEditForm,
 )
 from .models import ContactTicket, Letter
+
+logger = logging.getLogger(__name__)
 
 
 def landing_page(request):
@@ -139,25 +150,7 @@ def create_letter_page(request):
 
 @login_required
 def balance_page(request):
-    form = BalanceTopUpForm(request.POST or None)
-
-    if request.method == "POST" and form.is_valid():
-        amount = form.cleaned_data["amount"]
-        with transaction.atomic():
-            locked_user = get_user_model().objects.select_for_update().get(
-                pk=request.user.pk
-            )
-            locked_user.balance += amount
-            locked_user.save(update_fields=["balance"])
-            request.user.balance = locked_user.balance
-            BalanceTransaction.objects.create(
-                user=locked_user,
-                amount=amount,
-                reason="Manual balance top-up",
-            )
-
-        messages.success(request, f"${amount:.2f} added to your balance.")
-        return redirect("balance-page")
+    form = BalanceTopUpForm()
 
     transactions = BalanceTransaction.objects.filter(user=request.user)
     context = {
@@ -165,6 +158,229 @@ def balance_page(request):
         "transactions": transactions,
     }
     return render(request, "letters/balance.html", context)
+
+
+def _build_lemonsqueezy_checkout_payload(
+    *,
+    request,
+    amount_cents,
+):
+    success_url = request.build_absolute_uri(reverse("payment-success"))
+    error_url = request.build_absolute_uri(reverse("payment-error"))
+    return {
+        "data": {
+            "type": "checkouts",
+            "attributes": {
+                "custom_price": amount_cents,
+                "product_options": {
+                    "redirect_url": success_url,
+                    "receipt_button_text": "Back to LetterGator",
+                    "receipt_link_url": success_url,
+                },
+                "checkout_data": {
+                    "custom": {
+                        "user_id": str(request.user.id),
+                        "top_up_amount_cents": str(amount_cents),
+                        "success_url": success_url,
+                        "error_url": error_url,
+                    },
+                },
+            },
+            "relationships": {
+                "store": {
+                    "data": {
+                        "type": "stores",
+                        "id": settings.LEMONSQUEEZY_STORE_ID,
+                    }
+                },
+                "variant": {
+                    "data": {
+                        "type": "variants",
+                        "id": settings.LEMONSQUEEZY_VARIANT_ID,
+                    }
+                },
+            },
+        }
+    }
+
+
+@login_required
+@require_POST
+def create_checkout_view(request):
+    form = BalanceTopUpForm(request.POST or None)
+    if not form.is_valid():
+        transactions = BalanceTransaction.objects.filter(user=request.user)
+        return render(
+            request,
+            "letters/balance.html",
+            {
+                "balance_form": form,
+                "transactions": transactions,
+            },
+            status=400,
+        )
+
+    if not settings.LEMONSQUEEZY_API_KEY:
+        messages.error(request, "Payment provider is not configured yet.")
+        return redirect("balance-page")
+
+    if not settings.LEMONSQUEEZY_STORE_ID or not settings.LEMONSQUEEZY_VARIANT_ID:
+        messages.error(
+            request,
+            "Payment provider IDs are missing. Please contact support.",
+        )
+        return redirect("balance-page")
+
+    amount = form.cleaned_data["amount"]
+    amount_cents = int((amount * 100).quantize(Decimal("1")))
+    payload = _build_lemonsqueezy_checkout_payload(
+        request=request,
+        amount_cents=amount_cents,
+    )
+    headers = {
+        "Accept": "application/vnd.api+json",
+        "Content-Type": "application/vnd.api+json",
+        "Authorization": f"Bearer {settings.LEMONSQUEEZY_API_KEY}",
+    }
+
+    try:
+        response = requests.post(
+            f"{settings.LEMONSQUEEZY_API_BASE}/v1/checkouts",
+            json=payload,
+            headers=headers,
+            timeout=20,
+        )
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        logger.exception("Failed to create Lemon Squeezy checkout: %s", exc)
+        messages.error(
+            request,
+            "Could not start checkout right now. Please try again.",
+        )
+        return redirect("balance-page")
+
+    checkout_url = (
+        response.json().get("data", {}).get("attributes", {}).get("url")
+    )
+    if not checkout_url:
+        messages.error(
+            request,
+            "Checkout URL was not returned by payment provider.",
+        )
+        return redirect("balance-page")
+
+    return redirect(checkout_url)
+
+
+@login_required
+def payment_success_view(request):
+    return render(request, "letters/payment_success.html")
+
+
+@login_required
+def payment_error_view(request):
+    return render(request, "letters/payment_error.html")
+
+
+def _extract_user_id_from_payload(payload):
+    custom_data = payload.get("meta", {}).get("custom_data", {})
+    if not custom_data:
+        custom_data = payload.get("data", {}).get("attributes", {}).get(
+            "custom_data",
+            {},
+        )
+    user_id = custom_data.get("user_id")
+    try:
+        return int(user_id)
+    except (TypeError, ValueError):
+        return None
+
+
+def _extract_order_id(payload):
+    order_id = payload.get("data", {}).get("id")
+    if order_id is None:
+        return None
+    return str(order_id)
+
+
+def _extract_total_amount(payload):
+    custom_data = payload.get("meta", {}).get("custom_data", {})
+    if not custom_data:
+        custom_data = payload.get("data", {}).get("attributes", {}).get(
+            "custom_data",
+            {},
+        )
+
+    amount_in_cents = custom_data.get("top_up_amount_cents")
+    if amount_in_cents is None:
+        amount_in_cents = payload.get("data", {}).get("attributes", {}).get(
+            "total"
+        )
+    if amount_in_cents is None:
+        return None
+
+    try:
+        amount = Decimal(str(amount_in_cents)) / Decimal("100")
+        return amount.quantize(Decimal("0.01"))
+    except (InvalidOperation, TypeError, ValueError):
+        return None
+
+
+@csrf_exempt
+@require_POST
+def lemonsqueezy_webhook_view(request):
+    provided_signature = request.headers.get("X-Signature", "")
+    webhook_secret = settings.LEMONSQUEEZY_WEBHOOK_SECRET
+    if not webhook_secret:
+        logger.error("LEMONSQUEEZY_WEBHOOK_SECRET is not configured")
+        return HttpResponse(status=500)
+
+    digest = hmac.new(
+        webhook_secret.encode("utf-8"),
+        request.body,
+        hashlib.sha256,
+    ).hexdigest()
+    if not hmac.compare_digest(digest, provided_signature):
+        return HttpResponse(status=401)
+
+    try:
+        payload = json.loads(request.body.decode("utf-8"))
+    except (ValueError, UnicodeDecodeError):
+        return HttpResponse(status=400)
+
+    event_name = payload.get("meta", {}).get("event_name")
+    if event_name != "order_created":
+        return HttpResponse(status=200)
+
+    user_id = _extract_user_id_from_payload(payload)
+    order_id = _extract_order_id(payload)
+    amount = _extract_total_amount(payload)
+    if user_id is None or order_id is None or amount is None:
+        return HttpResponse(status=400)
+
+    user_model = get_user_model()
+    try:
+        with transaction.atomic():
+            if BalanceTransaction.objects.filter(external_id=order_id).exists():
+                return HttpResponse(status=200)
+
+            updated = user_model.objects.filter(pk=user_id).update(
+                balance=F("balance") + amount
+            )
+            if updated == 0:
+                return HttpResponse(status=404)
+
+            BalanceTransaction.objects.create(
+                user_id=user_id,
+                amount=amount,
+                transaction_type=BalanceTransaction.TYPE_CREDIT,
+                external_id=order_id,
+                reason="Lemon Squeezy top-up",
+            )
+    except IntegrityError:
+        return HttpResponse(status=200)
+
+    return HttpResponse(status=200)
 
 
 @require_POST

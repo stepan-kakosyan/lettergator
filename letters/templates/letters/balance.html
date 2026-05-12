@@ -51,7 +51,7 @@
                 </div>
 
                 <!-- Form -->
-                <form method="post" class="space-y-3">
+                <form method="post" action="{% url 'payment-checkout' %}" class="space-y-3">
                     {% csrf_token %}
                     <div>
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2" for="{{ balance_form.amount.id_for_label }}">
@@ -71,11 +71,9 @@
                     </div>
                     <button
                         type="submit"
-                        disabled
-                        class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-gray-300 text-gray-500 text-sm font-semibold cursor-not-allowed"
-                        title="Payments are coming soon"
+                        class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#014421] text-white text-sm font-semibold hover:opacity-90 transition-opacity"
                     >
-                        {% trans "Add Funds — Coming Soon" %}
+                        {% trans "Proceed to Secure Checkout" %}
                     </button>
                 </form>
             </div>

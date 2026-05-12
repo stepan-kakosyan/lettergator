@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     balance_page,
+    create_checkout_view,
     contact_page,
     contact_ticket_comment_view,
     concept_page,
@@ -14,7 +15,10 @@ from .views import (
     faq_page,
     how_page,
     landing_page,
+    lemonsqueezy_webhook_view,
     letters_page,
+    payment_error_view,
+    payment_success_view,
     privacy_page,
     terms_page,
 )
@@ -34,6 +38,14 @@ urlpatterns = [
     path("terms/", terms_page, name="terms-page"),
     path("dashboard/", dashboard_view, name="dashboard_view"),
     path("balance/", balance_page, name="balance-page"),
+    path("payment/checkout/", create_checkout_view, name="payment-checkout"),
+    path("payment/success/", payment_success_view, name="payment-success"),
+    path("payment/error/", payment_error_view, name="payment-error"),
+    path(
+        "payment/webhooks/lemonsqueezy/",
+        lemonsqueezy_webhook_view,
+        name="lemonsqueezy-webhook",
+    ),
     path(
         "dashboard/password-change/",
         dashboard_password_change_view,

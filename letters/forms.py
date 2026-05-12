@@ -226,6 +226,7 @@ class LetterForm(forms.ModelForm):
                     BalanceTransaction.objects.create(
                         user=locked_user,
                         amount=-schedule_cost,
+                        transaction_type=BalanceTransaction.TYPE_DEBIT,
                         reason=(
                             "Letter scheduling charge "
                             f"for '{instance.subject[:80]}'"
