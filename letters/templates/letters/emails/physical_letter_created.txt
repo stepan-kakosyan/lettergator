@@ -1,0 +1,39 @@
+Your physical letter is confirmed — LetterGator
+
+Hi {{ user.full_name }},
+
+Your physical letter request has been confirmed and stored. Here is a summary of the details you provided. Your files are queued for printing and delivery.
+
+---
+
+DELIVERY DETAILS
+
+Recipient:          {{ letter.recipient_name }}
+Address:            {{ letter.street_address }}
+                    {{ letter.city }}{% if letter.state_province %}, {{ letter.state_province }}{% endif %} {{ letter.postal_code }}
+                    {{ letter.country.country_name }}
+Requested delivery: {{ letter.requested_delivery_date|date:"N j, Y" }}
+
+Files:              {% if text_file_count %}{{ text_file_count }} document{{ text_file_count|pluralize }}{% endif %}{% if text_file_count and photo_count %}, {% endif %}{% if photo_count %}{{ photo_count }} photo{{ photo_count|pluralize }}{% endif %}{% if not text_file_count and not photo_count %}No files attached{% endif %}
+
+Pages to print:     {{ letter.total_printable_pages }} page{{ letter.total_printable_pages|pluralize }}
+
+{% if letter.message_text %}Message:
+{{ letter.message_text }}
+
+{% endif %}Total cost:         ${{ letter.total_price|floatformat:2 }}
+
+---
+
+DELIVERY INFORMATION
+
+Your letter will be printed and mailed to the recipient. Delivery typically occurs 1-4 days after your requested delivery date, depending on the destination country and local mail services.
+
+You can track your letter's status in your Letters dashboard.
+
+---
+
+Because some things are better left for later.
+See you later, Alligator!
+
+This is an automated confirmation from LetterGator. No action is required.

@@ -29,7 +29,10 @@ from accounts.forms import (
     UserProfileForm,
 )
 from accounts.models import BalanceTransaction, SecondaryEmail
-from accounts.services import send_letter_created_email
+from accounts.services import (
+    send_letter_created_email,
+    send_physical_letter_created_email,
+)
 from accounts.tasks import send_pending_email_confirmation_task
 from django.utils import timezone
 
@@ -531,6 +534,20 @@ class PhysicalLetterCreateView(FormView):
 
             messages.success(self.request, message)
             return redirect("letters-page")
+
+        # Send confirmation email for new paid physical letters
+        if self.current_draft is None:
+            try:
+                send_physical_letter_created_email(
+                    self.request,
+                    self.request.user,
+                    letter,
+                )
+            except Exception as exc:
+                logger.warning(
+                    "Failed to send physical letter confirmation email: %s",
+                    str(exc),
+                )
 
         if self.request.headers.get("HX-Request") == "true":
             return render(
