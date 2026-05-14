@@ -14,7 +14,11 @@
         <div class="text-center mb-8">
             <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">{% trans "Letters" %}</p>
             <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-                {% trans "Create Letter" %}
+                {% if current_letter %}
+                    {% trans "Edit Letter" %}
+                {% else %}
+                    {% trans "Create Letter" %}
+                {% endif %}
             </h1>
             <p class="text-gray-600 mt-2">
                 {% trans "Configure delivery, privacy, and control options before sealing." %}
@@ -29,6 +33,8 @@
             class="bg-white border border-gray-200 rounded-3xl p-8 text-left envelope-container"
             method="post"
             action="{% url 'letter-create-page' %}"
+            data-is-edit-mode="{% if current_letter %}1{% else %}0{% endif %}"
+            data-original-total-price="{{ original_total_price|floatformat:'2' }}"
             data-low-balance-for-long="{% if low_balance_for_long_schedule %}1{% else %}0{% endif %}"
             data-user-balance="{{ user_balance }}"
             data-rate-per-year="{{ long_schedule_rate }}"
@@ -41,6 +47,9 @@
             {{ form.recipient_list }}
             {{ form.browser_timezone }}
             {{ form.idempotency_key }}
+            {% if current_letter %}
+            <input type="hidden" name="draft" value="{{ current_letter.id }}">
+            {% endif %}
 
             {% if form.non_field_errors %}
             <div class="bg-red-50 text-red-700 text-sm font-semibold rounded-xl px-4 py-3 mb-5">
@@ -178,13 +187,28 @@
                 </div>
 
                 <div class="flex justify-end">
+                    {% if current_letter %}
+                    <a href="{% url 'letter-detail' 'email' current_letter.id %}" class="inline-flex items-center justify-center bg-white border border-gray-300 text-gray-700 font-medium px-6 py-3 rounded-xl hover:bg-gray-50 transition-all mr-3">
+                        {% trans "Cancel Changes" %}
+                    </a>
+                    {% endif %}
                     <button id="seal-btn" type="submit" class="bg-[#014421] text-white font-medium px-8 py-3 rounded-xl hover:bg-[#023319] hover:shadow-lg transform hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                        <span>{% trans "Seal and Store" %}</span>
+                        <span>
+                            {% if current_letter %}
+                                {% trans "Confirm Changes" %}
+                            {% else %}
+                                {% trans "Seal and Store" %}
+                            {% endif %}
+                        </span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                     </button>
                 </div>
                 <div id="schedule-cost-panel" class="hidden rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900 flex items-center justify-between gap-3">
+                    {% if current_letter %}
+                    <span>{% trans "Scheduling total:" %} <span id="schedule-cost-value" class="font-black">$0.00</span> &mdash; {% trans "only the difference is applied to your balance." %}</span>
+                    {% else %}
                     <span>{% trans "Scheduling cost:" %} <span id="schedule-cost-value" class="font-black">$0.00</span> &mdash; {% trans "will be deducted from your balance on save." %}</span>
+                    {% endif %}
                 </div>
                 <div id="balance-warning" class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-semibold flex items-center justify-between gap-3">
                     <span>{% trans "Your balance is not enough for this schedule." %}</span>
@@ -194,6 +218,38 @@
         </form>
     </div>
 </section>
+
+{% if current_letter %}
+<div id="email-edit-confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">{% trans "Confirm Changes" %}</h3>
+        <p class="text-sm text-gray-600 mb-4" id="email-edit-confirm-text"></p>
+        <div class="flex gap-3 justify-end">
+            <button type="button" id="email-edit-cancel-btn" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                {% trans "Cancel" %}
+            </button>
+            <button type="button" id="email-edit-confirm-btn" class="px-4 py-2 rounded-lg bg-[#014421] text-white font-medium hover:bg-[#023319] transition-colors">
+                {% trans "Confirm" %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="email-edit-balance-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+        <h3 class="text-lg font-semibold text-red-700 mb-2">{% trans "Your balance is not enough" %}</h3>
+        <p class="text-sm text-gray-600 mb-4" id="email-edit-balance-text"></p>
+        <div class="flex gap-3 justify-end">
+            <button type="button" id="email-edit-balance-close-btn" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                {% trans "Close" %}
+            </button>
+            <a href="{% url 'balance-page' %}" class="px-4 py-2 rounded-lg bg-[#014421] text-white font-medium hover:bg-[#023319] transition-colors">
+                {% trans "Top Up Balance" %}
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
 </div>
 {% endblock %}
 
@@ -207,6 +263,140 @@
             .replace(/[018]/g, function (c) {
                 return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
             });
+    }
+
+    var form = document.getElementById('vault-form');
+    var isEditMode = form && form.dataset.isEditMode === '1';
+    if (!form || !isEditMode) {
+        return;
+    }
+
+    var submitBtn = document.getElementById('seal-btn');
+    var deliveryAt = document.getElementById('id_delivery_at');
+    var confirmModal = document.getElementById('email-edit-confirm-modal');
+    var confirmText = document.getElementById('email-edit-confirm-text');
+    var confirmBtn = document.getElementById('email-edit-confirm-btn');
+    var cancelBtn = document.getElementById('email-edit-cancel-btn');
+    var balanceModal = document.getElementById('email-edit-balance-modal');
+    var balanceText = document.getElementById('email-edit-balance-text');
+    var closeBalanceBtn = document.getElementById('email-edit-balance-close-btn');
+
+    if (!submitBtn || !deliveryAt || !confirmModal || !confirmBtn) {
+        return;
+    }
+
+    var currentBalance = parseFloat(form.dataset.userBalance || '0');
+    var ratePerYear = parseFloat(form.dataset.ratePerYear || '0.5');
+    var originalTotal = parseFloat(form.dataset.originalTotalPrice || '0');
+    var ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+
+    function showModal(modal) {
+        if (!modal) {
+            return;
+        }
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function hideModal(modal) {
+        if (!modal) {
+            return;
+        }
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    function addYears(dateObj, yearsToAdd) {
+        var result = new Date(dateObj.getTime());
+        var originalMonth = result.getMonth();
+        result.setFullYear(result.getFullYear() + yearsToAdd);
+        if (result.getMonth() !== originalMonth) {
+            result.setDate(0);
+        }
+        return result;
+    }
+
+    function computeScheduleCost() {
+        if (!deliveryAt.value) {
+            return 0;
+        }
+
+        var now = new Date();
+        now.setHours(0, 0, 0, 0);
+        var deliveryDate = new Date(deliveryAt.value);
+        deliveryDate.setHours(0, 0, 0, 0);
+        var diffMs = deliveryDate.getTime() - now.getTime();
+
+        if (diffMs < ONE_YEAR_MS) {
+            return 0;
+        }
+
+        var years = deliveryDate.getFullYear() - now.getFullYear();
+        if (addYears(now, years) < deliveryDate) {
+            years += 1;
+        }
+        return years * ratePerYear;
+    }
+
+    submitBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        var newTotal = computeScheduleCost();
+        var delta = newTotal - originalTotal;
+
+        if (delta > 0 && currentBalance < delta) {
+            if (balanceText) {
+                balanceText.textContent =
+                    'Required: $' + delta.toFixed(2)
+                    + '. Available: $' + currentBalance.toFixed(2) + '.';
+            }
+            showModal(balanceModal);
+            return;
+        }
+
+        var resultingBalance = currentBalance - delta;
+        var deltaText = 'No pricing difference.';
+        if (delta > 0) {
+            deltaText =
+                'Additional charge $' + delta.toFixed(2)
+                + ' will be deducted.';
+        } else if (delta < 0) {
+            deltaText =
+                'Refund $' + (-delta).toFixed(2)
+                + ' will be credited to your balance.';
+        }
+        var priceDifference = Math.abs(delta).toFixed(2);
+
+        if (confirmText) {
+            confirmText.textContent =
+                'Old total: $' + originalTotal.toFixed(2)
+                + ' | New total: $' + newTotal.toFixed(2) + '. '
+                + 'Price difference: $' + priceDifference + '. '
+                + deltaText
+                + ' Resulting balance: $' + resultingBalance.toFixed(2) + '.';
+        }
+
+        showModal(confirmModal);
+    });
+
+    confirmBtn.addEventListener('click', function () {
+        hideModal(confirmModal);
+        form.submit();
+    });
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', function () {
+            hideModal(confirmModal);
+        });
+    }
+    if (closeBalanceBtn) {
+        closeBalanceBtn.addEventListener('click', function () {
+            hideModal(balanceModal);
+        });
     }
 }());
 </script>

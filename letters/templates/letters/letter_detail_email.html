@@ -47,7 +47,7 @@
                 </div>
                 <div class="rounded-xl border border-gray-200 p-4">
                     <p class="text-gray-500">{% trans "Price" %}</p>
-                    <p class="font-semibold text-gray-900">$0.00</p>
+                    <p class="font-semibold text-gray-900">${{ letter.total_price|floatformat:2 }}</p>
                 </div>
             </div>
 
@@ -67,33 +67,32 @@
 
             <div class="mt-6 rounded-xl border border-gray-200 p-4">
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                    {% trans "Settings" %}
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <p class="text-gray-700"><span class="font-semibold">{% trans "Send To Me" %}:</span> {% if letter.send_to_me %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
+                    <p class="text-gray-700"><span class="font-semibold">{% trans "Allow Delete Early" %}:</span> {% if letter.can_delete_early %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
+                    <p class="text-gray-700"><span class="font-semibold">{% trans "Allow Edit Early" %}:</span> {% if letter.can_edit_early %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
+                    <p class="text-gray-700"><span class="font-semibold">{% trans "Allow Sender Preview" %}:</span> {% if letter.allow_sender_preview %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
+                </div>
+            </div>
+
+            <div class="mt-6 rounded-xl border border-gray-200 p-4">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
                     {% trans "Letter Content" %}
                 </p>
-
-                {% if letter.can_be_edited_now %}
-                <form method="post" action="{% url 'letter-edit' letter.id %}">
-                    {% csrf_token %}
-                    <textarea
-                        name="message"
-                        class="w-full border border-gray-300 rounded-xl p-3"
-                        rows="10"
-                        required
-                    >{{ message_text }}</textarea>
-                    <div class="mt-3 flex justify-end">
-                        <button
-                            type="submit"
-                            class="bg-[#014421] text-white font-medium px-6 py-2.5 rounded-xl hover:bg-[#023319]"
-                        >
-                            {% trans "Save Changes" %}
-                        </button>
-                    </div>
-                </form>
-                {% else %}
                 <p class="text-gray-700 whitespace-pre-wrap">{{ message_text }}</p>
-                {% endif %}
             </div>
 
             <div class="mt-6 flex flex-wrap gap-3">
+                {% if letter.can_be_edited_now %}
+                <a
+                    href="{% url 'letter-create-page' %}?draft={{ letter.id }}"
+                    class="inline-flex items-center justify-center border border-[#014421] text-[#014421] font-medium px-6 py-2.5 rounded-xl hover:bg-emerald-50"
+                >
+                    {% trans "Edit Letter" %}
+                </a>
+                {% endif %}
                 {% if letter.can_be_deleted_now %}
                 <button
                     type="button"

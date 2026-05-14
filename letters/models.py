@@ -35,6 +35,11 @@ class Letter(models.Model):
     idempotency_key = models.CharField(
         max_length=64, blank=True, default="", db_index=True
     )
+    total_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+    )
 
     class Meta:
         ordering = ["delivery_at", "created_at"]

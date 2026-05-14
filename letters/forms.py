@@ -194,10 +194,24 @@ class LetterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.user = user
 
-        self.fields["send_to_me"].initial = True
-        self.fields["can_delete_early"].initial = False
-        self.fields["can_edit_early"].initial = False
-        self.fields["allow_sender_preview"].initial = False
+        if not (self.instance and self.instance.pk):
+            self.fields["send_to_me"].initial = True
+            self.fields["can_delete_early"].initial = False
+            self.fields["can_edit_early"].initial = False
+            self.fields["allow_sender_preview"].initial = False
+
+        if self.instance and self.instance.pk and not self.is_bound:
+            self.initial["message"] = self.instance.get_message()
+            local_delivery = timezone.localtime(self.instance.delivery_at)
+            self.initial["delivery_at"] = local_delivery.strftime(
+                "%Y-%m-%dT%H:%M"
+            )
+            if not self.instance.send_to_me:
+                recipients = [self.instance.recipient_email]
+                recipients.extend(self.instance.recipient_emails or [])
+                self.initial["recipient_list"] = ",".join(
+                    item for item in recipients if item
+                )
 
     def _get_browser_timezone(self):
         tz_name = self.data.get(self.add_prefix("browser_timezone"), "").strip()
@@ -287,22 +301,40 @@ class LetterForm(forms.ModelForm):
         schedule_cost = Decimal("0.00")
         if delivery_at:
             schedule_cost = compute_schedule_cost(delivery_at)
-        if schedule_cost > balance:
+        original_total_price = Decimal("0.00")
+        if self.instance and self.instance.pk:
+            original_total_price = self.instance.total_price or Decimal("0.00")
+
+        required_amount = schedule_cost
+        if self.instance and self.instance.pk:
+            required_amount = max(
+                schedule_cost - original_total_price,
+                Decimal("0.00"),
+            )
+
+        if required_amount > balance:
             raise forms.ValidationError(
                 "Insufficient balance for this schedule. "
-                f"Required: ${schedule_cost:.2f}. "
+                f"Required: ${required_amount:.2f}. "
                 f"Available: ${balance:.2f}."
             )
 
         cleaned_data["_recipients"] = recipients
         cleaned_data["sender_email"] = sender_email
         cleaned_data["_schedule_cost"] = schedule_cost
+        cleaned_data["_required_amount"] = required_amount
+        cleaned_data["_adjustment_amount"] = schedule_cost - original_total_price
         return cleaned_data
 
     def save(self, commit=True):
         ikey = self.cleaned_data.get("idempotency_key", "").strip()
         existing = None
-        if ikey and self.user and self.user.is_authenticated:
+        if (
+            ikey
+            and self.user
+            and self.user.is_authenticated
+            and not (self.instance and self.instance.pk)
+        ):
             existing = (
                 Letter.objects.filter(
                     user=self.user,
@@ -336,49 +368,49 @@ class LetterForm(forms.ModelForm):
 
         if commit:
             schedule_cost = self.cleaned_data.get("_schedule_cost", Decimal("0.00"))
+            adjustment_amount = self.cleaned_data.get(
+                "_adjustment_amount",
+                schedule_cost,
+            )
             with transaction.atomic():
-                if (
-                    schedule_cost > 0
-                    and self.user
-                    and self.user.is_authenticated
-                ):
+                if self.user and self.user.is_authenticated and adjustment_amount != 0:
                     locked_user = get_user_model().objects.select_for_update().get(
                         pk=self.user.pk
                     )
-                    if locked_user.balance < schedule_cost:
+                    if adjustment_amount > 0 and locked_user.balance < adjustment_amount:
                         raise forms.ValidationError(
                             "Insufficient balance for this schedule. "
-                            f"Required: ${schedule_cost:.2f}. "
+                            f"Required: ${adjustment_amount:.2f}. "
                             f"Available: ${locked_user.balance:.2f}."
                         )
-                    locked_user.balance -= schedule_cost
+
+                    if adjustment_amount > 0:
+                        locked_user.balance -= adjustment_amount
+                        transaction_type = BalanceTransaction.TYPE_DEBIT
+                        transaction_amount = -adjustment_amount
+                    else:
+                        refund_amount = -adjustment_amount
+                        locked_user.balance += refund_amount
+                        transaction_type = BalanceTransaction.TYPE_CREDIT
+                        transaction_amount = refund_amount
+
                     locked_user.save(update_fields=["balance"])
                     self.user.balance = locked_user.balance
                     BalanceTransaction.objects.create(
                         user=locked_user,
-                        amount=-schedule_cost,
-                        transaction_type=BalanceTransaction.TYPE_DEBIT,
+                        amount=transaction_amount,
+                        transaction_type=transaction_type,
                         reason=(
-                            "Letter scheduling charge "
+                            "Email letter scheduling adjustment "
                             f"for '{instance.subject[:80]}'"
                         ),
                     )
                     instance.user = locked_user
 
+                instance.total_price = schedule_cost
+
                 instance.save()
         return instance
-
-
-class LetterMessageEditForm(forms.Form):
-    message = forms.CharField(
-        required=True,
-        widget=forms.Textarea(
-            attrs={
-                "rows": 5,
-                "required": True,
-            }
-        ),
-    )
 
 
 class PhysicalLetterCreateForm(forms.ModelForm):
