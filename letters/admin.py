@@ -4,7 +4,10 @@ from .models import (
     CeleryTaskLog,
     ContactTicket,
     ContactTicketComment,
+    CountryPricing,
+    LetterAttachment,
     Letter,
+    PhysicalLetter,
 )
 
 
@@ -68,6 +71,18 @@ class ContactTicketCommentInline(admin.TabularInline):
     author_display.short_description = "Author"
 
 
+class LetterAttachmentInline(admin.TabularInline):
+    model = LetterAttachment
+    extra = 0
+    fields = (
+        "attachment_type",
+        "original_filename",
+        "file",
+        "created_at",
+    )
+    readonly_fields = ("created_at",)
+
+
 @admin.register(ContactTicket)
 class ContactTicketAdmin(admin.ModelAdmin):
     list_display = (
@@ -126,3 +141,59 @@ class ContactTicketCommentAdmin(admin.ModelAdmin):
             obj.is_admin_comment = True
             obj.commenter_email = obj.author.email or ""
         super().save_model(request, obj, form, change)
+
+
+@admin.register(CountryPricing)
+class CountryPricingAdmin(admin.ModelAdmin):
+    list_display = (
+        "country_code",
+        "country_name",
+        "price",
+    )
+    search_fields = ("country_code", "country_name")
+
+
+@admin.register(PhysicalLetter)
+class PhysicalLetterAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user",
+        "recipient_name",
+        "country",
+        "status",
+        "requested_delivery_date",
+        "total_printable_pages",
+        "total_price",
+        "created_at",
+    )
+    list_filter = (
+        "status",
+        "country",
+        "requested_delivery_date",
+        "created_at",
+    )
+    search_fields = (
+        "user__email",
+        "recipient_name",
+        "street_address",
+        "postal_code",
+        "tracking_number",
+    )
+    inlines = [LetterAttachmentInline]
+
+
+@admin.register(LetterAttachment)
+class LetterAttachmentAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "physical_letter",
+        "attachment_type",
+        "original_filename",
+        "created_at",
+    )
+    list_filter = ("attachment_type", "created_at")
+    search_fields = (
+        "original_filename",
+        "physical_letter__id",
+        "physical_letter__user__email",
+    )

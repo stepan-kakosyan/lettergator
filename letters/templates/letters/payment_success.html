@@ -21,7 +21,10 @@
                 {% trans "Back to Balance" %}
             </a>
             <a href="{% url 'letter-create-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-700 hover:border-[#014421] hover:text-[#014421] transition-colors">
-                {% trans "Create a Letter" %}
+                {% trans "Create Email Letters" %}
+            </a>
+            <a href="{% url 'physical-letter-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-700 hover:border-[#014421] hover:text-[#014421] transition-colors">
+                {% trans "Create Physical Letter" %}
             </a>
         </div>
     </div>

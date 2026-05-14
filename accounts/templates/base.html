@@ -1,13 +1,40 @@
+{% load i18n static %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}LetterGator{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script>
+        // Configure HTMX to include CSRF token with all requests.
+        // Use `document` here because this script runs in `<head>`.
+        document.addEventListener('htmx:beforeRequest', function (event) {
+            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (csrftoken && csrftoken.value) {
+                event.detail.xhr.setRequestHeader('X-CSRFToken', csrftoken.value);
+            } else {
+                // Try to get from cookie as fallback
+                var name = 'csrftoken';
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                if (cookieValue) {
+                    event.detail.xhr.setRequestHeader('X-CSRFToken', cookieValue);
+                }
+            }
+        });
+    </script>
     {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-white text-gray-900 antialiased selection:bg-[#014421] selection:text-white min-h-screen flex flex-col">
@@ -135,6 +162,182 @@
         initPageBehaviors(document);
     }());
     </script>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2" id="modal-title">
+                {% trans "Confirm Deletion" %}
+            </h3>
+            <p class="text-gray-600 mb-4" id="modal-message"></p>
+            <div class="hidden mb-4 p-3 rounded-lg bg-red-50 border border-red-200" id="modal-pricing-info">
+                <p class="text-sm text-red-900 font-medium" id="modal-pricing-text"></p>
+            </div>
+            <div class="hidden mb-4 p-3 rounded-lg bg-red-50 border border-red-200" id="modal-error-info">
+                <p class="text-sm text-red-900" id="modal-error-text"></p>
+            </div>
+            <div class="flex gap-3 justify-end" id="modal-buttons">
+                <button
+                    type="button"
+                    id="modal-no-btn"
+                    class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                >
+                    {% trans "No, cancel" %}
+                </button>
+                <button
+                    type="button"
+                    id="modal-yes-btn"
+                    class="px-4 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition-colors"
+                >
+                    {% trans "Yes, delete" %}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        var modal = document.getElementById('delete-confirm-modal');
+        var modalTitle = document.getElementById('modal-title');
+        var modalMessage = document.getElementById('modal-message');
+        var modalPricingInfo = document.getElementById('modal-pricing-info');
+        var modalPricingText = document.getElementById('modal-pricing-text');
+        var modalErrorInfo = document.getElementById('modal-error-info');
+        var modalErrorText = document.getElementById('modal-error-text');
+        var modalNoBtn = document.getElementById('modal-no-btn');
+        var modalYesBtn = document.getElementById('modal-yes-btn');
+        var modalButtons = document.getElementById('modal-buttons');
+        var pendingForm = null;
+        var pendingDeleteBtn = null;
+
+        if (!modal || !modalNoBtn || !modalYesBtn) {
+            return;
+        }
+
+        function showModal(message, pricingInfo) {
+            modalMessage.textContent = message;
+            modal.style.display = '';
+            
+            // Clear previous states
+            modalPricingInfo.classList.add('hidden');
+            modalErrorInfo.classList.add('hidden');
+            modalButtons.classList.remove('hidden');
+            
+            // Show pricing info if available
+            if (pricingInfo) {
+                if (pricingInfo.error) {
+                    modalErrorText.textContent = pricingInfo.error;
+                    modalErrorInfo.classList.remove('hidden');
+                    modalYesBtn.disabled = true;
+                    modalYesBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else if (pricingInfo.message) {
+                    modalPricingText.textContent = pricingInfo.message;
+                    modalPricingInfo.classList.remove('hidden');
+                    modalYesBtn.disabled = false;
+                    modalYesBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (!modalYesBtn.disabled) {
+                modalYesBtn.focus();
+            } else {
+                modalNoBtn.focus();
+            }
+        }
+
+        function hideModal() {
+            modal.style.display = '';
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            pendingForm = null;
+            pendingDeleteBtn = null;
+        }
+
+        modalNoBtn.addEventListener('click', hideModal);
+
+        modalYesBtn.addEventListener('click', function () {
+            if (!pendingDeleteBtn) {
+                return;
+            }
+            
+            // Check if this is an HTMX delete request
+            var hxDelete = pendingDeleteBtn.getAttribute('hx-delete');
+            var hxTarget = pendingDeleteBtn.getAttribute('hx-target') || 'body';
+            var hxSwap = pendingDeleteBtn.getAttribute('hx-swap') || 'innerHTML';
+            
+            // Get formaction before clearing references
+            var formaction = pendingDeleteBtn.getAttribute('formaction');
+            var form = pendingForm;
+            
+            hideModal();
+            
+            // If it's an HTMX delete request, trigger it
+            if (hxDelete) {
+                htmx.ajax('DELETE', hxDelete, {
+                    target: hxTarget,
+                    swap: hxSwap,
+                });
+            } else if (formaction) {
+                // Use traditional form submission
+                form.action = formaction;
+                form.submit();
+            } else if (form) {
+                // Default form submission
+                form.submit();
+            }
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                hideModal();
+            }
+        });
+
+        // Handle delete button clicks
+        document.addEventListener('click', function (e) {
+            var deleteBtn = e.target.closest('[data-delete-confirm]');
+            if (!deleteBtn) {
+                return;
+            }
+
+            e.preventDefault();
+            var message = deleteBtn.getAttribute('data-delete-confirm') || 'Are you sure?';
+            var form = deleteBtn.closest('form');
+            var letterType = deleteBtn.getAttribute('data-letter-type');
+            var letterId = deleteBtn.getAttribute('data-letter-id');
+            pendingDeleteBtn = deleteBtn;
+            pendingForm = form;
+
+            // If letter_type and letter_id are provided, fetch pricing info
+            if (letterType && letterId) {
+                fetch('/letters/api/deletion-info/?letter_type=' + encodeURIComponent(letterType) + '&letter_id=' + encodeURIComponent(letterId))
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(data) {
+                        showModal(message, data);
+                    })
+                    .catch(function(error) {
+                        console.error('Error fetching deletion info:', error);
+                        showModal(message);
+                    });
+            } else {
+                    showModal(message);
+            }
+        }, true);
+
+        // Escape key to close
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                hideModal();
+            }
+        });
+    }());
+    </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -13,11 +13,14 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.db.models import F
-from django.http import HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_POST
+from django.views.generic.edit import FormView
 
 from accounts.forms import (
     BalanceTopUpForm,
@@ -39,8 +42,15 @@ from .forms import (
     ContactTicketForm,
     LetterForm,
     LetterMessageEditForm,
+    PhysicalLetterCreateForm,
 )
-from .models import ContactTicket, Letter
+from .models import (
+    ContactTicket,
+    CountryPricing,
+    Letter,
+    LetterAttachment,
+    PhysicalLetter,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -70,15 +80,52 @@ def _can_access_letter(request, letter):
     return letter.user_id == request.user.id
 
 
+def _can_access_physical_letter(request, letter):
+    return letter.user_id == request.user.id
+
+
+def _calculate_physical_letter_years_passed(letter):
+    """Calculate how many full years have passed since letter creation."""
+    days_passed = (timezone.now() - letter.created_at).days
+    years_passed = max(0, days_passed // 365)
+    return years_passed
+
+
+def _calculate_physical_letter_deletion_info(letter):
+    """
+    Calculate deletion fee and refund for a physical letter.
+    Fee = 1 USD + (years_passed * 0.5 USD)
+    Refund = total_price - fee
+    """
+    years_passed = _calculate_physical_letter_years_passed(letter)
+    fee = Decimal("1.00") + (Decimal(str(years_passed)) * Decimal("0.50"))
+    refund = letter.total_price - fee
+    return {
+        "years_passed": years_passed,
+        "fee": fee,
+        "refund": max(Decimal("0.00"), refund),
+    }
+
+
 def letters_page(request):
     guest_mode = not request.user.is_authenticated
     letters = []
+    sort_by = (request.GET.get("sort") or "newest").strip().lower()
+    valid_sorts = {"newest", "oldest", "price_low", "price_high"}
+    if sort_by not in valid_sorts:
+        sort_by = "newest"
     email_verification_required = False
 
     if not guest_mode:
         email_verification_required = not request.user.email_verified
-        letters = list(_get_visible_letters_for_request(request))
-        for letter in letters:
+        email_letters = list(_get_visible_letters_for_request(request))
+        physical_letters = list(
+            PhysicalLetter.objects.filter(user=request.user)
+            .select_related("country")
+            .order_by("-created_at")
+        )
+        print(physical_letters)
+        for letter in email_letters:
             if letter.can_view_content:
                 plain_message = letter.get_message()
                 letter.display_message = plain_message
@@ -89,8 +136,80 @@ def letters_page(request):
                 letter.display_message = ""
                 letter.display_excerpt = "**********"
 
+        letters = []
+        for letter in email_letters:
+            letters.append(
+                {
+                    "type": "email",
+                    "id": letter.id,
+                    "title": letter.subject,
+                    "status": letter.status_label,
+                    "status_value": "",
+                    "created_at": letter.created_at,
+                    "price": Decimal("0.00"),
+                    "destination": (
+                        "Only me"
+                        if letter.send_to_me
+                        else letter.recipient_email
+                    ),
+                    "detail_url": reverse(
+                        "letter-detail",
+                        kwargs={"kind": "email", "item_id": letter.id},
+                    ),
+                    "raw": letter,
+                }
+            )
+        for letter in physical_letters:
+            detail_url = reverse(
+                "letter-detail",
+                kwargs={"kind": "physical", "item_id": letter.id},
+            )
+            if letter.status == PhysicalLetter.STATUS_DRAFT:
+                detail_url = f"{reverse('physical-letter-create')}?draft={letter.id}"
+
+            letters.append(
+                {
+                    "type": "physical",
+                    "id": letter.id,
+                    "title": (
+                        f"Draft physical letter #{letter.id}"
+                        if letter.status == PhysicalLetter.STATUS_DRAFT
+                        else f"Physical letter to {letter.recipient_name}"
+                    ),
+                    "status": letter.get_status_display(),
+                    "status_value": letter.status,
+                    "created_at": letter.created_at,
+                    "price": letter.total_price,
+                    "destination": (
+                        f"{letter.country.country_name} ({letter.country.country_code})"
+                    ),
+                    "detail_url": detail_url,
+                    "raw": letter,
+                }
+            )
+
+        if sort_by == "newest":
+            letters.sort(key=lambda x: x["created_at"], reverse=True)
+        elif sort_by == "oldest":
+            letters.sort(key=lambda x: x["created_at"])
+        elif sort_by == "price_low":
+            letters.sort(
+                key=lambda x: (
+                    x["price"],
+                    -x["created_at"].timestamp(),
+                )
+            )
+        elif sort_by == "price_high":
+            letters.sort(
+                key=lambda x: (
+                    -x["price"],
+                    -x["created_at"].timestamp(),
+                )
+            )
+
     context = {
         "letters": letters,
+        "sort_by": sort_by,
         "guest_mode": guest_mode,
         "email_verification_required": email_verification_required,
         "min_long_schedule_balance": MIN_LONG_SCHEDULE_BALANCE_USD,
@@ -146,6 +265,233 @@ def create_letter_page(request):
         "low_balance_for_long_schedule": low_balance_for_long_schedule,
     }
     return render(request, "letters/letter_create.html", context)
+
+
+class PhysicalLetterCreateView(FormView):
+    template_name = "letters/physical_letter_create.html"
+    form_class = PhysicalLetterCreateForm
+    success_url = reverse_lazy("letters-page")
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+        self.current_draft = self._get_current_draft()
+        return super().dispatch(request, *args, **kwargs)
+
+    def _is_draft_action(self):
+        return self.request.method == "POST" and (
+            self.request.POST.get("action") == "draft"
+        )
+
+    def _get_current_draft(self):
+        draft_id = (
+            self.request.GET.get("draft")
+            or self.request.POST.get("draft")
+        )
+        if not draft_id:
+            return None
+        try:
+            letter = PhysicalLetter.objects.get(
+                id=int(draft_id),
+                user=self.request.user,
+            )
+            if letter.status in (
+                PhysicalLetter.STATUS_DRAFT,
+                PhysicalLetter.STATUS_PAID,
+            ):
+                return letter
+            return None
+        except (ValueError, PhysicalLetter.DoesNotExist):
+            return None
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        kwargs["files"] = self.request.FILES or None
+        kwargs["save_as_draft"] = self._is_draft_action()
+        if self.current_draft is not None:
+            kwargs["instance"] = self.current_draft
+        return kwargs
+
+    def _countries_payload(self):
+        data = {}
+        for item in CountryPricing.objects.all():
+            data[str(item.id)] = {
+                "code": item.country_code,
+                "name": item.country_name,
+                "price": str(item.price),
+            }
+        return data
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        existing_text_files_count = 0
+        existing_photo_files_count = 0
+        existing_attachments = []
+        active_letter = self.current_draft
+        bound_form = context.get("form")
+        if (
+            active_letter is None
+            and bound_form is not None
+            and getattr(bound_form, "instance", None)
+            and getattr(bound_form.instance, "pk", None)
+        ):
+            active_letter = bound_form.instance
+
+        if active_letter is not None:
+            existing_text_files_count = active_letter.attachments.filter(
+                attachment_type=LetterAttachment.TYPE_TEXT,
+            ).count()
+            existing_photo_files_count = active_letter.attachments.filter(
+                attachment_type=LetterAttachment.TYPE_PHOTO,
+            ).count()
+            existing_attachments = list(
+                active_letter.attachments.order_by("created_at")
+            )
+
+        context["user_balance"] = self.request.user.balance
+        context["current_draft"] = self.current_draft
+        context["original_total_price"] = (
+            self.current_draft.total_price
+            if self.current_draft is not None
+            else Decimal("0.00")
+        )
+        context["drafts"] = PhysicalLetter.objects.filter(
+            user=self.request.user,
+            status=PhysicalLetter.STATUS_DRAFT,
+        ).order_by("-updated_at")
+        context["existing_text_files_count"] = existing_text_files_count
+        context["existing_photo_files_count"] = existing_photo_files_count
+        context["existing_attachments"] = existing_attachments
+        context["countries_pricing_json"] = self._countries_payload()
+        context["max_text_files"] = settings.PHYSICAL_LETTER_MAX_TEXT_FILES
+        context["max_photo_files"] = settings.PHYSICAL_LETTER_MAX_PHOTO_FILES
+        context["max_file_size_mb"] = settings.PHYSICAL_LETTER_MAX_FILE_SIZE_MB
+        context["max_delivery_years"] = settings.PHYSICAL_LETTER_MAX_DELIVERY_YEARS
+        context["extra_photo_price"] = (
+            settings.PHYSICAL_LETTER_EXTRA_PHOTO_PRICE_USD
+        )
+        context["extra_page_price"] = (
+            settings.PHYSICAL_LETTER_EXTRA_PAGE_PRICE_USD
+        )
+        context["extra_year_price"] = (
+            settings.PHYSICAL_LETTER_EXTRA_YEAR_PRICE_USD
+        )
+        context["text_chars_per_page"] = (
+            settings.PHYSICAL_LETTER_TEXT_CHARS_PER_PAGE
+        )
+        return context
+
+    def form_valid(self, form):
+        logger.info(
+            "PhysicalLetter form_valid entered: action=%s keys=%s",
+            self.request.POST.get("action"),
+            list(self.request.FILES.keys()),
+        )
+        form.save_as_draft = self._is_draft_action()
+        try:
+            letter = form.save()
+        except ValidationError as exc:
+            form.add_error(None, " ".join(exc.messages))
+            return self.form_invalid(form)
+
+        if self._is_draft_action():
+            message = "Your draft has been saved. You can edit and pay later."
+            if (
+                self.current_draft
+                and self.current_draft.status == PhysicalLetter.STATUS_PAID
+            ):
+                adjustment = getattr(form, "adjustment_amount", Decimal("0.00"))
+                adjustment_text = "No pricing changes were needed."
+                if adjustment > 0:
+                    adjustment_text = (
+                        f"Additional charge: ${adjustment:.2f} deducted "
+                        "from your balance."
+                    )
+                elif adjustment < 0:
+                    refund = -adjustment
+                    adjustment_text = (
+                        f"Refund: ${refund:.2f} credited to your balance."
+                    )
+                message = (
+                    f"Your physical letter was updated successfully. "
+                    f"{adjustment_text}"
+                )
+                title = "Letter Updated"
+            else:
+                title = "Draft Saved"
+
+            if self.request.headers.get("HX-Request") == "true":
+                is_draft = (
+                    self.current_draft is None
+                    or self.current_draft.status == PhysicalLetter.STATUS_DRAFT
+                )
+                is_paid = (
+                    self.current_draft
+                    and self.current_draft.status == PhysicalLetter.STATUS_PAID
+                )
+                return render(
+                    self.request,
+                    "letters/partials/operation_success.html",
+                    {
+                        "operation_type": "Physical Letter",
+                        "title": title,
+                        "message": message,
+                        "draft_info": is_draft,
+                        "draft_id": letter.id if is_draft else None,
+                        "show_continue_button": is_draft,
+                        "show_create_button": is_paid,
+                    },
+                )
+
+            messages.success(self.request, message)
+            return redirect("letters-page")
+
+        if self.request.headers.get("HX-Request") == "true":
+            return render(
+                self.request,
+                "letters/partials/operation_success.html",
+                {
+                    "operation_type": "Physical Letter",
+                    "title": "Letter Created",
+                    "message": (
+                        "Your physical letter has been created. "
+                        "Files are ready for admin printing."
+                    ),
+                    "show_create_button": True,
+                },
+            )
+
+        messages.success(
+            self.request,
+            "Physical letter created. Files are ready for admin printing.",
+        )
+        messages.info(
+            self.request,
+            (
+                "Delivery depends on destination country and can occur "
+                "1-4 days after your requested date."
+            ),
+        )
+
+        self.current_draft = None
+        self.current_paid_letter = None
+        return render(
+            self.request,
+            self.template_name,
+            self.get_context_data(
+                form=self.form_class(user=self.request.user),
+                created_letter=letter,
+            ),
+        )
+
+    def form_invalid(self, form):
+        logger.warning(
+            "PhysicalLetter form_invalid: errors=%s non_field=%s",
+            form.errors.as_json(),
+            form.non_field_errors(),
+        )
+        return super().form_invalid(form)
 
 
 @login_required
@@ -383,7 +729,7 @@ def lemonsqueezy_webhook_view(request):
     return HttpResponse(status=200)
 
 
-@require_POST
+@require_http_methods(['POST', 'DELETE'])
 @login_required
 def delete_letter_view(request, letter_id):
     letter = get_object_or_404(Letter, id=letter_id)
@@ -391,20 +737,36 @@ def delete_letter_view(request, letter_id):
         messages.error(request, "You do not have permission to delete this letter.")
         return redirect("letters-page")
 
-    if letter.can_be_deleted_now():
-        letter.is_deleted = True
-        letter.save(update_fields=["is_deleted"])
-        messages.success(request, "Letter deleted.")
-    elif letter.can_delete_early:
-        messages.error(
+    if not letter.can_be_deleted_now():
+        if letter.can_delete_early:
+            messages.error(
+                request,
+                "Delete window has expired for this letter.",
+            )
+        else:
+            messages.error(
+                request,
+                "Delete is disabled for this letter.",
+            )
+        return redirect("letters-page")
+
+    # Fully delete the email letter (email letters are free, no refund needed)
+    letter.delete()
+
+    # Check if this is an HTMX request
+    if request.headers.get("HX-Request") == "true":
+        return render(
             request,
-            "Delete window has expired for this letter.",
+            "letters/partials/operation_success.html",
+            {
+                "operation_type": "Email Letter",
+                "title": "Letter Deleted",
+                "message": "Your email letter has been permanently deleted.",
+                "show_create_button": True,
+            },
         )
-    else:
-        messages.error(
-            request,
-            "Delete is disabled for this letter.",
-        )
+
+    messages.success(request, "Letter deleted.")
     return redirect("letters-page")
 
 
@@ -457,6 +819,236 @@ def edit_letter_view(request, letter_id):
         messages.error(request, "Unable to update letter text.")
 
     return redirect("letters-page")
+
+
+@login_required
+def letter_detail_view(request, kind, item_id):
+    normalized_kind = (kind or "").strip().lower()
+    if normalized_kind == "email":
+        letter = get_object_or_404(Letter, id=item_id)
+        if not _can_access_letter(request, letter):
+            raise Http404()
+
+        if letter.can_view_content:
+            message_text = letter.get_message()
+        else:
+            message_text = "**********"
+
+        context = {
+            "letter": letter,
+            "message_text": message_text,
+        }
+        return render(request, "letters/letter_detail_email.html", context)
+
+    if normalized_kind == "physical":
+        letter = get_object_or_404(
+            PhysicalLetter.objects.select_related("country"),
+            id=item_id,
+        )
+        if not _can_access_physical_letter(request, letter):
+            raise Http404()
+
+        if letter.status == PhysicalLetter.STATUS_DRAFT:
+            return redirect(f"{reverse('physical-letter-create')}?draft={letter.id}")
+
+        attachments = list(letter.attachments.order_by("created_at"))
+        context = {
+            "letter": letter,
+            "attachments": attachments,
+        }
+        return render(request, "letters/letter_detail_physical.html", context)
+
+    raise Http404()
+
+
+@require_http_methods(['POST', 'DELETE'])
+@login_required
+def delete_physical_draft_view(request, letter_id):
+    letter = get_object_or_404(PhysicalLetter, id=letter_id)
+    if not _can_access_physical_letter(request, letter):
+        messages.error(
+            request,
+            "You do not have permission to delete this physical letter.",
+        )
+        return redirect("letters-page")
+
+    # Only allow deletion if status is DRAFT or PAID
+    if letter.status not in (PhysicalLetter.STATUS_DRAFT, PhysicalLetter.STATUS_PAID):
+        messages.error(
+            request,
+            "This physical letter can no longer be deleted.",
+        )
+        return redirect("letters-page")
+
+    # Use transaction to ensure atomicity
+    with transaction.atomic():
+        # Delete all attachments from S3
+        for attachment in letter.attachments.all():
+            attachment.file.delete(save=False)
+            attachment.delete()
+
+        # Only process refund if letter was PAID (drafts have no payment)
+        if letter.status == PhysicalLetter.STATUS_PAID:
+            deletion_info = _calculate_physical_letter_deletion_info(letter)
+            refund_amount = deletion_info["refund"]
+
+            # Create refund transaction if there's a refund amount
+            if refund_amount > 0:
+                BalanceTransaction.objects.create(
+                    user=letter.user,
+                    amount=refund_amount,
+                    transaction_type=BalanceTransaction.TYPE_CREDIT,
+                    reason=f"Refund for deleted physical letter #{letter.id}",
+                )
+                # Update user balance
+                letter.user.balance += refund_amount
+                letter.user.save(update_fields=["balance"])
+
+            # Delete the letter
+            letter.delete()
+
+            # Check if this is an HTMX request
+            if request.headers.get("HX-Request") == "true":
+                refund_message = (
+                    f"Refund of ${refund_amount:.2f} has been credited to your balance."
+                    if refund_amount > 0
+                    else ""
+                )
+                return render(
+                    request,
+                    "letters/partials/operation_success.html",
+                    {
+                        "operation_type": "Physical Letter",
+                        "title": "Letter Deleted",
+                        "message": "Your physical letter has been permanently deleted.",
+                        "refund_info": refund_message,
+                        "show_create_button": True,
+                    },
+                )
+
+            messages.success(
+                request,
+                f"Physical letter deleted. Refund of ${refund_amount:.2f} has been credited to your account."
+                if refund_amount > 0
+                else "Physical letter deleted.",
+            )
+        else:
+            # Draft deletion - no refund
+            letter.delete()
+
+            # Check if this is an HTMX request
+            if request.headers.get("HX-Request") == "true":
+                return render(
+                    request,
+                    "letters/partials/operation_success.html",
+                    {
+                        "operation_type": "Draft Letter",
+                        "title": "Draft Deleted",
+                        "message": "Your draft has been permanently deleted.",
+                        "show_create_button": True,
+                    },
+                )
+
+            messages.success(request, "Draft deleted.")
+
+    return redirect("letters-page")
+
+
+def get_deletion_info_view(request):
+    """
+    API endpoint to get deletion fee and refund info.
+    Query params: letter_type (email|physical), letter_id
+    """
+    # Check authentication
+    if not request.user.is_authenticated:
+        return JsonResponse(
+            {"error": "Authentication required"},
+            status=401,
+        )
+
+    letter_type = request.GET.get("letter_type", "").strip().lower()
+    letter_id = request.GET.get("letter_id", "").strip()
+
+    if not letter_type or not letter_id:
+        return JsonResponse(
+            {"error": "Missing letter_type or letter_id"},
+            status=400,
+        )
+
+    try:
+        letter_id = int(letter_id)
+    except (ValueError, TypeError):
+        return JsonResponse(
+            {"error": "Invalid letter_id"},
+            status=400,
+        )
+
+    if letter_type == "email":
+        letter = get_object_or_404(Letter, id=letter_id)
+        if not _can_access_letter(request, letter):
+            return JsonResponse(
+                {"error": "Permission denied"},
+                status=403,
+            )
+        # Email letters are free, no deletion fee
+        return JsonResponse({
+            "letter_type": "email",
+            "fee": "0.00",
+            "refund": "0.00",
+            "message": "This email letter will be permanently deleted.",
+        })
+
+    elif letter_type == "physical":
+        letter = get_object_or_404(PhysicalLetter, id=letter_id)
+        if not _can_access_physical_letter(request, letter):
+            return JsonResponse(
+                {"error": "Permission denied"},
+                status=403,
+            )
+
+        # Check if deletion is allowed
+        if letter.status not in (PhysicalLetter.STATUS_DRAFT, PhysicalLetter.STATUS_PAID):
+            return JsonResponse(
+                {
+                    "error": "This physical letter can no longer be deleted.",
+                    "can_delete": False,
+                },
+                status=400,
+            )
+
+        # Different messages for draft vs paid
+        if letter.status == PhysicalLetter.STATUS_DRAFT:
+            return JsonResponse({
+                "letter_type": "physical",
+                "status": "draft",
+                "can_delete": True,
+                "fee": "0.00",
+                "refund": "0.00",
+                "message": "This is a draft letter. No payment was made, so no refund will be issued.",
+            })
+        else:
+            # PAID status - calculate fee and refund
+            deletion_info = _calculate_physical_letter_deletion_info(letter)
+            return JsonResponse({
+                "letter_type": "physical",
+                "status": "paid",
+                "can_delete": True,
+                "fee": f"{deletion_info['fee']:.2f}",
+                "refund": f"{deletion_info['refund']:.2f}",
+                "years_passed": deletion_info["years_passed"],
+                "total_price": f"{letter.total_price:.2f}",
+                "message": (
+                    f"We will keep ${deletion_info['fee']:.2f} "
+                    f"({int(deletion_info['years_passed'])} years × $0.50 + $1.00 base fee). "
+                    f"${deletion_info['refund']:.2f} will be refunded to your balance."
+                ),
+            })
+
+    else:
+        return JsonResponse(
+            {"error": "Invalid letter_type"},
+            status=400,
+        )
 
 
 def concept_page(request):

@@ -168,3 +168,99 @@ class ContactTicketComment(models.Model):
 
     def __str__(self):
         return f"Comment #{self.id} on ticket #{self.ticket_id}"
+
+
+class CountryPricing(models.Model):
+    country_code = models.CharField(max_length=2, unique=True)
+    country_name = models.CharField(max_length=120)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        ordering = ["country_code"]
+
+    def save(self, *args, **kwargs):
+        self.country_code = (self.country_code or "").upper()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.country_name} ({self.country_code})"
+
+
+class PhysicalLetter(models.Model):
+    STATUS_DRAFT = "draft"
+    STATUS_PAID = "paid"
+    STATUS_PRINTING = "printing"
+    STATUS_SHIPPED = "shipped"
+    STATUS_DELIVERED = "delivered"
+    STATUS_CHOICES = [
+        (STATUS_DRAFT, "Draft"),
+        (STATUS_PAID, "Paid"),
+        (STATUS_PRINTING, "Printing"),
+        (STATUS_SHIPPED, "Shipped"),
+        (STATUS_DELIVERED, "Delivered"),
+    ]
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="physical_letters",
+    )
+    recipient_name = models.CharField(max_length=255)
+    street_address = models.CharField(max_length=255)
+    city = models.CharField(max_length=120)
+    state_province = models.CharField(max_length=120, blank=True, default="")
+    postal_code = models.CharField(max_length=30)
+    country = models.ForeignKey(
+        CountryPricing,
+        on_delete=models.PROTECT,
+        related_name="physical_letters",
+    )
+    requested_delivery_date = models.DateField()
+    message_text = models.TextField(blank=True, default="")
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_PAID,
+    )
+    tracking_number = models.CharField(max_length=100, blank=True, default="")
+    total_pages = models.PositiveIntegerField(default=0)
+    total_printable_pages = models.PositiveIntegerField(
+        default=0, help_text="User-specified total printable pages")
+    total_photos = models.PositiveIntegerField(default=0)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return (
+            f"Physical letter #{self.id} to {self.recipient_name} "
+            f"({self.country.country_code})"
+        )
+
+
+class LetterAttachment(models.Model):
+    TYPE_TEXT = "text"
+    TYPE_PHOTO = "photo"
+    TYPE_CHOICES = [
+        (TYPE_TEXT, "Text"),
+        (TYPE_PHOTO, "Photo"),
+    ]
+
+    physical_letter = models.ForeignKey(
+        PhysicalLetter,
+        on_delete=models.CASCADE,
+        related_name="attachments",
+    )
+    file = models.FileField(upload_to="physical_letters/%Y/%m/%d/")
+    attachment_type = models.CharField(max_length=10, choices=TYPE_CHOICES)
+    original_filename = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_at"]
+
+    def __str__(self):
+        return f"{self.get_attachment_type_display()}: {self.original_filename}"

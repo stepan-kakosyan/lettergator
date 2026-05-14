@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}LetterGator | {% trans "Physical Letter Details" %}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="w-full max-w-4xl mx-auto">
+        <div class="bg-white border border-gray-200 rounded-3xl p-8">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">
+                        {% trans "Physical Letter" %}
+                    </p>
+                    <h1 class="text-3xl font-black tracking-tight text-gray-900 mt-2">
+                        {% trans "Letter to" %} {{ letter.recipient_name }}
+                    </h1>
+                </div>
+                <a
+                    href="{% url 'letters-page' %}"
+                    class="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50"
+                >
+                    {% trans "Back to letters" %}
+                </a>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="rounded-xl border border-gray-200 p-4">
+                    <p class="text-gray-500">{% trans "Created" %}</p>
+                    <p class="font-semibold text-gray-900 local-date" data-utc="{{ letter.created_at|date:'c' }}">
+                        {{ letter.created_at|date:"M d, Y H:i" }}
+                    </p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                    <p class="text-gray-500">{% trans "Requested Delivery Date" %}</p>
+                    <p class="font-semibold text-gray-900">{{ letter.requested_delivery_date|date:"M d, Y" }}</p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                    <p class="text-gray-500">{% trans "Status" %}</p>
+                    <p class="font-semibold text-gray-900">{{ letter.get_status_display }}</p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                    <p class="text-gray-500">{% trans "Total Price" %}</p>
+                    <p class="font-semibold text-gray-900">${{ letter.total_price|floatformat:2 }}</p>
+                </div>
+            </div>
+
+            <div class="mt-6 rounded-xl border border-gray-200 p-4">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                    {% trans "Address" %}
+                </p>
+                <p class="text-gray-800">{{ letter.street_address }}</p>
+                <p class="text-gray-800">
+                    {{ letter.city }}{% if letter.state_province %}, {{ letter.state_province }}{% endif %}, {{ letter.postal_code }}
+                </p>
+                <p class="text-gray-800">{{ letter.country.country_name }} ({{ letter.country.country_code }})</p>
+            </div>
+
+            {% if letter.message_text %}
+            <div class="mt-6 rounded-xl border border-gray-200 p-4">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                    {% trans "Message Text" %}
+                </p>
+                <p class="text-gray-700 whitespace-pre-wrap">{{ letter.message_text }}</p>
+            </div>
+            {% endif %}
+
+            <div class="mt-6 rounded-xl border border-gray-200 p-4">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                    {% trans "Files" %}
+                </p>
+                {% if attachments %}
+                <div class="space-y-2">
+                    {% for attachment in attachments %}
+                    <div class="flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-3 py-2">
+                        <span class="text-sm text-gray-700">
+                            {{ attachment.original_filename }}
+                            <span class="text-gray-500">({{ attachment.get_attachment_type_display }})</span>
+                        </span>
+                        <button
+                            type="button"
+                            class="text-sm font-semibold text-[#014421]"
+                            data-attachment-open="{% url 'attachment-access' attachment.id %}"
+                        >
+                            {% trans "Open" %}
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-sm text-gray-600">{% trans "No files attached." %}</p>
+                {% endif %}
+            </div>
+
+            {% if letter.status == "draft" or letter.status == "paid" %}
+            <div class="mt-6 flex flex-wrap gap-3">
+                {% if letter.status == "paid" %}
+                <a
+                    href="{% url 'physical-letter-create' %}?draft={{ letter.id }}"
+                    class="inline-flex items-center justify-center border border-[#014421] text-[#014421] font-medium px-6 py-2.5 rounded-xl hover:bg-emerald-50"
+                >
+                    {% trans "Edit Letter" %}
+                </a>
+                {% endif %}
+                <button
+                    type="button"
+                    class="bg-red-600 text-white font-medium px-6 py-2.5 rounded-xl hover:bg-red-700"
+                    data-delete-confirm="{% trans "Delete this letter permanently?" %}"
+                    data-letter-type="physical"
+                    data-letter-id="{{ letter.id }}"
+                    hx-delete="{% url 'physical-letter-delete' letter.id %}"
+                    hx-trigger="none"
+                    hx-target="main"
+                    hx-swap="innerHTML swap:1s"
+                >
+                    {% trans "Delete Letter" %}
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    var fmt = new Intl.DateTimeFormat(undefined, {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+    });
+    document.querySelectorAll('.local-date[data-utc]').forEach(function (el) {
+        var d = new Date(el.dataset.utc);
+        if (!isNaN(d)) {
+            el.textContent = fmt.format(d);
+        }
+    });
+
+    document.querySelectorAll('[data-attachment-open]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var url = btn.getAttribute('data-attachment-open');
+            if (!url) {
+                return;
+            }
+            fetch(url)
+                .then(function (resp) {
+                    return resp.json();
+                })
+                .then(function (data) {
+                    if (data && data.url) {
+                        window.open(data.url, '_blank');
+                    }
+                });
+        });
+    });
+}());
+
+</script>
+{% endblock %}

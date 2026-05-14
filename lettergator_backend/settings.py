@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from datetime import timedelta
+from decimal import Decimal, InvalidOperation
 
 import pymysql
 from celery.schedules import crontab
@@ -11,6 +12,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 pymysql.install_as_MySQLdb()
 
 load_dotenv(BASE_DIR.parent / ".env")
+
+
+def _env_int(name, default):
+    raw_value = os.getenv(name, str(default)).strip()
+    try:
+        return int(raw_value)
+    except (TypeError, ValueError):
+        return int(default)
+
+
+def _env_decimal(name, default):
+    raw_value = os.getenv(name, str(default)).strip()
+    try:
+        return Decimal(raw_value)
+    except (TypeError, ValueError, InvalidOperation):
+        return Decimal(str(default))
+
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-secret-key")
 DEBUG = os.getenv("DEBUG", "1") == "1"
@@ -129,6 +147,66 @@ STATICFILES_STORAGE = (
 WHITENOISE_MANIFEST_STRICT = False
 WHITENOISE_USE_FINDERS = (
     os.getenv("WHITENOISE_USE_FINDERS", "1") == "1"
+)
+
+MEDIA_URL = os.getenv("MEDIA_URL", "/media/").strip() or "/media/"
+if not MEDIA_URL.endswith("/"):
+    MEDIA_URL = f"{MEDIA_URL}/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "")
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = "private"
+
+if AWS_STORAGE_BUCKET_NAME:
+    if "storages" not in INSTALLED_APPS:
+        INSTALLED_APPS.append("storages")
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    custom_domain = os.getenv("AWS_S3_CUSTOM_DOMAIN", "").strip()
+    if custom_domain:
+        AWS_S3_CUSTOM_DOMAIN = custom_domain
+        MEDIA_URL = f"https://{custom_domain}/"
+    else:
+        MEDIA_URL = (
+            f"https://{AWS_STORAGE_BUCKET_NAME}.s3."
+            f"{AWS_S3_REGION_NAME}.amazonaws.com/"
+        )
+
+PHYSICAL_LETTER_EXTRA_PHOTO_PRICE_USD = _env_decimal(
+    "PHYSICAL_LETTER_EXTRA_PHOTO_PRICE_USD",
+    "1.00",
+)
+PHYSICAL_LETTER_EXTRA_PAGE_PRICE_USD = _env_decimal(
+    "PHYSICAL_LETTER_EXTRA_PAGE_PRICE_USD",
+    "0.50",
+)
+PHYSICAL_LETTER_EXTRA_YEAR_PRICE_USD = _env_decimal(
+    "PHYSICAL_LETTER_EXTRA_YEAR_PRICE_USD",
+    "0.50",
+)
+PHYSICAL_LETTER_MAX_DELIVERY_YEARS = _env_int(
+    "PHYSICAL_LETTER_MAX_DELIVERY_YEARS",
+    10,
+)
+PHYSICAL_LETTER_MAX_TEXT_FILES = _env_int(
+    "PHYSICAL_LETTER_MAX_TEXT_FILES",
+    3,
+)
+PHYSICAL_LETTER_MAX_PHOTO_FILES = _env_int(
+    "PHYSICAL_LETTER_MAX_PHOTO_FILES",
+    3,
+)
+PHYSICAL_LETTER_MAX_FILE_SIZE_MB = _env_int(
+    "PHYSICAL_LETTER_MAX_FILE_SIZE_MB",
+    10,
+)
+PHYSICAL_LETTER_TEXT_CHARS_PER_PAGE = _env_int(
+    "PHYSICAL_LETTER_TEXT_CHARS_PER_PAGE",
+    1800,
 )
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
