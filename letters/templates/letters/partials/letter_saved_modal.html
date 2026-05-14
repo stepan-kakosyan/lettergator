@@ -31,7 +31,13 @@
                     href="{% url 'letter-create-page' %}"
                     class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors"
                 >
-                    {% trans "Create Another" %}
+                    {% trans "Create Email Letters" %}
+                </a>
+                <a
+                    href="{% url 'physical-letter-create' %}"
+                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors"
+                >
+                    {% trans "Create Physical Letter" %}
                 </a>
             </div>
         </div>

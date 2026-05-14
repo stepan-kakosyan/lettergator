@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}LetterGator | {% trans "Operation Successful" %}{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="w-full max-w-2xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-10 text-center space-y-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">{{ operation_type }}</p>
+        <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900">
+            {{ title }}
+        </h1>
+        <p class="text-gray-600">
+            {{ message }}
+        </p>
+        {% if draft_info %}
+        <p class="text-sm text-blue-900 bg-blue-50 border border-blue-200 rounded-xl p-3">
+            {% trans "This is a draft letter. You can edit it anytime before paying and submitting." %}
+        </p>
+        {% endif %}
+        {% if refund_info %}
+        <p class="text-sm text-emerald-900 bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+            {{ refund_info }}
+        </p>
+        {% endif %}
+        <div class="pt-2 flex flex-wrap justify-center gap-3">
+            <a href="{% url 'letters-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#014421] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+                {% trans "Back to Letters" %}
+            </a>
+            {% if show_create_button %}
+            <a href="{% url 'physical-letter-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-700 hover:border-[#014421] hover:text-[#014421] transition-colors">
+                {% trans "Create New Letter" %}
+            </a>
+            {% endif %}
+            {% if show_continue_button %}
+            <a href="{% url 'physical-letter-create' %}?draft={{ draft_id }}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-[#014421] text-sm font-semibold text-[#014421] hover:bg-emerald-50 transition-colors">
+                {% trans "Continue Editing" %}
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

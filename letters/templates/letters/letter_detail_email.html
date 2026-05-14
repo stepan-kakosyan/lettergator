@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}LetterGator | {% trans "Email Letter Details" %}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="w-full max-w-4xl mx-auto">
+        <div class="bg-white border border-gray-200 rounded-3xl p-8">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">
+                        {% trans "Email Letter" %}
+                    </p>
+                    <h1 class="text-3xl font-black tracking-tight text-gray-900 mt-2">
+                        {{ letter.subject }}
+                    </h1>
+                </div>
+                <a
+                    href="{% url 'letters-page' %}"
+                    class="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50"
+                >
+                    {% trans "Back to letters" %}
+                </a>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="rounded-xl border border-gray-200 p-4">
+                    <p class="text-gray-500">{% trans "Created" %}</p>
+                    <p class="font-semibold text-gray-900 local-date" data-utc="{{ letter.created_at|date:'c' }}">
+                        {{ letter.created_at|date:"M d, Y H:i" }}
+                    </p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                    <p class="text-gray-500">{% trans "Delivery" %}</p>
+                    <p class="font-semibold text-gray-900 local-date" data-utc="{{ letter.delivery_at|date:'c' }}">
+                        {{ letter.delivery_at|date:"M d, Y H:i" }}
+                    </p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                    <p class="text-gray-500">{% trans "Status" %}</p>
+                    <p class="font-semibold text-gray-900">{{ letter.status_label }}</p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                    <p class="text-gray-500">{% trans "Price" %}</p>
+                    <p class="font-semibold text-gray-900">$0.00</p>
+                </div>
+            </div>
+
+            <div class="mt-6 rounded-xl border border-gray-200 p-4">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                    {% trans "Recipients" %}
+                </p>
+                {% if letter.send_to_me %}
+                <p class="text-gray-800 font-semibold">{% trans "Only me" %}</p>
+                {% else %}
+                <p class="text-gray-800">{{ letter.recipient_email }}</p>
+                {% for extra in letter.recipient_emails %}
+                <p class="text-gray-800">{{ extra }}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="mt-6 rounded-xl border border-gray-200 p-4">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                    {% trans "Letter Content" %}
+                </p>
+
+                {% if letter.can_be_edited_now %}
+                <form method="post" action="{% url 'letter-edit' letter.id %}">
+                    {% csrf_token %}
+                    <textarea
+                        name="message"
+                        class="w-full border border-gray-300 rounded-xl p-3"
+                        rows="10"
+                        required
+                    >{{ message_text }}</textarea>
+                    <div class="mt-3 flex justify-end">
+                        <button
+                            type="submit"
+                            class="bg-[#014421] text-white font-medium px-6 py-2.5 rounded-xl hover:bg-[#023319]"
+                        >
+                            {% trans "Save Changes" %}
+                        </button>
+                    </div>
+                </form>
+                {% else %}
+                <p class="text-gray-700 whitespace-pre-wrap">{{ message_text }}</p>
+                {% endif %}
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+                {% if letter.can_be_deleted_now %}
+                <button
+                    type="button"
+                    class="bg-red-600 text-white font-medium px-6 py-2.5 rounded-xl hover:bg-red-700"
+                    data-delete-confirm="{% trans "Delete this letter permanently? This cannot be undone." %}"
+                    data-letter-type="email"
+                    data-letter-id="{{ letter.id }}"
+                    hx-delete="{% url 'letter-delete' letter.id %}"
+                    hx-trigger="none"
+                    hx-target="main"
+                    hx-swap="innerHTML swap:1s"
+                >
+                    {% trans "Delete Letter" %}
+                </button>
+                {% endif %}
+                {% if not letter.can_be_edited_now and not letter.can_be_deleted_now %}
+                <p class="text-sm text-gray-600">
+                    {% trans "This letter is no longer editable or deletable." %}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    var fmt = new Intl.DateTimeFormat(undefined, {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+    });
+    document.querySelectorAll('.local-date[data-utc]').forEach(function (el) {
+        var d = new Date(el.dataset.utc);
+        if (!isNaN(d)) {
+            el.textContent = fmt.format(d);
+        }
+    });
+}());
+
+</script>
+{% endblock %}
