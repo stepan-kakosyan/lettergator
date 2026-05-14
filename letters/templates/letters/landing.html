@@ -19,11 +19,8 @@
             <span class="text-[#014421]">{% trans "send your letter at a perfect time." %}</span>
         </h1>
         {% endwith %}
-        {% with balance=request.user.balance|floatformat:2 %}
         <p class="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl fade-in-up delay-200">
-            {% blocktrans %}You have <span class="font-semibold text-[#014421]">${{ balance }}</span> at your balance for creating long term letters.{% endblocktrans %}
         </p>
-        {% endwith %}
         {% else %}
         <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-3 fade-in-up delay-100">
             {% trans "Send your message" %} <br> <span class="text-[#014421]">{% trans "at the perfect time." %}</span>
@@ -32,18 +29,128 @@
             {% trans "Because some things are better left for later. See you later, Alligator!" %}
         </p>
         <p class="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl fade-in-up delay-200">
-            {% trans "A secure digital vault that stores your letters, files, and ideas, then delivers them in the future on the exact day you choose." %}
+            {% trans "A secure digital vault that stores your letters, files, and ideas, then delivers them in the future — by email or printed mail." %}
         </p>
         {% endif %}
+        {% if request.user.is_authenticated %}
+        <div class="w-full max-w-4xl fade-in-up delay-200">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+                <div class="rounded-2xl border border-gray-200 bg-white p-4">
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
+                        {% trans "Total letters" %}
+                    </p>
+                    <p class="text-3xl font-black text-gray-900 mt-2">
+                        {{ total_letters_count }}
+                    </p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        {% trans "Email and physical combined" %}
+                    </p>
+                </div>
+                <div class="rounded-2xl border border-gray-200 bg-white p-4">
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
+                        {% trans "Email letters" %}
+                    </p>
+                    <p class="text-3xl font-black text-gray-900 mt-2">
+                        {{ email_letters_count }}
+                    </p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        {% trans "Scheduled to inboxes" %}
+                    </p>
+                </div>
+                <div class="rounded-2xl border border-gray-200 bg-white p-4">
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
+                        {% trans "Physical letters" %}
+                    </p>
+                    <p class="text-3xl font-black text-gray-900 mt-2">
+                        {{ physical_letters_count }}
+                    </p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        {% trans "Print and mail orders" %}
+                    </p>
+                </div>
+                <div class="rounded-2xl border border-gray-200 bg-white p-4">
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
+                        {% trans "Completed" %}
+                    </p>
+                    <p class="text-3xl font-black text-gray-900 mt-2">
+                        {{ completed_letters_count }}
+                    </p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        {% trans "Already delivered" %}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Primary CTA Button -->
+            <div class="mt-6 flex justify-center">
+                <a
+                    href="{% url 'letters-page' %}"
+                    class="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold px-8 py-4 rounded-xl hover:from-emerald-700 hover:to-emerald-800 transition-all shadow-md hover:shadow-lg hover:scale-105"
+                >
+                    {% trans "Go to my letters" %}
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="mt-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border border-slate-200 p-6 shadow-sm overflow-hidden relative">
+                <!-- Decorative gradient background elements -->
+                <div class="absolute top-0 right-0 w-40 h-40 bg-emerald-400 opacity-5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-emerald-300 opacity-5 rounded-full blur-3xl -ml-16 -mb-16"></div>
+                
+                <div class="relative z-10">
+                    <div class="mb-6 pb-6 border-b border-slate-200">
+                        <p class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">
+                            {% trans "Your Balance" %}
+                        </p>
+                        <p class="text-4xl font-black text-slate-900 tracking-tight">
+                            ${{ request.user.balance|floatformat:2 }}
+                        </p>
+                        <p class="text-sm text-slate-600 mt-3">
+                            {% trans "Use your balance for long-term email scheduling and paid physical letter orders." %}
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 justify-between items-start">
+                        <div class="flex flex-wrap gap-3">
+                            <a
+                                href="{% url 'balance-page' %}"
+                                class="inline-flex items-center gap-2 border border-slate-300 text-gray-700 font-semibold px-5 py-3 rounded-xl hover:border-[#014421] hover:text-[#014421] transition-colors"
+                            >
+                                {% trans "See transactions" %}
+                            </a>
+                            <a
+                                href="{% url 'balance-page' %}"
+                                class="inline-flex items-center gap-2 border border-emerald-300 text-emerald-700 font-semibold px-5 py-3 rounded-xl hover:bg-emerald-50 transition-colors"
+                            >
+                                {% trans "Add funds" %}
+                            </a>
+                            <button
+                            id="open-calculator-btn"
+                            class="inline-flex items-center gap-2 border border-slate-300 text-slate-700 font-semibold px-4 py-3 rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-colors text-sm"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3v3m-6-10h.01M9 17h.01M15 15h.01m6-6h.01M15 7h.01M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-4"></path>
+                            </svg>
+                            {% trans "Price Calculator" %}
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
         <a
             href="{% url 'letters-page' %}"
             class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
         >
-            {% if request.user.is_authenticated %}{% trans "Go to my letters" %}{% else %}{% trans "Open Letters" %}{% endif %}
+            {% trans "Open Letters" %}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
         </a>
+        {% endif %}
     </section>
 
     <!-- See why teaser -->
@@ -102,39 +209,66 @@
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "See how" %}</p>
                 <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-                    {% trans "How your letter travels through time" %}
+                    {% trans "Choose your delivery method" %}
                 </h2>
                 <p class="text-gray-600 mt-3">
-                    {% trans "Four simple steps take your message from idea to inbox — on exactly the day and time you choose." %}
+                    {% trans "Send digital letters by email or physical letters by mail — both scheduled for exactly when they matter most." %}
                 </p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
-                    <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">1</div>
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">{% trans "Compose" %}</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Write your message with no limits and save it to your account." %}</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Digital Letters -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-[#014421] text-white text-lg font-bold flex items-center justify-center">✉️</div>
+                        <h3 class="text-xl font-bold text-gray-900">{% trans "Email Letters" %}</h3>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-5 text-left hover:border-[#014421] hover:shadow-md transition-all">
+                        <div class="text-sm font-semibold text-[#014421] mb-1">{% trans "1. Compose" %}</div>
+                        <p class="text-sm text-gray-500 leading-relaxed">{% trans "Write your message with no character limits and save it to your account." %}</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-5 text-left hover:border-[#014421] hover:shadow-md transition-all">
+                        <div class="text-sm font-semibold text-[#014421] mb-1">{% trans "2. Seal" %}</div>
+                        <p class="text-sm text-gray-500 leading-relaxed">{% trans "Set privacy rules — block previews, lock edits, control deletion." %}</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-5 text-left hover:border-[#014421] hover:shadow-md transition-all">
+                        <div class="text-sm font-semibold text-[#014421] mb-1">{% trans "3. Schedule" %}</div>
+                        <p class="text-sm text-gray-500 leading-relaxed">{% trans "Pick the exact date and time — presets or custom moments up to 10 years ahead." %}</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-5 text-left hover:border-[#014421] hover:shadow-md transition-all">
+                        <div class="text-sm font-semibold text-[#014421] mb-1">{% trans "4. Deliver" %}</div>
+                        <p class="text-sm text-gray-500 leading-relaxed">{% trans "Arrives in the recipient's inbox with automatic retry protection." %}</p>
+                    </div>
                 </div>
-                <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
-                    <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">2</div>
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">{% trans "Seal" %}</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Set privacy rules — block previews, lock edits, control deletion." %}</p>
-                </div>
-                <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
-                    <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">3</div>
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">{% trans "Schedule" %}</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "Pick the exact date — a preset milestone or a custom moment." %}</p>
-                </div>
-                <div class="border border-gray-200 rounded-2xl p-5 text-center hover:border-[#014421] hover:shadow-md transition-all">
-                    <div class="w-9 h-9 rounded-full bg-[#014421] text-white text-sm font-black flex items-center justify-center mx-auto mb-3">4</div>
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-semibold mb-1">{% trans "Deliver" %}</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">{% trans "LetterGator sends it automatically — with retry logic built in." %}</p>
+
+                <!-- Physical Letters -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-[#014421] text-white text-lg font-bold flex items-center justify-center">📮</div>
+                        <h3 class="text-xl font-bold text-gray-900">{% trans "Physical Letters" %}</h3>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-5 text-left hover:border-[#014421] hover:shadow-md transition-all">
+                        <div class="text-sm font-semibold text-[#014421] mb-1">{% trans "1. Compose" %}</div>
+                        <p class="text-sm text-gray-500 leading-relaxed">{% trans "Write your message and attach documents or photos to be printed together." %}</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-5 text-left hover:border-[#014421] hover:shadow-md transition-all">
+                        <div class="text-sm font-semibold text-[#014421] mb-1">{% trans "2. Address" %}</div>
+                        <p class="text-sm text-gray-500 leading-relaxed">{% trans "Enter recipient's name, address, and select country for pricing." %}</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-5 text-left hover:border-[#014421] hover:shadow-md transition-all">
+                        <div class="text-sm font-semibold text-[#014421] mb-1">{% trans "3. Schedule" %}</div>
+                        <p class="text-sm text-gray-500 leading-relaxed">{% trans "Set your desired delivery date. Printing starts on that date." %}</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-5 text-left hover:border-[#014421] hover:shadow-md transition-all">
+                        <div class="text-sm font-semibold text-[#014421] mb-1">{% trans "4. Ship" %}</div>
+                        <p class="text-sm text-gray-500 leading-relaxed">{% trans "Printed and mailed to the recipient's door with tracking." %}</p>
+                    </div>
                 </div>
             </div>
 
             <div class="text-center">
                 <a href="{% url 'how-page' %}" class="inline-flex items-center gap-2 text-sm font-semibold text-[#014421] border border-[#014421] px-5 py-2.5 rounded-xl hover:bg-[#014421] hover:text-white transition-colors">
-                    {% trans "See the full journey" %}
+                    {% trans "Learn about both types" %}
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                     </svg>
@@ -239,21 +373,30 @@
 
                 <details class="group border border-gray-200 rounded-2xl bg-white p-5">
                     <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
-                        <span class="font-semibold text-gray-900">6. Can I attach files to a letter?</span>
+                        <span class="font-semibold text-gray-900">6. {% trans "What's the difference between email and physical letters?" %}</span>
                         <span class="text-[#014421] font-bold group-open:hidden">+</span>
                         <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
                     </summary>
                     <p class="text-sm text-gray-600 mt-3">
-                        Not yet — letters currently support a rich text body only. File attachments
-                        are planned for a near-future version. You will be able to attach videos,
-                        audio recordings, images, and other files directly to your letter so the
-                        recipient receives everything in one delivery. We will announce this feature
-                        as soon as it is available.
+                        {% blocktrans trimmed %}
+                        <strong>Email Letters:</strong> Scheduled messages that arrive in an inbox at a specific date and time. 
+                        You control editing and deletion windows. Perfect for messages to yourself or loved ones.<br/><br/>
+                        <strong>Physical Letters:</strong> Printed and mailed to a recipient's address. You can attach documents 
+                        and photos that will be printed with your message. Perfect for tangible keepsakes and gifts.
+                        {% endblocktrans %}
                     </p>
                 </details>
             </div>
         </div>
     </section>
 
+    <!-- Include Calculator Modal -->
+    {% include "partials/calculator_modal.html" %}
+
+    <!-- Countries pricing data for calculator -->
+    {{ countries_pricing_json|json_script:"countries-pricing-data" }}
+
+    <!-- Include calculator script -->
+    <script src="{% static 'js/calculator.js' %}"></script>
 
 {% endblock %}

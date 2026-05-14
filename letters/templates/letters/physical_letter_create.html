@@ -155,9 +155,12 @@
                         {% trans "Text Files (max 3: PDF, TXT, DOCX)" %}
                     </p>
                     <div id="text-dropzone" class="upload-dropzone" tabindex="0" role="button" aria-label="{% trans 'Upload text files' %}">
-                        <p class="upload-dropzone-title">{% trans "Drop text files here" %}</p>
-                        <p class="upload-dropzone-subtitle">{% trans "or click to choose files" %}</p>
-                        <p class="upload-dropzone-meta">{% trans "Max file size:" %} {{ max_file_size_mb }}MB</p>
+                        <div class="upload-dropzone-copy">
+                            <p class="upload-dropzone-title">{% trans "Drop text files here" %}</p>
+                            <p class="upload-dropzone-subtitle">{% trans "or click to choose files" %}</p>
+                            <p class="upload-dropzone-meta">{% trans "Max file size:" %} {{ max_file_size_mb }}MB</p>
+                        </div>
+                        <div id="text-preview" class="upload-dropzone-files space-y-2"></div>
                     </div>
                     <div class="hidden">
                         <input
@@ -175,9 +178,12 @@
                         {% trans "Photos (max 3: JPG, PNG)" %}
                     </p>
                     <div id="photo-dropzone" class="upload-dropzone" tabindex="0" role="button" aria-label="{% trans 'Upload photo files' %}">
-                        <p class="upload-dropzone-title">{% trans "Drop images here" %}</p>
-                        <p class="upload-dropzone-subtitle">{% trans "or click to choose files" %}</p>
-                        <p class="upload-dropzone-meta">{% trans "Max file size:" %} {{ max_file_size_mb }}MB</p>
+                        <div class="upload-dropzone-copy">
+                            <p class="upload-dropzone-title">{% trans "Drop images here" %}</p>
+                            <p class="upload-dropzone-subtitle">{% trans "or click to choose files" %}</p>
+                            <p class="upload-dropzone-meta">{% trans "Max file size:" %} {{ max_file_size_mb }}MB</p>
+                        </div>
+                        <div id="photo-preview" class="upload-dropzone-files grid grid-cols-2 gap-2"></div>
                     </div>
                     <div class="hidden">
                         <input
@@ -189,18 +195,6 @@
                         >
                     </div>
                     {{ form.photo_files.errors }}
-                </div>
-                <!-- Printable pages section will be moved below file/photo previews -->
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
-                <div>
-                    <p class="text-sm font-semibold text-gray-700 mb-2">{% trans "Text File Preview" %}</p>
-                    <div id="text-preview" class="space-y-2"></div>
-                </div>
-                <div>
-                    <p class="text-sm font-semibold text-gray-700 mb-2">{% trans "Photo Preview" %}</p>
-                    <div id="photo-preview" class="grid grid-cols-3 gap-2"></div>
                 </div>
             </div>
 
@@ -229,17 +223,44 @@
 
             {# Existing attachments will be injected into the preview areas by JS #}
 
-            <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-4 mt-8">
-                <p class="text-sm text-emerald-900 font-semibold">
-                    {% trans "Estimated Total" %}: <span id="total-price">$0.00</span>
-                </p>
-                <p class="text-xs text-emerald-800 mt-1">
-                    {% trans "Current balance:" %} ${{ user_balance|floatformat:2 }}
-                </p>
-                <p class="text-xs text-emerald-800 mt-1" id="pricing-breakdown"></p>
-                <p class="text-xs text-gray-600 mt-2">
-                    {% trans "Final charge is validated on server after exact page analysis." %}
-                </p>
+            <!-- Fancy Cost Calculator Section -->
+            <div class="mt-8 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border border-slate-200 p-6 shadow-sm overflow-hidden relative">
+                <!-- Decorative gradient background elements -->
+                <div class="absolute top-0 right-0 w-40 h-40 bg-emerald-400 opacity-5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-emerald-300 opacity-5 rounded-full blur-3xl -ml-16 -mb-16"></div>
+                
+                <div class="relative z-10">
+                    <!-- Header with total -->
+                    <div class="mb-6 pb-6 border-b border-slate-200">
+                        <p class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">
+                            {% trans "Cost Summary" %}
+                        </p>
+                        <div class="flex items-baseline justify-between">
+                            <div>
+                                <p class="text-xs text-slate-600 mb-1">{% trans "Estimated Total" %}</p>
+                                <p class="text-4xl font-black text-slate-900 tracking-tight">
+                                    <span id="total-price">$0.00</span>
+                                </p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-slate-600 mb-1">{% trans "Your Balance" %}</p>
+                                <p class="text-2xl font-bold text-emerald-600">
+                                    ${{ user_balance|floatformat:2 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pricing breakdown -->
+                    <div id="pricing-breakdown-container" class="mb-4">
+                        <p id="pricing-breakdown" class="text-xs text-slate-700 leading-relaxed"></p>
+                    </div>
+                    
+                    <!-- Validation note -->
+                    <p class="text-xs text-slate-500 italic">
+                        💡 {% trans "Final charge is validated on server after exact page analysis." %}
+                    </p>
+                </div>
             </div>
 
             <div id="client-errors" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3 mt-4"></div>
@@ -331,7 +352,6 @@
         </div>
     </div>
 </div>
-</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -350,7 +370,7 @@
                 type: '{{ attachment.attachment_type }}',
                 url: '{% url "attachment-access" attachment.id %}',
                 display: '{{ attachment.get_attachment_type_display }}'
-            }{{ forloop.last|yesno:""," }}
+            }{% if not forloop.last %},{% endif %}
         {% endfor %}
         ]);
         document.head.appendChild(attachmentsScript);
@@ -358,8 +378,5 @@
 
 }());
 </script>
-{% endblock %}
 <script src="{% static 'js/physical-letter-form.js' %}"></script>
-</div>
-</body>
-</html>
+{% endblock %}

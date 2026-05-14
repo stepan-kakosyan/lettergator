@@ -380,30 +380,48 @@
 }
 
 .upload-dropzone {
-  border: 1px dashed #86efac;
+  border: 1px dashed #cbd5e1;
   border-radius: 0.85rem;
-  background: #f9fffb;
+  background: #f3f4f6;
   padding: 1rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
   cursor: pointer;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.upload-dropzone-copy {
+  text-align: center;
+}
+
+.upload-dropzone-files {
+  text-align: left;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 0.9rem;
+  min-height: 3rem;
+}
+
+.upload-dropzone.has-files {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-color: #94a3b8;
+}
+
 .upload-dropzone:hover,
 .upload-dropzone.is-dragover {
-  border-color: #16a34a;
-  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.15);
+  border-color: #6b7280;
+  box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.15);
 }
 
 .upload-dropzone-title {
   font-size: 0.9rem;
   font-weight: 800;
-  color: #14532d;
+  color: #1f2937;
 }
 
 .upload-dropzone-subtitle {
   font-size: 0.8rem;
-  color: #15803d;
+  color: #6b7280;
   margin-top: 0.25rem;
 }
 
@@ -419,7 +437,8 @@
   gap: 0.6rem;
   border: 1px solid #d1fae5;
   border-radius: 0.7rem;
-  background: #f9fffb;
+  background: #ffffff;
+  box-shadow: 0 8px 20px -16px rgba(15, 23, 42, 0.5);
   padding: 0.5rem 0.65rem;
 }
 
@@ -468,9 +487,10 @@
 
 .upload-photo-card {
   position: relative;
-  border: 1px solid #d1fae5;
-  border-radius: 0.65rem;
-  background: #f9fffb;
+  border: 1px solid #dbeafe;
+  border-radius: 0.8rem;
+  background: #ffffff;
+  box-shadow: 0 10px 24px -18px rgba(15, 23, 42, 0.5);
   padding: 0.3rem;
 }
 

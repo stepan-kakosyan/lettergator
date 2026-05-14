@@ -102,11 +102,10 @@
         class="md:hidden hidden absolute left-0 right-0 top-full z-50 bg-white border-b border-gray-100 shadow-lg px-6 py-5"
     >
         <nav class="flex flex-col gap-4 text-sm font-medium text-gray-600">
-            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'why-page' %}text-[#014421] font-semibold{% endif %}">{% trans "See why" %}</a>
-            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] font-semibold{% endif %}">{% trans "See how" %}</a>
             <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'letters-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Letters" %}</a>
             <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'contact-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Contact" %}</a>
-            <a href="{% url 'privacy-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'privacy-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Privacy" %}</a>
+            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'why-page' %}text-[#014421] font-semibold{% endif %}">{% trans "See why" %}</a>
+            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] font-semibold{% endif %}">{% trans "See how" %}</a>
             {% if not request.user.is_authenticated %}
             <hr class="border-gray-100">
             <a href="{% url 'login' %}" class="font-bold text-[#014421]">{% trans "Login" %}</a>

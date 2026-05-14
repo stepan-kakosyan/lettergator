@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block title %}LetterGator | {% trans "Create Letter" %}{% endblock %}
+{% block title %}LetterGator | {% trans "Create Email Letter" %}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
@@ -15,14 +15,20 @@
             <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">{% trans "Letters" %}</p>
             <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
                 {% if current_letter %}
-                    {% trans "Edit Letter" %}
+                    {% trans "Edit Email Letter" %}
                 {% else %}
-                    {% trans "Create Letter" %}
+                    {% trans "Create Email Letter" %}
                 {% endif %}
             </h1>
             <p class="text-gray-600 mt-2">
-                {% trans "Configure delivery, privacy, and control options before sealing." %}
+                {% trans "Configure delivery, privacy, and control options for email delivery." %}
             </p>
+            <div class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p class="text-sm text-blue-900">
+                    <strong>{% trans "Want to send a printed letter instead?" %}</strong> 
+                    <a href="{% url 'physical-letter-create' %}" class="font-semibold hover:underline">{% trans "Create a Physical Letter" %}</a>
+                </p>
+            </div>
             <a href="{% url 'letters-page' %}" class="inline-flex items-center mt-4 text-sm font-semibold text-[#014421] hover:underline">
                 {% trans "Back to Letters" %}
             </a>
@@ -58,23 +64,6 @@
                 {% endfor %}
             </div>
             {% endif %}
-
-            <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-emerald-900 mb-5">
-                <p class="font-semibold">{% trans "Balance usage for long-term delivery" %}</p>
-                <p class="text-sm mt-1">
-                    Your balance: <span class="font-bold">${{ user_balance|floatformat:2 }}</span>.
-                    Scheduling from 1 year and beyond costs
-                    ${{ long_schedule_rate|floatformat:2 }} per year.
-                    Keep at least ${{ min_long_schedule_balance|floatformat:2 }}
-                    to unlock those dates.
-                </p>
-                {% if low_balance_for_long_schedule %}
-                <p class="text-sm mt-2 font-semibold">
-                    1 year+ presets are locked until your balance reaches
-                    ${{ min_long_schedule_balance|floatformat:2 }}.
-                </p>
-                {% endif %}
-            </div>
 
             <div class="flex flex-col gap-6">
                 <div>
@@ -203,12 +192,39 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                     </button>
                 </div>
-                <div id="schedule-cost-panel" class="hidden rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900 flex items-center justify-between gap-3">
-                    {% if current_letter %}
-                    <span>{% trans "Scheduling total:" %} <span id="schedule-cost-value" class="font-black">$0.00</span> &mdash; {% trans "only the difference is applied to your balance." %}</span>
-                    {% else %}
-                    <span>{% trans "Scheduling cost:" %} <span id="schedule-cost-value" class="font-black">$0.00</span> &mdash; {% trans "will be deducted from your balance on save." %}</span>
-                    {% endif %}
+                <div id="pricing-summary-card" class="mt-8 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border border-slate-200 p-6 shadow-sm overflow-hidden relative">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-emerald-400 opacity-5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-emerald-300 opacity-5 rounded-full blur-3xl -ml-16 -mb-16"></div>
+
+                    <div class="relative z-10">
+                        <div class="mb-6 pb-6 border-b border-slate-200">
+                            <p class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">
+                                {% trans "Cost Summary" %}
+                            </p>
+                            <div class="flex items-baseline justify-between">
+                                <div>
+                                    <p class="text-xs text-slate-600 mb-1">{% trans "Estimated Total" %}</p>
+                                    <p class="text-4xl font-black text-slate-900 tracking-tight">
+                                        <span id="total-price">$0.00</span>
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs text-slate-600 mb-1">{% trans "Your Balance" %}</p>
+                                    <p class="text-2xl font-bold text-emerald-600">
+                                        ${{ user_balance|floatformat:2 }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pricing-breakdown-container" class="mb-4">
+                            <p id="pricing-breakdown" class="text-xs text-slate-700 leading-relaxed"></p>
+                        </div>
+
+                        <p class="text-xs text-slate-500 italic">
+                            💡 {% trans "Final charge is validated on server after exact schedule analysis." %}
+                        </p>
+                    </div>
                 </div>
                 <div id="balance-warning" class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-semibold flex items-center justify-between gap-3">
                     <span>{% trans "Your balance is not enough for this schedule." %}</span>

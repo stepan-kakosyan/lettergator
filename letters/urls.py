@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     balance_page,
+    calculator_countries_fragment,
     create_checkout_view,
     contact_page,
     contact_ticket_comment_view,
@@ -55,6 +56,7 @@ urlpatterns = [
     ),
     path("vault/", letters_page, name="vault-page"),
     path("how/", how_page, name="how-page"),
+    path("calculator/countries/", calculator_countries_fragment, name="calc-countries-fragment"),
     path("contact/", contact_page, name="contact-page"),
     path("why/", concept_page, name="why-page"),
     path("privacy/", privacy_page, name="privacy-page"),
