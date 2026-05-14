@@ -161,3 +161,45 @@ def send_letter_created_email(request, user, letter):
     )
     message.attach_alternative(html_body, "text/html")
     message.send(fail_silently=False)
+
+
+def send_physical_letter_created_email(request, user, letter):
+    logo_url = request.build_absolute_uri(static("img/logo.png"))
+
+    # Count text files and photos
+    text_file_count = letter.attachments.filter(
+        attachment_type="text"
+    ).count()
+    photo_count = letter.attachments.filter(
+        attachment_type="photo"
+    ).count()
+
+    context = {
+        "user": user,
+        "letter": letter,
+        "text_file_count": text_file_count,
+        "photo_count": photo_count,
+        "logo_url": logo_url,
+        "site_name": "LetterGator",
+    }
+
+    subject = (
+        f"Your physical letter to {letter.recipient_name} is confirmed"
+    )
+    text_body = render_to_string(
+        "letters/emails/physical_letter_created.txt",
+        context,
+    )
+    html_body = render_to_string(
+        "letters/emails/physical_letter_created.html",
+        context,
+    )
+
+    message = EmailMultiAlternatives(
+        subject=subject,
+        body=text_body,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[user.email],
+    )
+    message.attach_alternative(html_body, "text/html")
+    message.send(fail_silently=False)
