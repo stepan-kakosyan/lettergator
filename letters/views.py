@@ -41,7 +41,6 @@ from .forms import (
     ContactTicketCommentForm,
     ContactTicketForm,
     LetterForm,
-    LetterMessageEditForm,
     PhysicalLetterCreateForm,
 )
 from .models import (
@@ -107,6 +106,26 @@ def _calculate_physical_letter_deletion_info(letter):
     }
 
 
+def _calculate_email_letter_deletion_info(letter):
+    """
+    Calculate deletion fee and refund for an email letter.
+
+    Non-free letters keep a fixed $0.50 fee and refund the remainder.
+    Free letters have no fee and no refund.
+    """
+    total_price = letter.total_price or Decimal("0.00")
+    if total_price > 0:
+        fee = Decimal("0.50")
+    else:
+        fee = Decimal("0.00")
+    refund = total_price - fee
+    return {
+        "fee": fee,
+        "refund": max(Decimal("0.00"), refund),
+        "total_price": total_price,
+    }
+
+
 def letters_page(request):
     guest_mode = not request.user.is_authenticated
     letters = []
@@ -146,7 +165,7 @@ def letters_page(request):
                     "status": letter.status_label,
                     "status_value": "",
                     "created_at": letter.created_at,
-                    "price": Decimal("0.00"),
+                    "price": letter.total_price,
                     "destination": (
                         "Only me"
                         if letter.send_to_me
@@ -225,9 +244,31 @@ def create_letter_page(request):
         }
         return render(request, "letters/letter_create_blocked.html", context)
 
+    current_letter = None
+    draft_id = request.GET.get("draft") or request.POST.get("draft")
+    if draft_id:
+        try:
+            current_letter = Letter.objects.get(
+                id=int(draft_id),
+                user=request.user,
+            )
+        except (ValueError, Letter.DoesNotExist):
+            messages.error(request, "Email letter not found.")
+            return redirect("letters-page")
+
+        if not current_letter.can_be_edited_now():
+            messages.error(request, "This email letter can no longer be edited.")
+            return redirect(
+                reverse(
+                    "letter-detail",
+                    kwargs={"kind": "email", "item_id": current_letter.id},
+                )
+            )
+
     form = LetterForm(
         request.POST or None,
         user=request.user,
+        instance=current_letter,
     )
 
     if request.method == "POST" and form.is_valid():
@@ -237,9 +278,42 @@ def create_letter_page(request):
             form.add_error(None, " ".join(exc.messages))
         else:
             schedule_cost = form.cleaned_data.get("_schedule_cost", Decimal("0.00"))
-            send_letter_created_email(request, request.user, letter)
+            adjustment_amount = form.cleaned_data.get(
+                "_adjustment_amount",
+                schedule_cost,
+            )
+            if current_letter is None:
+                send_letter_created_email(request, request.user, letter)
 
             if request.headers.get("HX-Request") == "true":
+                if current_letter is not None:
+                    adjustment_text = "No pricing changes were needed."
+                    if adjustment_amount > 0:
+                        adjustment_text = (
+                            f"Additional charge: ${adjustment_amount:.2f} "
+                            "deducted from your balance."
+                        )
+                    elif adjustment_amount < 0:
+                        refund_amount = -adjustment_amount
+                        adjustment_text = (
+                            f"Refund: ${refund_amount:.2f} credited "
+                            "to your balance."
+                        )
+
+                    return render(
+                        request,
+                        "letters/partials/operation_success.html",
+                        {
+                            "operation_type": "Email Letter",
+                            "title": "Letter Updated",
+                            "message": (
+                                "Your email letter was updated successfully. "
+                                f"{adjustment_text}"
+                            ),
+                            "show_create_button": True,
+                        },
+                    )
+
                 return render(
                     request,
                     "letters/partials/letter_saved_modal.html",
@@ -247,10 +321,15 @@ def create_letter_page(request):
                         "letter_subject": letter.subject,
                         "schedule_cost": schedule_cost if schedule_cost else None,
                         "new_balance": request.user.balance,
+                        "adjustment_amount": adjustment_amount,
+                        "is_edit_mode": current_letter is not None,
                     },
                 )
 
-            messages.success(request, "Letter created and added to your list.")
+            if current_letter is not None:
+                messages.success(request, "Email letter updated.")
+            else:
+                messages.success(request, "Letter created and added to your list.")
             return redirect("letters-page")
 
     user_balance = request.user.balance
@@ -259,6 +338,12 @@ def create_letter_page(request):
     )
     context = {
         "form": form,
+        "current_letter": current_letter,
+        "original_total_price": (
+            current_letter.total_price
+            if current_letter is not None
+            else Decimal("0.00")
+        ),
         "user_balance": user_balance,
         "long_schedule_rate": RATE_PER_YEAR_USD,
         "min_long_schedule_balance": MIN_LONG_SCHEDULE_BALANCE_USD,
@@ -750,74 +835,61 @@ def delete_letter_view(request, letter_id):
             )
         return redirect("letters-page")
 
-    # Fully delete the email letter (email letters are free, no refund needed)
-    letter.delete()
+    deletion_info = _calculate_email_letter_deletion_info(letter)
+    refund_amount = deletion_info["refund"]
+    fee_amount = deletion_info["fee"]
 
-    # Check if this is an HTMX request
+    with transaction.atomic():
+        if refund_amount > 0:
+            user_model = get_user_model()
+            locked_user = user_model.objects.select_for_update().get(
+                pk=letter.user.pk,
+            )
+            locked_user.balance += refund_amount
+            locked_user.save(update_fields=["balance"])
+            BalanceTransaction.objects.create(
+                user=locked_user,
+                amount=refund_amount,
+                transaction_type=BalanceTransaction.TYPE_CREDIT,
+                reason=(
+                    "Refund for deleted email letter "
+                    f"#{letter.id}"
+                ),
+            )
+            request.user.balance = locked_user.balance
+
+        letter.delete()
+
     if request.headers.get("HX-Request") == "true":
+        if refund_amount > 0:
+            message = (
+                "Your email letter has been permanently deleted. "
+                f"We kept ${fee_amount:.2f} and refunded "
+                f"${refund_amount:.2f} to your balance."
+            )
+        else:
+            message = "Your email letter has been permanently deleted."
+
         return render(
             request,
             "letters/partials/operation_success.html",
             {
                 "operation_type": "Email Letter",
                 "title": "Letter Deleted",
-                "message": "Your email letter has been permanently deleted.",
+                "message": message,
                 "show_create_button": True,
             },
         )
 
-    messages.success(request, "Letter deleted.")
-    return redirect("letters-page")
-
-
-@require_POST
-@login_required
-def edit_letter_view(request, letter_id):
-    letter = get_object_or_404(Letter, id=letter_id)
-    if not _can_access_letter(request, letter):
-        messages.error(request, "You do not have permission to edit this letter.")
-        return redirect("letters-page")
-
-    if not letter.can_be_edited_now():
-        if letter.can_edit_early:
-            messages.error(request, "Edit window has expired for this letter.")
-        else:
-            messages.error(request, "Edit is disabled for this letter.")
-        return redirect("letters-page")
-
-    form = LetterMessageEditForm(request.POST)
-    if form.is_valid():
-        letter.set_message(form.cleaned_data["message"])
-        letter.save(update_fields=["message"])
-
-        if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            message = ""
-            excerpt = "**********"
-            if letter.can_view_content:
-                message = letter.get_message()
-                excerpt = message[:120]
-                if len(message) > 120:
-                    excerpt = f"{excerpt}..."
-            return JsonResponse(
-                {
-                    "ok": True,
-                    "message": message,
-                    "excerpt": excerpt,
-                }
-            )
-
-        messages.success(request, "Letter text updated.")
+    if refund_amount > 0:
+        messages.success(
+            request,
+            "Email letter deleted. "
+            f"We kept ${fee_amount:.2f} and refunded "
+            f"${refund_amount:.2f} to your account.",
+        )
     else:
-        if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            return JsonResponse(
-                {
-                    "ok": False,
-                    "error": "Unable to update letter text.",
-                },
-                status=400,
-            )
-        messages.error(request, "Unable to update letter text.")
-
+        messages.success(request, "Letter deleted.")
     return redirect("letters-page")
 
 
@@ -990,12 +1062,40 @@ def get_deletion_info_view(request):
                 {"error": "Permission denied"},
                 status=403,
             )
-        # Email letters are free, no deletion fee
+
+        if not letter.can_be_deleted_now():
+            return JsonResponse(
+                {
+                    "error": "This email letter can no longer be deleted.",
+                    "can_delete": False,
+                },
+                status=400,
+            )
+
+        deletion_info = _calculate_email_letter_deletion_info(letter)
+        fee_amount = deletion_info["fee"]
+        refund_amount = deletion_info["refund"]
+        total_price = deletion_info["total_price"]
+
+        if total_price > 0:
+            message = (
+                f"We will keep ${fee_amount:.2f} as a non-refundable "
+                f"processing fee. ${refund_amount:.2f} will be refunded "
+                "to your balance."
+            )
+        else:
+            message = (
+                "This email letter is free. It will be permanently deleted "
+                "with no refund."
+            )
+
         return JsonResponse({
             "letter_type": "email",
-            "fee": "0.00",
-            "refund": "0.00",
-            "message": "This email letter will be permanently deleted.",
+            "can_delete": True,
+            "fee": f"{fee_amount:.2f}",
+            "refund": f"{refund_amount:.2f}",
+            "total_price": f"{total_price:.2f}",
+            "message": message,
         })
 
     elif letter_type == "physical":

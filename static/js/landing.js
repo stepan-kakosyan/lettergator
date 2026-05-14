@@ -237,6 +237,24 @@
       }
     }
 
+    function initRecipientInputsFromHidden() {
+      if (!recipientList.value) {
+        return;
+      }
+      const existing = recipientList.value
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+      if (!existing.length) {
+        return;
+      }
+      recipientInputs.innerHTML = "";
+      existing.slice(0, MAX_RECIPIENTS).forEach((email) => {
+        createRecipientInput(email);
+      });
+      syncRecipientList();
+    }
+
     function toggleRecipientPanel() {
       const isSendToMe = sendToMe.checked;
       recipientPanel.classList.toggle("hidden", isSendToMe);
@@ -290,6 +308,10 @@
 
       const userBalance = parseFloat(form.dataset.userBalance || "0");
       const ratePerYear = parseFloat(form.dataset.ratePerYear || "0.50");
+      const isEditMode = form.dataset.isEditMode === "1";
+      const originalTotalPrice = parseFloat(
+        form.dataset.originalTotalPrice || "0",
+      );
       const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 
       function addYears(date, yearsToAdd) {
@@ -325,13 +347,16 @@
 
       function updateCostDisplay() {
         const cost = computeCost();
+        const requiredAmount = isEditMode
+          ? Math.max(cost - originalTotalPrice, 0)
+          : cost;
         if (cost > 0) {
           costPanel.classList.remove("hidden");
           costValue.textContent = "$" + cost.toFixed(2);
         } else {
           costPanel.classList.add("hidden");
         }
-        if (cost > userBalance) {
+        if (requiredAmount > userBalance) {
           balanceWarning.classList.remove("hidden");
           sealBtn.disabled = true;
           sealBtn.classList.add("opacity-50", "cursor-not-allowed");
@@ -351,6 +376,7 @@
     initBinaryToggles();
     setBrowserTimezone();
     initDatePresets();
+    initRecipientInputsFromHidden();
     toggleRecipientPanel();
     initScheduleCostDisplay();
   }

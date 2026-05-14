@@ -12,7 +12,6 @@ from .views import (
     dashboard_view,
     delete_letter_view,
     delete_physical_draft_view,
-    edit_letter_view,
     faq_page,
     get_deletion_info_view,
     how_page,
@@ -43,7 +42,6 @@ urlpatterns = [
         name="attachment-access",
     ),
     path("letters/<int:letter_id>/delete/", delete_letter_view, name="letter-delete"),
-    path("letters/<int:letter_id>/edit/", edit_letter_view, name="letter-edit"),
     path("letters/api/deletion-info/", get_deletion_info_view, name="deletion-info"),
     path(
         "letters/<str:kind>/<int:item_id>/",

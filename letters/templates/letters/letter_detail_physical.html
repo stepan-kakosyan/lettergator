@@ -69,32 +69,80 @@
             </div>
             {% endif %}
 
-            <div class="mt-6 rounded-xl border border-gray-200 p-4">
-                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
-                    {% trans "Files" %}
-                </p>
-                {% if attachments %}
-                <div class="space-y-2">
-                    {% for attachment in attachments %}
-                    <div class="flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-3 py-2">
-                        <span class="text-sm text-gray-700">
-                            {{ attachment.original_filename }}
-                            <span class="text-gray-500">({{ attachment.get_attachment_type_display }})</span>
-                        </span>
-                        <button
-                            type="button"
-                            class="text-sm font-semibold text-[#014421]"
-                            data-attachment-open="{% url 'attachment-access' attachment.id %}"
-                        >
-                            {% trans "Open" %}
-                        </button>
+            {% with sorted_attachments=attachments|dictsort:"attachment_type" %}
+            {% regroup sorted_attachments by attachment_type as attachments_by_type %}
+            
+            {% for type_group in attachments_by_type %}
+                {% if type_group.grouper == "photo" and type_group.list %}
+                <div class="mt-6 rounded-xl border border-gray-200 p-4">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                        📷 {% trans "Photos" %}
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        {% for attachment in type_group.list %}
+                        <div class="relative group">
+                            <img
+                                src="{{ attachment.file.url }}"
+                                alt="{{ attachment.original_filename }}"
+                                class="w-full h-auto aspect-square object-cover rounded-lg border border-gray-200"
+                            >
+                            <button
+                                type="button"
+                                class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center rounded-lg transition-all opacity-0 group-hover:opacity-100"
+                                data-attachment-open="{% url 'attachment-access' attachment.id %}"
+                                title="{{ attachment.original_filename }}"
+                            >
+                                <span class="text-white text-sm font-semibold">{% trans "Open" %}</span>
+                            </button>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
-                {% else %}
-                <p class="text-sm text-gray-600">{% trans "No files attached." %}</p>
                 {% endif %}
-            </div>
+            {% endfor %}
+            
+            {% for type_group in attachments_by_type %}
+                {% if type_group.grouper == "text" and type_group.list %}
+                <div class="mt-6 rounded-xl border border-gray-200 p-4">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                        📁 {% trans "Files" %}
+                    </p>
+                    <div class="space-y-2">
+                        {% for attachment in type_group.list %}
+                        <div class="flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-3 py-2">
+                            <div class="flex items-center gap-2 min-w-0 flex-1">
+                                <span class="text-lg flex-shrink-0">
+                                    {% with filename=attachment.original_filename|lower %}
+                                        {% if filename|slice:"-4:" == ".pdf" %}📕
+                                        {% elif filename|slice:"-5:" == ".docx" %}📘
+                                        {% elif filename|slice:"-4:" == ".doc" %}📘
+                                        {% elif filename|slice:"-5:" == ".xlsx" %}📗
+                                        {% elif filename|slice:"-4:" == ".xls" %}📗
+                                        {% elif filename|slice:"-4:" == ".txt" %}📝
+                                        {% elif filename|slice:"-4:" == ".zip" %}📦
+                                        {% elif filename|slice:"-4:" == ".ppt" %}🎪
+                                        {% elif filename|slice:"-6:" == ".pptx" %}🎪
+                                        {% else %}📃{% endif %}
+                                    {% endwith %}
+                                </span>
+                                <span class="text-sm text-gray-700 truncate">
+                                    {{ attachment.original_filename }}
+                                </span>
+                            </div>
+                            <button
+                                type="button"
+                                class="text-sm font-semibold text-[#014421] whitespace-nowrap"
+                                data-attachment-open="{% url 'attachment-access' attachment.id %}"
+                            >
+                                {% trans "Open" %}
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            {% endwith %}
 
             {% if letter.status == "draft" or letter.status == "paid" %}
             <div class="mt-6 flex flex-wrap gap-3">
