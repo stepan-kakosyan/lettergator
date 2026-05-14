@@ -16,56 +16,19 @@
 		}
 	}
 
-	function setDropzoneState(zone, hasFiles) {
-		if (!zone) {
-			return;
-		}
-		zone.classList.toggle('has-files', !!hasFiles);
-	}
-
-	function sameAttachmentId(leftId, rightId) {
-		return String(leftId) === String(rightId);
-	}
-
-	var photoAccessUrlCache = {};
-
-	function getCachedPhotoAccessUrl(att) {
-		var cacheKey = String(att.id);
-		if (photoAccessUrlCache[cacheKey]) {
-			return Promise.resolve(photoAccessUrlCache[cacheKey]);
-		}
-		return fetch(att.url)
-			.then(function (resp) {
-				return resp.json();
-			})
-			.then(function (data) {
-				if (data && data.url) {
-					photoAccessUrlCache[cacheKey] = data.url;
-					return data.url;
-				}
-				return '';
-			})
-			.catch(function () {
-				return '';
-			});
-	}
-
-	function renderExistingTextAttachments() {
+	// Helper to render existing attachments in preview
+	function renderExistingAttachments() {
+		// Text files
 		var textPreview = document.getElementById('text-preview');
-		if (!textPreview) {
-			return;
-		}
+		var photoPreview = document.getElementById('photo-preview');
+		if (!textPreview || !photoPreview) return;
 
-		var oldExisting = textPreview.querySelectorAll('.existing-attachment-row');
-		oldExisting.forEach(function (el) {
-			el.remove();
-		});
+		// Remove any previous existing file rows
+		var oldExisting = document.querySelectorAll('.existing-attachment-row');
+		oldExisting.forEach(function(el) { el.remove(); });
 
-		existingAttachments
-			.filter(function (att) {
-				return att.type === 'text';
-			})
-			.forEach(function (att) {
+		existingAttachments.forEach(function(att) {
+			if (att.type === 'text') {
 				var row = document.createElement('div');
 				row.className = 'upload-file-row existing-attachment-row';
 				var badge = document.createElement('span');
@@ -80,14 +43,11 @@
 				link.rel = 'noopener noreferrer';
 				link.textContent = 'View';
 				link.className = 'upload-file-view-link';
-				link.addEventListener('click', function (e) {
+				link.addEventListener('click', function(e) {
 					e.preventDefault();
-					e.stopPropagation();
 					fetch(att.url)
-						.then(function (resp) {
-							return resp.json();
-						})
-						.then(function (data) {
+						.then(resp => resp.json())
+						.then(data => {
 							if (data.url) {
 								window.open(data.url, '_blank');
 							}
@@ -97,56 +57,36 @@
 				removeBtn.type = 'button';
 				removeBtn.className = 'upload-item-remove';
 				removeBtn.textContent = 'Delete';
-				removeBtn.addEventListener('click', function (e) {
-					e.stopPropagation();
+				removeBtn.addEventListener('click', function() {
 					var input = document.createElement('input');
 					input.type = 'hidden';
 					input.name = 'delete_attachment_ids';
-					input.value = String(att.id);
+					input.value = att.id;
 					form.appendChild(input);
-					existingAttachments = existingAttachments.filter(function (a) {
-						return !sameAttachmentId(a.id, att.id);
-					});
-					delete photoAccessUrlCache[String(att.id)];
+					row.remove();
+					existingAttachments = existingAttachments.filter(function(a) { return a.id !== att.id; });
 					onInputsChanged();
-					renderTextPreview();
-					renderPhotoPreview();
 				});
 				row.appendChild(badge);
 				row.appendChild(name);
 				row.appendChild(link);
 				row.appendChild(removeBtn);
 				textPreview.appendChild(row);
-			});
-	}
-
-	function renderExistingPhotoAttachments() {
-		var photoPreview = document.getElementById('photo-preview');
-		if (!photoPreview) {
-			return;
-		}
-
-		var oldExisting = photoPreview.querySelectorAll('.existing-attachment-row');
-		oldExisting.forEach(function (el) {
-			el.remove();
-		});
-
-		existingAttachments
-			.filter(function (att) {
-				return att.type === 'photo';
-			})
-			.forEach(function (att) {
+			} else if (att.type === 'photo') {
 				var wrapper = document.createElement('div');
 				wrapper.className = 'upload-photo-card existing-attachment-row';
 				var image = document.createElement('img');
 				image.className = 'upload-photo-thumb';
 				image.alt = att.name;
 				image.src = '';
-				getCachedPhotoAccessUrl(att).then(function (url) {
-					if (url) {
-						image.src = url;
-					}
-				});
+				// Fetch presigned URL and set as src
+				fetch(att.url)
+					.then(resp => resp.json())
+					.then(data => {
+						if (data.url) {
+							image.src = data.url;
+						}
+					});
 				var meta = document.createElement('p');
 				meta.className = 'upload-photo-meta';
 				meta.textContent = att.name;
@@ -155,26 +95,22 @@
 				removeBtn.className = 'upload-photo-remove';
 				removeBtn.textContent = 'x';
 				removeBtn.setAttribute('aria-label', 'Delete image ' + att.name);
-				removeBtn.addEventListener('click', function (e) {
-					e.stopPropagation();
+				removeBtn.addEventListener('click', function() {
 					var input = document.createElement('input');
 					input.type = 'hidden';
 					input.name = 'delete_attachment_ids';
-					input.value = String(att.id);
+					input.value = att.id;
 					form.appendChild(input);
-					existingAttachments = existingAttachments.filter(function (a) {
-						return !sameAttachmentId(a.id, att.id);
-					});
-					delete photoAccessUrlCache[String(att.id)];
+					wrapper.remove();
+					existingAttachments = existingAttachments.filter(function(a) { return a.id !== att.id; });
 					onInputsChanged();
-					renderTextPreview();
-					renderPhotoPreview();
 				});
 				wrapper.appendChild(image);
 				wrapper.appendChild(removeBtn);
 				wrapper.appendChild(meta);
 				photoPreview.appendChild(wrapper);
-			});
+			}
+		});
 	}
 
 
@@ -376,14 +312,9 @@
 
 	function renderTextPreview() {
 		textPreview.innerHTML = '';
-		renderExistingTextAttachments();
+		renderExistingAttachments();
 		var files = selectedTextFiles;
-		setDropzoneState(textDropzone, files.length || existingAttachments.filter(function (a) {
-			return a.type === 'text';
-		}).length > 0);
-		if (!files.length && existingAttachments.filter(function (a) {
-			return a.type === 'text';
-		}).length === 0) {
+		if (!files.length && existingAttachments.filter(function(a){return a.type==='text';}).length === 0) {
 			textPreview.innerHTML = '<p class="text-xs text-gray-500">No text files selected.</p>';
 			return;
 		}
@@ -416,14 +347,9 @@
 
 	function renderPhotoPreview() {
 		photoPreview.innerHTML = '';
-		renderExistingPhotoAttachments();
+		renderExistingAttachments();
 		var files = selectedPhotoFiles;
-		setDropzoneState(photoDropzone, files.length || existingAttachments.filter(function (a) {
-			return a.type === 'photo';
-		}).length > 0);
-		if (!files.length && existingAttachments.filter(function (a) {
-			return a.type === 'photo';
-		}).length === 0) {
+		if (!files.length && existingAttachments.filter(function(a){return a.type==='photo';}).length === 0) {
 			photoPreview.innerHTML = '<p class="text-xs text-gray-500 col-span-3">No photos selected.</p>';
 			return;
 		}
@@ -517,12 +443,7 @@
 			appendFiles(input, Array.from(dropped));
 		}
 
-		zone.addEventListener('click', function (event) {
-			if (event.target && event.target.closest('button, a, .upload-dropzone-files')) {
-				return;
-			}
-			openPicker();
-		});
+		zone.addEventListener('click', openPicker);
 		zone.addEventListener('keydown', function (event) {
 			if (event.key === 'Enter' || event.key === ' ') {
 				event.preventDefault();

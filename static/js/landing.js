@@ -298,11 +298,12 @@
 
     function initScheduleCostDisplay() {
       const sealBtn = document.getElementById("seal-btn");
-      const costPanel = document.getElementById("schedule-cost-panel");
-      const costValue = document.getElementById("schedule-cost-value");
+      const costCard = document.getElementById("pricing-summary-card");
+      const costValue = document.getElementById("total-price");
+      const breakdownNode = document.getElementById("pricing-breakdown");
       const balanceWarning = document.getElementById("balance-warning");
 
-      if (!sealBtn || !costPanel || !costValue || !balanceWarning) {
+      if (!sealBtn || !costCard || !costValue || !breakdownNode || !balanceWarning) {
         return;
       }
 
@@ -324,9 +325,9 @@
         return result;
       }
 
-      function computeCost() {
+      function computeCostDetails() {
         if (!deliveryAt || !deliveryAt.value) {
-          return 0;
+          return { cost: 0, years: 0 };
         }
         const now = new Date();
         now.setHours(0, 0, 0, 0);
@@ -334,7 +335,7 @@
         deliveryDate.setHours(0, 0, 0, 0);
         const diffMs = deliveryDate.getTime() - now.getTime();
         if (diffMs < ONE_YEAR_MS) {
-          return 0;
+          return { cost: 0, years: 0 };
         }
 
         let years = deliveryDate.getFullYear() - now.getFullYear();
@@ -342,20 +343,27 @@
           years += 1;
         }
 
-        return years * ratePerYear;
+        return {
+          years,
+          cost: years * ratePerYear,
+        };
       }
 
       function updateCostDisplay() {
-        const cost = computeCost();
+        const details = computeCostDetails();
+        const cost = details.cost;
         const requiredAmount = isEditMode
           ? Math.max(cost - originalTotalPrice, 0)
           : cost;
-        if (cost > 0) {
-          costPanel.classList.remove("hidden");
-          costValue.textContent = "$" + cost.toFixed(2);
-        } else {
-          costPanel.classList.add("hidden");
-        }
+        costValue.textContent = "$" + cost.toFixed(2);
+        breakdownNode.textContent = cost > 0
+          ? "Long-term delivery cost: "
+            + details.years
+            + " year(s) x $"
+            + ratePerYear.toFixed(2)
+            + " = $"
+            + cost.toFixed(2)
+          : "No extra charge for this delivery date.";
         if (requiredAmount > userBalance) {
           balanceWarning.classList.remove("hidden");
           sealBtn.disabled = true;

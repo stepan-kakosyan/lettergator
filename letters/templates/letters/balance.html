@@ -41,13 +41,19 @@
                     <p class="text-gray-500 text-sm mt-1">{% trans "Top up your balance to schedule letters beyond one year." %}</p>
                 </div>
 
-                <!-- How pricing works -->
-                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 space-y-2">
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-bold">{% trans "How pricing works" %}</p>
-                    <ul class="text-sm text-gray-700 space-y-1">
-                        <li>{% blocktrans %}Letters delivered <strong>under 1 year</strong> from today are <strong>free</strong>.{% endblocktrans %}</li>
-                        <li>{% blocktrans %}Letters delivered <strong>1 year or more</strong> from today cost <strong>$0.50 per year</strong>.{% endblocktrans %}</li>
-                    </ul>
+
+                <!-- Price Calculator Button -->
+                <div class="flex justify-start mb-2">
+                    <button
+                        id="open-calculator-btn"
+                        type="button"
+                        class="inline-flex items-center gap-2 border border-slate-300 text-slate-700 font-semibold px-5 py-3 rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-colors"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3v3m-6-10h.01M9 17h.01M15 15h.01m6-6h.01M15 7h.01M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-4"></path>
+                        </svg>
+                        {% trans "Price Calculator" %}
+                    </button>
                 </div>
 
                 <!-- Form -->
@@ -64,10 +70,11 @@
                     </div>
                     <!-- Quick-fill buttons -->
                     <div class="flex flex-wrap gap-2">
-                        <button type="button" data-fill="1.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$1</button>
-                        <button type="button" data-fill="2.50" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$2.50</button>
                         <button type="button" data-fill="5.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$5</button>
                         <button type="button" data-fill="10.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$10</button>
+                        <button type="button" data-fill="15.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$15</button>
+                        <button type="button" data-fill="20.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$20</button>
+                        <button type="button" data-fill="25.00" class="quick-fill px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium hover:border-[#014421] hover:text-[#014421] transition-colors">$25</button>
                     </div>
                     <button
                         type="submit"
@@ -121,6 +128,8 @@
         </div><!-- end grid -->
     </div>
 </section>
+{% include "partials/calculator_modal.html" %}
+
 {% endblock %}
 
 {% block extra_js %}
@@ -146,4 +155,8 @@
 
 }());
 </script>
+    {{ countries_pricing_json|json_script:"countries-pricing-data" }}
+    <script src="{% static 'js/calculator.js' %}"></script>
+
 {% endblock %}
+

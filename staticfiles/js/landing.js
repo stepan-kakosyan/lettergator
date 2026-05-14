@@ -237,6 +237,24 @@
       }
     }
 
+    function initRecipientInputsFromHidden() {
+      if (!recipientList.value) {
+        return;
+      }
+      const existing = recipientList.value
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+      if (!existing.length) {
+        return;
+      }
+      recipientInputs.innerHTML = "";
+      existing.slice(0, MAX_RECIPIENTS).forEach((email) => {
+        createRecipientInput(email);
+      });
+      syncRecipientList();
+    }
+
     function toggleRecipientPanel() {
       const isSendToMe = sendToMe.checked;
       recipientPanel.classList.toggle("hidden", isSendToMe);
@@ -278,10 +296,89 @@
       }
     });
 
+    function initScheduleCostDisplay() {
+      const sealBtn = document.getElementById("seal-btn");
+      const costPanel = document.getElementById("schedule-cost-panel");
+      const costValue = document.getElementById("schedule-cost-value");
+      const balanceWarning = document.getElementById("balance-warning");
+
+      if (!sealBtn || !costPanel || !costValue || !balanceWarning) {
+        return;
+      }
+
+      const userBalance = parseFloat(form.dataset.userBalance || "0");
+      const ratePerYear = parseFloat(form.dataset.ratePerYear || "0.50");
+      const isEditMode = form.dataset.isEditMode === "1";
+      const originalTotalPrice = parseFloat(
+        form.dataset.originalTotalPrice || "0",
+      );
+      const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+
+      function addYears(date, yearsToAdd) {
+        const result = new Date(date.getTime());
+        const originalMonth = result.getMonth();
+        result.setFullYear(result.getFullYear() + yearsToAdd);
+        if (result.getMonth() !== originalMonth) {
+          result.setDate(0);
+        }
+        return result;
+      }
+
+      function computeCost() {
+        if (!deliveryAt || !deliveryAt.value) {
+          return 0;
+        }
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        const deliveryDate = new Date(deliveryAt.value);
+        deliveryDate.setHours(0, 0, 0, 0);
+        const diffMs = deliveryDate.getTime() - now.getTime();
+        if (diffMs < ONE_YEAR_MS) {
+          return 0;
+        }
+
+        let years = deliveryDate.getFullYear() - now.getFullYear();
+        if (addYears(now, years) < deliveryDate) {
+          years += 1;
+        }
+
+        return years * ratePerYear;
+      }
+
+      function updateCostDisplay() {
+        const cost = computeCost();
+        const requiredAmount = isEditMode
+          ? Math.max(cost - originalTotalPrice, 0)
+          : cost;
+        if (cost > 0) {
+          costPanel.classList.remove("hidden");
+          costValue.textContent = "$" + cost.toFixed(2);
+        } else {
+          costPanel.classList.add("hidden");
+        }
+        if (requiredAmount > userBalance) {
+          balanceWarning.classList.remove("hidden");
+          sealBtn.disabled = true;
+          sealBtn.classList.add("opacity-50", "cursor-not-allowed");
+        } else {
+          balanceWarning.classList.add("hidden");
+          sealBtn.disabled = false;
+          sealBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        }
+      }
+
+      if (deliveryAt) {
+        deliveryAt.addEventListener("change", updateCostDisplay);
+        updateCostDisplay();
+      }
+    }
+
     initBinaryToggles();
     setBrowserTimezone();
     initDatePresets();
+    initRecipientInputsFromHidden();
     toggleRecipientPanel();
+    initScheduleCostDisplay();
   }
 
   function initLettersPageInteractions() {

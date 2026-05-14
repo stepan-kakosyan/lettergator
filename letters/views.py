@@ -58,11 +58,72 @@ logger = logging.getLogger(__name__)
 
 
 def landing_page(request):
-    return render(request, "letters/landing.html")
+    context = {}
+    if request.user.is_authenticated:
+        email_letters_count = Letter.objects.filter(
+            user=request.user,
+            is_deleted=False,
+        ).count()
+        physical_letters_count = PhysicalLetter.objects.filter(
+            user=request.user,
+        ).count()
+        email_completed_count = Letter.objects.filter(
+            user=request.user,
+            is_delivered=True,
+            is_deleted=False,
+        ).count()
+        physical_completed_count = PhysicalLetter.objects.filter(
+            user=request.user,
+            status=PhysicalLetter.STATUS_DELIVERED,
+        ).count()
+        context.update({
+            "total_letters_count": (
+                email_letters_count + physical_letters_count
+            ),
+            "email_letters_count": email_letters_count,
+            "physical_letters_count": physical_letters_count,
+            "completed_letters_count": (
+                email_completed_count + physical_completed_count
+            ),
+        })
+    # Add countries pricing for calculator
+    countries_data = {}
+    for item in CountryPricing.objects.all():
+        countries_data[str(item.id)] = {
+            "code": item.country_code,
+            "name": item.country_name,
+            "price": str(item.price),
+        }
+    context["countries_pricing_json"] = countries_data
+    return render(request, "letters/landing.html", context)
+
+
+def calculator_countries_fragment(request):
+    """Returns <option> tags for calculator country select (HTMX target)."""
+    items = CountryPricing.objects.all().order_by('country_name')
+    options_html = ''.join(
+        '<option value="{id}">{name} (${price})</option>'.format(
+            id=item.id,
+            name=item.country_name,
+            price='{:.2f}'.format(float(item.price)),
+        )
+        for item in items
+    )
+    from django.http import HttpResponse
+    return HttpResponse(options_html, content_type='text/html')
 
 
 def how_page(request):
-    return render(request, "letters/how.html")
+    # Add countries pricing for calculator
+    countries_data = {}
+    for item in CountryPricing.objects.all():
+        countries_data[str(item.id)] = {
+            "code": item.country_code,
+            "name": item.country_name,
+            "price": str(item.price),
+        }
+    context = {"countries_pricing_json": countries_data}
+    return render(request, "letters/how.html", context)
 
 
 def faq_page(request):
@@ -236,6 +297,15 @@ def letters_page(request):
         "email_verification_required": email_verification_required,
         "min_long_schedule_balance": MIN_LONG_SCHEDULE_BALANCE_USD,
     }
+    # Add countries pricing for calculator
+    countries_data = {}
+    for item in CountryPricing.objects.all():
+        countries_data[str(item.id)] = {
+            "code": item.country_code,
+            "name": item.country_name,
+            "price": str(item.price),
+        }
+    context["countries_pricing_json"] = countries_data
     return render(request, "letters/vault.html", context)
 
 
