@@ -3,10 +3,12 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.db import models, transaction
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 from django.utils import timezone
 
 from .crypto import decrypt_message, is_encrypted_message
-from .dynamodb_sync import upsert_letter_schedule
+from .dynamodb_sync import delete_letter_schedule, upsert_letter_schedule
 
 
 logger = logging.getLogger(__name__)
@@ -101,6 +103,16 @@ class Letter(models.Model):
                 self.id,
             )
 
+    @staticmethod
+    def _safe_sync_schedule_delete(letter_id):
+        try:
+            delete_letter_schedule(letter_id)
+        except Exception:
+            logger.exception(
+                "Failed to delete letter %s from DynamoDB schedules.",
+                letter_id,
+            )
+
     def _queue_schedule_upsert(self, using):
         transaction.on_commit(
             lambda: self._safe_sync_schedule_upsert(),
@@ -114,6 +126,13 @@ class Letter(models.Model):
         using = kwargs.get("using") or self._state.db
         super().save(*args, **kwargs)
         self._queue_schedule_upsert(using)
+
+
+@receiver(pre_delete, sender=Letter)
+def remove_letter_schedule_on_delete(sender, instance, using, **kwargs):
+    if not instance.id:
+        return
+    Letter._safe_sync_schedule_delete(instance.id)
 
 
 class ContactTicket(models.Model):
