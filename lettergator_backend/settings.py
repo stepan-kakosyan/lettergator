@@ -218,7 +218,6 @@ EMAIL_BACKEND = os.getenv(
     "EMAIL_BACKEND",
     "lettergator_backend.email_backend.EmailBackend",
 )
-EMAIL_BACKEND = 'django_ses.SESBackend'
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "1") == "1"
