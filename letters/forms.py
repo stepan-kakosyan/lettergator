@@ -340,7 +340,6 @@ class LetterForm(forms.ModelForm):
                     user=self.user,
                     idempotency_key=ikey,
                     is_delivered=False,
-                    is_deleted=False,
                 ).first()
             )
 

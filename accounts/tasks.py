@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-from celery import shared_task
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.utils import timezone
@@ -9,8 +8,7 @@ from .services import send_email_reactivation_email
 from .services import send_pending_email_confirmation_email
 
 
-@shared_task(bind=True, max_retries=5)
-def send_pending_email_confirmation_task(self, user_id, base_url=None):
+def send_pending_email_confirmation_task(user_id, base_url=None):
     user_model = get_user_model()
     try:
         user = user_model.objects.get(id=user_id)
@@ -20,15 +18,9 @@ def send_pending_email_confirmation_task(self, user_id, base_url=None):
     if not user.pending_email:
         return
 
-    try:
-        send_pending_email_confirmation_email(None, user, base_url=base_url)
-    except Exception as exc:
-        if self.request.retries >= self.max_retries:
-            raise
-        raise self.retry(exc=exc, countdown=120)
+    send_pending_email_confirmation_email(None, user, base_url=base_url)
 
 
-@shared_task
 def send_email_reactivation_reminders_task():
     user_model = get_user_model()
     now = timezone.now()

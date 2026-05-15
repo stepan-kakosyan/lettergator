@@ -53,6 +53,8 @@ from .models import (
     LetterAttachment,
     PhysicalLetter,
 )
+from .dynamodb_sync import delete_letter_schedule
+
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +64,6 @@ def landing_page(request):
     if request.user.is_authenticated:
         email_letters_count = Letter.objects.filter(
             user=request.user,
-            is_deleted=False,
         ).count()
         physical_letters_count = PhysicalLetter.objects.filter(
             user=request.user,
@@ -70,7 +71,6 @@ def landing_page(request):
         email_completed_count = Letter.objects.filter(
             user=request.user,
             is_delivered=True,
-            is_deleted=False,
         ).count()
         physical_completed_count = PhysicalLetter.objects.filter(
             user=request.user,
@@ -348,7 +348,7 @@ def create_letter_page(request):
         try:
             letter = form.save()
         except ValidationError as exc:
-            form.add_error(None, " ".join(exc.messages))
+            form.add_error(None, str(exc))
         else:
             schedule_cost = form.cleaned_data.get("_schedule_cost", Decimal("0.00"))
             adjustment_amount = form.cleaned_data.get(
@@ -946,6 +946,14 @@ def delete_letter_view(request, letter_id):
             request.user.balance = locked_user.balance
 
         letter.delete()
+        print("Letter deleted, now syncing schedule delete...")
+        try:
+            delete_letter_schedule(letter_id)
+        except Exception as exc:
+            logger.exception(
+                "Error deleting schedule for letter %s: %s",
+                letter_id,
+                str(exc))
 
     if request.headers.get("HX-Request") == "true":
         if refund_amount > 0:
@@ -1437,15 +1445,21 @@ def dashboard_view(request):
                             "pending_email_requested_at",
                         ]
                     )
-                    send_pending_email_confirmation_task.delay(
-                        user.id,
-                        request.build_absolute_uri("/"),
-                    )
-                    messages.success(
-                        request,
-                        "Confirmation link queued for your new email. "
-                        "Primary email will be updated after confirmation.",
-                    )
+                    try:
+                        send_pending_email_confirmation_task(
+                            user.id,
+                            request.build_absolute_uri("/"),
+                        )
+                        messages.success(
+                            request,
+                            "Confirmation email sent to your new address. "
+                            "Primary email will update after confirmation.",
+                        )
+                    except Exception:
+                        messages.error(
+                            request,
+                            "Unable to send confirmation email right now.",
+                        )
                 else:
                     user.save(update_fields=["full_name", "phone_number", "address"])
                     messages.success(request, "Profile updated successfully.")

@@ -82,8 +82,7 @@ class LetterDetailApiView(APIView):
     def delete(self, request, letter_id):
         letter = self._get_letter(request, letter_id)
         if letter.can_be_deleted_now():
-            letter.is_deleted = True
-            letter.save(update_fields=["is_deleted"])
+            letter.soft_delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         if letter.can_delete_early:

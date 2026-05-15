@@ -4,7 +4,6 @@ from datetime import timedelta
 from decimal import Decimal, InvalidOperation
 
 import pymysql
-from celery.schedules import crontab
 from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
 
@@ -158,6 +157,10 @@ AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
 AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "")
+DYNAMODB_SCHEDULES_TABLE_NAME = os.getenv(
+    "DYNAMODB_SCHEDULES_TABLE_NAME",
+    "LetterGator-Schedules",
+)
 AWS_S3_SIGNATURE_VERSION = "s3v4"
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = "private"
@@ -310,28 +313,3 @@ if _cors_allowed_origins:
     ]
 else:
     CORS_ALLOW_ALL_ORIGINS = DEBUG
-
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
-CELERY_RESULT_BACKEND = os.getenv(
-    "CELERY_RESULT_BACKEND",
-    CELERY_BROKER_URL,
-)
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TIMEZONE = TIME_ZONE
-CELERY_BEAT_SCHEDULE = {
-    "queue-due-letters-every-10-minutes": {
-        "task": "letters.tasks.queue_due_letters_task",
-        "schedule": crontab(minute="*/10"),
-    },
-    # TEMPORARY SAFETY STOP: Arweave backups are paused until manually re-enabled.
-    # "queue-arweave-backups-every-10-minutes": {
-    #     "task": "letters.tasks.queue_arweave_backup_task",
-    #     "schedule": crontab(minute="*/10"),
-    # },
-    "send-email-reactivation-reminders-every-morning": {
-        "task": "accounts.tasks.send_email_reactivation_reminders_task",
-        "schedule": crontab(hour=8, minute=0),
-    },
-}
