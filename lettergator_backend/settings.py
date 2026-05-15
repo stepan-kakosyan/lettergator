@@ -233,6 +233,22 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv(
     "DEFAULT_FROM_EMAIL", EMAIL_HOST_USER or "no-reply@lettergator.local"
 )
+
+# SES backend settings (used when EMAIL_BACKEND=django_ses.SESBackend)
+AWS_SES_REGION_NAME = os.getenv(
+    "AWS_SES_REGION_NAME",
+    os.getenv("AWS_S3_REGION_NAME", ""),
+)
+AWS_SES_REGION_ENDPOINT = os.getenv("AWS_SES_REGION_ENDPOINT", "")
+_aws_ses_auto_throttle_raw = os.getenv("AWS_SES_AUTO_THROTTLE", "").strip()
+if _aws_ses_auto_throttle_raw:
+    try:
+        AWS_SES_AUTO_THROTTLE = float(_aws_ses_auto_throttle_raw)
+    except ValueError:
+        AWS_SES_AUTO_THROTTLE = None
+else:
+    # Avoid ses:GetSendQuota unless explicitly enabled via env.
+    AWS_SES_AUTO_THROTTLE = None
 SITE_URL = os.getenv("SITE_URL", "http://localhost:8040")
 
 LEMONSQUEEZY_API_KEY = os.getenv("LEMONSQUEEZY_API_KEY", "")
