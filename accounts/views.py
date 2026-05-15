@@ -236,14 +236,20 @@ def resend_pending_email_confirmation_view(request):
     if not user.pending_email:
         messages.info(request, "No pending email change found.")
     else:
-        send_pending_email_confirmation_task.delay(
-            user.id,
-            request.build_absolute_uri("/"),
-        )
-        messages.success(
-            request,
-            "Confirmation email has been queued for your pending address.",
-        )
+        try:
+            send_pending_email_confirmation_task(
+                user.id,
+                request.build_absolute_uri("/"),
+            )
+            messages.success(
+                request,
+                "Confirmation email has been sent to your pending address.",
+            )
+        except Exception:
+            messages.error(
+                request,
+                "Unable to send confirmation email right now.",
+            )
 
     next_url = request.POST.get("next", "")
     if next_url and url_has_allowed_host_and_scheme(

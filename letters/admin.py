@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from .models import (
-    CeleryTaskLog,
     ContactTicket,
     ContactTicketComment,
     CountryPricing,
@@ -9,40 +8,6 @@ from .models import (
     Letter,
     PhysicalLetter,
 )
-
-
-@admin.register(CeleryTaskLog)
-class CeleryTaskLogAdmin(admin.ModelAdmin):
-    list_display = (
-        "task_name",
-        "status",
-        "task_id",
-        "started_at",
-        "finished_at",
-        "short_detail",
-    )
-    list_filter = ("task_name", "status", "started_at")
-    search_fields = ("task_name", "task_id", "detail")
-    readonly_fields = (
-        "task_name",
-        "task_id",
-        "status",
-        "detail",
-        "started_at",
-        "finished_at",
-    )
-    ordering = ("-started_at",)
-
-    def short_detail(self, obj):
-        return obj.detail[:120] if obj.detail else ""
-
-    short_detail.short_description = "Detail"
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return False
 
 
 @admin.register(Letter)

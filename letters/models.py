@@ -1,10 +1,15 @@
+import logging
 from datetime import timedelta
 
 from django.conf import settings
-from django.db import models
+from django.db import models, transaction
 from django.utils import timezone
 
-from .crypto import decrypt_message, encrypt_message, is_encrypted_message
+from .crypto import decrypt_message, is_encrypted_message
+from .dynamodb_sync import upsert_letter_schedule
+
+
+logger = logging.getLogger(__name__)
 
 
 class Letter(models.Model):
@@ -26,7 +31,6 @@ class Letter(models.Model):
     allow_sender_preview = models.BooleanField(default=False)
     message = models.TextField()
     is_delivered = models.BooleanField(default=False)
-    is_deleted = models.BooleanField(default=False)
     has_delivery_issue = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     arweave_tx_id = models.CharField(
@@ -48,7 +52,7 @@ class Letter(models.Model):
         return f"Letter to {self.recipient_email} on {self.delivery_at}"
 
     def set_message(self, plain_text):
-        self.message = encrypt_message(plain_text or "")
+        self.message = plain_text or ""
 
     def get_message(self):
         return decrypt_message(self.message or "", letter_id=self.id)
@@ -67,12 +71,12 @@ class Letter(models.Model):
         return self._window_deadline()
 
     def can_be_deleted_now(self):
-        if not self.can_delete_early or self.is_delivered or self.is_deleted:
+        if not self.can_delete_early or self.is_delivered:
             return False
         return timezone.now() <= self._window_deadline()
 
     def can_be_edited_now(self):
-        if not self.can_edit_early or self.is_delivered or self.is_deleted:
+        if not self.can_edit_early or self.is_delivered:
             return False
         return timezone.now() <= self._window_deadline()
 
@@ -82,39 +86,34 @@ class Letter(models.Model):
 
     @property
     def status_label(self):
-        if self.is_deleted:
-            return "Deleted"
         if self.has_delivery_issue:
             return "Issued"
         if self.is_delivered:
             return "Delivered"
         return "Scheduled"
 
+    def _safe_sync_schedule_upsert(self):
+        try:
+            upsert_letter_schedule(self)
+        except Exception:
+            logger.exception(
+                "Failed to upsert letter %s into DynamoDB schedules.",
+                self.id,
+            )
 
-class CeleryTaskLog(models.Model):
-    STATUS_STARTED = "started"
-    STATUS_SUCCESS = "success"
-    STATUS_FAILURE = "failure"
-    STATUS_CHOICES = [
-        (STATUS_STARTED, "Started"),
-        (STATUS_SUCCESS, "Success"),
-        (STATUS_FAILURE, "Failure"),
-    ]
+    def _queue_schedule_upsert(self, using):
+        transaction.on_commit(
+            lambda: self._safe_sync_schedule_upsert(),
+            using=using,
+        )
 
-    task_name = models.CharField(max_length=200)
-    task_id = models.CharField(max_length=200, blank=True, default="")
-    status = models.CharField(
-        max_length=20, choices=STATUS_CHOICES, default=STATUS_STARTED
-    )
-    detail = models.TextField(blank=True, default="")
-    started_at = models.DateTimeField(auto_now_add=True)
-    finished_at = models.DateTimeField(null=True, blank=True)
+    def soft_delete(self, using=None):
+        self.delete()
 
-    class Meta:
-        ordering = ["-started_at"]
-
-    def __str__(self):
-        return f"{self.task_name} [{self.status}] @ {self.started_at:%Y-%m-%d %H:%M:%S}"
+    def save(self, *args, **kwargs):
+        using = kwargs.get("using") or self._state.db
+        super().save(*args, **kwargs)
+        self._queue_schedule_upsert(using)
 
 
 class ContactTicket(models.Model):

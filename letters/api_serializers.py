@@ -29,7 +29,6 @@ class LetterListSerializer(serializers.ModelSerializer):
             "allow_sender_preview",
             "message",
             "is_delivered",
-            "is_deleted",
             "has_delivery_issue",
             "status_label",
             "can_be_deleted_now",
@@ -122,9 +121,9 @@ class LetterMessageUpdateSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         letter = self.context["letter"]
-        if letter.is_delivered or letter.is_deleted:
+        if letter.is_delivered:
             raise serializers.ValidationError(
-                "Delivered or deleted letters cannot be edited."
+                "Delivered letters cannot be edited."
             )
         if not letter.can_edit_early:
             raise serializers.ValidationError("Edit is disabled for this letter.")

@@ -46,7 +46,7 @@ This command sends emails for all letters where:
 
 Then it marks each sent letter as delivered.
 
-You can later trigger this command with Celery Beat, cron, or a scheduled container job.
+You can later trigger this command with cron or a scheduled container job.
 
 ## Notes
 

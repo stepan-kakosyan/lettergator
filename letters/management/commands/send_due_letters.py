@@ -15,7 +15,6 @@ class Command(BaseCommand):
         due_letters = Letter.objects.filter(
             delivery_at__lte=now,
             is_delivered=False,
-            is_deleted=False,
         )
 
         sent_count = 0
