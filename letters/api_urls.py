@@ -10,7 +10,7 @@ urlpatterns = [
     path("", LetterListCreateApiView.as_view(), name="api-letters-list-create"),
     path("<int:letter_id>/", LetterDetailApiView.as_view(), name="api-letters-detail"),
     path(
-        "<int:letter_id>/delivery-status/",
+        "<uuid:letter_id>/delivery-status/",
         LetterDeliveryStatusApiView.as_view(),
         name="api-letters-delivery-status",
     ),
