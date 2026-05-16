@@ -68,6 +68,17 @@ class LetterDynamoSyncTests(TestCase):
         self.assertEqual(item["cc_email"], "sender@example.com")
         self.assertEqual(item["message"], "hello")
 
+    def test_delivery_worker_id_persisted_in_canonical_uuid_format(self):
+        letter = Letter.objects.create(**self._letter_kwargs())
+        letter.refresh_from_db()
+
+        self.assertEqual(len(letter.delivery_worker_id), 36)
+        self.assertEqual(letter.delivery_worker_id.count("-"), 4)
+        self.assertEqual(
+            letter.delivery_worker_id,
+            str(uuid.UUID(letter.delivery_worker_id)),
+        )
+
 
 class LetterDeliveryStatusApiTests(TestCase):
     def setUp(self):
