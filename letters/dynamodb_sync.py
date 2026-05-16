@@ -97,8 +97,13 @@ def _cc_email(letter):
 
 
 def build_schedule_item(letter):
+    # Always use canonical UUID string (with hyphens) for delivery_worker_id
+    import uuid
+    worker_id = letter.delivery_worker_id
+    if worker_id and not isinstance(worker_id, uuid.UUID):
+        worker_id = uuid.UUID(str(worker_id))
     return {
-        "letter_id": str(letter.delivery_worker_id),
+        "letter_id": str(worker_id),
         "subject": letter.subject,
         "recipient": _all_recipients(letter),
         "cc_email": _cc_email(letter),

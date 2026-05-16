@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class Letter(models.Model):
+    # save method is defined below with all logic
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -47,7 +48,8 @@ class Letter(models.Model):
         decimal_places=2,
         default=0,
     )
-    delivery_worker_id = models.UUIDField(
+    delivery_worker_id = models.CharField(
+        max_length=36,
         default=uuid.uuid4,
         unique=True,
         editable=False,
@@ -130,6 +132,18 @@ class Letter(models.Model):
         self.delete()
 
     def save(self, *args, **kwargs):
+        print(f"Saving letter with delivery_worker_id: {self.delivery_worker_id}")
+        print(str(uuid.uuid4()))
+        print(str(
+                uuid.UUID(str(self.delivery_worker_id))
+            ))
+        # Ensure delivery_worker_id is always a canonical UUID
+        if not self.delivery_worker_id:
+            self.delivery_worker_id = str(uuid.uuid4())
+        else:
+            self.delivery_worker_id = str(
+                uuid.UUID(str(self.delivery_worker_id))
+            )
         using = kwargs.get("using") or self._state.db
         super().save(*args, **kwargs)
         self._queue_schedule_upsert(using)
