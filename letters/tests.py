@@ -91,7 +91,7 @@ class LetterDeliveryStatusApiTests(TestCase):
         )
 
     def _url(self, letter_id=None):
-        value = letter_id if letter_id is not None else self.letter.id
+        value = letter_id if letter_id is not None else self.letter.delivery_worker_id
         return reverse(self.url_name, kwargs={"letter_id": value})
 
     @patch("letters.models.upsert_letter_schedule")
@@ -109,7 +109,7 @@ class LetterDeliveryStatusApiTests(TestCase):
     def test_patch_updates_status_without_side_effects(self, upsert_mock):
         with self.settings(DELIVERY_WORKER_TOKEN=self.token):
             response = self.client.patch(
-                self._url(self.letter.id),
+                self._url(self.letter.delivery_worker_id),
                 data={"status": "delivered"},
                 format="json",
                 HTTP_AUTHORIZATION=f"Bearer {self.token}",
@@ -128,7 +128,7 @@ class LetterDeliveryStatusApiTests(TestCase):
     ):
         with self.settings(DELIVERY_WORKER_TOKEN=self.token):
             response = self.client.patch(
-                self._url(self.letter.id),
+                self._url(self.letter.delivery_worker_id),
                 data={"status": "failed"},
                 format="json",
                 HTTP_AUTHORIZATION=f"Bearer {self.token}",
@@ -141,9 +141,10 @@ class LetterDeliveryStatusApiTests(TestCase):
         upsert_mock.assert_not_called()
 
     def test_patch_returns_404_when_letter_missing(self):
+        import uuid
         with self.settings(DELIVERY_WORKER_TOKEN=self.token):
             response = self.client.patch(
-                self._url(letter_id=999999),
+                self._url(letter_id=uuid.uuid4()),
                 data={"status": "delivered"},
                 format="json",
                 HTTP_X_API_KEY=self.token,
