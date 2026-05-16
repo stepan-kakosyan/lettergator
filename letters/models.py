@@ -1,4 +1,5 @@
 import logging
+import uuid
 from datetime import timedelta
 
 from django.conf import settings
@@ -45,6 +46,12 @@ class Letter(models.Model):
         max_digits=10,
         decimal_places=2,
         default=0,
+    )
+    delivery_worker_id = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+        db_index=True,
     )
 
     class Meta:
@@ -132,7 +139,7 @@ class Letter(models.Model):
 def remove_letter_schedule_on_delete(sender, instance, using, **kwargs):
     if not instance.id:
         return
-    Letter._safe_sync_schedule_delete(instance.id)
+    Letter._safe_sync_schedule_delete(instance.delivery_worker_id)
 
 
 class ContactTicket(models.Model):

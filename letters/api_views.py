@@ -1,15 +1,22 @@
+from django.db import transaction
 from rest_framework import permissions, status
-from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.exceptions import (
+    NotFound,
+    PermissionDenied,
+    ValidationError,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.services import send_letter_created_email
 
 from .api_serializers import (
+    DeliveryStatusUpdateSerializer,
     LetterCreateSerializer,
     LetterListSerializer,
     LetterMessageUpdateSerializer,
 )
+from .authentication import DeliveryWorkerTokenAuthentication
 from .models import Letter
 
 
@@ -88,3 +95,25 @@ class LetterDetailApiView(APIView):
         if letter.can_delete_early:
             raise ValidationError("Delete window has expired for this letter.")
         raise ValidationError("Delete is disabled for this letter.")
+
+
+class LetterDeliveryStatusApiView(APIView):
+    authentication_classes = [DeliveryWorkerTokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def patch(self, request, letter_id):
+        serializer = DeliveryStatusUpdateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        with transaction.atomic():
+            updated = Letter.objects.filter(
+                delivery_worker_id=letter_id,
+            ).update(
+                is_delivered=True,
+                has_delivery_issue=False,
+            )
+
+        if not updated:
+            raise NotFound("Letter not found.")
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
