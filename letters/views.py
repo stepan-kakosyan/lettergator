@@ -948,11 +948,11 @@ def delete_letter_view(request, letter_id):
         letter.delete()
         print("Letter deleted, now syncing schedule delete...")
         try:
-            delete_letter_schedule(letter_id)
+            delete_letter_schedule(letter.delivery_worker_id)
         except Exception as exc:
             logger.exception(
                 "Error deleting schedule for letter %s: %s",
-                letter_id,
+                letter.delivery_worker_id,
                 str(exc))
 
     if request.headers.get("HX-Request") == "true":

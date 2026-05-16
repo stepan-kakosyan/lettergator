@@ -130,3 +130,7 @@ class LetterMessageUpdateSerializer(serializers.Serializer):
         if timezone.now() > letter.edit_until():
             raise serializers.ValidationError("Edit window has expired for this letter.")
         return attrs
+
+
+class DeliveryStatusUpdateSerializer(serializers.Serializer):
+    status = serializers.ChoiceField(choices=["delivered"])

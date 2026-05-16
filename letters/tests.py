@@ -1,8 +1,13 @@
 from datetime import timedelta
+import uuid
 from unittest.mock import patch
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.urls import reverse
 from django.utils import timezone
+from rest_framework import status
+from rest_framework.test import APIClient
 
 from .dynamodb_sync import build_schedule_item
 from .models import Letter
@@ -53,11 +58,76 @@ class LetterDynamoSyncTests(TestCase):
     def test_build_schedule_item_includes_plain_message_and_recipients(self):
         letter = Letter(**self._letter_kwargs())
         letter.id = 123
+        letter.delivery_worker_id = uuid.uuid4()
 
         item = build_schedule_item(letter)
 
-        self.assertEqual(item["letter_id"], "123")
+        self.assertEqual(item["letter_id"], str(letter.delivery_worker_id))
         self.assertEqual(item["subject"], "Future Letter")
         self.assertEqual(item["recipient"], ["a@example.com", "b@example.com"])
         self.assertEqual(item["cc_email"], "sender@example.com")
         self.assertEqual(item["message"], "hello")
+
+
+class LetterDeliveryStatusApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.url_name = "api-letters-delivery-status"
+        self.token = "worker-secret-token"
+
+        user = get_user_model().objects.create_user(
+            email="worker-test@example.com",
+            full_name="Worker Test",
+            password="safe-pass-123",
+        )
+        self.letter = Letter.objects.create(
+            user=user,
+            subject="Scheduled",
+            sender_email="sender@example.com",
+            recipient_email="recipient@example.com",
+            recipient_emails=[],
+            delivery_at=timezone.now() + timedelta(hours=1),
+            message="hello",
+        )
+
+    def _url(self, letter_id=None):
+        value = letter_id or self.letter.delivery_worker_id
+        return reverse(self.url_name, kwargs={"letter_id": value})
+
+    @patch("letters.models.upsert_letter_schedule")
+    def test_patch_requires_authentication(self, upsert_mock):
+        response = self.client.patch(
+            self._url(),
+            data={"status": "delivered"},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        upsert_mock.assert_not_called()
+
+    @patch("letters.models.upsert_letter_schedule")
+    def test_patch_updates_status_without_side_effects(self, upsert_mock):
+        with self.settings(DELIVERY_WORKER_TOKEN=self.token):
+            response = self.client.patch(
+                self._url(),
+                data={"status": "delivered"},
+                format="json",
+                HTTP_AUTHORIZATION=f"Bearer {self.token}",
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.letter.refresh_from_db()
+        self.assertTrue(self.letter.is_delivered)
+        self.assertFalse(self.letter.has_delivery_issue)
+        upsert_mock.assert_not_called()
+
+    def test_patch_returns_404_when_letter_missing(self):
+        with self.settings(DELIVERY_WORKER_TOKEN=self.token):
+            response = self.client.patch(
+                self._url(letter_id=uuid.uuid4()),
+                data={"status": "delivered"},
+                format="json",
+                HTTP_X_API_KEY=self.token,
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

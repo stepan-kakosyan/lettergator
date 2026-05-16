@@ -98,7 +98,7 @@ def _cc_email(letter):
 
 def build_schedule_item(letter):
     return {
-        "letter_id": str(letter.id),
+        "letter_id": str(letter.delivery_worker_id),
         "subject": letter.subject,
         "recipient": _all_recipients(letter),
         "cc_email": _cc_email(letter),
