@@ -107,7 +107,7 @@ class LetterDeliveryStatusApiView(APIView):
 
         with transaction.atomic():
             updated = Letter.objects.filter(
-                delivery_worker_id=letter_id,
+                id=int(letter_id),
             ).update(
                 is_delivered=True,
                 has_delivery_issue=False,

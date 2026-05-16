@@ -30,6 +30,7 @@ def _env_decimal(name, default):
 
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-secret-key")
+DJANGO_API_TOKEN = os.getenv("DJANGO_API_TOKEN", "")
 DEBUG = os.getenv("DEBUG", "1") == "1"
 ALLOWED_HOSTS = [
     h.strip()
