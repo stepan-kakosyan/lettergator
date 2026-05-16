@@ -23,7 +23,6 @@ class DeliveryWorkerTokenAuthentication(BaseAuthentication):
         token = self._extract_token(request)
         if not token:
             raise exceptions.AuthenticationFailed("Authentication required.")
-
         if not constant_time_compare(token, expected_token):
             raise exceptions.AuthenticationFailed("Invalid token.")
 

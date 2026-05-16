@@ -133,4 +133,4 @@ class LetterMessageUpdateSerializer(serializers.Serializer):
 
 
 class DeliveryStatusUpdateSerializer(serializers.Serializer):
-    status = serializers.ChoiceField(choices=["delivered"])
+    status = serializers.ChoiceField(choices=["delivered", "failed"])
