@@ -49,10 +49,10 @@ class LetterDynamoSyncTests(TestCase):
                 upsert_mock.reset_mock()
                 delete_mock.reset_mock()
 
-                letter_id = letter.id
+                delivery_worker_id = letter.delivery_worker_id
                 letter.delete()
 
-        delete_mock.assert_called_once_with(letter_id)
+            delete_mock.assert_called_once_with(delivery_worker_id)
         upsert_mock.assert_not_called()
 
     def test_build_schedule_item_includes_plain_message_and_recipients(self):
