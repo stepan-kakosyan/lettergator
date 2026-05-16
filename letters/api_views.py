@@ -104,14 +104,17 @@ class LetterDeliveryStatusApiView(APIView):
     def patch(self, request, letter_id):
         serializer = DeliveryStatusUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        status_value = serializer.validated_data["status"]
+
+        update_fields = {
+            "is_delivered": status_value == "delivered",
+            "has_delivery_issue": status_value == "failed",
+        }
 
         with transaction.atomic():
             updated = Letter.objects.filter(
-                id=int(letter_id),
-            ).update(
-                is_delivered=True,
-                has_delivery_issue=False,
-            )
+                id=letter_id,
+            ).update(**update_fields)
 
         if not updated:
             raise NotFound("Letter not found.")

@@ -121,6 +121,25 @@ class LetterDeliveryStatusApiTests(TestCase):
         self.assertFalse(self.letter.has_delivery_issue)
         upsert_mock.assert_not_called()
 
+    @patch("letters.models.upsert_letter_schedule")
+    def test_patch_marks_failed_status_without_side_effects(
+        self,
+        upsert_mock,
+    ):
+        with self.settings(DELIVERY_WORKER_TOKEN=self.token):
+            response = self.client.patch(
+                self._url(self.letter.id),
+                data={"status": "failed"},
+                format="json",
+                HTTP_AUTHORIZATION=f"Bearer {self.token}",
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.letter.refresh_from_db()
+        self.assertFalse(self.letter.is_delivered)
+        self.assertTrue(self.letter.has_delivery_issue)
+        upsert_mock.assert_not_called()
+
     def test_patch_returns_404_when_letter_missing(self):
         with self.settings(DELIVERY_WORKER_TOKEN=self.token):
             response = self.client.patch(
