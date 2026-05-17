@@ -20,10 +20,10 @@
 
         <!-- Desktop nav -->
         <nav class="hidden md:flex gap-8 text-sm font-medium text-gray-500">
-            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'why-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "See why" %}</a>
-            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "See how" %}</a>
             <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'letters-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "Letters" %}</a>
             <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'contact-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "Contact" %}</a>
+            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'why-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "See why" %}</a>
+            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "See how" %}</a>
         </nav>
 
         <div class="flex items-center gap-3">
