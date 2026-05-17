@@ -1,15 +1,17 @@
-{% extends "base.html" %}
 
-{% block title %}Test Email | LetterGator{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Test Email" %} | LetterGator{% endblock %}
 
 {% block content %}
 <section id="test-email-shell" class="min-h-screen bg-white px-6 py-10">
     <div class="w-full max-w-2xl mx-auto">
         <h1 class="text-2xl md:text-3xl font-semibold text-[#014421]">
-            Test Email Sender
+            {% trans "Test Email Sender" %}
         </h1>
         <p class="mt-2 text-sm text-gray-600">
-            Send a test message to confirm SMTP/email delivery is working.
+            {% trans "Send a test message to confirm SMTP/email delivery is working." %}
         </p>
 
         {% if messages %}
@@ -36,7 +38,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ form.to_email.id_for_label }}">
-                    Recipient email
+                    {% trans "Recipient email" %}
                 </label>
                 {{ form.to_email }}
                 {% for error in form.to_email.errors %}
@@ -46,7 +48,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ form.subject.id_for_label }}">
-                    Subject
+                    {% trans "Subject" %}
                 </label>
                 {{ form.subject }}
                 {% for error in form.subject.errors %}
@@ -56,7 +58,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-600 mb-2" for="{{ form.message.id_for_label }}">
-                    Message
+                    {% trans "Message" %}
                 </label>
                 {{ form.message }}
                 {% for error in form.message.errors %}
@@ -66,10 +68,10 @@
 
             <div class="flex items-center justify-between gap-3 pt-2">
                 <a href="{% url 'dashboard_view' %}" class="text-sm font-medium text-gray-500 hover:text-gray-700">
-                    Back to dashboard
+                    {% trans "Back to dashboard" %}
                 </a>
                 <button type="submit" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-[#014421] text-white hover:bg-[#023319] transition-colors">
-                    Send test email
+                    {% trans "Send test email" %}
                 </button>
             </div>
         </form>

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 15:52+0000\n"
+"POT-Creation-Date: 2026-05-17 07:23+0000\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,10 +33,10 @@ msgstr ""
 #: accounts/templates/accounts/login.html:4
 #: accounts/templates/accounts/login.html:85
 #: accounts/templates/accounts/register.html:148
-#: accounts/templates/partials/header.html:42
-#: accounts/templates/partials/header.html:113
+#: accounts/templates/partials/header.html:52
+#: accounts/templates/partials/header.html:121
 #: letters/templates/letters/vault.html:66
-#: letters/templates/letters/vault.html:108
+#: letters/templates/letters/vault.html:148
 msgid "Login"
 msgstr "Login"
 
@@ -97,7 +97,9 @@ msgstr "Login to access your letters."
 #: accounts/templates/accounts/login.html:28
 #: accounts/templates/accounts/password_reset_form.html:26
 #: accounts/templates/accounts/register.html:46
+#: accounts/templates/partials/calculator_modal.html:38
 #: letters/templates/letters/contact.html:39
+#: letters/templates/letters/vault.html:167
 msgid "Email"
 msgstr "Email"
 
@@ -139,7 +141,7 @@ msgstr "Need an account?"
 #: accounts/templates/accounts/register.html:4
 #: accounts/templates/accounts/register.html:124
 #: letters/templates/letters/vault.html:72
-#: letters/templates/letters/vault.html:111
+#: letters/templates/letters/vault.html:151
 msgid "Register"
 msgstr "Register"
 
@@ -240,6 +242,181 @@ msgstr "Full name"
 msgid "Already have an account?"
 msgstr "Already have an account?"
 
+#: accounts/templates/accounts/test_email.html:5
+#, fuzzy
+#| msgid "Email"
+msgid "Test Email"
+msgstr "Email"
+
+#: accounts/templates/accounts/test_email.html:11
+#, fuzzy
+#| msgid "Recovery Email Sent"
+msgid "Test Email Sender"
+msgstr "Recovery Email Sent"
+
+#: accounts/templates/accounts/test_email.html:14
+msgid "Send a test message to confirm SMTP/email delivery is working."
+msgstr ""
+
+#: accounts/templates/accounts/test_email.html:41
+#, fuzzy
+#| msgid "Recipient Emails (max 5)"
+msgid "Recipient email"
+msgstr "Recipient Emails (max 5)"
+
+#: accounts/templates/accounts/test_email.html:51
+#: letters/templates/letters/contact.html:55
+#: letters/templates/letters/letter_create.html:71
+msgid "Subject"
+msgstr "Subject"
+
+#: accounts/templates/accounts/test_email.html:61
+#: letters/templates/letters/contact.html:65
+#: letters/templates/letters/letter_create.html:154
+msgid "Message"
+msgstr "Message"
+
+#: accounts/templates/accounts/test_email.html:71
+#, fuzzy
+#| msgid "Back to home"
+msgid "Back to dashboard"
+msgstr "Back to home"
+
+#: accounts/templates/accounts/test_email.html:74
+#, fuzzy
+#| msgid "Send recovery email"
+msgid "Send test email"
+msgstr "Send recovery email"
+
+#: accounts/templates/base.html:170
+msgid "Confirm Deletion"
+msgstr ""
+
+#: accounts/templates/base.html:185
+#, fuzzy
+#| msgid "Cancel"
+msgid "No, cancel"
+msgstr "Cancel"
+
+#: accounts/templates/base.html:192
+msgid "Yes, delete"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:9
+#: letters/templates/letters/balance.html:55
+#: letters/templates/letters/how.html:354
+#: letters/templates/letters/landing.html:136
+#: letters/templates/letters/vault.html:97
+msgid "Price Calculator"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:12
+msgid "Estimate your cost based on letter type and specifications."
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:19
+#: letters/templates/letters/letter_create.html:260
+#: letters/templates/letters/physical_letter_create.html:347
+msgid "Close"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:32
+#, fuzzy
+#| msgid "Letter"
+msgid "Letter Type"
+msgstr "Letter"
+
+#: accounts/templates/partials/calculator_modal.html:39
+msgid "Digital inbox delivery"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:45
+#: letters/templates/letters/vault.html:165
+msgid "Physical"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:46
+#, fuzzy
+#| msgid "Remaining balance:"
+msgid "Print and mail"
+msgstr "Remaining balance:"
+
+#: accounts/templates/partials/calculator_modal.html:56
+#, fuzzy
+#| msgid "Delivery Date"
+msgid "Delivery Years Ahead"
+msgstr "Delivery Date"
+
+#: accounts/templates/partials/calculator_modal.html:59
+msgid "Scheduling under 1 year is free. Each additional year costs $0.50."
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:65
+#: accounts/templates/partials/calculator_modal.html:137
+msgid "Less than 1 year"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:66
+#: accounts/templates/partials/calculator_modal.html:138
+#, fuzzy
+#| msgid "1 year"
+msgid "year"
+msgstr "1 year"
+
+#: accounts/templates/partials/calculator_modal.html:67
+#: accounts/templates/partials/calculator_modal.html:68
+#: accounts/templates/partials/calculator_modal.html:69
+#: accounts/templates/partials/calculator_modal.html:70
+#: accounts/templates/partials/calculator_modal.html:71
+#: accounts/templates/partials/calculator_modal.html:72
+#: accounts/templates/partials/calculator_modal.html:73
+#: accounts/templates/partials/calculator_modal.html:74
+#: accounts/templates/partials/calculator_modal.html:75
+#: accounts/templates/partials/calculator_modal.html:139
+#: accounts/templates/partials/calculator_modal.html:140
+#: accounts/templates/partials/calculator_modal.html:141
+#: accounts/templates/partials/calculator_modal.html:142
+#: accounts/templates/partials/calculator_modal.html:143
+#: accounts/templates/partials/calculator_modal.html:144
+#: accounts/templates/partials/calculator_modal.html:145
+#: accounts/templates/partials/calculator_modal.html:146
+#: accounts/templates/partials/calculator_modal.html:147
+#, fuzzy
+#| msgid "5 years"
+msgid "years"
+msgstr "5 years"
+
+#: accounts/templates/partials/calculator_modal.html:84
+msgid "Destination Country"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:94
+msgid "Loading countries..."
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:101
+msgid "Printable pages"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:117
+#: letters/templates/letters/letter_detail_physical.html:79
+msgid "Photos"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:131
+msgid "Years Ahead"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:160
+#: letters/templates/letters/letter_create.html:206
+#: letters/templates/letters/physical_letter_create.html:240
+msgid "Estimated Total"
+msgstr ""
+
+#: accounts/templates/partials/calculator_modal.html:167
+msgid "Free for delivery under 1 year."
+msgstr ""
+
 # --- Footer ---
 #: accounts/templates/partials/footer.html:4
 msgid "All rights reserved."
@@ -250,53 +427,60 @@ msgid "Terms"
 msgstr "Terms"
 
 #: accounts/templates/partials/footer.html:7
-#: accounts/templates/partials/header.html:110
 #: letters/templates/letters/privacy.html:9
 msgid "Privacy"
 msgstr "Privacy"
 
 #: accounts/templates/partials/footer.html:8
 #: letters/templates/letters/faq.html:14
-#: letters/templates/letters/landing.html:150
+#: letters/templates/letters/landing.html:284
 msgid "FAQ"
 msgstr "FAQ"
 
+#: accounts/templates/partials/header.html:11
+msgid "BETA: This is a beta version. Everything you do on this"
+msgstr ""
+
+#: accounts/templates/partials/header.html:12
+msgid "website may be erased after the official launch."
+msgstr ""
+
 # --- Navigation ---
-#: accounts/templates/partials/header.html:13
-#: accounts/templates/partials/header.html:106
-#: letters/templates/letters/landing.html:53
+#: accounts/templates/partials/header.html:23
+#: accounts/templates/partials/header.html:117
+#: letters/templates/letters/landing.html:160
 msgid "See why"
 msgstr "See why"
 
-#: accounts/templates/partials/header.html:14
-#: accounts/templates/partials/header.html:107
-#: letters/templates/letters/landing.html:103
+#: accounts/templates/partials/header.html:24
+#: accounts/templates/partials/header.html:118
+#: letters/templates/letters/landing.html:210
 msgid "See how"
 msgstr "See how"
 
-#: accounts/templates/partials/header.html:15
-#: accounts/templates/partials/header.html:108
+#: accounts/templates/partials/header.html:25
+#: accounts/templates/partials/header.html:115
 #: letters/templates/letters/letter_create.html:15
 #: letters/templates/letters/vault.html:4
 msgid "Letters"
 msgstr "Letters"
 
-#: accounts/templates/partials/header.html:16
-#: accounts/templates/partials/header.html:109
+#: accounts/templates/partials/header.html:26
+#: accounts/templates/partials/header.html:116
 #: letters/templates/letters/terms.html:166
 msgid "Contact"
 msgstr "Contact"
 
 # --- Languages ---
-#: lettergator_backend/settings.py:110
+#: lettergator_backend/settings.py:128
 msgid "English"
 msgstr "English"
 
-#: lettergator_backend/settings.py:111
+#: lettergator_backend/settings.py:129
 msgid "Russian"
 msgstr "Russian"
 
-#: lettergator_backend/settings.py:112
+#: lettergator_backend/settings.py:130
 msgid "Armenian"
 msgstr "Armenian"
 
@@ -322,51 +506,31 @@ msgstr "Add Funds"
 msgid "Top up your balance to schedule letters beyond one year."
 msgstr "Top up your balance to schedule letters beyond one year."
 
-#: letters/templates/letters/balance.html:46
-msgid "How pricing works"
-msgstr "How pricing works"
-
-#: letters/templates/letters/balance.html:48
-msgid ""
-"Letters delivered <strong>under 1 year</strong> from today are <strong>free</"
-"strong>."
-msgstr ""
-"Letters delivered <strong>under 1 year</strong> from today are <strong>free</"
-"strong>."
-
-#: letters/templates/letters/balance.html:49
-msgid ""
-"Letters delivered <strong>1 year or more</strong> from today cost "
-"<strong>$0.50 per year</strong>."
-msgstr ""
-"Letters delivered <strong>1 year or more</strong> from today cost "
-"<strong>$0.50 per year</strong>."
-
-#: letters/templates/letters/balance.html:58
+#: letters/templates/letters/balance.html:64
 msgid "Amount (USD)"
 msgstr "Amount (USD)"
 
-#: letters/templates/letters/balance.html:78
-msgid "Add Funds — Coming Soon"
-msgstr "Add Funds — Coming Soon"
+#: letters/templates/letters/balance.html:83
+msgid "Proceed to Secure Checkout"
+msgstr ""
 
-#: letters/templates/letters/balance.html:85
+#: letters/templates/letters/balance.html:90
 msgid "Transaction History"
 msgstr "Transaction History"
 
-#: letters/templates/letters/balance.html:92
+#: letters/templates/letters/balance.html:97
 msgid "Amount"
 msgstr "Amount"
 
-#: letters/templates/letters/balance.html:93
+#: letters/templates/letters/balance.html:98
 msgid "Reason"
 msgstr "Reason"
 
-#: letters/templates/letters/balance.html:94
+#: letters/templates/letters/balance.html:99
 msgid "Date"
 msgstr "Date"
 
-#: letters/templates/letters/balance.html:118
+#: letters/templates/letters/balance.html:123
 msgid "No transactions yet."
 msgstr "No transactions yet."
 
@@ -391,12 +555,13 @@ msgstr "Message to the Future"
 
 #: letters/templates/letters/concept.html:24
 msgid ""
-"Explore scenarios by category. Click any scenario to read the full story, "
-"timing, and delivery setup behind it."
+"Explore scenarios across categories. Send digital letters by email or "
+"physical letters by mail— each form of expression has its own power for the "
+"right moment."
 msgstr ""
 
 #: letters/templates/letters/concept.html:41
-#: letters/templates/letters/landing.html:66
+#: letters/templates/letters/landing.html:173
 msgid "Personal"
 msgstr "Personal"
 
@@ -413,7 +578,7 @@ msgid "4 scenarios"
 msgstr "Explore all scenarios"
 
 #: letters/templates/letters/concept.html:57
-#: letters/templates/letters/landing.html:72
+#: letters/templates/letters/landing.html:179
 msgid "Family"
 msgstr "Family"
 
@@ -432,7 +597,7 @@ msgid "3 scenarios"
 msgstr "Explore all scenarios"
 
 #: letters/templates/letters/concept.html:73
-#: letters/templates/letters/landing.html:78
+#: letters/templates/letters/landing.html:185
 msgid "Team"
 msgstr "Team"
 
@@ -443,7 +608,7 @@ msgid ""
 msgstr ""
 
 #: letters/templates/letters/concept.html:89
-#: letters/templates/letters/landing.html:84
+#: letters/templates/letters/landing.html:191
 msgid "Milestone"
 msgstr "Milestone"
 
@@ -454,6 +619,114 @@ msgstr ""
 #: letters/templates/letters/concept.html:90
 msgid "preserved and delivered when they count."
 msgstr ""
+
+#: letters/templates/letters/concept.html:105
+#: letters/templates/letters/how.html:224
+#: letters/templates/letters/landing.html:248
+#: letters/templates/letters/physical_letter_create.html:16
+#, fuzzy
+#| msgid "Existing Letters"
+msgid "Physical Letters"
+msgstr "Existing Letters"
+
+#: letters/templates/letters/concept.html:106
+msgid ""
+"Tangible keepsakes. Send printed letters with attachments, documents, and "
+"photos—for moments that deserve to be held."
+msgstr ""
+
+#: letters/templates/letters/concept.html:113
+msgid "Printed memory for a life moment"
+msgstr ""
+
+#: letters/templates/letters/concept.html:115
+msgid ""
+"A handwritten or typed message printed and mailed to a loved one—with photos "
+"from a meaningful moment, documents, or artwork. Arrives as a beautiful, "
+"tangible keepsake they can hold and treasure forever."
+msgstr ""
+
+#: letters/templates/letters/concept.html:121
+msgid "When to use:"
+msgstr ""
+
+#: letters/templates/letters/concept.html:126
+msgid "Letters to a newborn—for their 18th birthday"
+msgstr ""
+
+#: letters/templates/letters/concept.html:128
+msgid ""
+"A physical letter scheduled to arrive on your child's 18th birthday, "
+"complete with photos from their early years, your handwritten words, and "
+"memories. They'll unwrap a tangible connection to the person you were when "
+"they were born."
+msgstr ""
+
+#: letters/templates/letters/concept.html:134
+msgid "Time to delivery:"
+msgstr ""
+
+#: letters/templates/letters/concept.html:139
+msgid "A printed manifesto or values statement"
+msgstr ""
+
+#: letters/templates/letters/concept.html:141
+msgid ""
+"Write your personal beliefs, life values, or a heartfelt letter and have it "
+"beautifully printed and framed for a loved one. Include your handwriting, "
+"signatures, and design elements that can't be captured in email."
+msgstr ""
+
+#: letters/templates/letters/concept.html:147
+msgid "When to send:"
+msgstr ""
+
+#: letters/templates/letters/concept.html:152
+msgid "Team or company milestone book"
+msgstr ""
+
+#: letters/templates/letters/concept.html:154
+msgid ""
+"Collect printed letters from team members, partners, or family about a "
+"shared milestone—a company anniversary, a team launch, or a collective "
+"achievement. Deliver them all bound together as a lasting memento."
+msgstr ""
+
+#: letters/templates/letters/concept.html:160
+msgid "Perfect for:"
+msgstr ""
+
+#: letters/templates/letters/concept.html:165
+msgid "Why choose a physical letter?"
+msgstr ""
+
+#: letters/templates/letters/concept.html:169
+msgid "Tangible and memorable—something to hold, display, or share."
+msgstr ""
+
+#: letters/templates/letters/concept.html:173
+msgid "Include photos, documents, and artwork alongside your message."
+msgstr ""
+
+#: letters/templates/letters/concept.html:177
+msgid "Arrives as a surprise in the mailbox—not an email notification."
+msgstr ""
+
+#: letters/templates/letters/concept.html:181
+msgid "Personal touches like handwriting or custom formatting."
+msgstr ""
+
+#: letters/templates/letters/concept.html:185
+msgid "Becomes a keepsake to be treasured for years."
+msgstr ""
+
+# --- Letter Create ---
+#: letters/templates/letters/concept.html:195
+#: letters/templates/letters/letter_create.html:29
+#, fuzzy
+#| msgid "Create Letter"
+msgid "Create a Physical Letter"
+msgstr "Create Letter"
 
 # --- Contact ---
 #: letters/templates/letters/contact.html:4
@@ -477,17 +750,6 @@ msgstr ""
 #, python-format
 msgid "Sending as: <strong>%(email)s</strong>"
 msgstr "Sending as: <strong>%(email)s</strong>"
-
-#: letters/templates/letters/contact.html:55
-#: letters/templates/letters/letter_create.html:73
-#: letters/templates/letters/vault.html:120
-msgid "Subject"
-msgstr "Subject"
-
-#: letters/templates/letters/contact.html:65
-#: letters/templates/letters/letter_create.html:156
-msgid "Message"
-msgstr "Message"
 
 #: letters/templates/letters/contact.html:82
 msgid "Send Message"
@@ -616,7 +878,7 @@ msgstr ""
 
 # --- Landing: FAQ section ---
 #: letters/templates/letters/faq.html:16
-#: letters/templates/letters/landing.html:152
+#: letters/templates/letters/landing.html:286
 msgid "Common questions"
 msgstr "Common questions"
 
@@ -634,94 +896,192 @@ msgstr ""
 
 #: letters/templates/letters/faq.html:34
 msgid ""
-"Scheduling a letter for under 1 year is free. For schedules at 1 year or "
-"beyond, the price is $0.50 per year. The total is charged once when you "
-"click Seal and Store, not every month. You can always write letters without "
-"paying; payment is only required for long-term scheduling. To unlock 1 year+ "
-"scheduling options, keep at least $1.00 in your balance."
+"<strong>Email letters:</strong> Delivery under 1 year is free. At 1 year or "
+"beyond, the cost is $0.50 per year, charged once when you save the letter. "
+"To unlock 1 year+ scheduling, keep at least $1.00 in your balance.<br/><br/> "
+"<strong>Physical letters:</strong> Pricing includes the destination "
+"country's base cost, $0.50 per printable page, $0.50 per photo, and $0.50 "
+"per year into the future. The full amount is charged once when you pay and "
+"submit the order."
 msgstr ""
 
-#: letters/templates/letters/faq.html:46
+#: letters/templates/letters/faq.html:47
 msgid "2. How reliable is delivery, and what backup details can I provide?"
 msgstr ""
 
-#: letters/templates/letters/faq.html:51
+#: letters/templates/letters/faq.html:52
 msgid ""
-"LetterGator is built for reliable future delivery with retry logic if a "
-"first attempt fails. You can send to yourself or to other recipients, and "
-"add up to 5 recipient emails. For additional account-level safety, you may "
-"provide a phone number and address in your profile. If provided, those "
-"details help us keep your account contact information complete for "
-"exceptional support and verification situations."
+"<strong>Email letters:</strong> Delivery includes retry logic if a first "
+"email attempt fails. You can send to yourself or to other recipients, and "
+"add up to 5 recipient emails per letter.<br/><br/> <strong>Physical letters:"
+"</strong> Delivery depends on the recipient address, destination country, "
+"and postal service timing. Your account details, plus the full mailing "
+"address you enter for the order, help us prepare and route the letter "
+"correctly."
 msgstr ""
 
-#: letters/templates/letters/faq.html:64
+#: letters/templates/letters/faq.html:66
 msgid "3. Can I change, delete, or preview a letter after I create it?"
 msgstr ""
 
-#: letters/templates/letters/faq.html:69
+#: letters/templates/letters/faq.html:71
 msgid ""
-"You control this at creation time. If you enable Allow Edit and/or Allow "
-"Delete, those actions are available only during the first 30 days after the "
-"letter is created. If you leave either option disabled, that action is not "
-"available after creation at all. Message preview works the same way: if See "
-"Message Before Delivery is enabled, you can view your content before "
-"delivery; if disabled, the content stays sealed until delivery."
+"<strong>Email letters:</strong> You control edit, delete, and preview rules "
+"at creation time. If Allow Edit and/or Allow Delete are enabled, those "
+"actions are available only during the first 30 days. Preview works the same "
+"way: if See Message Before Delivery is enabled, you can view the message "
+"before delivery.<br/><br/> <strong>Physical letters:</strong> You can save "
+"drafts before paying. Paid physical letters can still be updated while they "
+"remain in Paid status, and you can delete Draft or Paid letters. Physical "
+"letters do not use the same preview controls as email letters because they "
+"are prepared for printing and shipping."
 msgstr ""
 
-#: letters/templates/letters/faq.html:82
+#: letters/templates/letters/faq.html:86
 msgid "4. How do you make sure my email is still valid in future years?"
 msgstr ""
 
-#: letters/templates/letters/faq.html:87
+#: letters/templates/letters/faq.html:91
 msgid ""
-"To keep long-term delivery dependable, we send a re-confirmation email "
-"roughly once a year so you can confirm your address and stay connected with "
-"us. This also acts as a reminder to update your account details if your "
-"email changes. If you plan to switch email providers, you can update your "
-"email in your profile and confirm the new address so future letters continue "
-"to route correctly."
-msgstr ""
-
-#: letters/templates/letters/faq.html:100
-msgid ""
-"5. Is my message content private, and what happens if your database is lost?"
+"<strong>Email letters:</strong> We send a re-confirmation email roughly once "
+"a year so you can confirm your address and update your account if your email "
+"ever changes.<br/><br/> <strong>Physical letters:</strong> The most "
+"important detail is the recipient's mailing address on the order. Review the "
+"address carefully before paying, and if you need to change a paid physical "
+"letter later, update it before the letter moves beyond Paid status."
 msgstr ""
 
 #: letters/templates/letters/faq.html:105
 msgid ""
-"Every message is encrypted before it is stored. The content is unreadable to "
-"anyone who has access to our database — it can only be decrypted at the "
-"moment of delivery. For permanent resilience, the encrypted message data is "
-"also written to Arweave — a decentralised blockchain storage network built "
-"to keep data available permanently. Even if our own database were ever lost "
-"or destroyed, the encrypted letter data is preserved on the blockchain and "
-"cannot disappear."
+"5. Is my message content private, and what happens if your database is lost?"
 msgstr ""
 
-#: letters/templates/letters/faq.html:119
-msgid "6. Can I attach files to a letter?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:124
+#: letters/templates/letters/faq.html:110
 msgid ""
-"Not yet — letters currently support a rich text body only. File attachments "
-"are planned for a near-future version. You will be able to attach videos, "
-"audio recordings, images, and other files directly to your letter so the "
-"recipient receives everything in one delivery. We will announce this feature "
-"as soon as it is available."
+"<strong>Email letters:</strong> Message content is encrypted before storage "
+"and written to Arweave for long-term resilience. Even if our own database "
+"were lost, the encrypted email-letter payload remains preserved.<br/><br/> "
+"<strong>Physical letters:</strong> Your message text, uploaded files, and "
+"shipping details are stored with the order so the letter can be prepared for "
+"printing and mailing. Physical letters follow a different operational flow "
+"than sealed email delivery, so they are not handled with the same delivery-"
+"only decryption model."
 msgstr ""
 
-#: letters/templates/letters/faq.html:139
-msgid "Still have questions?"
+#: letters/templates/letters/faq.html:125
+msgid "6. What's the difference between email letters and physical letters?"
 msgstr ""
 
-# --- Contact ---
-#: letters/templates/letters/faq.html:144
+#: letters/templates/letters/faq.html:130
+msgid ""
+"<strong>Email Letters:</strong> Scheduled messages that arrive in an inbox "
+"at a specific date and time. You choose when to deliver (up to 10 years "
+"ahead), and can optionally edit or delete during the first 30 days. Perfect "
+"for digital-only messages and milestone reminders.<br/><br/> "
+"<strong>Physical Letters:</strong> Printed and mailed to a recipient's "
+"address. You select a desired delivery date, and can attach documents (PDFs, "
+"TXT) and photos (JPG, PNG) that will be printed with your message. Perfect "
+"for tangible keepsakes, gifts, and memorable occasions."
+msgstr ""
+
+#: letters/templates/letters/faq.html:143
+msgid "7. Can I attach files to email letters?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:148
+msgid ""
+"No, email letters support only text content. However, if you want to share "
+"documents, images, or photos, you can create a <strong>physical letter</"
+"strong> instead, which supports attaching PDFs, Word documents, text files, "
+"and photos that will be printed together."
+msgstr ""
+
+#: letters/templates/letters/faq.html:158
+msgid "8. What file types can I attach to physical letters?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:163
+msgid ""
+"<strong>Documents:</strong> PDF, Word (.DOCX), and Text (.TXT) files are "
+"supported and will be printed.<br/> <strong>Photos:</strong> JPG and PNG "
+"images are supported and will be printed in color or black &amp; white.<br/> "
+"You can attach up to 3 documents and 3 photos per letter. Each page of your "
+"documents is calculated into the total price."
+msgstr ""
+
+#: letters/templates/letters/faq.html:173
+msgid "9. How are refunds handled if I delete a letter?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:178
+msgid ""
+"<strong>Email letters:</strong> Free letters have no refund because no "
+"payment was made. Paid email letters keep a fixed $0.50 processing fee, and "
+"the rest is returned to your balance if deletion is still allowed.<br/><br/> "
+"<strong>Physical letters:</strong> Drafts have no refund because they were "
+"never paid. Paid physical letters refund the remaining balance after a "
+"deletion fee of $1.00 plus $0.50 for each full year since the order was "
+"created."
+msgstr ""
+
+#: letters/templates/letters/faq.html:191
+msgid "10. How long does delivery take for each letter type?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:196
+msgid ""
+"<strong>Email letters:</strong> Delivery happens at the exact future date "
+"and time you choose.<br/><br/> <strong>Physical letters:</strong> You choose "
+"a requested delivery date, and the order is then prepared for shipping. "
+"Delivery depends on the destination country and can occur around 1 to 4 days "
+"after your requested date, with later arrival possible depending on postal "
+"conditions."
+msgstr ""
+
+#: letters/templates/letters/faq.html:209
+msgid "11. Can I save a physical letter as a draft before paying?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:214
+msgid ""
+"Yes. Physical letters can be saved as drafts first, which is useful when you "
+"still need to refine the address, message, or attachments. Drafts are "
+"unpaid. Once you are ready, you can return to the draft, review the final "
+"price, and pay to move it into Paid status."
+msgstr ""
+
+#: letters/templates/letters/faq.html:225
+msgid "12. Can I track the status of a physical letter after I pay?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:230
+msgid ""
+"Yes. In your Letters workspace, physical letters move through statuses such "
+"as Draft, Paid, Printing, Shipped, and Delivered. This helps you understand "
+"whether the order is still editable, being prepared, or already on its way."
+msgstr ""
+
+#: letters/templates/letters/faq.html:240
+msgid "13. How do I choose between an email letter and a physical letter?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:245
+msgid ""
+"Choose <strong>email letters</strong> when precise timing, privacy controls, "
+"and inbox delivery matter most. Choose <strong>physical letters</strong> "
+"when you want a tangible keepsake, printed photos or documents, and a more "
+"ceremonial mailbox experience for the recipient."
+msgstr ""
+
+#: letters/templates/letters/faq.html:259
+msgid "Anything else we should know?"
+msgstr ""
+
+#: letters/templates/letters/faq.html:264
 #, fuzzy
-#| msgid "Contact Us"
-msgid "Contact us"
-msgstr "Contact Us"
+#| msgid "Send your message"
+msgid "Send us a message"
+msgstr "Send your message"
 
 #: letters/templates/letters/how.html:5
 msgid "LetterGator | See how"
@@ -734,23 +1094,22 @@ msgid "How it works"
 msgstr "How pricing works"
 
 #: letters/templates/letters/how.html:17
-msgid "Four steps."
-msgstr ""
-
-#: letters/templates/letters/how.html:17
 #, fuzzy
 #| msgid "Send your message"
-msgid "One future message."
+msgid "Deliver your message"
 msgstr "Send your message"
+
+#: letters/templates/letters/how.html:17
+msgid "your way."
+msgstr ""
 
 #: letters/templates/letters/how.html:20
 msgid ""
-"From the moment you write to the moment it arrives — here is exactly what "
-"happens to your letter along the way."
+"Choose email for digital delivery or physical letters for tangible "
+"keepsakes. Both can be scheduled for exactly when they matter most."
 msgstr ""
 
 #: letters/templates/letters/how.html:42 letters/templates/letters/how.html:57
-#: letters/templates/letters/landing.html:115
 msgid "Compose"
 msgstr "Compose"
 
@@ -780,7 +1139,6 @@ msgid "Auto-saved to your account dashboard"
 msgstr "Update your account password."
 
 #: letters/templates/letters/how.html:71 letters/templates/letters/how.html:87
-#: letters/templates/letters/landing.html:120
 msgid "Seal"
 msgstr "Seal"
 
@@ -809,7 +1167,6 @@ msgstr ""
 
 #: letters/templates/letters/how.html:101
 #: letters/templates/letters/how.html:117
-#: letters/templates/letters/landing.html:125
 msgid "Schedule"
 msgstr "Schedule"
 
@@ -838,7 +1195,6 @@ msgstr ""
 
 #: letters/templates/letters/how.html:130
 #: letters/templates/letters/how.html:146
-#: letters/templates/letters/landing.html:130
 msgid "Deliver"
 msgstr "Deliver"
 
@@ -867,17 +1223,20 @@ msgid "Confirmation logged to your account history"
 msgstr ""
 
 #: letters/templates/letters/how.html:159
-msgid "Letter creation form"
-msgstr ""
+#: letters/templates/letters/landing.html:224
+#, fuzzy
+#| msgid "Letters"
+msgid "Email Letters"
+msgstr "Letters"
 
 #: letters/templates/letters/how.html:160
-msgid "Every field explained"
+msgid "Creation form fields explained"
 msgstr ""
 
 #: letters/templates/letters/how.html:162
 msgid ""
-"This is a full guide to every setting in the Create Letter page, including "
-"what each field controls and how pricing is calculated."
+"This is a full guide to every setting in the Create Email Letter page, "
+"including what each field controls and how pricing is calculated."
 msgstr ""
 
 #: letters/templates/letters/how.html:171
@@ -1058,14 +1417,129 @@ msgid ""
 "any) is logged in your balance history."
 msgstr ""
 
-#: letters/templates/letters/how.html:221
+#: letters/templates/letters/how.html:225
+msgid "From message to mailbox"
+msgstr ""
+
+#: letters/templates/letters/how.html:227
+msgid ""
+"Physical letters combine your message with attachments (documents and "
+"photos), then get printed and mailed to the recipient's address. Here's how "
+"the process works."
+msgstr ""
+
+#: letters/templates/letters/how.html:239
+msgid "Compose with attachments"
+msgstr ""
+
+#: letters/templates/letters/how.html:241
+msgid ""
+"Write your message and optionally attach files: up to 3 documents (PDF, "
+"DOCX, TXT) and up to 3 photos (JPG, PNG). Everything will be printed "
+"together in one envelope."
+msgstr ""
+
+#: letters/templates/letters/how.html:253
+#, fuzzy
+#| msgid "Mailing address"
+msgid "Add recipient address"
+msgstr "Mailing address"
+
+#: letters/templates/letters/how.html:255
+msgid ""
+"Enter the recipient's name, street address, city, state/province, postal "
+"code, and country. The price is calculated based on your document pages, "
+"photos, and destination country."
+msgstr ""
+
+#: letters/templates/letters/how.html:267
+msgid "Set desired delivery date"
+msgstr ""
+
+#: letters/templates/letters/how.html:269
+msgid ""
+"Choose the date you'd like the letter to arrive. We'll print it on your "
+"requested date and begin shipping. You can schedule up to 10 years in "
+"advance."
+msgstr ""
+
+#: letters/templates/letters/how.html:281
+msgid "Pay and confirm"
+msgstr ""
+
+#: letters/templates/letters/how.html:283
+msgid ""
+"The total price is deducted from your account balance when you confirm. Your "
+"account balance must cover the full cost of the letter."
+msgstr ""
+
+#: letters/templates/letters/how.html:295
+msgid "Print and ship"
+msgstr ""
+
+#: letters/templates/letters/how.html:297
+msgid ""
+"On your requested delivery date, the letter is printed and shipped via "
+"postal service. Delivery times vary by country (typically 2-6 weeks). Track "
+"its status in your account dashboard."
+msgstr ""
+
+#: letters/templates/letters/how.html:309
+#, fuzzy
+#| msgid "Recipients"
+msgid "Recipient receives it"
+msgstr "Recipients"
+
+#: letters/templates/letters/how.html:311
+msgid ""
+"The letter arrives in your recipient's mailbox — a tangible, memorable "
+"keepsake that they can hold in their hands and share with others."
+msgstr ""
+
+#: letters/templates/letters/how.html:321
+msgid "Pricing"
+msgstr ""
+
+#: letters/templates/letters/how.html:323
+msgid "Base cost:"
+msgstr ""
+
+#: letters/templates/letters/how.html:323
+msgid "Depends on destination country."
+msgstr ""
+
+#: letters/templates/letters/how.html:324
+msgid "Per-page fee:"
+msgstr ""
+
+#: letters/templates/letters/how.html:324
+msgid "$0.50 per printed page (documents + message)."
+msgstr ""
+
+#: letters/templates/letters/how.html:325
+msgid "Per-photo fee:"
+msgstr ""
+
+#: letters/templates/letters/how.html:325
+msgid "$1.00 per attached photo."
+msgstr ""
+
+#: letters/templates/letters/how.html:326
+msgid "Per-year fee:"
+msgstr ""
+
+#: letters/templates/letters/how.html:326
+msgid "$0.50 per year into the future (same as email letters)."
+msgstr ""
+
+#: letters/templates/letters/how.html:335
 #, fuzzy
 #| msgid "Create your first letter"
 msgid "Ready to write your first letter?"
 msgstr "Create your first letter"
 
-#: letters/templates/letters/how.html:226
-#: letters/templates/letters/landing.html:42
+#: letters/templates/letters/how.html:341
+#: letters/templates/letters/landing.html:148
 msgid "Open Letters"
 msgstr "Open Letters"
 
@@ -1083,50 +1557,113 @@ msgstr "Hi %(name)s, now you can"
 msgid "send your letter at a perfect time."
 msgstr "send your letter at a perfect time."
 
-#: letters/templates/letters/landing.html:24
-#, fuzzy, python-format
-#| msgid ""
-#| "You have <span class=\"font-semibold text-[#014421]\">%(balance)s</span> "
-#| "at your balance for creating long term letters."
-msgid ""
-"You have <span class=\"font-semibold text-[#014421]\">$%(balance)s</span> at "
-"your balance for creating long term letters."
-msgstr ""
-"You have <span class=\"font-semibold text-[#014421]\">%(balance)s</span> at "
-"your balance for creating long term letters."
-
-#: letters/templates/letters/landing.html:29
+#: letters/templates/letters/landing.html:26
 msgid "Send your message"
 msgstr "Send your message"
 
-#: letters/templates/letters/landing.html:29
+#: letters/templates/letters/landing.html:26
 msgid "at the perfect time."
 msgstr "at the perfect time."
 
+#: letters/templates/letters/landing.html:29
+msgid ""
+"Because some things are better left for later. See you later, Alligator!"
+msgstr ""
+"Because some things are better left for later. See you later, Alligator!"
+
 #: letters/templates/letters/landing.html:32
-msgid ""
-"Because some things are better left for later. See you later, Alligator!"
-msgstr ""
-"Because some things are better left for later. See you later, Alligator!"
-
-#: letters/templates/letters/landing.html:35
+#, fuzzy
+#| msgid ""
+#| "A secure digital vault that stores your letters, files, and ideas, then "
+#| "delivers them in the future on the exact day you choose."
 msgid ""
 "A secure digital vault that stores your letters, files, and ideas, then "
-"delivers them in the future on the exact day you choose."
+"delivers them in the future — by email or printed mail."
 msgstr ""
 "A secure digital vault that stores your letters, files, and ideas, then "
 "delivers them in the future on the exact day you choose."
 
-#: letters/templates/letters/landing.html:42
+#: letters/templates/letters/landing.html:40
+#, fuzzy
+#| msgid "Go to Letters"
+msgid "Total letters"
+msgstr "Go to Letters"
+
+#: letters/templates/letters/landing.html:46
+msgid "Email and physical combined"
+msgstr ""
+
+#: letters/templates/letters/landing.html:51
+#, fuzzy
+#| msgid "Go to my letters"
+msgid "Email letters"
+msgstr "Go to my letters"
+
+#: letters/templates/letters/landing.html:57
+#, fuzzy
+#| msgid "Scheduling cost:"
+msgid "Scheduled to inboxes"
+msgstr "Scheduling cost:"
+
+#: letters/templates/letters/landing.html:62
+msgid "Physical letters"
+msgstr ""
+
+#: letters/templates/letters/landing.html:68
+#, fuzzy
+#| msgid "Remaining balance:"
+msgid "Print and mail orders"
+msgstr "Remaining balance:"
+
+#: letters/templates/letters/landing.html:73
+#, fuzzy
+#| msgid "Compose"
+msgid "Completed"
+msgstr "Compose"
+
+#: letters/templates/letters/landing.html:79
+#, fuzzy
+#| msgid "Already active"
+msgid "Already delivered"
+msgstr "Already active"
+
+#: letters/templates/letters/landing.html:90
 msgid "Go to my letters"
 msgstr "Go to my letters"
 
+# --- Balance ---
+#: letters/templates/letters/landing.html:105
+#: letters/templates/letters/letter_create.html:212
+#: letters/templates/letters/physical_letter_create.html:246
+#, fuzzy
+#| msgid "Balance"
+msgid "Your Balance"
+msgstr "Balance"
+
+#: letters/templates/letters/landing.html:111
+msgid ""
+"Use your balance for long-term email scheduling and paid physical letter "
+"orders."
+msgstr ""
+
+#: letters/templates/letters/landing.html:121
+#, fuzzy
+#| msgid "No transactions yet."
+msgid "See transactions"
+msgstr "No transactions yet."
+
+#: letters/templates/letters/landing.html:127
+#, fuzzy
+#| msgid "Add Funds"
+msgid "Add funds"
+msgstr "Add Funds"
+
 # --- Landing: See why section ---
-#: letters/templates/letters/landing.html:55
+#: letters/templates/letters/landing.html:162
 msgid "Who writes letters like this?"
 msgstr "Who writes letters like this?"
 
-#: letters/templates/letters/landing.html:58
+#: letters/templates/letters/landing.html:165
 msgid ""
 "From personal milestones to team rituals — here are the moments people most "
 "often choose to write a letter for later."
@@ -1134,7 +1671,7 @@ msgstr ""
 "From personal milestones to team rituals — here are the moments people most "
 "often choose to write a letter for later."
 
-#: letters/templates/letters/landing.html:67
+#: letters/templates/letters/landing.html:174
 msgid ""
 "Letters to your future self — written during a job change, a hard season, or "
 "a new beginning. Read when the dust settles."
@@ -1142,7 +1679,7 @@ msgstr ""
 "Letters to your future self — written during a job change, a hard season, or "
 "a new beginning. Read when the dust settles."
 
-#: letters/templates/letters/landing.html:73
+#: letters/templates/letters/landing.html:180
 msgid ""
 "Notes to a partner, a newborn, or your whole family — timed for "
 "anniversaries, birthdays, or the moments that matter most."
@@ -1150,7 +1687,7 @@ msgstr ""
 "Notes to a partner, a newborn, or your whole family — timed for "
 "anniversaries, birthdays, or the moments that matter most."
 
-#: letters/templates/letters/landing.html:79
+#: letters/templates/letters/landing.html:186
 msgid ""
 "Pre-launch messages, knowledge handovers, year-ahead commitments — delivered "
 "at exactly the right professional moment."
@@ -1158,7 +1695,7 @@ msgstr ""
 "Pre-launch messages, knowledge handovers, year-ahead commitments — delivered "
 "at exactly the right professional moment."
 
-#: letters/templates/letters/landing.html:85
+#: letters/templates/letters/landing.html:192
 msgid ""
 "Retirement, moving abroad, a difficult anniversary — letters that mark "
 "life's biggest turning points and arrive when they are needed."
@@ -1166,176 +1703,308 @@ msgstr ""
 "Retirement, moving abroad, a difficult anniversary — letters that mark "
 "life's biggest turning points and arrive when they are needed."
 
-#: letters/templates/letters/landing.html:91
+#: letters/templates/letters/landing.html:198
 msgid "Explore all scenarios"
 msgstr "Explore all scenarios"
 
-# --- Landing: See how section ---
-#: letters/templates/letters/landing.html:105
-msgid "How your letter travels through time"
-msgstr "How your letter travels through time"
-
-#: letters/templates/letters/landing.html:108
-msgid ""
-"Four simple steps take your message from idea to inbox — on exactly the day "
-"and time you choose."
+#: letters/templates/letters/landing.html:212
+msgid "Choose your delivery method"
 msgstr ""
-"Four simple steps take your message from idea to inbox — on exactly the day "
-"and time you choose."
 
-#: letters/templates/letters/landing.html:116
-msgid "Write your message with no limits and save it to your account."
+#: letters/templates/letters/landing.html:215
+msgid ""
+"Send digital letters by email or physical letters by mail — both scheduled "
+"for exactly when they matter most."
+msgstr ""
+
+#: letters/templates/letters/landing.html:227
+#: letters/templates/letters/landing.html:251
+#, fuzzy
+#| msgid "Compose"
+msgid "1. Compose"
+msgstr "Compose"
+
+#: letters/templates/letters/landing.html:228
+#, fuzzy
+#| msgid "Write your message with no limits and save it to your account."
+msgid ""
+"Write your message with no character limits and save it to your account."
 msgstr "Write your message with no limits and save it to your account."
 
-#: letters/templates/letters/landing.html:121
+#: letters/templates/letters/landing.html:231
+#, fuzzy
+#| msgid "Seal"
+msgid "2. Seal"
+msgstr "Seal"
+
+#: letters/templates/letters/landing.html:232
 msgid "Set privacy rules — block previews, lock edits, control deletion."
 msgstr "Set privacy rules — block previews, lock edits, control deletion."
 
-#: letters/templates/letters/landing.html:126
-msgid "Pick the exact date — a preset milestone or a custom moment."
+#: letters/templates/letters/landing.html:235
+#: letters/templates/letters/landing.html:259
+#, fuzzy
+#| msgid "Schedule"
+msgid "3. Schedule"
+msgstr "Schedule"
+
+#: letters/templates/letters/landing.html:236
+#, fuzzy
+#| msgid "Pick the exact date — a preset milestone or a custom moment."
+msgid ""
+"Pick the exact date and time — presets or custom moments up to 10 years "
+"ahead."
 msgstr "Pick the exact date — a preset milestone or a custom moment."
 
-#: letters/templates/letters/landing.html:131
-msgid "LetterGator sends it automatically — with retry logic built in."
-msgstr "LetterGator sends it automatically — with retry logic built in."
+#: letters/templates/letters/landing.html:239
+#, fuzzy
+#| msgid "Deliver"
+msgid "4. Deliver"
+msgstr "Deliver"
 
-#: letters/templates/letters/landing.html:137
-msgid "See the full journey"
-msgstr "See the full journey"
+#: letters/templates/letters/landing.html:240
+msgid "Arrives in the recipient's inbox with automatic retry protection."
+msgstr ""
 
-#: letters/templates/letters/landing.html:155
+#: letters/templates/letters/landing.html:252
+msgid ""
+"Write your message and attach documents or photos to be printed together."
+msgstr ""
+
+#: letters/templates/letters/landing.html:255
+msgid "2. Address"
+msgstr ""
+
+#: letters/templates/letters/landing.html:256
+msgid "Enter recipient's name, address, and select country for pricing."
+msgstr ""
+
+#: letters/templates/letters/landing.html:260
+msgid "Set your desired delivery date. Printing starts on that date."
+msgstr ""
+
+#: letters/templates/letters/landing.html:263
+msgid "4. Ship"
+msgstr ""
+
+#: letters/templates/letters/landing.html:264
+msgid "Printed and mailed to the recipient's door with tracking."
+msgstr ""
+
+#: letters/templates/letters/landing.html:271
+msgid "Learn about both types"
+msgstr ""
+
+#: letters/templates/letters/landing.html:289
 msgid "Everything users usually ask before sending their first future letter."
 msgstr "Everything users usually ask before sending their first future letter."
 
+#: letters/templates/letters/landing.html:376
+msgid "What's the difference between email and physical letters?"
+msgstr ""
+
+#: letters/templates/letters/landing.html:381
+msgid ""
+"<strong>Email Letters:</strong> Scheduled messages that arrive in an inbox "
+"at a specific date and time. You control editing and deletion windows. "
+"Perfect for messages to yourself or loved ones.<br/><br/> <strong>Physical "
+"Letters:</strong> Printed and mailed to a recipient's address. You can "
+"attach documents and photos that will be printed with your message. Perfect "
+"for tangible keepsakes and gifts."
+msgstr ""
+
 # --- Letter Create ---
 #: letters/templates/letters/letter_create.html:4
-#: letters/templates/letters/letter_create.html:17
-#: letters/templates/letters/vault.html:80
-#: letters/templates/letters/vault.html:257
-msgid "Create Letter"
+#: letters/templates/letters/letter_create.html:20
+#, fuzzy
+#| msgid "Create Letter"
+msgid "Create Email Letter"
 msgstr "Create Letter"
 
-#: letters/templates/letters/letter_create.html:20
-msgid "Configure delivery, privacy, and control options before sealing."
+#: letters/templates/letters/letter_create.html:18
+#, fuzzy
+#| msgid "Edit Letter Text"
+msgid "Edit Email Letter"
+msgstr "Edit Letter Text"
+
+#: letters/templates/letters/letter_create.html:24
+#, fuzzy
+#| msgid "Configure delivery, privacy, and control options before sealing."
+msgid "Configure delivery, privacy, and control options for email delivery."
 msgstr "Configure delivery, privacy, and control options before sealing."
 
-#: letters/templates/letters/letter_create.html:23
+#: letters/templates/letters/letter_create.html:28
+msgid "Want to send a printed letter instead?"
+msgstr ""
+
+#: letters/templates/letters/letter_create.html:33
 #: letters/templates/letters/letter_create_blocked.html:41
+#: letters/templates/letters/operation_success.html:28
+#: letters/templates/letters/partials/operation_success.html:24
 msgid "Back to Letters"
 msgstr "Back to Letters"
 
-#: letters/templates/letters/letter_create.html:54
-msgid "Balance usage for long-term delivery"
-msgstr "Balance usage for long-term delivery"
-
-#: letters/templates/letters/letter_create.html:82
+#: letters/templates/letters/letter_create.html:80
+#: letters/templates/letters/letter_detail_email.html:73
 msgid "Send To Me"
 msgstr "Send To Me"
 
-#: letters/templates/letters/letter_create.html:84
+#: letters/templates/letters/letter_create.html:82
 msgid "Selected by default. Choose No to send to other recipients."
 msgstr "Selected by default. Choose No to send to other recipients."
 
-#: letters/templates/letters/letter_create.html:89
-#: letters/templates/letters/letter_create.html:103
-#: letters/templates/letters/letter_create.html:117
-#: letters/templates/letters/letter_create.html:131
+#: letters/templates/letters/letter_create.html:87
+#: letters/templates/letters/letter_create.html:101
+#: letters/templates/letters/letter_create.html:115
+#: letters/templates/letters/letter_create.html:129
+#: letters/templates/letters/letter_detail_email.html:73
+#: letters/templates/letters/letter_detail_email.html:74
+#: letters/templates/letters/letter_detail_email.html:75
+#: letters/templates/letters/letter_detail_email.html:76
 msgid "Yes"
 msgstr "Yes"
 
-#: letters/templates/letters/letter_create.html:90
-#: letters/templates/letters/letter_create.html:104
-#: letters/templates/letters/letter_create.html:118
-#: letters/templates/letters/letter_create.html:132
+#: letters/templates/letters/letter_create.html:88
+#: letters/templates/letters/letter_create.html:102
+#: letters/templates/letters/letter_create.html:116
+#: letters/templates/letters/letter_create.html:130
+#: letters/templates/letters/letter_detail_email.html:73
+#: letters/templates/letters/letter_detail_email.html:74
+#: letters/templates/letters/letter_detail_email.html:75
+#: letters/templates/letters/letter_detail_email.html:76
 msgid "No"
 msgstr "No"
 
-#: letters/templates/letters/letter_create.html:96
+#: letters/templates/letters/letter_create.html:94
 msgid "Allow Delete (1 Month Window)"
 msgstr "Allow Delete (1 Month Window)"
 
-#: letters/templates/letters/letter_create.html:98
+#: letters/templates/letters/letter_create.html:96
 msgid ""
 "If enabled, deletion is available only in the first month after creation."
 msgstr ""
 "If enabled, deletion is available only in the first month after creation."
 
-#: letters/templates/letters/letter_create.html:110
+#: letters/templates/letters/letter_create.html:108
 msgid "Allow Edit (1 Month Window)"
 msgstr "Allow Edit (1 Month Window)"
 
-#: letters/templates/letters/letter_create.html:112
+#: letters/templates/letters/letter_create.html:110
 msgid ""
 "If enabled, editing is available only in the first month after creation."
 msgstr ""
 "If enabled, editing is available only in the first month after creation."
 
-#: letters/templates/letters/letter_create.html:124
+#: letters/templates/letters/letter_create.html:122
 msgid "See Message Before Delivery"
 msgstr "See Message Before Delivery"
 
-#: letters/templates/letters/letter_create.html:126
+#: letters/templates/letters/letter_create.html:124
 msgid "If enabled, you can preview your message before it is delivered."
 msgstr "If enabled, you can preview your message before it is delivered."
 
-#: letters/templates/letters/letter_create.html:139
+#: letters/templates/letters/letter_create.html:137
 msgid "Recipient Emails (max 5)"
 msgstr "Recipient Emails (max 5)"
 
-#: letters/templates/letters/letter_create.html:145
+#: letters/templates/letters/letter_create.html:143
 msgid "Add Email"
 msgstr "Add Email"
 
-#: letters/templates/letters/letter_create.html:150
+#: letters/templates/letters/letter_create.html:148
 msgid "Add at least one recipient when \"Send to me\" is disabled."
 msgstr "Add at least one recipient when \"Send to me\" is disabled."
 
-#: letters/templates/letters/letter_create.html:164
+#: letters/templates/letters/letter_create.html:162
 msgid "Delivery Date And Time"
 msgstr "Delivery Date And Time"
 
-#: letters/templates/letters/letter_create.html:169
+#: letters/templates/letters/letter_create.html:167
 msgid "1 year and longer schedules consume your USD balance."
 msgstr "1 year and longer schedules consume your USD balance."
 
-#: letters/templates/letters/letter_create.html:172
+#: letters/templates/letters/letter_create.html:170
 msgid "1 month"
 msgstr "1 month"
 
-#: letters/templates/letters/letter_create.html:173
+#: letters/templates/letters/letter_create.html:171
 msgid "6 months"
 msgstr "6 months"
 
-#: letters/templates/letters/letter_create.html:174
+#: letters/templates/letters/letter_create.html:172
 msgid "1 year"
 msgstr "1 year"
 
-#: letters/templates/letters/letter_create.html:175
+#: letters/templates/letters/letter_create.html:173
 msgid "5 years"
 msgstr "5 years"
 
-#: letters/templates/letters/letter_create.html:176
+#: letters/templates/letters/letter_create.html:174
 msgid "10 years"
 msgstr "10 years"
 
-#: letters/templates/letters/letter_create.html:182
+#: letters/templates/letters/letter_create.html:181
+#: letters/templates/letters/physical_letter_create.html:290
+#, fuzzy
+#| msgid "Cancel edit"
+msgid "Cancel Changes"
+msgstr "Cancel edit"
+
+#: letters/templates/letters/letter_create.html:187
+#: letters/templates/letters/letter_create.html:241
+#: letters/templates/letters/physical_letter_create.html:303
+#: letters/templates/letters/physical_letter_create.html:328
+#, fuzzy
+#| msgid "Confirm password"
+msgid "Confirm Changes"
+msgstr "Confirm password"
+
+#: letters/templates/letters/letter_create.html:189
 msgid "Seal and Store"
 msgstr "Seal and Store"
 
-#: letters/templates/letters/letter_create.html:187
-msgid "Scheduling cost:"
-msgstr "Scheduling cost:"
+#: letters/templates/letters/letter_create.html:202
+#: letters/templates/letters/physical_letter_create.html:236
+msgid "Cost Summary"
+msgstr ""
 
-#: letters/templates/letters/letter_create.html:187
-msgid "will be deducted from your balance on save."
-msgstr "will be deducted from your balance on save."
+#: letters/templates/letters/letter_create.html:225
+msgid "Final charge is validated on server after exact schedule analysis."
+msgstr ""
 
-#: letters/templates/letters/letter_create.html:190
+#: letters/templates/letters/letter_create.html:230
 msgid "Your balance is not enough for this schedule."
 msgstr "Your balance is not enough for this schedule."
 
-#: letters/templates/letters/letter_create.html:191
+#: letters/templates/letters/letter_create.html:231
 msgid "Top up balance"
+msgstr "Top up balance"
+
+#: letters/templates/letters/letter_create.html:245
+#: letters/templates/letters/partials/password_change_panel.html:98
+#: letters/templates/letters/physical_letter_create.html:332
+msgid "Cancel"
+msgstr "Cancel"
+
+#: letters/templates/letters/letter_create.html:248
+#: letters/templates/letters/physical_letter_create.html:335
+#, fuzzy
+#| msgid "Confirm password"
+msgid "Confirm"
+msgstr "Confirm password"
+
+#: letters/templates/letters/letter_create.html:256
+#: letters/templates/letters/physical_letter_create.html:343
+#, fuzzy
+#| msgid "Your balance is not enough for this schedule."
+msgid "Your balance is not enough"
+msgstr "Your balance is not enough for this schedule."
+
+#: letters/templates/letters/letter_create.html:263
+#: letters/templates/letters/physical_letter_create.html:350
+#, fuzzy
+#| msgid "Top up balance"
+msgid "Top Up Balance"
 msgstr "Top up balance"
 
 #: letters/templates/letters/letter_create_blocked.html:4
@@ -1348,13 +2017,19 @@ msgid "Email verification required"
 msgstr "Email verification required"
 
 #: letters/templates/letters/letter_create_blocked.html:13
-msgid "Verify your email before creating a letter"
-msgstr "Verify your email before creating a letter"
+#, fuzzy
+#| msgid "Verify your primary email to create letters"
+msgid "Verify your email to create letters"
+msgstr "Verify your primary email to create letters"
 
 #: letters/templates/letters/letter_create_blocked.html:16
+#, fuzzy
+#| msgid ""
+#| "Your account is active and you can browse the app, but letter creation is "
+#| "locked until you confirm your email address."
 msgid ""
-"Your account is active and you can browse the app, but letter creation is "
-"locked until you confirm your email address."
+"Your account is active and you can browse the app, but both email and "
+"physical letter creation is locked until you confirm your email address."
 msgstr ""
 "Your account is active and you can browse the app, but letter creation is "
 "locked until you confirm your email address."
@@ -1363,6 +2038,179 @@ msgstr ""
 #: letters/templates/letters/vault.html:55
 msgid "Resend activation email"
 msgstr "Resend activation email"
+
+#: letters/templates/letters/letter_detail_email.html:4
+#, fuzzy
+#| msgid "Edit Letter Text"
+msgid "Email Letter Details"
+msgstr "Edit Letter Text"
+
+#: letters/templates/letters/letter_detail_email.html:17
+#, fuzzy
+#| msgid "Letter"
+msgid "Email Letter"
+msgstr "Letter"
+
+#: letters/templates/letters/letter_detail_email.html:27
+#: letters/templates/letters/letter_detail_physical.html:27
+#, fuzzy
+#| msgid "Back to Letters"
+msgid "Back to letters"
+msgstr "Back to Letters"
+
+# --- Letter Create ---
+#: letters/templates/letters/letter_detail_email.html:33
+#: letters/templates/letters/letter_detail_physical.html:33
+#, fuzzy
+#| msgid "Create Letter"
+msgid "Created"
+msgstr "Create Letter"
+
+#: letters/templates/letters/letter_detail_email.html:39
+#, fuzzy
+#| msgid "Deliver"
+msgid "Delivery"
+msgstr "Deliver"
+
+#: letters/templates/letters/letter_detail_email.html:45
+#: letters/templates/letters/letter_detail_physical.html:43
+#: letters/templates/letters/vault.html:179
+msgid "Status"
+msgstr "Status"
+
+#: letters/templates/letters/letter_detail_email.html:49
+#: letters/templates/letters/vault.html:194
+msgid "Price"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_email.html:56
+msgid "Recipients"
+msgstr "Recipients"
+
+#: letters/templates/letters/letter_detail_email.html:59
+msgid "Only me"
+msgstr "Only me"
+
+#: letters/templates/letters/letter_detail_email.html:70
+msgid "Settings"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_email.html:74
+msgid "Allow Delete Early"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_email.html:75
+msgid "Allow Edit Early"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_email.html:76
+msgid "Allow Sender Preview"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_email.html:82
+#, fuzzy
+#| msgid "Content"
+msgid "Letter Content"
+msgstr "Content"
+
+#: letters/templates/letters/letter_detail_email.html:93
+#: letters/templates/letters/letter_detail_physical.html:154
+#, fuzzy
+#| msgid "Edit Letter Text"
+msgid "Edit Letter"
+msgstr "Edit Letter Text"
+
+#: letters/templates/letters/letter_detail_email.html:100
+msgid "Delete this letter permanently? This cannot be undone."
+msgstr "Delete this letter permanently? This cannot be undone."
+
+# --- Letter Create ---
+#: letters/templates/letters/letter_detail_email.html:108
+#: letters/templates/letters/letter_detail_physical.html:168
+#, fuzzy
+#| msgid "Create Letter"
+msgid "Delete Letter"
+msgstr "Create Letter"
+
+#: letters/templates/letters/letter_detail_email.html:113
+msgid "This letter is no longer editable or deletable."
+msgstr ""
+
+#: letters/templates/letters/letter_detail_physical.html:4
+msgid "Physical Letter Details"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_physical.html:17
+msgid "Physical Letter"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_physical.html:20
+#, fuzzy
+#| msgid "Letter"
+msgid "Letter to"
+msgstr "Letter"
+
+#: letters/templates/letters/letter_detail_physical.html:39
+#: letters/templates/letters/physical_letter_create.html:133
+#, fuzzy
+#| msgid "Delivery Date"
+msgid "Requested Delivery Date"
+msgstr "Delivery Date"
+
+#: letters/templates/letters/letter_detail_physical.html:47
+msgid "Total Price"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_physical.html:54
+msgid "Address"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_physical.html:66
+#: letters/templates/letters/physical_letter_create.html:145
+#, fuzzy
+#| msgid "Message"
+msgid "Message Text"
+msgstr "Message"
+
+#: letters/templates/letters/letter_detail_physical.html:95
+#: letters/templates/letters/letter_detail_physical.html:137
+msgid "Open"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_physical.html:108
+msgid "Files"
+msgstr ""
+
+#: letters/templates/letters/letter_detail_physical.html:160
+#, fuzzy
+#| msgid "Delete this letter permanently? This cannot be undone."
+msgid "Delete this letter permanently?"
+msgstr "Delete this letter permanently? This cannot be undone."
+
+#: letters/templates/letters/operation_success.html:4
+msgid "Operation Successful"
+msgstr ""
+
+#: letters/templates/letters/operation_success.html:18
+#: letters/templates/letters/partials/operation_success.html:14
+msgid ""
+"This is a draft letter. You can edit it anytime before paying and submitting."
+msgstr ""
+
+# --- Letter Create ---
+#: letters/templates/letters/operation_success.html:32
+#: letters/templates/letters/partials/operation_success.html:28
+#, fuzzy
+#| msgid "Create Letter"
+msgid "Create New Letter"
+msgstr "Create Letter"
+
+#: letters/templates/letters/operation_success.html:37
+#: letters/templates/letters/partials/operation_success.html:33
+#, fuzzy
+#| msgid "Continue with Google"
+msgid "Continue Editing"
+msgstr "Continue with Google"
 
 #: letters/templates/letters/partials/contact_ticket_card.html:20
 msgid "Comments"
@@ -1410,9 +2258,26 @@ msgstr "Remaining balance:"
 msgid "View My Letters"
 msgstr "View My Letters"
 
+# --- Letter Create ---
 #: letters/templates/letters/partials/letter_saved_modal.html:34
-msgid "Create Another"
-msgstr "Create Another"
+#: letters/templates/letters/payment_success.html:24
+#: letters/templates/letters/vault.html:81
+#: letters/templates/letters/vault.html:211
+#, fuzzy
+#| msgid "Create Letter"
+msgid "Create Email Letters"
+msgstr "Create Letter"
+
+# --- Letter Create ---
+#: letters/templates/letters/partials/letter_saved_modal.html:40
+#: letters/templates/letters/payment_success.html:27
+#: letters/templates/letters/physical_letter_create.html:4
+#: letters/templates/letters/vault.html:87
+#: letters/templates/letters/vault.html:214
+#, fuzzy
+#| msgid "Create Letter"
+msgid "Create Physical Letter"
+msgstr "Create Letter"
 
 #: letters/templates/letters/partials/password_change_panel.html:5
 #: letters/templates/letters/partials/password_change_panel.html:18
@@ -1426,10 +2291,6 @@ msgstr "Update your account password."
 #: letters/templates/letters/partials/password_change_panel.html:37
 msgid "Current password"
 msgstr "Current password"
-
-#: letters/templates/letters/partials/password_change_panel.html:98
-msgid "Cancel"
-msgstr "Cancel"
 
 #: letters/templates/letters/partials/password_change_panel.html:110
 msgid "Password is hidden for security."
@@ -1463,6 +2324,216 @@ msgstr "Remove"
 #: letters/templates/letters/partials/secondary_email_panel.html:79
 msgid "No secondary emails yet."
 msgstr "No secondary emails yet."
+
+#: letters/templates/letters/payment_error.html:4
+msgid "Payment Not Completed"
+msgstr ""
+
+#: letters/templates/letters/payment_error.html:9
+#: letters/templates/letters/payment_success.html:9
+msgid "Payment"
+msgstr ""
+
+#: letters/templates/letters/payment_error.html:11
+msgid "Payment was not completed"
+msgstr ""
+
+#: letters/templates/letters/payment_error.html:14
+msgid "The checkout was cancelled or failed before confirmation."
+msgstr ""
+
+#: letters/templates/letters/payment_error.html:18
+#, fuzzy
+#| msgid "Back to home"
+msgid "Back to Dashboard"
+msgstr "Back to home"
+
+#: letters/templates/letters/payment_error.html:21
+msgid "Try Again"
+msgstr ""
+
+# --- Contact ---
+#: letters/templates/letters/payment_error.html:24
+#, fuzzy
+#| msgid "Contact Us"
+msgid "Contact Support"
+msgstr "Contact Us"
+
+#: letters/templates/letters/payment_success.html:4
+msgid "Payment Received"
+msgstr ""
+
+#: letters/templates/letters/payment_success.html:11
+msgid "Payment successful"
+msgstr ""
+
+#: letters/templates/letters/payment_success.html:14
+msgid ""
+"Thanks. Your payment is being processed and your balance should update "
+"within a few moments."
+msgstr ""
+
+#: letters/templates/letters/payment_success.html:17
+msgid ""
+"To unlock 1 year+ scheduling, make sure your balance reaches at least $1.00."
+msgstr ""
+
+#: letters/templates/letters/payment_success.html:21
+#, fuzzy
+#| msgid "Back to login"
+msgid "Back to Balance"
+msgstr "Back to login"
+
+#: letters/templates/letters/physical_letter_create.html:19
+msgid "Print and Mail Request"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:22
+msgid ""
+"Submit text/files and destination details for manual admin printing and "
+"shipping."
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:25
+msgid ""
+"Delivery depends on destination country and usually happens 1-4 days after "
+"your requested date."
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:33
+msgid "Draft saved successfully."
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:35
+msgid "Physical letter created successfully."
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:39
+msgid "Reference ID:"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:62
+msgid "Suggested from files"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:91
+#, fuzzy
+#| msgid "Recipients"
+msgid "Recipient Name"
+msgstr "Recipients"
+
+#: letters/templates/letters/physical_letter_create.html:98
+#, fuzzy
+#| msgid "Amount"
+msgid "Country"
+msgstr "Amount"
+
+#: letters/templates/letters/physical_letter_create.html:105
+msgid "Street Address"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:112
+msgid "City"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:119
+msgid "State / Province"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:126
+msgid "Postal Code"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:138
+#, python-format
+msgid ""
+"\n"
+"                        Allowed range: today to %(years)s years ahead.\n"
+"                        "
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:150
+msgid "Optional when files are uploaded."
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:155
+msgid "Text Files (max 3: PDF, TXT, DOCX)"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:157
+msgid "Upload text files"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:159
+msgid "Drop text files here"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:160
+#: letters/templates/letters/physical_letter_create.html:183
+msgid "or click to choose files"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:161
+#: letters/templates/letters/physical_letter_create.html:184
+msgid "Max file size:"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:178
+msgid "Photos (max 3: JPG, PNG)"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:180
+msgid "Upload photo files"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:182
+msgid "Drop images here"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:203
+msgid "Total Printable Pages"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:207
+msgid "Pages To Print"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:209
+msgid "Suggested from files: 0"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:214
+msgid "pages"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:218
+msgid ""
+"Auto minimum equals uploaded text files count. You can increase it manually."
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:261
+msgid "Final charge is validated on server after exact page analysis."
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:273
+#, fuzzy
+#| msgid "Delete this letter permanently? This cannot be undone."
+msgid "Delete this draft permanently?"
+msgstr "Delete this letter permanently? This cannot be undone."
+
+#: letters/templates/letters/physical_letter_create.html:281
+msgid "Delete"
+msgstr "Delete"
+
+#: letters/templates/letters/physical_letter_create.html:305
+msgid "Pay And Submit"
+msgstr ""
+
+#: letters/templates/letters/physical_letter_create.html:317
+#, fuzzy
+#| msgid "Save profile"
+msgid "Save Draft"
+msgstr "Save profile"
 
 #: letters/templates/letters/privacy.html:4
 msgid "LetterGator | Privacy"
@@ -1742,82 +2813,145 @@ msgstr ""
 "You can explore Letters, but you must verify your email before creating a "
 "new letter."
 
-#: letters/templates/letters/vault.html:87
+#: letters/templates/letters/vault.html:107
 msgid "Why Sign In"
 msgstr "Why Sign In"
 
-#: letters/templates/letters/vault.html:87
-msgid "Existing Letters"
-msgstr "Existing Letters"
+#: letters/templates/letters/vault.html:109
+#, fuzzy
+#| msgid "Letters"
+msgid "All Letters"
+msgstr "Letters"
 
-#: letters/templates/letters/vault.html:102
+#: letters/templates/letters/vault.html:115
+msgid "Sort"
+msgstr ""
+
+#: letters/templates/letters/vault.html:124
+msgid "Creation date (latest first)"
+msgstr ""
+
+#: letters/templates/letters/vault.html:127
+msgid "Creation date (oldest first)"
+msgstr ""
+
+#: letters/templates/letters/vault.html:130
+msgid "Lowest price"
+msgstr ""
+
+#: letters/templates/letters/vault.html:133
+msgid "Highest price"
+msgstr ""
+
+#: letters/templates/letters/vault.html:142
 msgid "Access required"
 msgstr "Access required"
 
-#: letters/templates/letters/vault.html:104
-msgid ""
-"To view your personal letters table and decrypted previews (when allowed), "
-"please log in or create an account."
+#: letters/templates/letters/vault.html:144
+#, fuzzy
+#| msgid ""
+#| "To view your personal letters table and decrypted previews (when "
+#| "allowed), please log in or create an account."
+msgid "To view your letters, please log in or create an account."
 msgstr ""
 "To view your personal letters table and decrypted previews (when allowed), "
 "please log in or create an account."
 
-#: letters/templates/letters/vault.html:121
-msgid "Content"
-msgstr "Content"
+#: letters/templates/letters/vault.html:184
+msgid "Draft"
+msgstr ""
 
-#: letters/templates/letters/vault.html:122
-msgid "Recipients"
-msgstr "Recipients"
+#: letters/templates/letters/vault.html:190
+msgid "Destination"
+msgstr ""
 
-#: letters/templates/letters/vault.html:123
-msgid "Delivery Date"
-msgstr "Delivery Date"
+#: letters/templates/letters/vault.html:200
+#, fuzzy
+#| msgid "Profile details"
+msgid "Open details"
+msgstr "Profile details"
 
-#: letters/templates/letters/vault.html:124
-msgid "Status"
-msgstr "Status"
-
-#: letters/templates/letters/vault.html:125
-msgid "Delete"
-msgstr "Delete"
-
-#: letters/templates/letters/vault.html:153
-msgid "Display More"
-msgstr "Display More"
-
-#: letters/templates/letters/vault.html:199
-msgid "Only me"
-msgstr "Only me"
-
-#: letters/templates/letters/vault.html:235
-msgid "Delete this letter permanently? This cannot be undone."
-msgstr "Delete this letter permanently? This cannot be undone."
-
-#: letters/templates/letters/vault.html:241
-msgid "Available until"
-msgstr "Available until"
-
-#: letters/templates/letters/vault.html:244
-msgid "You cannot delete this letter."
-msgstr "You cannot delete this letter."
-
-#: letters/templates/letters/vault.html:254
+#: letters/templates/letters/vault.html:207
 msgid "No letters yet"
 msgstr "No letters yet"
 
-#: letters/templates/letters/vault.html:255
+#: letters/templates/letters/vault.html:208
 msgid "Create your first letter to start building your timeline."
 msgstr "Create your first letter to start building your timeline."
 
-#: letters/templates/letters/vault.html:270
-msgid "Letter"
-msgstr "Letter"
+#~ msgid "How pricing works"
+#~ msgstr "How pricing works"
 
-#: letters/templates/letters/vault.html:283
-msgid "Edit Letter Text"
-msgstr "Edit Letter Text"
+#~ msgid ""
+#~ "Letters delivered <strong>under 1 year</strong> from today are "
+#~ "<strong>free</strong>."
+#~ msgstr ""
+#~ "Letters delivered <strong>under 1 year</strong> from today are "
+#~ "<strong>free</strong>."
 
-#: letters/templates/letters/vault.html:294
-msgid "Save Text"
-msgstr "Save Text"
+#~ msgid ""
+#~ "Letters delivered <strong>1 year or more</strong> from today cost "
+#~ "<strong>$0.50 per year</strong>."
+#~ msgstr ""
+#~ "Letters delivered <strong>1 year or more</strong> from today cost "
+#~ "<strong>$0.50 per year</strong>."
+
+#~ msgid "Add Funds — Coming Soon"
+#~ msgstr "Add Funds — Coming Soon"
+
+#, fuzzy
+#~| msgid "Send your message"
+#~ msgid "One future message."
+#~ msgstr "Send your message"
+
+#, fuzzy, python-format
+#~| msgid ""
+#~| "You have <span class=\"font-semibold text-[#014421]\">%(balance)s</span> "
+#~| "at your balance for creating long term letters."
+#~ msgid ""
+#~ "You have <span class=\"font-semibold text-[#014421]\">$%(balance)s</span> "
+#~ "at your balance for creating long term letters."
+#~ msgstr ""
+#~ "You have <span class=\"font-semibold text-[#014421]\">%(balance)s</span> "
+#~ "at your balance for creating long term letters."
+
+# --- Landing: See how section ---
+#~ msgid "How your letter travels through time"
+#~ msgstr "How your letter travels through time"
+
+#~ msgid ""
+#~ "Four simple steps take your message from idea to inbox — on exactly the "
+#~ "day and time you choose."
+#~ msgstr ""
+#~ "Four simple steps take your message from idea to inbox — on exactly the "
+#~ "day and time you choose."
+
+#~ msgid "LetterGator sends it automatically — with retry logic built in."
+#~ msgstr "LetterGator sends it automatically — with retry logic built in."
+
+#~ msgid "See the full journey"
+#~ msgstr "See the full journey"
+
+#~ msgid "Balance usage for long-term delivery"
+#~ msgstr "Balance usage for long-term delivery"
+
+#~ msgid "will be deducted from your balance on save."
+#~ msgstr "will be deducted from your balance on save."
+
+#~ msgid "Verify your email before creating a letter"
+#~ msgstr "Verify your email before creating a letter"
+
+#~ msgid "Create Another"
+#~ msgstr "Create Another"
+
+#~ msgid "Display More"
+#~ msgstr "Display More"
+
+#~ msgid "Available until"
+#~ msgstr "Available until"
+
+#~ msgid "You cannot delete this letter."
+#~ msgstr "You cannot delete this letter."
+
+#~ msgid "Save Text"
+#~ msgstr "Save Text"
