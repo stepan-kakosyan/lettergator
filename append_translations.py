@@ -571,6 +571,7 @@ def append_entries(path, lang_idx):
             f.write(line)
     print(f"Appended {len([l for l in lines if 'msgid' in l])} entries to {path}")
 
+
 append_entries('locale/en/LC_MESSAGES/django.po', 1)
 append_entries('locale/ru/LC_MESSAGES/django.po', 2)
 append_entries('locale/hy/LC_MESSAGES/django.po', 3)

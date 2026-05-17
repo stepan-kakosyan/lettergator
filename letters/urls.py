@@ -1,4 +1,4 @@
-from django.urls import path
+﻿from django.urls import path
 
 from .views import (
     balance_page,
@@ -6,7 +6,6 @@ from .views import (
     create_checkout_view,
     contact_page,
     contact_ticket_comment_view,
-    concept_page,
     create_letter_page,
     dashboard_password_change_view,
     dashboard_secondary_emails_view,
@@ -23,6 +22,7 @@ from .views import (
     payment_error_view,
     payment_success_view,
     PhysicalLetterCreateView,
+    pricing_page,
     privacy_page,
     terms_page,
 )
@@ -58,7 +58,8 @@ urlpatterns = [
     path("how/", how_page, name="how-page"),
     path("calculator/countries/", calculator_countries_fragment, name="calc-countries-fragment"),
     path("contact/", contact_page, name="contact-page"),
-    path("why/", concept_page, name="why-page"),
+    path("why/", how_page, name="why-page"),
+    path("pricing/", pricing_page, name="pricing-page"),
     path("privacy/", privacy_page, name="privacy-page"),
     path("faq/", faq_page, name="faq-page"),
     path("terms/", terms_page, name="terms-page"),
@@ -88,3 +89,5 @@ urlpatterns = [
         name="contact-ticket-comment",
     ),
 ]
+
+

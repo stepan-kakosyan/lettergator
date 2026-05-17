@@ -1,4 +1,4 @@
-{% load static i18n %}
+﻿{% load static i18n %}
 {% get_current_language as CURRENT_LANG %}
 
 <header class="w-full px-6 py-2 border-b border-gray-100 relative sticky top-0 z-40 bg-white">
@@ -22,8 +22,8 @@
         <nav class="hidden md:flex gap-8 text-sm font-medium text-gray-500">
             <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'letters-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "Letters" %}</a>
             <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'contact-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "Contact" %}</a>
-            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'why-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "See why" %}</a>
-            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "See how" %}</a>
+            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'how-page' or request.resolver_match.url_name == 'why-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "How it works" %}</a>
+            <a href="{% url 'pricing-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'pricing-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "Piricng" %}</a>
         </nav>
 
         <div class="flex items-center gap-3">
@@ -82,11 +82,11 @@
                     </a>
                     <a href="{% url 'set-language' %}?lang=ru" class="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors {% if CURRENT_LANG == 'ru' %}font-semibold text-[#014421]{% endif %}" role="menuitem">
                         <img src="{% static 'img/flags/ru.svg' %}" class="w-5 h-4 rounded-sm border border-gray-200" alt="RU">
-                        Русский
+                        Ð ÑƒÑÑÐºÐ¸Ð¹
                     </a>
                     <a href="{% url 'set-language' %}?lang=hy" class="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors {% if CURRENT_LANG == 'hy' %}font-semibold text-[#014421]{% endif %}" role="menuitem">
                         <img src="{% static 'img/flags/hy.svg' %}" class="w-5 h-4 rounded-sm border border-gray-200" alt="HY">
-                        Հայերեն
+                        Õ€Õ¡ÕµÕ¥Ö€Õ¥Õ¶
                     </a>
                 </div>
             </div>
@@ -114,8 +114,8 @@
         <nav class="flex flex-col gap-4 text-sm font-medium text-gray-600">
             <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'letters-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Letters" %}</a>
             <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'contact-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Contact" %}</a>
-            <a href="{% url 'why-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'why-page' %}text-[#014421] font-semibold{% endif %}">{% trans "See why" %}</a>
-            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] font-semibold{% endif %}">{% trans "See how" %}</a>
+            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'how-page' or request.resolver_match.url_name == 'why-page' %}text-[#014421] font-semibold{% endif %}">{% trans "How it works" %}</a>
+            <a href="{% url 'pricing-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'pricing-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Piricng" %}</a>
             {% if not request.user.is_authenticated %}
             <hr class="border-gray-100">
             <a href="{% url 'login' %}" class="font-bold text-[#014421]">{% trans "Login" %}</a>

@@ -1,4 +1,4 @@
-import hashlib
+﻿import hashlib
 import hmac
 import json
 import logging
@@ -124,6 +124,12 @@ def how_page(request):
         }
     context = {"countries_pricing_json": countries_data}
     return render(request, "letters/how.html", context)
+
+
+def pricing_page(request):
+    country_pricing = CountryPricing.objects.all().order_by("country_name")
+    context = {"country_pricing": country_pricing}
+    return render(request, "letters/pricing.html", context)
 
 
 def faq_page(request):
@@ -1234,7 +1240,7 @@ def get_deletion_info_view(request):
                 "total_price": f"{letter.total_price:.2f}",
                 "message": (
                     f"We will keep ${deletion_info['fee']:.2f} "
-                    f"({int(deletion_info['years_passed'])} years × $0.50 + $1.00 base fee). "
+                    f"({int(deletion_info['years_passed'])} years Ã— $0.50 + $1.00 base fee). "
                     f"${deletion_info['refund']:.2f} will be refunded to your balance."
                 ),
             })
@@ -1494,3 +1500,4 @@ def dashboard_view(request):
         "pending_primary_email": request.user.pending_email,
     }
     return render(request, "letters/dashboard.html", context)
+

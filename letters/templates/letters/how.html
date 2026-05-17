@@ -1,369 +1,336 @@
 {% extends "base.html" %}
-
 {% load static i18n %}
 
-{% block title %}{% trans "LetterGator | See how" %}{% endblock %}
+{% block title %}{% trans "LetterGator | How it works" %}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/concept.css' %}">
 {% endblock %}
 
 {% block content %}
 
-    <!-- Hero -->
-    <section class="flex flex-col items-center justify-center px-6 pt-12 pb-16 max-w-4xl mx-auto text-center">
-        <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold mb-3 fade-in-up delay-100">{% trans "How it works" %}</p>
-        <h1 class="text-5xl md:text-6xl font-black tracking-tight text-gray-900 mb-5 fade-in-up delay-100">
-            {% trans "Deliver your message" %} <span class="text-[#014421]">{% trans "your way." %}</span>
+<span id="cg-cta-href" data-href="{% url 'letters-page' %}" hidden></span>
+
+<section class="px-6 pt-14 pb-10 md:pt-20 md:pb-14">
+    <div class="max-w-4xl mx-auto text-center">
+        <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold mb-3">{% trans "How it works" %}</p>
+        <h1 class="text-5xl md:text-6xl font-black tracking-tight text-gray-900 mb-5">
+            {% trans "Why and how" %}
+            <span class="text-[#014421] block">{% trans "future letters work." %}</span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-500 max-w-2xl fade-in-up delay-200">
+        <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto">
             {% blocktrans trimmed %}
-            Choose email for digital delivery or physical letters for tangible keepsakes. 
-            Both can be scheduled for exactly when they matter most.
+            Explore why people write letters to the future and exactly how email
+            and physical delivery work from start to finish.
             {% endblocktrans %}
         </p>
-    </section>
+    </div>
+</section>
 
-    <!-- Stepper -->
-    <section class="px-6 pb-24">
-        <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
+<section id="why-people-write" class="relative px-6 pt-4 pb-24 overflow-hidden">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+        <div class="absolute -top-20 left-1/2 -translate-x-1/2 h-72 w-72 rounded-full bg-emerald-100/60 blur-3xl"></div>
+        <div class="absolute top-40 -left-20 h-52 w-52 rounded-full bg-slate-100/70 blur-2xl"></div>
+        <div class="absolute bottom-10 -right-16 h-56 w-56 rounded-full bg-emerald-50/80 blur-3xl"></div>
+    </div>
 
-            <div class="steps-list">
+    <div class="relative max-w-6xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-10 md:mb-12">
+            <p class="text-xs md:text-sm uppercase tracking-[0.24em] text-[#014421] font-semibold">{% trans "See why" %}</p>
+            <h2 class="mt-4 text-3xl md:text-4xl font-black tracking-tight text-gray-900 leading-[1.1]">
+                {% trans "Why people send letters" %}
+                <span class="block text-[#014421]">{% trans "into the future." %}</span>
+            </h2>
+            <p class="mt-5 text-sm md:text-base text-gray-600 leading-relaxed">
+                {% blocktrans trimmed %}
+                Explore scenarios across categories. Send digital letters by email or
+                physical letters by mail— each form of expression has its own power
+                for the right moment.
+                {% endblocktrans %}
+            </p>
+        </div>
 
-                <!-- Step 1 -->
-                <div class="step-row">
-                    <div class="step-marker-col">
-                        <div class="step-circle">1</div>
-                        <div class="step-connector"></div>
-                    </div>
-                    <div class="step-body-col">
-                        <div class="step-inner">
-                            <div class="step-text">
-                                <p class="step-kicker">{% trans "Compose" %}</p>
-                                <h3 class="step-heading">{% trans "Create a meaningful letter in minutes." %}</h3>
-                                <p class="step-desc">
-                                    {% blocktrans trimmed %}
-                                    Write your subject line and full message body. There are no character
-                                    limits — pour in as much as you need. The letter is immediately
-                                    attached to your account, safely stored, and ready for the next step.
-                                    {% endblocktrans %}
-                                </p>
-                                <ul class="step-bullets">
-                                    <li>{% trans "Rich message body with full text support" %}</li>
-                                    <li>{% trans "Clear subject line for recipient context" %}</li>
-                                    <li>{% trans "Auto-saved to your account dashboard" %}</li>
-                                </ul>
-                            </div>
-                            <img src="{% static 'img/step1.png' %}" alt="{% trans 'Compose' %}" class="step-img" />
+        <article class="rounded-3xl border border-gray-200 bg-white/90 backdrop-blur-sm p-6 md:p-8 shadow-sm">
+            <div class="space-y-8 md:space-y-10">
+                <div class="flex flex-wrap items-start justify-between gap-4">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <span class="text-2xl md:text-3xl">&#9997;&#65039;</span>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900">{% trans "Personal" %}</h3>
+                            <p class="mt-2 text-sm md:text-base text-gray-600 max-w-2xl">{% trans "Write to who you'll become. Capture doubt, clarity, and conviction before life rewrites the memory." %}</p>
                         </div>
                     </div>
+                    <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">{% trans "4 scenarios" %}</span>
+                </div>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 md:gap-5" id="explorer-personal" data-active-cat="personal">
+                    <div class="cg-scenario-list space-y-2" id="list-personal"></div>
+                    <div class="cg-scenario-detail rounded-2xl border border-gray-200 bg-gray-50/80 p-5" id="detail-personal"></div>
                 </div>
 
-                <!-- Step 2 -->
-                <div class="step-row">
-                    <div class="step-marker-col">
-                        <div class="step-circle">2</div>
-                        <div class="step-connector"></div>
-                    </div>
-                    <div class="step-body-col">
-                        <div class="step-inner">
-                            <div class="step-text">
-                                <p class="step-kicker">{% trans "Seal" %}</p>
-                                <h3 class="step-heading">{% trans "Choose privacy and ownership controls." %}</h3>
-                                <p class="step-desc">
-                                    {% blocktrans trimmed %}
-                                    Before scheduling, decide the rules that govern your letter.
-                                    Can you peek at the content before delivery? Should edits be
-                                    blocked once scheduled? These controls lock in your intentions
-                                    and prevent second-guessing.
-                                    {% endblocktrans %}
-                                </p>
-                                <ul class="step-bullets">
-                                    <li>{% trans "Toggle content preview on or off" %}</li>
-                                    <li>{% trans "Allow or block edits in the first month" %}</li>
-                                    <li>{% trans "Enable or disable early deletion" %}</li>
-                                </ul>
-                            </div>
-                            <img src="{% static 'img/step2.png' %}" alt="{% trans 'Seal' %}" class="step-img" />
+                <div class="border-t border-gray-200"></div>
+
+                <div class="flex flex-wrap items-start justify-between gap-4">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <span class="text-2xl md:text-3xl">&#127968;</span>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900">{% trans "Family" %}</h3>
+                            <p class="mt-2 text-sm md:text-base text-gray-600 max-w-2xl">{% trans "Bridge the distance. Send words that will land on an anniversary, a birthday, or a day that needs them most." %}</p>
                         </div>
                     </div>
+                    <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">{% trans "3 scenarios" %}</span>
+                </div>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 md:gap-5" id="explorer-family" data-active-cat="family">
+                    <div class="cg-scenario-list space-y-2" id="list-family"></div>
+                    <div class="cg-scenario-detail rounded-2xl border border-gray-200 bg-gray-50/80 p-5" id="detail-family"></div>
                 </div>
 
-                <!-- Step 3 -->
-                <div class="step-row">
-                    <div class="step-marker-col">
-                        <div class="step-circle">3</div>
-                        <div class="step-connector"></div>
-                    </div>
-                    <div class="step-body-col">
-                        <div class="step-inner">
-                            <div class="step-text">
-                                <p class="step-kicker">{% trans "Schedule" %}</p>
-                                <h3 class="step-heading">{% trans "Set exact timing for emotional impact." %}</h3>
-                                <p class="step-desc">
-                                    {% blocktrans trimmed %}
-                                    Pick the precise date and time your message should land.
-                                    Use quick-select presets — 1 month, 1 year, 5 years, 10 years —
-                                    or dial in a custom moment: a birthday, anniversary, or milestone
-                                    you already know is coming.
-                                    {% endblocktrans %}
-                                </p>
-                                <ul class="step-bullets">
-                                    <li>{% trans "Preset slots for common future milestones" %}</li>
-                                    <li>{% trans "Custom date-and-time picker for exact moments" %}</li>
-                                    <li>{% trans "Delivery time locked after confirmation" %}</li>
-                                </ul>
-                            </div>
-                            <img src="{% static 'img/step3.png' %}" alt="{% trans 'Schedule' %}" class="step-img" />
+                <div class="border-t border-gray-200"></div>
+
+                <div class="flex flex-wrap items-start justify-between gap-4">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <span class="text-2xl md:text-3xl">&#128640;</span>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900">{% trans "Team" %}</h3>
+                            <p class="mt-2 text-sm md:text-base text-gray-600 max-w-2xl">{% trans "Preserve what the team knows today. Deliver it to the team that needs it tomorrow." %}</p>
                         </div>
                     </div>
+                    <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">{% trans "3 scenarios" %}</span>
+                </div>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 md:gap-5" id="explorer-team" data-active-cat="team">
+                    <div class="cg-scenario-list space-y-2" id="list-team"></div>
+                    <div class="cg-scenario-detail rounded-2xl border border-gray-200 bg-gray-50/80 p-5" id="detail-team"></div>
                 </div>
 
-                <!-- Step 4 -->
-                <div class="step-row is-last">
-                    <div class="step-marker-col">
-                        <div class="step-circle">4</div>
-                    </div>
-                    <div class="step-body-col">
-                        <div class="step-inner">
-                            <div class="step-text">
-                                <p class="step-kicker">{% trans "Deliver" %}</p>
-                                <h3 class="step-heading">{% trans "Automatic delivery with fallback reliability." %}</h3>
-                                <p class="step-desc">
-                                    {% blocktrans trimmed %}
-                                    When the clock hits your chosen moment, LetterGator dispatches
-                                    your message to every selected recipient simultaneously.
-                                    Built-in retry logic protects against delivery failures so your
-                                    words arrive — no matter what happens between now and then.
-                                    {% endblocktrans %}
-                                </p>
-                                <ul class="step-bullets">
-                                    <li>{% trans "Sends to all selected recipients at once" %}</li>
-                                    <li>{% trans "Retry logic guards against delivery failures" %}</li>
-                                    <li>{% trans "Confirmation logged to your account history" %}</li>
-                                </ul>
-                            </div>
-                            <img src="{% static 'img/step4.png' %}" alt="{% trans 'Deliver' %}" class="step-img" />
+                <div class="border-t border-gray-200"></div>
+
+                <div class="flex flex-wrap items-start justify-between gap-4">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <span class="text-2xl md:text-3xl">&#127942;</span>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900">{% trans "Milestone" %}</h3>
+                            <p class="mt-2 text-sm md:text-base text-gray-600 max-w-2xl">{% trans "Mark the moments that matter. Retirement, relocations, difficult dates" %} &mdash; {% trans "preserved and delivered when they count." %}</p>
                         </div>
                     </div>
+                    <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">{% trans "3 scenarios" %}</span>
                 </div>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 md:gap-5" id="explorer-milestone" data-active-cat="milestone">
+                    <div class="cg-scenario-list space-y-2" id="list-milestone"></div>
+                    <div class="cg-scenario-detail rounded-2xl border border-gray-200 bg-gray-50/80 p-5" id="detail-milestone"></div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
 
+<section id="email-flow" class="px-6 pb-24">
+    <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
+        <div class="mb-10">
+            <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "Email Letters" %}</p>
+            <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">{% trans "Deliver your message" %} <span class="text-[#014421]">{% trans "your way." %}</span></h2>
+            <p class="text-gray-600 mt-3 max-w-3xl">
+                {% blocktrans trimmed %}
+                Create your message now, lock delivery rules, and let LetterGator
+                deliver it at the exact future moment you choose.
+                {% endblocktrans %}
+            </p>
+        </div>
+
+        <div class="space-y-6">
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">1</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Compose" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        Write your subject and message with full text support, then
+                        save it directly to your account dashboard.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">2</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Seal" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        Choose privacy and control settings, including preview,
+                        edit window, and early deletion permissions.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">3</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Schedule" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        Pick an exact future date and time using presets or a
+                        custom moment up to 10 years ahead.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">4</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Deliver" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        LetterGator sends your letter at the scheduled time with
+                        retry protection and confirmation in your account history.
+                        {% endblocktrans %}
+                    </p>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- Form guide -->
-    <section class="px-6 pb-16">
-        <div class="max-w-5xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
-            <div class="mb-8">
-                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "Email Letters" %}</p>
-                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">{% trans "Creation form fields explained" %}</h2>
-                <p class="text-gray-600 mt-3 max-w-3xl">
-                    {% blocktrans trimmed %}
-                    This is a full guide to every setting in the Create Email Letter page,
-                    including what each field controls and how pricing is calculated.
-                    {% endblocktrans %}
-                </p>
-            </div>
+    </div>
+</section>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="rounded-2xl border border-gray-200 p-5">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">{% trans "Content fields" %}</p>
-                    <ul class="mt-3 space-y-3 text-sm text-gray-700">
-                        <li><strong>{% trans "Subject:" %}</strong> {% trans "The title of your letter, used for quick identification in your list and confirmation messages." %}</li>
-                        <li><strong>{% trans "Message:" %}</strong> {% trans "The full text body that will be stored securely and delivered at the scheduled time." %}</li>
-                        <li><strong>{% trans "Delivery Date and Time:" %}</strong> {% trans "The exact future moment when LetterGator sends your message." %}</li>
-                    </ul>
-                </div>
+<section id="physical-flow" class="px-6 pb-24">
+    <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
+        <div class="mb-10">
+            <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "Physical Letters" %}</p>
+            <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">{% trans "From message to mailbox" %}</h2>
+            <p class="text-gray-600 mt-3 max-w-3xl">
+                {% blocktrans trimmed %}
+                Physical letters combine your message with attachments
+                (documents and photos), then get printed and mailed to the
+                recipient's address. Here's how the process works.
+                {% endblocktrans %}
+            </p>
+        </div>
 
-                <div class="rounded-2xl border border-gray-200 p-5">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">{% trans "Recipient fields" %}</p>
-                    <ul class="mt-3 space-y-3 text-sm text-gray-700">
-                        <li><strong>{% trans "Send To Me:" %}</strong> {% trans "If Yes, the letter is sent to your account email." %}</li>
-                        <li><strong>{% trans "Recipient Emails:" %}</strong> {% trans "Shown when Send To Me is No. Add up to 5 valid recipient emails." %}</li>
-                        <li><strong>{% trans "Browser timezone:" %}</strong> {% trans "Captured automatically so your selected delivery time is interpreted correctly." %}</li>
-                    </ul>
-                </div>
-
-                <div class="rounded-2xl border border-gray-200 p-5">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">{% trans "Control settings" %}</p>
-                    <ul class="mt-3 space-y-3 text-sm text-gray-700">
-                        <li><strong>{% trans "Allow Delete (1 Month Window):" %}</strong> {% trans "Lets you delete the letter only during the first 30 days after creation. If this is disabled, the letter cannot be deleted after creation at all." %}</li>
-                        <li><strong>{% trans "Allow Edit (1 Month Window):" %}</strong> {% trans "Lets you edit the message only during the first 30 days after creation. If this is disabled, the message cannot be edited after creation at all." %}</li>
-                        <li><strong>{% trans "See Message Before Delivery:" %}</strong> {% trans "If enabled, you can preview your own message before its delivery time." %}</li>
-                    </ul>
-                </div>
-
-                <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
-                    <p class="text-xs uppercase tracking-widest text-[#014421] font-bold">{% trans "Pricing and balance" %}</p>
-                    <ul class="mt-3 space-y-3 text-sm text-gray-700">
-                        <li><strong>{% trans "Under 1 year:" %}</strong> {% trans "Free." %}</li>
-                        <li><strong>{% trans "1 year or more:" %}</strong> {% trans "$0.50 per year." %}</li>
-                        <li><strong>{% trans "Minimum balance to unlock 1 year+ dates:" %}</strong> {% trans "$1.00." %}</li>
-                        <li><strong>{% trans "Charge timing:" %}</strong> {% trans "The scheduling cost is deducted once when you save (Seal and Store)." %}</li>
-                    </ul>
+        <div class="space-y-6">
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">1</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Compose with attachments" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        Write your message and optionally attach files: up to 3
+                        documents (PDF, DOCX, TXT) and up to 3 photos (JPG, PNG).
+                        Everything will be printed together in one envelope.
+                        {% endblocktrans %}
+                    </p>
                 </div>
             </div>
 
-            <div class="mt-6 rounded-2xl border border-gray-200 p-5">
-                <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">{% trans "What happens when you submit" %}</p>
-                <ul class="mt-3 space-y-2 text-sm text-gray-700">
-                    <li>{% trans "The form validates required fields, recipient emails, and future delivery time." %}</li>
-                    <li>{% trans "If your selected schedule has a cost, your balance is checked before creation." %}</li>
-                    <li>{% trans "On success, the letter is sealed and stored, and the scheduling charge (if any) is logged in your balance history." %}</li>
-                </ul>
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">2</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Add recipient address" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        Enter the recipient's name, street address, city,
+                        state/province, postal code, and country. The price is
+                        calculated based on your document pages, photos, and
+                        destination country.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">3</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Set desired delivery date" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        Choose the date you'd like the letter to arrive. We'll
+                        print it on your requested date and begin shipping. You
+                        can schedule up to 10 years in advance.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">4</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Pay and confirm" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        The total price is deducted from your account balance when
+                        you confirm. Your account balance must cover the full cost
+                        of the letter.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">5</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Print and ship" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        On your requested delivery date, the letter is printed and
+                        shipped via postal service. Delivery times vary by country
+                        (typically 2-6 weeks). Track its status in your account
+                        dashboard.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">6</div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Recipient receives it" %}</h3>
+                    <p class="text-sm text-gray-600">
+                        {% blocktrans trimmed %}
+                        The letter arrives in your recipient's mailbox — a tangible,
+                        memorable keepsake that they can hold in their hands and
+                        share with others.
+                        {% endblocktrans %}
+                    </p>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- Physical Letter Journey -->
-    <section class="px-6 pb-24">
-        <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
+    </div>
+</section>
 
-            <div class="mb-10">
-                <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "Physical Letters" %}</p>
-                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">{% trans "From message to mailbox" %}</h2>
-                <p class="text-gray-600 mt-3 max-w-3xl">
-                    {% blocktrans trimmed %}
-                    Physical letters combine your message with attachments (documents and photos), 
-                    then get printed and mailed to the recipient's address. Here's how the process works.
-                    {% endblocktrans %}
-                </p>
-            </div>
-
-            <div class="space-y-6">
-                <!-- Step 1 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">1</div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Compose with attachments" %}</h3>
-                        <p class="text-sm text-gray-600">
-                            {% blocktrans trimmed %}
-                            Write your message and optionally attach files: up to 3 documents (PDF, DOCX, TXT) 
-                            and up to 3 photos (JPG, PNG). Everything will be printed together in one envelope.
-                            {% endblocktrans %}
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">2</div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Add recipient address" %}</h3>
-                        <p class="text-sm text-gray-600">
-                            {% blocktrans trimmed %}
-                            Enter the recipient's name, street address, city, state/province, postal code, 
-                            and country. The price is calculated based on your document pages, photos, and destination country.
-                            {% endblocktrans %}
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">3</div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Set desired delivery date" %}</h3>
-                        <p class="text-sm text-gray-600">
-                            {% blocktrans trimmed %}
-                            Choose the date you'd like the letter to arrive. We'll print it on your requested date 
-                            and begin shipping. You can schedule up to 10 years in advance.
-                            {% endblocktrans %}
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 4 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">4</div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Pay and confirm" %}</h3>
-                        <p class="text-sm text-gray-600">
-                            {% blocktrans trimmed %}
-                            The total price is deducted from your account balance when you confirm. 
-                            Your account balance must cover the full cost of the letter.
-                            {% endblocktrans %}
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 5 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">5</div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Print and ship" %}</h3>
-                        <p class="text-sm text-gray-600">
-                            {% blocktrans trimmed %}
-                            On your requested delivery date, the letter is printed and shipped via postal service. 
-                            Delivery times vary by country (typically 2-6 weeks). Track its status in your account dashboard.
-                            {% endblocktrans %}
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 6 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">6</div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Recipient receives it" %}</h3>
-                        <p class="text-sm text-gray-600">
-                            {% blocktrans trimmed %}
-                            The letter arrives in your recipient's mailbox — a tangible, memorable keepsake that 
-                            they can hold in their hands and share with others.
-                            {% endblocktrans %}
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-8 p-6 rounded-2xl border border-emerald-200 bg-emerald-50">
-                <p class="text-xs uppercase tracking-widest text-[#014421] font-bold">{% trans "Pricing" %}</p>
-                <ul class="mt-3 space-y-2 text-sm text-gray-700">
-                    <li><strong>{% trans "Base cost:" %}</strong> {% trans "Depends on destination country." %}</li>
-                    <li><strong>{% trans "Per-page fee:" %}</strong> {% trans "$0.50 per printed page (documents + message)." %}</li>
-                    <li><strong>{% trans "Per-photo fee:" %}</strong> {% trans "$1.00 per attached photo." %}</li>
-                    <li><strong>{% trans "Per-year fee:" %}</strong> {% trans "$0.50 per year into the future (same as email letters)." %}</li>
-                </ul>
-            </div>
+<section class="px-6 pb-24">
+    <div class="max-w-4xl mx-auto">
+        <p class="text-gray-500 text-base mb-4 text-center">{% trans "Ready to write your first letter?" %}</p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+            <a
+                href="{% url 'letters-page' %}"
+                class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
+            >
+                {% trans "Open Letters" %}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+            <button
+                id="open-calculator-btn"
+                type="button"
+                class="inline-flex items-center gap-2 border border-slate-300 text-slate-700 font-semibold px-5 py-3 rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-colors"
+            >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3v3m-6-10h.01M9 17h.01M15 15h.01m6-6h.01M15 7h.01M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-4"></path>
+                </svg>
+                {% trans "Price Calculator" %}
+            </button>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- CTA -->
-    <section class="px-6 pb-24">
-        <div class="max-w-4xl mx-auto">
-            <p class="text-gray-500 text-base mb-4 text-center">{% trans "Ready to write your first letter?" %}</p>
-            <div class="flex flex-wrap items-center justify-center gap-3">
-                <a
-                    href="{% url 'letters-page' %}"
-                    class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
-                >
-                    {% trans "Open Letters" %}
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </a>
-                <button
-                    id="open-calculator-btn"
-                    type="button"
-                    class="inline-flex items-center gap-2 border border-slate-300 text-slate-700 font-semibold px-5 py-3 rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-colors"
-                >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3v3m-6-10h.01M9 17h.01M15 15h.01m6-6h.01M15 7h.01M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-4"></path>
-                    </svg>
-                    {% trans "Price Calculator" %}
-                </button>
-            </div>
-        </div>
-    </section>
+{% include "partials/calculator_modal.html" %}
+{{ countries_pricing_json|json_script:"countries-pricing-data" }}
+<script src="{% static 'js/calculator.js' %}"></script>
 
-    <!-- Include Calculator Modal -->
-    {% include "partials/calculator_modal.html" %}
+{% endblock %}
 
-    <!-- Countries pricing data for calculator -->
-    {{ countries_pricing_json|json_script:"countries-pricing-data" }}
-
-    <!-- Include calculator script -->
-    <script src="{% static 'js/calculator.js' %}"></script>
-
+{% block extra_js %}
+<script src="{% static 'js/concept.js' %}"></script>
 {% endblock %}
