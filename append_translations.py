@@ -545,12 +545,12 @@ NEW_ENTRIES = [
      "Grrek' dzerr maeknabanootyoone..."),
 ]
 
-import re
 
 def get_existing_msgids(path):
     with open(path, encoding='utf-8') as f:
         content = f.read()
     return set(re.findall(r'^msgid "(.+?)"', content, re.MULTILINE))
+
 
 def append_entries(path, lang_idx):
     """lang_idx: 1=en, 2=ru, 3=hy (index into tuple)"""
@@ -565,7 +565,7 @@ def append_entries(path, lang_idx):
             esc_id = msgid.replace('"', '\\"')
             esc_str = msgstr.replace('"', '\\"')
             lines.append(f'\nmsgid "{esc_id}"\nmsgstr "{esc_str}"\n')
-    
+
     with open(path, 'a', encoding='utf-8') as f:
         for line in lines:
             f.write(line)

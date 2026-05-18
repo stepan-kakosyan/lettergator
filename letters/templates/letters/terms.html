@@ -10,35 +10,43 @@
         <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
             {% trans "Terms of Service" %}
         </h1>
-        <p class="text-gray-500 text-sm mt-2">{% trans "Last updated: May 2026" %}</p>
+        <p class="text-gray-500 text-sm mt-2">{% trans "Effective date: May 18, 2026" %}</p>
         <p class="text-gray-600 mt-4">
             {% blocktrans trimmed %}
-            By creating an account or using LetterGator, you agree to the following
-            terms. Please read them carefully before using the service.
+            By creating an account, purchasing credit, or using LetterGator in any
+            way, you agree to these terms. Please read them carefully before
+            using the service. If you do not agree with any part of these terms,
+            you should not use the platform.
             {% endblocktrans %}
         </p>
 
         <div class="mt-8 space-y-6">
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "1. Service description" %}</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "1. What LetterGator does" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% blocktrans trimmed %}
-                    LetterGator is a time-delayed letter delivery service. You compose a
-                    message, choose a future delivery date, and the platform delivers it
-                    to the specified recipients when that date arrives. The service is
-                    intended for personal, family, and professional use only.
+                    LetterGator is a scheduled letter platform. You can write email
+                    letters now and set them to be delivered on a future date. The
+                    service is designed for personal reflection, family messages,
+                    professional reminders, and other lawful communications where
+                    delayed delivery is useful. We may also offer related features
+                    such as physical letter creation, attachments, contact tickets,
+                    account management tools, and delivery controls.
                     {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "2. Account eligibility" %}</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "2. Account eligibility and responsibility" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% blocktrans trimmed %}
-                    You must be at least 18 years old to create an account. You are
-                    responsible for keeping your login credentials confidential and for
-                    all activity that occurs under your account.
+                    You must be legally able to enter into a binding agreement to use
+                    LetterGator. If you use the service on behalf of a business or
+                    organization, you confirm that you have authority to accept these
+                    terms for that entity. You are responsible for keeping your login
+                    credentials confidential and for all activity that happens under
+                    your account.
                     {% endblocktrans %}
                 </p>
             </article>
@@ -47,120 +55,145 @@
                 <h2 class="text-xl font-bold text-gray-900">{% trans "3. Acceptable use" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% blocktrans trimmed %}
-                    You agree not to use LetterGator to send spam, harassing content,
-                    illegal material, or any content that violates the rights of others.
-                    Letters sent through the platform must have a legitimate, consented
-                    recipient. We reserve the right to terminate accounts that violate
-                    these rules.
+                    You agree not to use LetterGator to send spam, phishing attempts,
+                    malware, harassing content, illegal material, or any message that
+                    violates the rights of others. You may only send letters to
+                    recipients you are reasonably entitled to contact. You are also
+                    responsible for obtaining any permissions needed for the content,
+                    attachments, or delivery details you provide.
                     {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "4. Pricing and billing" %}</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "4. Pricing, balance, and billing" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% blocktrans trimmed %}
-                    Letters scheduled for delivery within 1 year of creation are free.
-                    Letters scheduled 1 year or more in the future incur a fee of $0.50
-                    per year of the schedule. This charge is deducted once from your
-                    balance when you confirm the letter. There are no recurring
-                    subscription fees; you only pay for what you schedule.
+                    Some letters can be created without charge, while long-term
+                    scheduling may require payment from your account balance. Any fee
+                    shown before confirmation is the amount you agree to pay when the
+                    letter is scheduled. Balances are tied to your account and may be
+                    used for eligible service charges, refunds, or adjustments where
+                    applicable. We may change pricing in the future, but any change
+                    will only apply to new actions after the update is published.
                     {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "5. Delivery commitment" %}</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "5. Delivery timing and limits" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% blocktrans trimmed %}
                     We make reasonable efforts to deliver letters on the scheduled date
-                    using automated systems with retry logic. However, we cannot
-                    guarantee delivery in cases where a recipient's email address is no
-                    longer valid, their inbox rejects messages, or extraordinary
-                    technical circumstances arise. We will flag delivery issues in your
+                    using automated systems and retry logic. Delivery can be affected by
+                    invalid addresses, recipient-side filtering, mailbox limits,
+                    third-party service outages, legal restrictions, or technical
+                    events outside our control. When possible, we will surface delivery
+                    problems in your account so you can review them.
+                    {% endblocktrans %}
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "6. Message content, encryption, and storage" %}</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    {% blocktrans trimmed %}
+                    Letter content is encrypted before storage and is intended to be
+                    readable only through authorized application flows. We do not
+                    design the service so staff can casually browse personal letter
+                    content. You remain solely responsible for the text you write,
+                    the files you attach, and any claims you make inside the letter.
+                    Some encrypted letter data may also be backed up for durability,
+                    recovery, or long-term availability, including through external
+                    archival systems where enabled.
+                    {% endblocktrans %}
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "7. Editing, deletion, and lock periods" %}</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    {% blocktrans trimmed %}
+                    If edit or delete controls are available for a letter, they may be
+                    limited by a lock period or other service rule. Once a letter is
+                    locked, it cannot be changed or removed except where the product
+                    specifically allows it. These controls are part of the service
+                    design and may vary by letter type, delivery date, or account
+                    status.
+                    {% endblocktrans %}
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "8. Account, email, and contact information" %}</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    {% blocktrans trimmed %}
+                    To keep your account and letters usable over long timeframes, we
+                    may ask you to confirm your email address from time to time. You
+                    should keep your account information current, including your email,
+                    phone number, and address where relevant. If you change your email,
+                    the new address may need to be verified before it becomes active
+                    for delivery or account notices.
+                    {% endblocktrans %}
+                </p>
+            </article>
+
+            <article>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "9. Your submissions and rights" %}</h2>
+                <p class="text-gray-600 mt-2 leading-relaxed">
+                    {% blocktrans trimmed %}
+                    You retain ownership of the content you submit, but you grant us a
+                    limited license to host, process, transmit, display, and deliver it
+                    as necessary to operate the service. This includes the technical
+                    right to store your letter data, schedule delivery, create backups,
+                    generate previews where enabled, and show letter status in your
                     account.
                     {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "6. Message content and encryption" %}</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "10. Suspension and termination" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% blocktrans trimmed %}
-                    Your message content is encrypted before storage. LetterGator staff
-                    cannot read the contents of your letters. You remain solely
-                    responsible for the content you write. Additionally, encrypted
-                    letter data is backed up to Arweave, a permanent decentralised
-                    blockchain storage network, to ensure long-term availability of
-                    your letters even in unexpected situations.
+                    You may stop using LetterGator at any time. We may suspend,
+                    restrict, or terminate access to any account that appears to
+                    violate these terms, create security risk, interfere with the
+                    platform, or expose us or other users to harm. If your account is
+                    closed, undelivered letters may no longer be dispatched.
                     {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "7. Edit and deletion rights" %}</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "11. No guarantee and limitation of liability" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% blocktrans trimmed %}
-                    If you enable the Allow Edit or Allow Delete options when creating a
-                    letter, those actions are available only during the first 30 days
-                    after creation. Once the window expires, or if the options were not
-                    enabled, the letter is permanently locked until delivery.
+                    LetterGator is provided on an "as is" and "as available" basis. To
+                    the maximum extent allowed by law, we are not responsible for
+                    indirect, incidental, special, or consequential damages, including
+                    delays, missed delivery dates, data loss caused by events outside
+                    our reasonable control, or business losses that result from your
+                    use of the service.
                     {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "8. Account and email validity" %}</h2>
-                <p class="text-gray-600 mt-2 leading-relaxed">
-                    {% blocktrans trimmed %}
-                    To keep your letters deliverable over long timeframes, we send an
-                    annual re-confirmation email to verify your address is still active.
-                    You can update your email address in your profile at any time;
-                    the new address must be confirmed before it becomes active for
-                    delivery. You may also provide a phone number and address in your
-                    profile as supplementary contact information.
-                    {% endblocktrans %}
-                </p>
-            </article>
-
-            <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "9. Termination" %}</h2>
-                <p class="text-gray-600 mt-2 leading-relaxed">
-                    {% blocktrans trimmed %}
-                    You may close your account at any time by contacting us. Upon
-                    account closure, undelivered letters will no longer be dispatched.
-                    We reserve the right to suspend or terminate accounts that breach
-                    these terms without prior notice.
-                    {% endblocktrans %}
-                </p>
-            </article>
-
-            <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "10. Limitation of liability" %}</h2>
-                <p class="text-gray-600 mt-2 leading-relaxed">
-                    {% blocktrans trimmed %}
-                    LetterGator is provided "as is". To the maximum extent permitted by
-                    applicable law, we are not liable for indirect, incidental, or
-                    consequential damages arising from your use of the service,
-                    including missed deliveries or loss of content beyond our
-                    reasonable control.
-                    {% endblocktrans %}
-                </p>
-            </article>
-
-            <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "11. Changes to these terms" %}</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "12. Changes to these terms" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% blocktrans trimmed %}
                     We may update these terms from time to time. If material changes
-                    are made, we will notify you by email. Continued use of the service
-                    after such notice constitutes acceptance of the updated terms.
+                    are made, we may notify you by email, a notice in the product, or
+                    another reasonable method. Continued use of the service after the
+                    effective date of an updated version means you accept the revised
+                    terms.
                     {% endblocktrans %}
                 </p>
             </article>
 
             <article>
-                <h2 class="text-xl font-bold text-gray-900">{% trans "12. Contact" %}</h2>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "13. Contact" %}</h2>
                 <p class="text-gray-600 mt-2 leading-relaxed">
                     {% trans "If you have questions about these terms, please use the" %}
                     <a href="{% url 'contact-page' %}" class="text-[#014421] font-semibold hover:underline">{% trans "Contact" %}</a>

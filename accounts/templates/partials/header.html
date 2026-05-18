@@ -2,16 +2,6 @@
 {% get_current_language as CURRENT_LANG %}
 
 <header class="w-full px-6 py-2 border-b border-gray-100 relative sticky top-0 z-40 bg-white">
-    <div
-        class="-mx-6 mb-2 bg-amber-100 border-b border-amber-200 px-6 py-2"
-        role="status"
-        aria-live="polite"
-    >
-        <p class="text-center text-xs md:text-sm font-semibold text-amber-900">
-            {% trans "BETA: This is a beta version. Everything you do on this" %}
-            {% trans "website may be erased after the official launch." %}
-        </p>
-    </div>
     <div class="max-w-5xl mx-auto flex justify-between items-center gap-3">
         <a href="{% url 'landing-page' %}" class="inline-flex {% if request.user.is_authenticated %}flex-col md:flex-row md:items-center{% else %}flex-row items-center{% endif %} gap-2" aria-label="LetterGator home">
             <img src="{% static 'img/logo.png' %}" alt="LetterGator logo" class="h-[80px] w-auto">
@@ -82,11 +72,11 @@
                     </a>
                     <a href="{% url 'set-language' %}?lang=ru" class="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors {% if CURRENT_LANG == 'ru' %}font-semibold text-[#014421]{% endif %}" role="menuitem">
                         <img src="{% static 'img/flags/ru.svg' %}" class="w-5 h-4 rounded-sm border border-gray-200" alt="RU">
-                        Ð ÑƒÑÑÐºÐ¸Ð¹
+                        Русский
                     </a>
                     <a href="{% url 'set-language' %}?lang=hy" class="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors {% if CURRENT_LANG == 'hy' %}font-semibold text-[#014421]{% endif %}" role="menuitem">
                         <img src="{% static 'img/flags/hy.svg' %}" class="w-5 h-4 rounded-sm border border-gray-200" alt="HY">
-                        Õ€Õ¡ÕµÕ¥Ö€Õ¥Õ¶
+                        Հայերեն
                     </a>
                 </div>
             </div>
