@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'anymail',
     "corsheaders",
     "rest_framework",
     "accounts",
@@ -222,7 +223,6 @@ EMAIL_BACKEND = os.getenv(
     "EMAIL_BACKEND",
     "lettergator_backend.email_backend.EmailBackend",
 )
-# MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY", "")
 
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
@@ -237,17 +237,11 @@ if EMAIL_USE_TLS and EMAIL_USE_SSL:
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv(
-    "DEFAULT_FROM_EMAIL", EMAIL_HOST_USER or "no-reply@lettergator.local"
+    "DEFAULT_FROM_EMAIL", EMAIL_HOST_USER or "no-reply@lettergator.com"
 )
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY"),
-    "MAILGUN_SENDER_DOMAIN": os.getenv(
-        "MAILGUN_SENDER_DOMAIN", "lettergator.com"
-    ),
-    "MAILGUN_API_URL": os.getenv(
-        "MAILGUN_API_URL", "https://api.eu.mailgun.net/v3"
-    ),
+    "BREVO_API_KEY": os.getenv("BREVO_API_KEY")
 }
 # SES backend settings (used when EMAIL_BACKEND=django_ses.SESBackend)
 # AWS_SES_REGION_NAME = os.getenv(
