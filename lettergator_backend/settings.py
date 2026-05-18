@@ -222,6 +222,8 @@ EMAIL_BACKEND = os.getenv(
     "EMAIL_BACKEND",
     "lettergator_backend.email_backend.EmailBackend",
 )
+# MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY", "")
+
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "1") == "1"
@@ -238,21 +240,30 @@ DEFAULT_FROM_EMAIL = os.getenv(
     "DEFAULT_FROM_EMAIL", EMAIL_HOST_USER or "no-reply@lettergator.local"
 )
 
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": os.getenv(
+        "MAILGUN_SENDER_DOMAIN", "lettergator.com"
+    ),
+    "MAILGUN_API_URL": os.getenv(
+        "MAILGUN_API_URL", "https://api.eu.mailgun.net/v3"
+    ),
+}
 # SES backend settings (used when EMAIL_BACKEND=django_ses.SESBackend)
-AWS_SES_REGION_NAME = os.getenv(
-    "AWS_SES_REGION_NAME",
-    os.getenv("AWS_S3_REGION_NAME", ""),
-)
-AWS_SES_REGION_ENDPOINT = os.getenv("AWS_SES_REGION_ENDPOINT", "")
-_aws_ses_auto_throttle_raw = os.getenv("AWS_SES_AUTO_THROTTLE", "").strip()
-if _aws_ses_auto_throttle_raw:
-    try:
-        AWS_SES_AUTO_THROTTLE = float(_aws_ses_auto_throttle_raw)
-    except ValueError:
-        AWS_SES_AUTO_THROTTLE = None
-else:
-    # Avoid ses:GetSendQuota unless explicitly enabled via env.
-    AWS_SES_AUTO_THROTTLE = None
+# AWS_SES_REGION_NAME = os.getenv(
+#     "AWS_SES_REGION_NAME",
+#     os.getenv("AWS_S3_REGION_NAME", ""),
+# )
+# AWS_SES_REGION_ENDPOINT = os.getenv("AWS_SES_REGION_ENDPOINT", "")
+# _aws_ses_auto_throttle_raw = os.getenv("AWS_SES_AUTO_THROTTLE", "").strip()
+# if _aws_ses_auto_throttle_raw:
+#     try:
+#         AWS_SES_AUTO_THROTTLE = float(_aws_ses_auto_throttle_raw)
+#     except ValueError:
+#         AWS_SES_AUTO_THROTTLE = None
+# else:
+#     # Avoid ses:GetSendQuota unless explicitly enabled via env.
+#     AWS_SES_AUTO_THROTTLE = None
 SITE_URL = os.getenv("SITE_URL", "http://localhost:8040")
 
 LEMONSQUEEZY_API_KEY = os.getenv("LEMONSQUEEZY_API_KEY", "")

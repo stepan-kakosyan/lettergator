@@ -272,21 +272,21 @@ def test_email_view(request):
     form = TestEmailForm(request.POST or None, initial=initial_data)
 
     if request.method == "POST" and form.is_valid():
-        try:
-            send_mail(
-                subject=form.cleaned_data["subject"],
-                message=form.cleaned_data["message"],
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[form.cleaned_data["to_email"]],
-                fail_silently=False,
-            )
-            messages.success(request, "Test email sent successfully.")
-            return redirect("test-email")
-        except Exception as exc:
-            messages.error(
-                request,
-                f"Unable to send test email: {exc}",
-            )
+        # try:
+        send_mail(
+            subject=form.cleaned_data["subject"],
+            message=form.cleaned_data["message"],
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[form.cleaned_data["to_email"]],
+            fail_silently=False,
+        )
+        messages.success(request, "Test email sent successfully.")
+        return redirect("test-email")
+        # except Exception as exc:
+        #     messages.error(
+        #         request,
+        #         f"Unable to send test email: {exc}",
+        #     )
 
     return render(request, "accounts/test_email.html", {"form": form})
 
