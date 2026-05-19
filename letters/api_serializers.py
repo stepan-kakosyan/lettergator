@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError as DjangoValidationError
-from django.utils import timezone
 from rest_framework import serializers
 
 from .forms import LetterForm
@@ -21,7 +20,6 @@ class LetterListSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "subject",
-            "send_to_me",
             "delivery_at",
             "recipients",
             "can_delete_early",
@@ -69,7 +67,6 @@ class LetterListSerializer(serializers.ModelSerializer):
 
 class LetterCreateSerializer(serializers.Serializer):
     subject = serializers.CharField(max_length=200)
-    send_to_me = serializers.BooleanField(default=True)
     delivery_at = serializers.DateTimeField()
     can_delete_early = serializers.BooleanField(default=False)
     can_edit_early = serializers.BooleanField(default=False)
@@ -86,7 +83,6 @@ class LetterCreateSerializer(serializers.Serializer):
         user = self.context["request"].user
         form_data = {
             "subject": attrs["subject"],
-            "send_to_me": attrs.get("send_to_me", True),
             "delivery_at": attrs["delivery_at"],
             "can_delete_early": attrs.get("can_delete_early", False),
             "can_edit_early": attrs.get("can_edit_early", False),
@@ -127,8 +123,6 @@ class LetterMessageUpdateSerializer(serializers.Serializer):
             )
         if not letter.can_edit_early:
             raise serializers.ValidationError("Edit is disabled for this letter.")
-        if timezone.now() > letter.edit_until():
-            raise serializers.ValidationError("Edit window has expired for this letter.")
         return attrs
 
 

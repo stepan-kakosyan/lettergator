@@ -6,14 +6,14 @@
 {% block content %}
 <section class="px-6 pt-12 pb-10 md:pt-16 md:pb-14">
     <div class="max-w-5xl mx-auto text-center">
-        <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold mb-3">{% trans "Piricng" %}</p>
+        <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold mb-3">{% trans "Pricing" %}</p>
         <h1 class="text-4xl md:text-5xl font-black tracking-tight text-gray-900">
             {% trans "Pricing and Balance" %}
         </h1>
         <p class="mt-4 text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
             {% blocktrans trimmed %}
             Learn how to top up your balance and how pricing is calculated for
-            both email and physical letters.
+            email letters, physical letters, and SMS messages.
             {% endblocktrans %}
         </p>
     </div>
@@ -57,6 +57,71 @@
         </article>
     </div>
 </section>
+
+<section class="px-6 pb-8">
+    <div class="max-w-5xl mx-auto">
+        <article class="rounded-3xl border border-[#d8e4dc] bg-[#f7fbf8] p-6 md:p-8 shadow-sm">
+            <p class="text-xs uppercase tracking-[0.22em] text-[#1d4835] font-semibold">{% trans "SMS Messages" %}</p>
+            <h2 class="mt-3 text-2xl font-bold text-gray-900">{% trans "Flat base + per-year pricing" %}</h2>
+            <p class="mt-3 text-sm text-gray-600">{% trans "SMS messages are always paid. Pricing is simple and predictable:" %}</p>
+            <ul class="mt-4 space-y-3 text-sm text-gray-700">
+                <li>
+                    <strong>{% trans "Base price:" %}</strong>
+                    {% trans "$1.00 for any schedule up to 1 year ahead." %}
+                </li>
+                <li>
+                    <strong>{% trans "Beyond 1 year:" %}</strong>
+                    {% trans "+$0.20 per additional year." %}
+                </li>
+            </ul>
+            <div class="mt-5 overflow-auto rounded-xl border border-[#d8e4dc] bg-white">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-[#eef5f1] text-[#1d4835]">
+                        <tr>
+                            <th class="text-left px-4 py-3 font-semibold">{% trans "Schedule (years)" %}</th>
+                            <th class="text-left px-4 py-3 font-semibold">{% trans "Total price" %}</th>
+                            <th class="text-left px-4 py-3 font-semibold text-gray-500">{% trans "Calculation" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-t border-[#d8e4dc]">
+                            <td class="px-4 py-2">{% trans "Up to 1 year" %}</td>
+                            <td class="px-4 py-2 font-semibold text-[#1d4835]">$1.00</td>
+                            <td class="px-4 py-2 text-gray-500">$1.00</td>
+                        </tr>
+                        <tr class="border-t border-[#d8e4dc]">
+                            <td class="px-4 py-2">2 {% trans "years" %}</td>
+                            <td class="px-4 py-2 font-semibold text-[#1d4835]">$1.20</td>
+                            <td class="px-4 py-2 text-gray-500">$1.00 + 1×$0.20</td>
+                        </tr>
+                        <tr class="border-t border-[#d8e4dc]">
+                            <td class="px-4 py-2">3 {% trans "years" %}</td>
+                            <td class="px-4 py-2 font-semibold text-[#1d4835]">$1.40</td>
+                            <td class="px-4 py-2 text-gray-500">$1.00 + 2×$0.20</td>
+                        </tr>
+                        <tr class="border-t border-[#d8e4dc]">
+                            <td class="px-4 py-2">5 {% trans "years" %}</td>
+                            <td class="px-4 py-2 font-semibold text-[#1d4835]">$1.80</td>
+                            <td class="px-4 py-2 text-gray-500">$1.00 + 4×$0.20</td>
+                        </tr>
+                        <tr class="border-t border-[#d8e4dc]">
+                            <td class="px-4 py-2">10 {% trans "years" %}</td>
+                            <td class="px-4 py-2 font-semibold text-[#1d4835]">$2.80</td>
+                            <td class="px-4 py-2 text-gray-500">$1.00 + 9×$0.20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 text-xs text-gray-500">
+                {% trans "Maximum schedule: 10 years. Plain text only — no emoji. Max 160 characters." %}
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'sms-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#1d4835] text-white text-sm font-semibold hover:bg-[#16372a] transition-colors">
+                    {% trans "Schedule an SMS" %}
+                </a>
+            </div>
+        </article>
+    </div>
 
 <section class="px-6 pb-24">
     <div class="max-w-5xl mx-auto rounded-3xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm">
