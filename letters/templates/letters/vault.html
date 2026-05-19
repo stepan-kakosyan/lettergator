@@ -11,26 +11,39 @@
 <div id="letters-shell">
 <section id="letters" class="px-6 py-20">
     <div class="w-full max-w-6xl mx-auto fade-in-up delay-300">
-        <div class="bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
-            <p class="text-xs uppercase tracking-[0.2em] text-[#014421] font-semibold">Letters</p>
-            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
-                {% if guest_mode %}{% trans "Letters Workspace Preview" %}{% else %}{% trans "Your Letters Workspace" %}{% endif %}
-            </h1>
-            <p class="text-gray-600 mt-4 max-w-3xl">
-                {% if guest_mode %}
-                {% trans "This page stores and manages your scheduled letters. Sign in to create letters, manage recipients, and control edit/delete permissions." %}
-                {% else %}
-                {% trans "Manage scheduled letters in one place. You can review recipients, delivery timing, visibility, and perform edit/delete actions where they are still permitted." %}
-                {% endif %}
-            </p>
-            {% if not guest_mode %}
-            <div class="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-emerald-900">
-                <p class="font-semibold">{% trans "Long-term schedule policy" %}</p>
-                <p class="text-sm mt-1">
-                    {% blocktrans with balance=min_long_schedule_balance|floatformat:2 %}Scheduling letters for one year and beyond uses your balance. The rate is $0.50 per year. Keep at least ${{ balance }} to unlock 1 year+ scheduling options.{% endblocktrans %}
+        <div class="relative overflow-hidden rounded-3xl border border-[#d8e4dc] bg-gradient-to-br from-[#f7fbf8] via-white to-[#eef5f1] p-8 md:p-10 shadow-sm">
+            <div class="pointer-events-none absolute -top-20 -right-12 h-52 w-52 rounded-full bg-[#648451]/15 blur-2xl"></div>
+            <div class="pointer-events-none absolute -bottom-20 -left-10 h-52 w-52 rounded-full bg-[#1d4835]/10 blur-2xl"></div>
+
+            <div class="relative">
+                <p class="text-xs uppercase tracking-[0.2em] text-[#1d4835] font-semibold">Letters</p>
+                <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
+                    {% if guest_mode %}{% trans "Letters Workspace Preview" %}{% else %}{% trans "Your Letters Workspace" %}{% endif %}
+                </h1>
+                <p class="text-gray-600 mt-4 max-w-3xl">
+                    {% if guest_mode %}
+                    {% trans "Preview how your future letters are organized. Sign in to create letters, manage recipients, and control edit/delete permissions from one dashboard." %}
+                    {% else %}
+                    {% trans "Track every scheduled message in one dashboard. Review recipients, delivery timing, permissions, and status updates without losing context." %}
+                    {% endif %}
                 </p>
+
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl">
+                    <div class="rounded-2xl border border-[#d8e4dc] bg-white/90 px-4 py-3">
+                        <p class="text-xs uppercase tracking-wide text-[#648451] font-semibold">{% trans "Timing" %}</p>
+                        <p class="text-sm text-gray-700 mt-1">{% trans "Schedule delivery up to 10 years ahead." %}</p>
+                    </div>
+                    <div class="rounded-2xl border border-[#d8e4dc] bg-white/90 px-4 py-3">
+                        <p class="text-xs uppercase tracking-wide text-[#648451] font-semibold">{% trans "Types" %}</p>
+                        <p class="text-sm text-gray-700 mt-1">{% trans "Email and physical letters in one timeline." %}</p>
+                    </div>
+                    <div class="rounded-2xl border border-[#d8e4dc] bg-white/90 px-4 py-3">
+                        <p class="text-xs uppercase tracking-wide text-[#648451] font-semibold">{% trans "Control" %}</p>
+                        <p class="text-sm text-gray-700 mt-1">{% trans "Visibility and actions based on letter rules." %}</p>
+                    </div>
+                </div>
             </div>
-            {% endif %}
+
             {% if not guest_mode and email_verification_required %}
             <div class="mt-6 rounded-2xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900">
                 <p class="font-semibold">{% trans "Email verification required" %}</p>
@@ -58,44 +71,60 @@
             </div>
             {% endif %}
             {% if guest_mode %}
-            <div class="mt-6 flex flex-wrap gap-3">
-                <a
-                    href="{% url 'login' %}"
-                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
-                >
-                    {% trans "Login" %}
-                </a>
-                <a
-                    href="{% url 'register' %}"
-                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors"
-                >
-                    {% trans "Register" %}
-                </a>
+            <div class="mt-7 rounded-2xl border border-[#d8e4dc] bg-white/95 p-5 md:p-6">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div class="max-w-2xl">
+                        <p class="text-sm font-semibold text-[#1d4835]">{% trans "Start building your future timeline" %}</p>
+                        <p class="text-sm text-gray-600 mt-1">{% trans "Create an account to unlock drafting, scheduling, and recipient management." %}</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <a
+                            href="{% url 'register' %}"
+                            class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#1d4835] text-white font-semibold hover:bg-[#16372a] transition-colors"
+                        >
+                            {% trans "Create Account" %}
+                        </a>
+                        <a
+                            href="{% url 'login' %}"
+                            class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#648451] text-[#1d4835] font-semibold hover:bg-[#edf3ee] transition-colors"
+                        >
+                            {% trans "Login" %}
+                        </a>
+                    </div>
+                </div>
             </div>
             {% else %}
-            <div class="mt-6 flex flex-wrap gap-3">
-                <a
-                    href="{% url 'letter-create-page' %}"
-                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors"
-                >
-                    {% trans "Create Email Letters" %}
-                </a>
-                <a
-                    href="{% url 'physical-letter-create' %}"
-                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors"
-                >
-                    {% trans "Create Physical Letter" %}
-                </a>
-                <button
-                    id="open-calculator-btn"
-                    type="button"
-                    class="inline-flex items-center gap-2 border border-slate-300 text-slate-700 font-semibold px-5 py-3 rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-colors"
-                >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3v3m-6-10h.01M9 17h.01M15 15h.01m6-6h.01M15 7h.01M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-4"></path>
-                    </svg>
-                    {% trans "Price Calculator" %}
-                </button>
+            <div class="mt-7 rounded-2xl border border-[#d8e4dc] bg-white/95 p-5 md:p-6">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div class="max-w-2xl">
+                        <p class="text-sm font-semibold text-[#1d4835]">{% trans "Choose your letter format and schedule now" %}</p>
+                        <p class="text-sm text-gray-600 mt-1">{% trans "Start with digital delivery, physical delivery, or estimate the final cost first." %}</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <a
+                            href="{% url 'letter-create-page' %}"
+                            class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#1d4835] text-white font-semibold hover:bg-[#16372a] transition-colors"
+                        >
+                            {% trans "Create Email Letter" %}
+                        </a>
+                        <a
+                            href="{% url 'physical-letter-create' %}"
+                            class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#648451] text-white font-semibold hover:bg-[#536f43] transition-colors"
+                        >
+                            {% trans "Create Physical Letter" %}
+                        </a>
+                        <button
+                            id="open-calculator-btn"
+                            type="button"
+                            class="inline-flex items-center gap-2 border border-[#648451] text-[#1d4835] font-semibold px-5 py-3 rounded-xl hover:bg-[#edf3ee] transition-colors"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3v3m-6-10h.01M9 17h.01M15 15h.01m6-6h.01M15 7h.01M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-4"></path>
+                            </svg>
+                            {% trans "Price Calculator" %}
+                        </button>
+                    </div>
+                </div>
             </div>
             {% endif %}
         </div>

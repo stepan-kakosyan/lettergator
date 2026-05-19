@@ -1,0 +1,231 @@
+{% load i18n %}
+<div class="max-w-4xl mx-auto space-y-3">
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "1. How much does LetterGator cost, and when is it charged?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Email letters:</strong> Delivery under 1 year is free. At 1 year or
+                    beyond, the cost is $0.50 per year, charged once when you save the letter.
+                    To unlock 1 year+ scheduling, keep at least $1.00 in your balance.<br/><br/>
+                    <strong>Physical letters:</strong> Pricing includes the destination country's
+                    base cost, $0.50 per printable page, $0.50 per photo, and $0.50 per year into
+                    the future. The full amount is charged once when you pay and submit the order.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "2. How reliable is delivery, and what backup details can I provide?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Email letters:</strong> Delivery includes retry logic if a first email
+                    attempt fails. You can send to yourself or to other recipients, and add up to
+                    5 recipient emails per letter.<br/><br/>
+                    <strong>Physical letters:</strong> Delivery depends on the recipient address,
+                    destination country, and postal service timing. Your account details, plus the
+                    full mailing address you enter for the order, help us prepare and route the
+                    letter correctly.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "3. Can I change, delete, or preview a letter after I create it?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Email letters:</strong> You control edit, delete, and preview rules at
+                    creation time. If Allow Edit and/or Allow Delete are enabled, those actions are
+                    available only during the first 30 days. Preview works the same way: if See
+                    Message Before Delivery is enabled, you can view the message before delivery.<br/><br/>
+                    <strong>Physical letters:</strong> You can save drafts before paying. Paid
+                    physical letters can still be updated while they remain in Paid status, and you
+                    can delete Draft or Paid letters. Physical letters do not use the same preview
+                    controls as email letters because they are prepared for printing and shipping.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "4. How do you make sure my email is still valid in future years?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Email letters:</strong> We send a re-confirmation email roughly once a
+                    year so you can confirm your address and update your account if your email ever
+                    changes.<br/><br/>
+                    <strong>Physical letters:</strong> The most important detail is the recipient's
+                    mailing address on the order. Review the address carefully before paying, and if
+                    you need to change a paid physical letter later, update it before the letter
+                    moves beyond Paid status.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "5. Is my message content private, and what happens if your database is lost?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Email letters:</strong> Message content is encrypted before storage and
+                    written to Arweave for long-term resilience. Even if our own database were lost,
+                    the encrypted email-letter payload remains preserved.<br/><br/>
+                    <strong>Physical letters:</strong> Your message text, uploaded files, and
+                    shipping details are stored with the order so the letter can be prepared for
+                    printing and mailing. Physical letters follow a different operational flow than
+                    sealed email delivery, so they are not handled with the same delivery-only
+                    decryption model.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "6. What's the difference between email letters and physical letters?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Email Letters:</strong> Scheduled messages that arrive in an inbox at a specific date and time. 
+                    You choose when to deliver (up to 10 years ahead), and can optionally edit or delete during the first 30 days.
+                    Perfect for digital-only messages and milestone reminders.<br/><br/>
+                    <strong>Physical Letters:</strong> Printed and mailed to a recipient's address. You select a desired delivery date, 
+                    and can attach documents (PDFs, TXT) and photos (JPG, PNG) that will be printed with your message. 
+                    Perfect for tangible keepsakes, gifts, and memorable occasions.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "7. Can I attach files to email letters?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    No, email letters support only text content. However, if you want to share documents, 
+                    images, or photos, you can create a <strong>physical letter</strong> instead, 
+                    which supports attaching PDFs, Word documents, text files, and photos that will be printed together.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "8. What file types can I attach to physical letters?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Documents:</strong> PDF, Word (.DOCX), and Text (.TXT) files are supported and will be printed.<br/>
+                    <strong>Photos:</strong> JPG and PNG images are supported and will be printed in color or black &amp; white.<br/>
+                    You can attach up to 3 documents and 3 photos per letter. Each page of your documents is calculated into the total price.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "9. How are refunds handled if I delete a letter?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Email letters:</strong> Free letters have no refund because no payment
+                    was made. Paid email letters keep a fixed $0.50 processing fee, and the rest is
+                    returned to your balance if deletion is still allowed.<br/><br/>
+                    <strong>Physical letters:</strong> Drafts have no refund because they were never
+                    paid. Paid physical letters refund the remaining balance after a deletion fee of
+                    $1.00 plus $0.50 for each full year since the order was created.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "10. How long does delivery take for each letter type?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    <strong>Email letters:</strong> Delivery happens at the exact future date and
+                    time you choose.<br/><br/>
+                    <strong>Physical letters:</strong> You choose a requested delivery date, and the
+                    order is then prepared for shipping. Delivery depends on the destination country
+                    and can occur around 1 to 4 days after your requested date, with later arrival
+                    possible depending on postal conditions.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "11. Can I save a physical letter as a draft before paying?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    Yes. Physical letters can be saved as drafts first, which is useful when you
+                    still need to refine the address, message, or attachments. Drafts are unpaid.
+                    Once you are ready, you can return to the draft, review the final price, and pay
+                    to move it into Paid status.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "12. Can I track the status of a physical letter after I pay?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    Yes. In your Letters workspace, physical letters move through statuses such as
+                    Draft, Paid, Printing, Shipped, and Delivered. This helps you understand whether
+                    the order is still editable, being prepared, or already on its way.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+            <details class="group border border-gray-200 rounded-2xl bg-white p-5">
+                <summary class="list-none cursor-pointer flex items-center justify-between gap-4">
+                    <span class="font-semibold text-gray-900">{% trans "13. How do I choose between an email letter and a physical letter?" %}</span>
+                    <span class="text-[#014421] font-bold group-open:hidden">+</span>
+                    <span class="text-[#014421] font-bold hidden group-open:inline">-</span>
+                </summary>
+                <p class="text-sm text-gray-600 mt-3">
+                    {% blocktrans trimmed %}
+                    Choose <strong>email letters</strong> when precise timing, privacy controls, and
+                    inbox delivery matter most. Choose <strong>physical letters</strong> when you
+                    want a tangible keepsake, printed photos or documents, and a more ceremonial
+                    mailbox experience for the recipient.
+                    {% endblocktrans %}
+                </p>
+            </details>
+
+        </div>

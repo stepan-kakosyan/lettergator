@@ -5,332 +5,321 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
-<link rel="stylesheet" href="{% static 'css/concept.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<span id="cg-cta-href" data-href="{% url 'letters-page' %}" hidden></span>
-
-<section class="px-6 pt-14 pb-10 md:pt-20 md:pb-14">
+<section class="px-6 pt-14 pb-10 md:pt-20 md:pb-14 bg-slate-50/60">
     <div class="max-w-4xl mx-auto text-center">
-        <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold mb-3">{% trans "How it works" %}</p>
-        <h1 class="text-5xl md:text-6xl font-black tracking-tight text-gray-900 mb-5">
-            {% trans "Why and how" %}
-            <span class="text-[#014421] block">{% trans "future letters work." %}</span>
+        <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">
+            {% trans "How it works" %}
+        </p>
+        <h1 class="mt-4 text-4xl md:text-6xl font-black tracking-tight text-gray-900">
+            {% trans "Why people send letters" %}
+            <span class="block text-[#014421]">{% trans "into the future." %}</span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto">
+        <p class="mt-6 text-base md:text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
             {% blocktrans trimmed %}
-            Explore why people write letters to the future and exactly how email
-            and physical delivery work from start to finish.
+            Explore practical scenarios across personal, family, team, and
+            milestone moments. Send digital letters by email or physical
+            letters by mail, scheduled for exactly when they matter most
+            (up to 10 years ahead).
             {% endblocktrans %}
         </p>
     </div>
 </section>
 
-<section id="why-people-write" class="relative px-6 pt-4 pb-24 overflow-hidden">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-        <div class="absolute -top-20 left-1/2 -translate-x-1/2 h-72 w-72 rounded-full bg-emerald-100/60 blur-3xl"></div>
-        <div class="absolute top-40 -left-20 h-52 w-52 rounded-full bg-slate-100/70 blur-2xl"></div>
-        <div class="absolute bottom-10 -right-16 h-56 w-56 rounded-full bg-emerald-50/80 blur-3xl"></div>
-    </div>
-
-    <div class="relative max-w-6xl mx-auto">
-        <div class="text-center max-w-3xl mx-auto mb-10 md:mb-12">
-            <p class="text-xs md:text-sm uppercase tracking-[0.24em] text-[#014421] font-semibold">{% trans "See why" %}</p>
-            <h2 class="mt-4 text-3xl md:text-4xl font-black tracking-tight text-gray-900 leading-[1.1]">
-                {% trans "Why people send letters" %}
-                <span class="block text-[#014421]">{% trans "into the future." %}</span>
+<section class="py-14 bg-white font-sans scenarios-section">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-sm font-semibold tracking-wider text-indigo-600 uppercase">
+                {% trans "See why" %}
+            </span>
+            <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                {% trans "Real moments people prepare for" %}
             </h2>
-            <p class="mt-5 text-sm md:text-base text-gray-600 leading-relaxed">
-                {% blocktrans trimmed %}
-                Explore scenarios across categories. Send digital letters by email or
-                physical letters by mail— each form of expression has its own power
-                for the right moment.
-                {% endblocktrans %}
+            <p class="mt-4 text-lg text-gray-600 leading-relaxed">
+                {% trans "A card-based scenario list inspired by your selected section design, now fully in English." %}
             </p>
         </div>
 
-        <article class="rounded-3xl border border-gray-200 bg-white/90 backdrop-blur-sm p-6 md:p-8 shadow-sm">
-            <div class="space-y-8 md:space-y-10">
-                <div class="flex flex-wrap items-start justify-between gap-4">
-                    <div class="flex items-start gap-3 md:gap-4">
-                        <span class="text-2xl md:text-3xl">&#9997;&#65039;</span>
-                        <div>
-                            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900">{% trans "Personal" %}</h3>
-                            <p class="mt-2 text-sm md:text-base text-gray-600 max-w-2xl">{% trans "Write to who you'll become. Capture doubt, clarity, and conviction before life rewrites the memory." %}</p>
-                        </div>
+        <div id="scenario-filters" class="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 border-b border-gray-200 pb-4">
+            <button type="button" data-filter="all" class="scenario-filter px-4 py-2 rounded-full text-sm font-semibold bg-[#1d4835] text-white border border-[#1d4835]">{% trans "All" %}</button>
+            <button type="button" data-filter="personal" class="scenario-filter px-4 py-2 rounded-full text-sm font-semibold bg-white text-[#1d4835] border border-[#648451] hover:bg-[#648451] hover:text-white">{% trans "Personal" %}</button>
+            <button type="button" data-filter="family" class="scenario-filter px-4 py-2 rounded-full text-sm font-semibold bg-white text-[#1d4835] border border-[#648451] hover:bg-[#648451] hover:text-white">{% trans "Family" %}</button>
+            <button type="button" data-filter="team" class="scenario-filter px-4 py-2 rounded-full text-sm font-semibold bg-white text-[#1d4835] border border-[#648451] hover:bg-[#648451] hover:text-white">{% trans "Team" %}</button>
+            <button type="button" data-filter="milestone" class="scenario-filter px-4 py-2 rounded-full text-sm font-semibold bg-white text-[#1d4835] border border-[#648451] hover:bg-[#648451] hover:text-white">{% trans "Milestone" %}</button>
+        </div>
+
+        <div id="scenario-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div data-category="personal" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Personal" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
                     </div>
-                    <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">{% trans "4 scenarios" %}</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Letter to my future self" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Capture your doubts, values, and goals today before memory changes with time." %}</p>
                 </div>
-                <div class="mt-6 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 md:gap-5" id="explorer-personal" data-active-cat="personal">
-                    <div class="cg-scenario-list space-y-2" id="list-personal"></div>
-                    <div class="cg-scenario-detail rounded-2xl border border-gray-200 bg-gray-50/80 p-5" id="detail-personal"></div>
-                </div>
-
-                <div class="border-t border-gray-200"></div>
-
-                <div class="flex flex-wrap items-start justify-between gap-4">
-                    <div class="flex items-start gap-3 md:gap-4">
-                        <span class="text-2xl md:text-3xl">&#127968;</span>
-                        <div>
-                            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900">{% trans "Family" %}</h3>
-                            <p class="mt-2 text-sm md:text-base text-gray-600 max-w-2xl">{% trans "Bridge the distance. Send words that will land on an anniversary, a birthday, or a day that needs them most." %}</p>
-                        </div>
-                    </div>
-                    <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">{% trans "3 scenarios" %}</span>
-                </div>
-                <div class="mt-6 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 md:gap-5" id="explorer-family" data-active-cat="family">
-                    <div class="cg-scenario-list space-y-2" id="list-family"></div>
-                    <div class="cg-scenario-detail rounded-2xl border border-gray-200 bg-gray-50/80 p-5" id="detail-family"></div>
-                </div>
-
-                <div class="border-t border-gray-200"></div>
-
-                <div class="flex flex-wrap items-start justify-between gap-4">
-                    <div class="flex items-start gap-3 md:gap-4">
-                        <span class="text-2xl md:text-3xl">&#128640;</span>
-                        <div>
-                            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900">{% trans "Team" %}</h3>
-                            <p class="mt-2 text-sm md:text-base text-gray-600 max-w-2xl">{% trans "Preserve what the team knows today. Deliver it to the team that needs it tomorrow." %}</p>
-                        </div>
-                    </div>
-                    <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">{% trans "3 scenarios" %}</span>
-                </div>
-                <div class="mt-6 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 md:gap-5" id="explorer-team" data-active-cat="team">
-                    <div class="cg-scenario-list space-y-2" id="list-team"></div>
-                    <div class="cg-scenario-detail rounded-2xl border border-gray-200 bg-gray-50/80 p-5" id="detail-team"></div>
-                </div>
-
-                <div class="border-t border-gray-200"></div>
-
-                <div class="flex flex-wrap items-start justify-between gap-4">
-                    <div class="flex items-start gap-3 md:gap-4">
-                        <span class="text-2xl md:text-3xl">&#127942;</span>
-                        <div>
-                            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900">{% trans "Milestone" %}</h3>
-                            <p class="mt-2 text-sm md:text-base text-gray-600 max-w-2xl">{% trans "Mark the moments that matter. Retirement, relocations, difficult dates" %} &mdash; {% trans "preserved and delivered when they count." %}</p>
-                        </div>
-                    </div>
-                    <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">{% trans "3 scenarios" %}</span>
-                </div>
-                <div class="mt-6 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 md:gap-5" id="explorer-milestone" data-active-cat="milestone">
-                    <div class="cg-scenario-list space-y-2" id="list-milestone"></div>
-                    <div class="cg-scenario-detail rounded-2xl border border-gray-200 bg-gray-50/80 p-5" id="detail-milestone"></div>
-                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "1-5 years" %}</strong></div>
             </div>
-        </article>
-    </div>
-</section>
 
-<section id="email-flow" class="px-6 pb-24">
-    <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
-        <div class="mb-10">
-            <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "Email Letters" %}</p>
-            <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">{% trans "Deliver your message" %} <span class="text-[#014421]">{% trans "your way." %}</span></h2>
-            <p class="text-gray-600 mt-3 max-w-3xl">
-                {% blocktrans trimmed %}
-                Create your message now, lock delivery rules, and let LetterGator
-                deliver it at the exact future moment you choose.
-                {% endblocktrans %}
+            <div data-category="personal" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Personal" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Before I quit my job" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Write down your real reasons and emotions, then revisit them after the transition." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "6 months" %}</strong></div>
+            </div>
+
+            <div data-category="personal" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Personal" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Before my first therapy session" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Capture your starting point and read it one year later to see how far you came." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "1 year" %}</strong></div>
+            </div>
+
+            <div data-category="family" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-rose-50 text-rose-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Family" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Letter to my partner" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Schedule a note to arrive on an anniversary, birthday, or difficult day." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "Exact anniversary date" %}</strong></div>
+            </div>
+
+            <div data-category="family" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-rose-50 text-rose-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Family" %}</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Physical" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Letter to a newborn for their 10th birthday" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Write today, include photos from early years, and deliver on a milestone birthday." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "10 years" %}</strong></div>
+            </div>
+
+            <div data-category="family" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-rose-50 text-rose-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Family" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Letter to my whole family" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Send one message to everyone for a reunion, holiday, or shared milestone." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "1-3 years" %}</strong></div>
+            </div>
+
+            <div data-category="team" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Team" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "To my team on launch day" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "A pre-launch message that arrives exactly when your product goes live." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "Exact launch date" %}</strong></div>
+            </div>
+
+            <div data-category="team" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Team" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "To the next team lead" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Pass forward context and hard-earned lessons to your successor." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "30-90 days" %}</strong></div>
+            </div>
+
+            <div data-category="team" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Team" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "To the team in one year" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Document today's commitments and read them as a one-year retrospective." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "1 year" %}</strong></div>
+            </div>
+
+            <div data-category="milestone" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Milestone" %}</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Physical" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Before I retire" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Preserve career lessons and deliver them to a mentee in the years after retirement." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "1-5 years after retirement" %}</strong></div>
+            </div>
+
+            <div data-category="milestone" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Milestone" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Before moving abroad" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Write to your future self before relocation and read it after settling in." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "1 year" %}</strong></div>
+            </div>
+
+            <div data-category="milestone" class="scenario-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Milestone" %}</span>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full tracking-wide">{% trans "Digital / Email" %}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "On a difficult anniversary" %}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{% trans "Schedule supportive words for a date that is emotionally heavy for someone you love." %}</p>
+                </div>
+                <div class="pt-4 border-t border-dashed border-gray-100 text-xs text-gray-500">{% trans "Delivery:" %} <strong class="text-gray-800">{% trans "Exact annual date" %}</strong></div>
+            </div>
+        </div>
+
+        <div class="mt-14 bg-gradient-to-r from-[#1d4835] to-[#648451] rounded-3xl p-8 md:p-12 text-center shadow-lg text-white">
+            <h3 class="text-2xl md:text-3xl font-bold mb-4">{% trans "Ready to write your first future letter?" %}</h3>
+            <p class="text-indigo-100 max-w-xl mx-auto mb-6 text-sm md:text-base">
+                {% trans "Create your first letter now, schedule the right moment, and let LetterGator handle delivery." %}
             </p>
-        </div>
-
-        <div class="space-y-6">
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">1</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Compose" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        Write your subject and message with full text support, then
-                        save it directly to your account dashboard.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">2</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Seal" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        Choose privacy and control settings, including preview,
-                        edit window, and early deletion permissions.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">3</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Schedule" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        Pick an exact future date and time using presets or a
-                        custom moment up to 10 years ahead.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">4</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Deliver" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        LetterGator sends your letter at the scheduled time with
-                        retry protection and confirmation in your account history.
-                        {% endblocktrans %}
-                    </p>
-                </div>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="{% url 'letter-create-page' %}" class="inline-flex items-center justify-center px-6 py-3 border border-[#1d4835] text-base font-medium rounded-xl text-white bg-[#1d4835] hover:bg-[#16372a] shadow-sm transition-colors duration-200">
+                    {% trans "Create Digital Email Letter" %}
+                </a>
+                <a href="{% url 'physical-letter-create' %}" class="inline-flex items-center justify-center px-6 py-3 border border-[#648451] text-base font-medium rounded-xl text-white bg-[#648451] hover:bg-[#536f43] shadow-sm transition-colors duration-200">
+                    {% trans "Create Physical Letter" %}
+                </a>
             </div>
         </div>
 
+        <div class="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <article class="rounded-3xl border border-emerald-100 bg-emerald-50/60 p-6 md:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="h-10 w-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xl">✉️</span>
+                    <h3 class="text-2xl font-bold text-gray-900">{% trans "Digital Email Letters" %}</h3>
+                </div>
+                <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-5">
+                    {% trans "Best when precise timing, privacy controls, and instant inbox delivery matter most. Ideal for reflection notes, reminders, and milestone messages." %}
+                </p>
+                <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
+                    <li>{% trans "Compose your subject and message." %}</li>
+                    <li>{% trans "Set privacy controls (edit, delete, preview)." %}</li>
+                    <li>{% trans "Choose a date and time (up to 10 years)." %}</li>
+                    <li>{% trans "LetterGator delivers by email at schedule." %}</li>
+                </ol>
+            </article>
+
+            <article class="rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="h-10 w-10 rounded-xl bg-slate-800 text-white flex items-center justify-center text-xl">📮</span>
+                    <h3 class="text-2xl font-bold text-gray-900">{% trans "Physical Letters" %}</h3>
+                </div>
+                <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-5">
+                    {% trans "Best for tangible keepsakes and emotional occasions. Include printed documents or photos and deliver a real envelope to a real mailbox." %}
+                </p>
+                <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
+                    <li>{% trans "Write your letter and optionally attach files." %}</li>
+                    <li>{% trans "Add recipient postal address and country." %}</li>
+                    <li>{% trans "Pick your requested date (up to 10 years)." %}</li>
+                    <li>{% trans "We print and ship to the recipient." %}</li>
+                </ol>
+            </article>
+        </div>
     </div>
 </section>
 
-<section id="physical-flow" class="px-6 pb-24">
-    <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-3xl p-8 md:p-12">
-        <div class="mb-10">
-            <p class="text-xs uppercase tracking-[0.22em] text-[#014421] font-semibold">{% trans "Physical Letters" %}</p>
-            <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">{% trans "From message to mailbox" %}</h2>
-            <p class="text-gray-600 mt-3 max-w-3xl">
-                {% blocktrans trimmed %}
-                Physical letters combine your message with attachments
-                (documents and photos), then get printed and mailed to the
-                recipient's address. Here's how the process works.
-                {% endblocktrans %}
-            </p>
-        </div>
-
-        <div class="space-y-6">
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">1</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Compose with attachments" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        Write your message and optionally attach files: up to 3
-                        documents (PDF, DOCX, TXT) and up to 3 photos (JPG, PNG).
-                        Everything will be printed together in one envelope.
-                        {% endblocktrans %}
-                    </p>
-                </div>
+<section class="px-6 pb-20">
+    <div class="max-w-6xl mx-auto rounded-3xl border border-amber-100 bg-amber-50/60 p-6 md:p-10">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div class="max-w-2xl">
+                <p class="text-xs uppercase tracking-[0.22em] text-amber-700 font-semibold mb-2">
+                    {% trans "Pricing" %}
+                </p>
+                <h3 class="text-2xl md:text-3xl font-black text-gray-900 mb-2">
+                    {% trans "Estimate cost before you create" %}
+                </h3>
+                <p class="text-gray-700 text-sm md:text-base">
+                    {% trans "Use the price calculator to estimate email or physical letter cost, then open the pricing page for full details." %}
+                </p>
             </div>
-
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">2</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Add recipient address" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        Enter the recipient's name, street address, city,
-                        state/province, postal code, and country. The price is
-                        calculated based on your document pages, photos, and
-                        destination country.
-                        {% endblocktrans %}
-                    </p>
-                </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button
+                    id="open-calculator-btn"
+                    type="button"
+                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#1d4835] text-white font-semibold hover:bg-[#16372a] transition-colors"
+                >
+                    {% trans "Pricing Calculator" %}
+                </button>
+                <a
+                    href="{% url 'pricing-page' %}"
+                    class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#648451] bg-[#648451] text-white font-semibold hover:bg-[#536f43] transition-colors"
+                >
+                    {% trans "Open Pricing Page" %}
+                </a>
             </div>
-
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">3</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Set desired delivery date" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        Choose the date you'd like the letter to arrive. We'll
-                        print it on your requested date and begin shipping. You
-                        can schedule up to 10 years in advance.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">4</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Pay and confirm" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        The total price is deducted from your account balance when
-                        you confirm. Your account balance must cover the full cost
-                        of the letter.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">5</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Print and ship" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        On your requested delivery date, the letter is printed and
-                        shipped via postal service. Delivery times vary by country
-                        (typically 2-6 weeks). Track its status in your account
-                        dashboard.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#014421] text-white flex items-center justify-center font-black text-lg">6</div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">{% trans "Recipient receives it" %}</h3>
-                    <p class="text-sm text-gray-600">
-                        {% blocktrans trimmed %}
-                        The letter arrives in your recipient's mailbox — a tangible,
-                        memorable keepsake that they can hold in their hands and
-                        share with others.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="px-6 pb-24">
-    <div class="max-w-4xl mx-auto">
-        <p class="text-gray-500 text-base mb-4 text-center">{% trans "Ready to write your first letter?" %}</p>
-        <div class="flex flex-wrap items-center justify-center gap-3">
-            <a
-                href="{% url 'letters-page' %}"
-                class="inline-flex items-center gap-2 bg-[#014421] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#023319] transition-colors"
-            >
-                {% trans "Open Letters" %}
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-            </a>
-            <button
-                id="open-calculator-btn"
-                type="button"
-                class="inline-flex items-center gap-2 border border-slate-300 text-slate-700 font-semibold px-5 py-3 rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-colors"
-            >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3v3m-6-10h.01M9 17h.01M15 15h.01m6-6h.01M15 7h.01M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-4"></path>
-                </svg>
-                {% trans "Price Calculator" %}
-            </button>
         </div>
     </div>
 </section>
 
 {% include "partials/calculator_modal.html" %}
 {{ countries_pricing_json|json_script:"countries-pricing-data" }}
-<script src="{% static 'js/calculator.js' %}"></script>
 
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/concept.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var filters = document.querySelectorAll(".scenario-filter");
+    var cards = document.querySelectorAll(".scenario-card");
+
+    function setActiveButton(activeBtn) {
+        filters.forEach(function (btn) {
+            btn.classList.remove("bg-[#1d4835]", "text-white", "border-[#1d4835]");
+            btn.classList.add("bg-white", "text-[#1d4835]", "border-[#648451]");
+        });
+        activeBtn.classList.add("bg-[#1d4835]", "text-white", "border-[#1d4835]");
+        activeBtn.classList.remove("bg-white", "text-[#1d4835]", "border-[#648451]");
+    }
+
+    function applyFilter(filterName) {
+        cards.forEach(function (card) {
+            var category = card.getAttribute("data-category");
+            if (filterName === "all" || category === filterName) {
+                card.classList.remove("hidden");
+            } else {
+                card.classList.add("hidden");
+            }
+        });
+    }
+
+    filters.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            var filterName = btn.getAttribute("data-filter");
+            setActiveButton(btn);
+            applyFilter(filterName);
+        });
+    });
+});
+</script>
+<script src="{% static 'js/calculator.js' %}"></script>
 {% endblock %}

@@ -1,4 +1,4 @@
-﻿from django.urls import path
+from django.urls import path
 
 from .views import (
     balance_page,
@@ -58,7 +58,6 @@ urlpatterns = [
     path("how/", how_page, name="how-page"),
     path("calculator/countries/", calculator_countries_fragment, name="calc-countries-fragment"),
     path("contact/", contact_page, name="contact-page"),
-    path("why/", how_page, name="why-page"),
     path("pricing/", pricing_page, name="pricing-page"),
     path("privacy/", privacy_page, name="privacy-page"),
     path("faq/", faq_page, name="faq-page"),
@@ -89,5 +88,3 @@ urlpatterns = [
         name="contact-ticket-comment",
     ),
 ]
-
-

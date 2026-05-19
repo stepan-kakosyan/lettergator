@@ -1,7 +1,4 @@
-﻿{% load static i18n %}
-{% get_current_language as CURRENT_LANG %}
-
-<header class="w-full px-6 pt-1 pb-2 border-b border-gray-100 relative sticky top-0 z-40 bg-white">
+{% load static i18n %}{% get_current_language as CURRENT_LANG %}<header class="w-full px-6 pt-1 pb-2 border-b border-gray-100 relative sticky top-0 z-40 bg-white">
     <div class="max-w-5xl mx-auto flex justify-between items-center gap-3">
         <a href="{% url 'landing-page' %}" class="inline-flex {% if request.user.is_authenticated %}flex-col md:flex-row md:items-center{% else %}flex-row items-center{% endif %} gap-2" aria-label="LetterGator home">
             <img src="{% static 'img/logo.png' %}" alt="LetterGator logo" class="h-[80px] w-auto">
@@ -12,7 +9,7 @@
         <nav class="hidden md:flex gap-8 text-sm font-medium text-gray-500">
             <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'letters-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "Letters" %}</a>
             <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'contact-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "Contact" %}</a>
-            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'how-page' or request.resolver_match.url_name == 'why-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "How it works" %}</a>
+            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "How it works" %}</a>
             <a href="{% url 'pricing-page' %}" class="hover:text-[#014421] transition-colors pb-0.5 {% if request.resolver_match.url_name == 'pricing-page' %}text-[#014421] border-b-2 border-[#014421]{% endif %}">{% trans "Piricng" %}</a>
         </nav>
 
@@ -104,7 +101,7 @@
         <nav class="flex flex-col gap-4 text-sm font-medium text-gray-600">
             <a href="{% url 'letters-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'letters-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Letters" %}</a>
             <a href="{% url 'contact-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'contact-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Contact" %}</a>
-            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'how-page' or request.resolver_match.url_name == 'why-page' %}text-[#014421] font-semibold{% endif %}">{% trans "How it works" %}</a>
+            <a href="{% url 'how-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'how-page' %}text-[#014421] font-semibold{% endif %}">{% trans "How it works" %}</a>
             <a href="{% url 'pricing-page' %}" class="hover:text-[#014421] transition-colors py-1 {% if request.resolver_match.url_name == 'pricing-page' %}text-[#014421] font-semibold{% endif %}">{% trans "Piricng" %}</a>
             {% if not request.user.is_authenticated %}
             <hr class="border-gray-100">

@@ -6,6 +6,7 @@ from django.contrib.auth.forms import (
     SetPasswordForm,
     UserCreationForm,
 )
+from django.contrib.auth import get_user_model
 from decimal import Decimal
 
 from .models import CustomUser, SecondaryEmail
@@ -87,6 +88,22 @@ class PasswordRecoveryRequestForm(PasswordResetForm):
                     "focus:ring-0 focus:outline-none"
                 ),
             }
+        )
+
+    def get_users(self, email):
+        user_model = get_user_model()
+        email_field_name = user_model.get_email_field_name()
+        active_users = user_model._default_manager.filter(
+            **{
+                f"{email_field_name}__iexact": email,
+                "is_active": True,
+            }
+        )
+        return (
+            user
+            for user in active_users
+            if getattr(user, email_field_name, "").casefold()
+            == email.casefold()
         )
 
 

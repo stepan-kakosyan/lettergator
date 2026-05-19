@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-17 07:23+0000\n"
+"POT-Creation-Date: 2026-05-19 09:16+0000\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,8 +33,8 @@ msgstr ""
 #: accounts/templates/accounts/login.html:4
 #: accounts/templates/accounts/login.html:85
 #: accounts/templates/accounts/register.html:148
-#: accounts/templates/partials/header.html:52
-#: accounts/templates/partials/header.html:121
+#: accounts/templates/partials/header.html:39
+#: accounts/templates/partials/header.html:108
 #: letters/templates/letters/vault.html:66
 #: letters/templates/letters/vault.html:148
 msgid "Login"
@@ -80,8 +80,8 @@ msgid "Create your first letter"
 msgstr "Create your first letter"
 
 #: accounts/templates/accounts/activation_success.html:39
-#: letters/templates/letters/privacy.html:68
-#: letters/templates/letters/terms.html:178
+#: letters/templates/letters/privacy.html:131
+#: letters/templates/letters/terms.html:211
 msgid "Go to Letters"
 msgstr "Go to Letters"
 
@@ -288,23 +288,23 @@ msgstr "Back to home"
 msgid "Send test email"
 msgstr "Send recovery email"
 
-#: accounts/templates/base.html:170
+#: accounts/templates/base.html:186
 msgid "Confirm Deletion"
 msgstr ""
 
-#: accounts/templates/base.html:185
+#: accounts/templates/base.html:201
 #, fuzzy
 #| msgid "Cancel"
 msgid "No, cancel"
 msgstr "Cancel"
 
-#: accounts/templates/base.html:192
+#: accounts/templates/base.html:208
 msgid "Yes, delete"
 msgstr ""
 
 #: accounts/templates/partials/calculator_modal.html:9
 #: letters/templates/letters/balance.html:55
-#: letters/templates/letters/how.html:354
+#: letters/templates/letters/how.html:324
 #: letters/templates/letters/landing.html:136
 #: letters/templates/letters/vault.html:97
 msgid "Price Calculator"
@@ -437,50 +437,44 @@ msgstr "Privacy"
 msgid "FAQ"
 msgstr "FAQ"
 
-#: accounts/templates/partials/header.html:11
-msgid "BETA: This is a beta version. Everything you do on this"
-msgstr ""
-
-#: accounts/templates/partials/header.html:12
-msgid "website may be erased after the official launch."
-msgstr ""
-
-# --- Navigation ---
-#: accounts/templates/partials/header.html:23
-#: accounts/templates/partials/header.html:117
-#: letters/templates/letters/landing.html:160
-msgid "See why"
-msgstr "See why"
-
-#: accounts/templates/partials/header.html:24
-#: accounts/templates/partials/header.html:118
-#: letters/templates/letters/landing.html:210
-msgid "See how"
-msgstr "See how"
-
-#: accounts/templates/partials/header.html:25
-#: accounts/templates/partials/header.html:115
+#: accounts/templates/partials/header.html:10
+#: accounts/templates/partials/header.html:102
 #: letters/templates/letters/letter_create.html:15
 #: letters/templates/letters/vault.html:4
 msgid "Letters"
 msgstr "Letters"
 
-#: accounts/templates/partials/header.html:26
-#: accounts/templates/partials/header.html:116
-#: letters/templates/letters/terms.html:166
+#: accounts/templates/partials/header.html:11
+#: accounts/templates/partials/header.html:103
+#: letters/templates/letters/privacy.html:120
+#: letters/templates/letters/terms.html:199
 msgid "Contact"
 msgstr "Contact"
 
+#: accounts/templates/partials/header.html:12
+#: accounts/templates/partials/header.html:104
+#: letters/templates/letters/how.html:19
+#, fuzzy
+#| msgid "How pricing works"
+msgid "How it works"
+msgstr "How pricing works"
+
+#: accounts/templates/partials/header.html:13
+#: accounts/templates/partials/header.html:105
+#: letters/templates/letters/pricing.html:9
+msgid "Piricng"
+msgstr ""
+
 # --- Languages ---
-#: lettergator_backend/settings.py:128
+#: lettergator_backend/settings.py:129
 msgid "English"
 msgstr "English"
 
-#: lettergator_backend/settings.py:129
+#: lettergator_backend/settings.py:130
 msgid "Russian"
 msgstr "Russian"
 
-#: lettergator_backend/settings.py:130
+#: lettergator_backend/settings.py:131
 msgid "Armenian"
 msgstr "Armenian"
 
@@ -538,123 +532,139 @@ msgstr "No transactions yet."
 msgid "LetterGator | See why"
 msgstr ""
 
-#: letters/templates/letters/concept.html:18
+#: letters/templates/letters/concept.html:20
 msgid "LetterGator See why"
 msgstr ""
 
-#: letters/templates/letters/concept.html:20
+#: letters/templates/letters/concept.html:22
+#: letters/templates/letters/how.html:44
 msgid "Why people send letters"
 msgstr ""
 
 # --- Landing: hero ---
-#: letters/templates/letters/concept.html:21
+#: letters/templates/letters/concept.html:23
+#: letters/templates/letters/how.html:45
 #, fuzzy
 #| msgid "Message to the Future"
 msgid "into the future."
 msgstr "Message to the Future"
 
-#: letters/templates/letters/concept.html:24
+#: letters/templates/letters/concept.html:26
+#: letters/templates/letters/how.html:48
 msgid ""
 "Explore scenarios across categories. Send digital letters by email or "
 "physical letters by mail— each form of expression has its own power for the "
 "right moment."
 msgstr ""
 
-#: letters/templates/letters/concept.html:41
+#: letters/templates/letters/concept.html:43
+#: letters/templates/letters/how.html:62
 #: letters/templates/letters/landing.html:173
 msgid "Personal"
 msgstr "Personal"
 
-#: letters/templates/letters/concept.html:42
+#: letters/templates/letters/concept.html:44
+#: letters/templates/letters/how.html:63
 msgid ""
 "Write to who you'll become. Capture doubt, clarity, and conviction before "
 "life rewrites the memory."
 msgstr ""
 
-#: letters/templates/letters/concept.html:44
+#: letters/templates/letters/concept.html:46
+#: letters/templates/letters/how.html:66
 #, fuzzy
 #| msgid "Explore all scenarios"
 msgid "4 scenarios"
 msgstr "Explore all scenarios"
 
-#: letters/templates/letters/concept.html:57
+#: letters/templates/letters/concept.html:59
+#: letters/templates/letters/how.html:79
 #: letters/templates/letters/landing.html:179
 msgid "Family"
 msgstr "Family"
 
-#: letters/templates/letters/concept.html:58
+#: letters/templates/letters/concept.html:60
+#: letters/templates/letters/how.html:80
 msgid ""
 "Bridge the distance. Send words that will land on an anniversary, a "
 "birthday, or a day that needs them most."
 msgstr ""
 
-#: letters/templates/letters/concept.html:60
-#: letters/templates/letters/concept.html:76
-#: letters/templates/letters/concept.html:92
+#: letters/templates/letters/concept.html:62
+#: letters/templates/letters/concept.html:78
+#: letters/templates/letters/concept.html:94
+#: letters/templates/letters/how.html:83 letters/templates/letters/how.html:100
+#: letters/templates/letters/how.html:117
 #, fuzzy
 #| msgid "Explore all scenarios"
 msgid "3 scenarios"
 msgstr "Explore all scenarios"
 
-#: letters/templates/letters/concept.html:73
+#: letters/templates/letters/concept.html:75
+#: letters/templates/letters/how.html:96
 #: letters/templates/letters/landing.html:185
 msgid "Team"
 msgstr "Team"
 
-#: letters/templates/letters/concept.html:74
+#: letters/templates/letters/concept.html:76
+#: letters/templates/letters/how.html:97
 msgid ""
 "Preserve what the team knows today. Deliver it to the team that needs it "
 "tomorrow."
 msgstr ""
 
-#: letters/templates/letters/concept.html:89
+#: letters/templates/letters/concept.html:91
+#: letters/templates/letters/how.html:113
 #: letters/templates/letters/landing.html:191
 msgid "Milestone"
 msgstr "Milestone"
 
-#: letters/templates/letters/concept.html:90
+#: letters/templates/letters/concept.html:92
+#: letters/templates/letters/how.html:114
 msgid "Mark the moments that matter. Retirement, relocations, difficult dates"
 msgstr ""
 
-#: letters/templates/letters/concept.html:90
+#: letters/templates/letters/concept.html:92
+#: letters/templates/letters/how.html:114
 msgid "preserved and delivered when they count."
 msgstr ""
 
-#: letters/templates/letters/concept.html:105
-#: letters/templates/letters/how.html:224
+#: letters/templates/letters/concept.html:107
+#: letters/templates/letters/how.html:201
 #: letters/templates/letters/landing.html:248
 #: letters/templates/letters/physical_letter_create.html:16
+#: letters/templates/letters/pricing.html:63
 #, fuzzy
 #| msgid "Existing Letters"
 msgid "Physical Letters"
 msgstr "Existing Letters"
 
-#: letters/templates/letters/concept.html:106
+#: letters/templates/letters/concept.html:108
 msgid ""
 "Tangible keepsakes. Send printed letters with attachments, documents, and "
 "photos—for moments that deserve to be held."
 msgstr ""
 
-#: letters/templates/letters/concept.html:113
+#: letters/templates/letters/concept.html:115
 msgid "Printed memory for a life moment"
 msgstr ""
 
-#: letters/templates/letters/concept.html:115
+#: letters/templates/letters/concept.html:117
 msgid ""
 "A handwritten or typed message printed and mailed to a loved one—with photos "
 "from a meaningful moment, documents, or artwork. Arrives as a beautiful, "
 "tangible keepsake they can hold and treasure forever."
 msgstr ""
 
-#: letters/templates/letters/concept.html:121
+#: letters/templates/letters/concept.html:123
 msgid "When to use:"
 msgstr ""
 
-#: letters/templates/letters/concept.html:126
+#: letters/templates/letters/concept.html:128
 msgid "Letters to a newborn—for their 18th birthday"
 msgstr ""
 
-#: letters/templates/letters/concept.html:128
+#: letters/templates/letters/concept.html:130
 msgid ""
 "A physical letter scheduled to arrive on your child's 18th birthday, "
 "complete with photos from their early years, your handwritten words, and "
@@ -662,66 +672,66 @@ msgid ""
 "they were born."
 msgstr ""
 
-#: letters/templates/letters/concept.html:134
+#: letters/templates/letters/concept.html:136
 msgid "Time to delivery:"
 msgstr ""
 
-#: letters/templates/letters/concept.html:139
+#: letters/templates/letters/concept.html:141
 msgid "A printed manifesto or values statement"
 msgstr ""
 
-#: letters/templates/letters/concept.html:141
+#: letters/templates/letters/concept.html:143
 msgid ""
 "Write your personal beliefs, life values, or a heartfelt letter and have it "
 "beautifully printed and framed for a loved one. Include your handwriting, "
 "signatures, and design elements that can't be captured in email."
 msgstr ""
 
-#: letters/templates/letters/concept.html:147
+#: letters/templates/letters/concept.html:149
 msgid "When to send:"
 msgstr ""
 
-#: letters/templates/letters/concept.html:152
+#: letters/templates/letters/concept.html:154
 msgid "Team or company milestone book"
 msgstr ""
 
-#: letters/templates/letters/concept.html:154
+#: letters/templates/letters/concept.html:156
 msgid ""
 "Collect printed letters from team members, partners, or family about a "
 "shared milestone—a company anniversary, a team launch, or a collective "
 "achievement. Deliver them all bound together as a lasting memento."
 msgstr ""
 
-#: letters/templates/letters/concept.html:160
+#: letters/templates/letters/concept.html:162
 msgid "Perfect for:"
 msgstr ""
 
-#: letters/templates/letters/concept.html:165
+#: letters/templates/letters/concept.html:167
 msgid "Why choose a physical letter?"
 msgstr ""
 
-#: letters/templates/letters/concept.html:169
+#: letters/templates/letters/concept.html:171
 msgid "Tangible and memorable—something to hold, display, or share."
 msgstr ""
 
-#: letters/templates/letters/concept.html:173
+#: letters/templates/letters/concept.html:175
 msgid "Include photos, documents, and artwork alongside your message."
 msgstr ""
 
-#: letters/templates/letters/concept.html:177
+#: letters/templates/letters/concept.html:179
 msgid "Arrives as a surprise in the mailbox—not an email notification."
 msgstr ""
 
-#: letters/templates/letters/concept.html:181
+#: letters/templates/letters/concept.html:183
 msgid "Personal touches like handwriting or custom formatting."
 msgstr ""
 
-#: letters/templates/letters/concept.html:185
+#: letters/templates/letters/concept.html:187
 msgid "Becomes a keepsake to be treasured for years."
 msgstr ""
 
 # --- Letter Create ---
-#: letters/templates/letters/concept.html:195
+#: letters/templates/letters/concept.html:197
 #: letters/templates/letters/letter_create.html:29
 #, fuzzy
 #| msgid "Create Letter"
@@ -890,655 +900,198 @@ msgid ""
 "Everything you might want to know before sending your first future letter."
 msgstr "Everything users usually ask before sending their first future letter."
 
-#: letters/templates/letters/faq.html:29
-msgid "1. How much does LetterGator cost, and when is it charged?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:34
-msgid ""
-"<strong>Email letters:</strong> Delivery under 1 year is free. At 1 year or "
-"beyond, the cost is $0.50 per year, charged once when you save the letter. "
-"To unlock 1 year+ scheduling, keep at least $1.00 in your balance.<br/><br/> "
-"<strong>Physical letters:</strong> Pricing includes the destination "
-"country's base cost, $0.50 per printable page, $0.50 per photo, and $0.50 "
-"per year into the future. The full amount is charged once when you pay and "
-"submit the order."
-msgstr ""
-
-#: letters/templates/letters/faq.html:47
-msgid "2. How reliable is delivery, and what backup details can I provide?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:52
-msgid ""
-"<strong>Email letters:</strong> Delivery includes retry logic if a first "
-"email attempt fails. You can send to yourself or to other recipients, and "
-"add up to 5 recipient emails per letter.<br/><br/> <strong>Physical letters:"
-"</strong> Delivery depends on the recipient address, destination country, "
-"and postal service timing. Your account details, plus the full mailing "
-"address you enter for the order, help us prepare and route the letter "
-"correctly."
-msgstr ""
-
-#: letters/templates/letters/faq.html:66
-msgid "3. Can I change, delete, or preview a letter after I create it?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:71
-msgid ""
-"<strong>Email letters:</strong> You control edit, delete, and preview rules "
-"at creation time. If Allow Edit and/or Allow Delete are enabled, those "
-"actions are available only during the first 30 days. Preview works the same "
-"way: if See Message Before Delivery is enabled, you can view the message "
-"before delivery.<br/><br/> <strong>Physical letters:</strong> You can save "
-"drafts before paying. Paid physical letters can still be updated while they "
-"remain in Paid status, and you can delete Draft or Paid letters. Physical "
-"letters do not use the same preview controls as email letters because they "
-"are prepared for printing and shipping."
-msgstr ""
-
-#: letters/templates/letters/faq.html:86
-msgid "4. How do you make sure my email is still valid in future years?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:91
-msgid ""
-"<strong>Email letters:</strong> We send a re-confirmation email roughly once "
-"a year so you can confirm your address and update your account if your email "
-"ever changes.<br/><br/> <strong>Physical letters:</strong> The most "
-"important detail is the recipient's mailing address on the order. Review the "
-"address carefully before paying, and if you need to change a paid physical "
-"letter later, update it before the letter moves beyond Paid status."
-msgstr ""
-
-#: letters/templates/letters/faq.html:105
-msgid ""
-"5. Is my message content private, and what happens if your database is lost?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:110
-msgid ""
-"<strong>Email letters:</strong> Message content is encrypted before storage "
-"and written to Arweave for long-term resilience. Even if our own database "
-"were lost, the encrypted email-letter payload remains preserved.<br/><br/> "
-"<strong>Physical letters:</strong> Your message text, uploaded files, and "
-"shipping details are stored with the order so the letter can be prepared for "
-"printing and mailing. Physical letters follow a different operational flow "
-"than sealed email delivery, so they are not handled with the same delivery-"
-"only decryption model."
-msgstr ""
-
-#: letters/templates/letters/faq.html:125
-msgid "6. What's the difference between email letters and physical letters?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:130
-msgid ""
-"<strong>Email Letters:</strong> Scheduled messages that arrive in an inbox "
-"at a specific date and time. You choose when to deliver (up to 10 years "
-"ahead), and can optionally edit or delete during the first 30 days. Perfect "
-"for digital-only messages and milestone reminders.<br/><br/> "
-"<strong>Physical Letters:</strong> Printed and mailed to a recipient's "
-"address. You select a desired delivery date, and can attach documents (PDFs, "
-"TXT) and photos (JPG, PNG) that will be printed with your message. Perfect "
-"for tangible keepsakes, gifts, and memorable occasions."
-msgstr ""
-
-#: letters/templates/letters/faq.html:143
-msgid "7. Can I attach files to email letters?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:148
-msgid ""
-"No, email letters support only text content. However, if you want to share "
-"documents, images, or photos, you can create a <strong>physical letter</"
-"strong> instead, which supports attaching PDFs, Word documents, text files, "
-"and photos that will be printed together."
-msgstr ""
-
-#: letters/templates/letters/faq.html:158
-msgid "8. What file types can I attach to physical letters?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:163
-msgid ""
-"<strong>Documents:</strong> PDF, Word (.DOCX), and Text (.TXT) files are "
-"supported and will be printed.<br/> <strong>Photos:</strong> JPG and PNG "
-"images are supported and will be printed in color or black &amp; white.<br/> "
-"You can attach up to 3 documents and 3 photos per letter. Each page of your "
-"documents is calculated into the total price."
-msgstr ""
-
-#: letters/templates/letters/faq.html:173
-msgid "9. How are refunds handled if I delete a letter?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:178
-msgid ""
-"<strong>Email letters:</strong> Free letters have no refund because no "
-"payment was made. Paid email letters keep a fixed $0.50 processing fee, and "
-"the rest is returned to your balance if deletion is still allowed.<br/><br/> "
-"<strong>Physical letters:</strong> Drafts have no refund because they were "
-"never paid. Paid physical letters refund the remaining balance after a "
-"deletion fee of $1.00 plus $0.50 for each full year since the order was "
-"created."
-msgstr ""
-
-#: letters/templates/letters/faq.html:191
-msgid "10. How long does delivery take for each letter type?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:196
-msgid ""
-"<strong>Email letters:</strong> Delivery happens at the exact future date "
-"and time you choose.<br/><br/> <strong>Physical letters:</strong> You choose "
-"a requested delivery date, and the order is then prepared for shipping. "
-"Delivery depends on the destination country and can occur around 1 to 4 days "
-"after your requested date, with later arrival possible depending on postal "
-"conditions."
-msgstr ""
-
-#: letters/templates/letters/faq.html:209
-msgid "11. Can I save a physical letter as a draft before paying?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:214
-msgid ""
-"Yes. Physical letters can be saved as drafts first, which is useful when you "
-"still need to refine the address, message, or attachments. Drafts are "
-"unpaid. Once you are ready, you can return to the draft, review the final "
-"price, and pay to move it into Paid status."
-msgstr ""
-
-#: letters/templates/letters/faq.html:225
-msgid "12. Can I track the status of a physical letter after I pay?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:230
-msgid ""
-"Yes. In your Letters workspace, physical letters move through statuses such "
-"as Draft, Paid, Printing, Shipped, and Delivered. This helps you understand "
-"whether the order is still editable, being prepared, or already on its way."
-msgstr ""
-
-#: letters/templates/letters/faq.html:240
-msgid "13. How do I choose between an email letter and a physical letter?"
-msgstr ""
-
-#: letters/templates/letters/faq.html:245
-msgid ""
-"Choose <strong>email letters</strong> when precise timing, privacy controls, "
-"and inbox delivery matter most. Choose <strong>physical letters</strong> "
-"when you want a tangible keepsake, printed photos or documents, and a more "
-"ceremonial mailbox experience for the recipient."
-msgstr ""
-
-#: letters/templates/letters/faq.html:259
+#: letters/templates/letters/faq.html:30
 msgid "Anything else we should know?"
 msgstr ""
 
-#: letters/templates/letters/faq.html:264
+#: letters/templates/letters/faq.html:35
 #, fuzzy
 #| msgid "Send your message"
 msgid "Send us a message"
 msgstr "Send your message"
 
-#: letters/templates/letters/how.html:5
-msgid "LetterGator | See how"
-msgstr ""
-
-#: letters/templates/letters/how.html:15
+#: letters/templates/letters/how.html:4
 #, fuzzy
 #| msgid "How pricing works"
-msgid "How it works"
+msgid "LetterGator | How it works"
 msgstr "How pricing works"
 
-#: letters/templates/letters/how.html:17
+#: letters/templates/letters/how.html:21
+msgid "Why and how"
+msgstr ""
+
+#: letters/templates/letters/how.html:22
 #, fuzzy
-#| msgid "Send your message"
-msgid "Deliver your message"
-msgstr "Send your message"
+#| msgid "Secure your future letters."
+msgid "future letters work."
+msgstr "Secure your future letters."
 
-#: letters/templates/letters/how.html:17
-msgid "your way."
-msgstr ""
-
-#: letters/templates/letters/how.html:20
+#: letters/templates/letters/how.html:25
 msgid ""
-"Choose email for digital delivery or physical letters for tangible "
-"keepsakes. Both can be scheduled for exactly when they matter most."
+"Explore why people write letters to the future and exactly how email and "
+"physical delivery work from start to finish."
 msgstr ""
 
-#: letters/templates/letters/how.html:42 letters/templates/letters/how.html:57
-msgid "Compose"
-msgstr "Compose"
-
-#: letters/templates/letters/how.html:43
-msgid "Create a meaningful letter in minutes."
-msgstr ""
-
-#: letters/templates/letters/how.html:45
-msgid ""
-"Write your subject line and full message body. There are no character limits "
-"— pour in as much as you need. The letter is immediately attached to your "
-"account, safely stored, and ready for the next step."
-msgstr ""
-
-#: letters/templates/letters/how.html:52
-msgid "Rich message body with full text support"
-msgstr ""
-
-#: letters/templates/letters/how.html:53
-msgid "Clear subject line for recipient context"
-msgstr ""
-
-#: letters/templates/letters/how.html:54
-#, fuzzy
-#| msgid "Update your account password."
-msgid "Auto-saved to your account dashboard"
-msgstr "Update your account password."
-
-#: letters/templates/letters/how.html:71 letters/templates/letters/how.html:87
-msgid "Seal"
-msgstr "Seal"
-
-#: letters/templates/letters/how.html:72
-msgid "Choose privacy and ownership controls."
-msgstr ""
-
-#: letters/templates/letters/how.html:74
-msgid ""
-"Before scheduling, decide the rules that govern your letter. Can you peek at "
-"the content before delivery? Should edits be blocked once scheduled? These "
-"controls lock in your intentions and prevent second-guessing."
-msgstr ""
-
-#: letters/templates/letters/how.html:82
-msgid "Toggle content preview on or off"
-msgstr ""
-
-#: letters/templates/letters/how.html:83
-msgid "Allow or block edits in the first month"
-msgstr ""
-
-#: letters/templates/letters/how.html:84
-msgid "Enable or disable early deletion"
-msgstr ""
-
-#: letters/templates/letters/how.html:101
-#: letters/templates/letters/how.html:117
-msgid "Schedule"
-msgstr "Schedule"
-
-#: letters/templates/letters/how.html:102
-msgid "Set exact timing for emotional impact."
-msgstr ""
-
-#: letters/templates/letters/how.html:104
-msgid ""
-"Pick the precise date and time your message should land. Use quick-select "
-"presets — 1 month, 1 year, 5 years, 10 years — or dial in a custom moment: a "
-"birthday, anniversary, or milestone you already know is coming."
-msgstr ""
-
-#: letters/templates/letters/how.html:112
-msgid "Preset slots for common future milestones"
-msgstr ""
-
-#: letters/templates/letters/how.html:113
-msgid "Custom date-and-time picker for exact moments"
-msgstr ""
-
-#: letters/templates/letters/how.html:114
-msgid "Delivery time locked after confirmation"
-msgstr ""
-
-#: letters/templates/letters/how.html:130
-#: letters/templates/letters/how.html:146
-msgid "Deliver"
-msgstr "Deliver"
+# --- Navigation ---
+#: letters/templates/letters/how.html:42
+#: letters/templates/letters/landing.html:160
+msgid "See why"
+msgstr "See why"
 
 #: letters/templates/letters/how.html:131
-msgid "Automatic delivery with fallback reliability."
-msgstr ""
-
-#: letters/templates/letters/how.html:133
-msgid ""
-"When the clock hits your chosen moment, LetterGator dispatches your message "
-"to every selected recipient simultaneously. Built-in retry logic protects "
-"against delivery failures so your words arrive — no matter what happens "
-"between now and then."
-msgstr ""
-
-#: letters/templates/letters/how.html:141
-msgid "Sends to all selected recipients at once"
-msgstr ""
-
-#: letters/templates/letters/how.html:142
-msgid "Retry logic guards against delivery failures"
-msgstr ""
-
-#: letters/templates/letters/how.html:143
-msgid "Confirmation logged to your account history"
-msgstr ""
-
-#: letters/templates/letters/how.html:159
 #: letters/templates/letters/landing.html:224
+#: letters/templates/letters/pricing.html:49
 #, fuzzy
 #| msgid "Letters"
 msgid "Email Letters"
 msgstr "Letters"
 
-#: letters/templates/letters/how.html:160
-msgid "Creation form fields explained"
+#: letters/templates/letters/how.html:132
+#, fuzzy
+#| msgid "Send your message"
+msgid "Deliver your message"
+msgstr "Send your message"
+
+#: letters/templates/letters/how.html:132
+msgid "your way."
 msgstr ""
 
-#: letters/templates/letters/how.html:162
+#: letters/templates/letters/how.html:134
 msgid ""
-"This is a full guide to every setting in the Create Email Letter page, "
-"including what each field controls and how pricing is calculated."
+"Create your message now, lock delivery rules, and let LetterGator deliver it "
+"at the exact future moment you choose."
+msgstr ""
+
+#: letters/templates/letters/how.html:145
+msgid "Compose"
+msgstr "Compose"
+
+#: letters/templates/letters/how.html:147
+#, fuzzy
+#| msgid "Write your message with no limits and save it to your account."
+msgid ""
+"Write your subject and message with full text support, then save it directly "
+"to your account dashboard."
+msgstr "Write your message with no limits and save it to your account."
+
+#: letters/templates/letters/how.html:158
+msgid "Seal"
+msgstr "Seal"
+
+#: letters/templates/letters/how.html:160
+msgid ""
+"Choose privacy and control settings, including preview, edit window, and "
+"early deletion permissions."
 msgstr ""
 
 #: letters/templates/letters/how.html:171
-#, fuzzy
-#| msgid "Content"
-msgid "Content fields"
-msgstr "Content"
+msgid "Schedule"
+msgstr "Schedule"
 
 #: letters/templates/letters/how.html:173
 #, fuzzy
-#| msgid "Subject"
-msgid "Subject:"
-msgstr "Subject"
-
-#: letters/templates/letters/how.html:173
+#| msgid "Pick the exact date — a preset milestone or a custom moment."
 msgid ""
-"The title of your letter, used for quick identification in your list and "
-"confirmation messages."
-msgstr ""
-
-#: letters/templates/letters/how.html:174
-#, fuzzy
-#| msgid "Message"
-msgid "Message:"
-msgstr "Message"
-
-#: letters/templates/letters/how.html:174
-msgid ""
-"The full text body that will be stored securely and delivered at the "
-"scheduled time."
-msgstr ""
-
-#: letters/templates/letters/how.html:175
-#, fuzzy
-#| msgid "Delivery Date And Time"
-msgid "Delivery Date and Time:"
-msgstr "Delivery Date And Time"
-
-#: letters/templates/letters/how.html:175
-msgid "The exact future moment when LetterGator sends your message."
-msgstr ""
-
-#: letters/templates/letters/how.html:180
-#, fuzzy
-#| msgid "Recipients"
-msgid "Recipient fields"
-msgstr "Recipients"
-
-#: letters/templates/letters/how.html:182
-#, fuzzy
-#| msgid "Send To Me"
-msgid "Send To Me:"
-msgstr "Send To Me"
-
-#: letters/templates/letters/how.html:182
-msgid "If Yes, the letter is sent to your account email."
-msgstr ""
-
-#: letters/templates/letters/how.html:183
-#, fuzzy
-#| msgid "Recipient Emails (max 5)"
-msgid "Recipient Emails:"
-msgstr "Recipient Emails (max 5)"
-
-#: letters/templates/letters/how.html:183
-msgid "Shown when Send To Me is No. Add up to 5 valid recipient emails."
-msgstr ""
+"Pick an exact future date and time using presets or a custom moment up to 10 "
+"years ahead."
+msgstr "Pick the exact date — a preset milestone or a custom moment."
 
 #: letters/templates/letters/how.html:184
-msgid "Browser timezone:"
-msgstr ""
+msgid "Deliver"
+msgstr "Deliver"
 
-#: letters/templates/letters/how.html:184
+#: letters/templates/letters/how.html:186
 msgid ""
-"Captured automatically so your selected delivery time is interpreted "
-"correctly."
-msgstr ""
-
-#: letters/templates/letters/how.html:189
-msgid "Control settings"
-msgstr ""
-
-#: letters/templates/letters/how.html:191
-#, fuzzy
-#| msgid "Allow Delete (1 Month Window)"
-msgid "Allow Delete (1 Month Window):"
-msgstr "Allow Delete (1 Month Window)"
-
-#: letters/templates/letters/how.html:191
-msgid ""
-"Lets you delete the letter only during the first 30 days after creation. If "
-"this is disabled, the letter cannot be deleted after creation at all."
-msgstr ""
-
-#: letters/templates/letters/how.html:192
-#, fuzzy
-#| msgid "Allow Edit (1 Month Window)"
-msgid "Allow Edit (1 Month Window):"
-msgstr "Allow Edit (1 Month Window)"
-
-#: letters/templates/letters/how.html:192
-msgid ""
-"Lets you edit the message only during the first 30 days after creation. If "
-"this is disabled, the message cannot be edited after creation at all."
-msgstr ""
-
-#: letters/templates/letters/how.html:193
-#, fuzzy
-#| msgid "See Message Before Delivery"
-msgid "See Message Before Delivery:"
-msgstr "See Message Before Delivery"
-
-#: letters/templates/letters/how.html:193
-#, fuzzy
-#| msgid "If enabled, you can preview your message before it is delivered."
-msgid "If enabled, you can preview your own message before its delivery time."
-msgstr "If enabled, you can preview your message before it is delivered."
-
-#: letters/templates/letters/how.html:198
-#, fuzzy
-#| msgid "Remaining balance:"
-msgid "Pricing and balance"
-msgstr "Remaining balance:"
-
-#: letters/templates/letters/how.html:200
-#, fuzzy
-#| msgid "1 year"
-msgid "Under 1 year:"
-msgstr "1 year"
-
-#: letters/templates/letters/how.html:200
-msgid "Free."
-msgstr ""
-
-#: letters/templates/letters/how.html:201
-msgid "1 year or more:"
-msgstr ""
-
-#: letters/templates/letters/how.html:201
-msgid "$0.50 per year."
+"LetterGator sends your letter at the scheduled time with retry protection "
+"and confirmation in your account history."
 msgstr ""
 
 #: letters/templates/letters/how.html:202
-msgid "Minimum balance to unlock 1 year+ dates:"
-msgstr ""
-
-#: letters/templates/letters/how.html:202
-msgid "$1.00."
-msgstr ""
-
-#: letters/templates/letters/how.html:203
-msgid "Charge timing:"
-msgstr ""
-
-#: letters/templates/letters/how.html:203
-msgid "The scheduling cost is deducted once when you save (Seal and Store)."
-msgstr ""
-
-#: letters/templates/letters/how.html:209
-msgid "What happens when you submit"
-msgstr ""
-
-#: letters/templates/letters/how.html:211
-msgid ""
-"The form validates required fields, recipient emails, and future delivery "
-"time."
-msgstr ""
-
-#: letters/templates/letters/how.html:212
-msgid ""
-"If your selected schedule has a cost, your balance is checked before "
-"creation."
-msgstr ""
-
-#: letters/templates/letters/how.html:213
-msgid ""
-"On success, the letter is sealed and stored, and the scheduling charge (if "
-"any) is logged in your balance history."
-msgstr ""
-
-#: letters/templates/letters/how.html:225
 msgid "From message to mailbox"
 msgstr ""
 
-#: letters/templates/letters/how.html:227
+#: letters/templates/letters/how.html:204
 msgid ""
 "Physical letters combine your message with attachments (documents and "
 "photos), then get printed and mailed to the recipient's address. Here's how "
 "the process works."
 msgstr ""
 
-#: letters/templates/letters/how.html:239
+#: letters/templates/letters/how.html:216
 msgid "Compose with attachments"
 msgstr ""
 
-#: letters/templates/letters/how.html:241
+#: letters/templates/letters/how.html:218
 msgid ""
 "Write your message and optionally attach files: up to 3 documents (PDF, "
 "DOCX, TXT) and up to 3 photos (JPG, PNG). Everything will be printed "
 "together in one envelope."
 msgstr ""
 
-#: letters/templates/letters/how.html:253
+#: letters/templates/letters/how.html:230
 #, fuzzy
 #| msgid "Mailing address"
 msgid "Add recipient address"
 msgstr "Mailing address"
 
-#: letters/templates/letters/how.html:255
+#: letters/templates/letters/how.html:232
 msgid ""
 "Enter the recipient's name, street address, city, state/province, postal "
 "code, and country. The price is calculated based on your document pages, "
 "photos, and destination country."
 msgstr ""
 
-#: letters/templates/letters/how.html:267
+#: letters/templates/letters/how.html:245
 msgid "Set desired delivery date"
 msgstr ""
 
-#: letters/templates/letters/how.html:269
+#: letters/templates/letters/how.html:247
 msgid ""
 "Choose the date you'd like the letter to arrive. We'll print it on your "
 "requested date and begin shipping. You can schedule up to 10 years in "
 "advance."
 msgstr ""
 
-#: letters/templates/letters/how.html:281
+#: letters/templates/letters/how.html:259
 msgid "Pay and confirm"
 msgstr ""
 
-#: letters/templates/letters/how.html:283
+#: letters/templates/letters/how.html:261
 msgid ""
 "The total price is deducted from your account balance when you confirm. Your "
 "account balance must cover the full cost of the letter."
 msgstr ""
 
-#: letters/templates/letters/how.html:295
+#: letters/templates/letters/how.html:273
 msgid "Print and ship"
 msgstr ""
 
-#: letters/templates/letters/how.html:297
+#: letters/templates/letters/how.html:275
 msgid ""
 "On your requested delivery date, the letter is printed and shipped via "
 "postal service. Delivery times vary by country (typically 2-6 weeks). Track "
 "its status in your account dashboard."
 msgstr ""
 
-#: letters/templates/letters/how.html:309
+#: letters/templates/letters/how.html:288
 #, fuzzy
 #| msgid "Recipients"
 msgid "Recipient receives it"
 msgstr "Recipients"
 
-#: letters/templates/letters/how.html:311
+#: letters/templates/letters/how.html:290
 msgid ""
 "The letter arrives in your recipient's mailbox — a tangible, memorable "
 "keepsake that they can hold in their hands and share with others."
 msgstr ""
 
-#: letters/templates/letters/how.html:321
-msgid "Pricing"
-msgstr ""
-
-#: letters/templates/letters/how.html:323
-msgid "Base cost:"
-msgstr ""
-
-#: letters/templates/letters/how.html:323
-msgid "Depends on destination country."
-msgstr ""
-
-#: letters/templates/letters/how.html:324
-msgid "Per-page fee:"
-msgstr ""
-
-#: letters/templates/letters/how.html:324
-msgid "$0.50 per printed page (documents + message)."
-msgstr ""
-
-#: letters/templates/letters/how.html:325
-msgid "Per-photo fee:"
-msgstr ""
-
-#: letters/templates/letters/how.html:325
-msgid "$1.00 per attached photo."
-msgstr ""
-
-#: letters/templates/letters/how.html:326
-msgid "Per-year fee:"
-msgstr ""
-
-#: letters/templates/letters/how.html:326
-msgid "$0.50 per year into the future (same as email letters)."
-msgstr ""
-
-#: letters/templates/letters/how.html:335
+#: letters/templates/letters/how.html:305
 #, fuzzy
 #| msgid "Create your first letter"
 msgid "Ready to write your first letter?"
 msgstr "Create your first letter"
 
-#: letters/templates/letters/how.html:341
+#: letters/templates/letters/how.html:311
 #: letters/templates/letters/landing.html:148
 msgid "Open Letters"
 msgstr "Open Letters"
@@ -1707,6 +1260,10 @@ msgstr ""
 msgid "Explore all scenarios"
 msgstr "Explore all scenarios"
 
+#: letters/templates/letters/landing.html:210
+msgid "See how"
+msgstr "See how"
+
 #: letters/templates/letters/landing.html:212
 msgid "Choose your delivery method"
 msgstr ""
@@ -1798,20 +1355,6 @@ msgstr ""
 #: letters/templates/letters/landing.html:289
 msgid "Everything users usually ask before sending their first future letter."
 msgstr "Everything users usually ask before sending their first future letter."
-
-#: letters/templates/letters/landing.html:376
-msgid "What's the difference between email and physical letters?"
-msgstr ""
-
-#: letters/templates/letters/landing.html:381
-msgid ""
-"<strong>Email Letters:</strong> Scheduled messages that arrive in an inbox "
-"at a specific date and time. You control editing and deletion windows. "
-"Perfect for messages to yourself or loved ones.<br/><br/> <strong>Physical "
-"Letters:</strong> Printed and mailed to a recipient's address. You can "
-"attach documents and photos that will be printed with your message. Perfect "
-"for tangible keepsakes and gifts."
-msgstr ""
 
 # --- Letter Create ---
 #: letters/templates/letters/letter_create.html:4
@@ -2233,6 +1776,189 @@ msgstr "Add comment"
 msgid "Write your comment..."
 msgstr "Write your comment..."
 
+#: letters/templates/letters/partials/faq.html:6
+msgid "1. How much does LetterGator cost, and when is it charged?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:11
+msgid ""
+"<strong>Email letters:</strong> Delivery under 1 year is free. At 1 year or "
+"beyond, the cost is $0.50 per year, charged once when you save the letter. "
+"To unlock 1 year+ scheduling, keep at least $1.00 in your balance.<br/><br/> "
+"<strong>Physical letters:</strong> Pricing includes the destination "
+"country's base cost, $0.50 per printable page, $0.50 per photo, and $0.50 "
+"per year into the future. The full amount is charged once when you pay and "
+"submit the order."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:24
+msgid "2. How reliable is delivery, and what backup details can I provide?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:29
+msgid ""
+"<strong>Email letters:</strong> Delivery includes retry logic if a first "
+"email attempt fails. You can send to yourself or to other recipients, and "
+"add up to 5 recipient emails per letter.<br/><br/> <strong>Physical letters:"
+"</strong> Delivery depends on the recipient address, destination country, "
+"and postal service timing. Your account details, plus the full mailing "
+"address you enter for the order, help us prepare and route the letter "
+"correctly."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:43
+msgid "3. Can I change, delete, or preview a letter after I create it?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:48
+msgid ""
+"<strong>Email letters:</strong> You control edit, delete, and preview rules "
+"at creation time. If Allow Edit and/or Allow Delete are enabled, those "
+"actions are available only during the first 30 days. Preview works the same "
+"way: if See Message Before Delivery is enabled, you can view the message "
+"before delivery.<br/><br/> <strong>Physical letters:</strong> You can save "
+"drafts before paying. Paid physical letters can still be updated while they "
+"remain in Paid status, and you can delete Draft or Paid letters. Physical "
+"letters do not use the same preview controls as email letters because they "
+"are prepared for printing and shipping."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:63
+msgid "4. How do you make sure my email is still valid in future years?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:68
+msgid ""
+"<strong>Email letters:</strong> We send a re-confirmation email roughly once "
+"a year so you can confirm your address and update your account if your email "
+"ever changes.<br/><br/> <strong>Physical letters:</strong> The most "
+"important detail is the recipient's mailing address on the order. Review the "
+"address carefully before paying, and if you need to change a paid physical "
+"letter later, update it before the letter moves beyond Paid status."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:82
+msgid ""
+"5. Is my message content private, and what happens if your database is lost?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:87
+msgid ""
+"<strong>Email letters:</strong> Message content is encrypted before storage "
+"and written to Arweave for long-term resilience. Even if our own database "
+"were lost, the encrypted email-letter payload remains preserved.<br/><br/> "
+"<strong>Physical letters:</strong> Your message text, uploaded files, and "
+"shipping details are stored with the order so the letter can be prepared for "
+"printing and mailing. Physical letters follow a different operational flow "
+"than sealed email delivery, so they are not handled with the same delivery-"
+"only decryption model."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:102
+msgid "6. What's the difference between email letters and physical letters?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:107
+msgid ""
+"<strong>Email Letters:</strong> Scheduled messages that arrive in an inbox "
+"at a specific date and time. You choose when to deliver (up to 10 years "
+"ahead), and can optionally edit or delete during the first 30 days. Perfect "
+"for digital-only messages and milestone reminders.<br/><br/> "
+"<strong>Physical Letters:</strong> Printed and mailed to a recipient's "
+"address. You select a desired delivery date, and can attach documents (PDFs, "
+"TXT) and photos (JPG, PNG) that will be printed with your message. Perfect "
+"for tangible keepsakes, gifts, and memorable occasions."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:120
+msgid "7. Can I attach files to email letters?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:125
+msgid ""
+"No, email letters support only text content. However, if you want to share "
+"documents, images, or photos, you can create a <strong>physical letter</"
+"strong> instead, which supports attaching PDFs, Word documents, text files, "
+"and photos that will be printed together."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:135
+msgid "8. What file types can I attach to physical letters?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:140
+msgid ""
+"<strong>Documents:</strong> PDF, Word (.DOCX), and Text (.TXT) files are "
+"supported and will be printed.<br/> <strong>Photos:</strong> JPG and PNG "
+"images are supported and will be printed in color or black &amp; white.<br/> "
+"You can attach up to 3 documents and 3 photos per letter. Each page of your "
+"documents is calculated into the total price."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:150
+msgid "9. How are refunds handled if I delete a letter?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:155
+msgid ""
+"<strong>Email letters:</strong> Free letters have no refund because no "
+"payment was made. Paid email letters keep a fixed $0.50 processing fee, and "
+"the rest is returned to your balance if deletion is still allowed.<br/><br/> "
+"<strong>Physical letters:</strong> Drafts have no refund because they were "
+"never paid. Paid physical letters refund the remaining balance after a "
+"deletion fee of $1.00 plus $0.50 for each full year since the order was "
+"created."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:168
+msgid "10. How long does delivery take for each letter type?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:173
+msgid ""
+"<strong>Email letters:</strong> Delivery happens at the exact future date "
+"and time you choose.<br/><br/> <strong>Physical letters:</strong> You choose "
+"a requested delivery date, and the order is then prepared for shipping. "
+"Delivery depends on the destination country and can occur around 1 to 4 days "
+"after your requested date, with later arrival possible depending on postal "
+"conditions."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:186
+msgid "11. Can I save a physical letter as a draft before paying?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:191
+msgid ""
+"Yes. Physical letters can be saved as drafts first, which is useful when you "
+"still need to refine the address, message, or attachments. Drafts are "
+"unpaid. Once you are ready, you can return to the draft, review the final "
+"price, and pay to move it into Paid status."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:202
+msgid "12. Can I track the status of a physical letter after I pay?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:207
+msgid ""
+"Yes. In your Letters workspace, physical letters move through statuses such "
+"as Draft, Paid, Printing, Shipped, and Delivered. This helps you understand "
+"whether the order is still editable, being prepared, or already on its way."
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:217
+msgid "13. How do I choose between an email letter and a physical letter?"
+msgstr ""
+
+#: letters/templates/letters/partials/faq.html:222
+msgid ""
+"Choose <strong>email letters</strong> when precise timing, privacy controls, "
+"and inbox delivery matter most. Choose <strong>physical letters</strong> "
+"when you want a tangible keepsake, printed photos or documents, and a more "
+"ceremonial mailbox experience for the recipient."
+msgstr ""
+
 #: letters/templates/letters/partials/letter_saved_modal.html:11
 msgid "Letter sealed and stored!"
 msgstr "Letter sealed and stored!"
@@ -2423,6 +2149,7 @@ msgid "Recipient Name"
 msgstr "Recipients"
 
 #: letters/templates/letters/physical_letter_create.html:98
+#: letters/templates/letters/pricing.html:90
 #, fuzzy
 #| msgid "Amount"
 msgid "Country"
@@ -2535,59 +2262,252 @@ msgstr ""
 msgid "Save Draft"
 msgstr "Save profile"
 
+#: letters/templates/letters/pricing.html:4
+msgid "LetterGator | Piricng"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:11
+#, fuzzy
+#| msgid "Remaining balance:"
+msgid "Pricing and Balance"
+msgstr "Remaining balance:"
+
+#: letters/templates/letters/pricing.html:14
+msgid ""
+"Learn how to top up your balance and how pricing is calculated for both "
+"email and physical letters."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:25
+#, fuzzy
+#| msgid "Back to login"
+msgid "How to Fill Balance"
+msgstr "Back to login"
+
+#: letters/templates/letters/pricing.html:26
+msgid "Top up in a few steps"
+msgstr ""
+
+# --- Balance ---
+#: letters/templates/letters/pricing.html:29
+#, fuzzy
+#| msgid "Balance"
+msgid "Open your Balance page."
+msgstr "Balance"
+
+#: letters/templates/letters/pricing.html:32
+msgid "Enter your amount in USD."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:35
+msgid "Proceed to secure checkout and complete payment."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:38
+msgid "Your balance becomes available for scheduling paid letters."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:43
+#, fuzzy
+#| msgid "Back to login"
+msgid "Go to Balance"
+msgstr "Back to login"
+
+#: letters/templates/letters/pricing.html:50
+msgid "Simple schedule-based pricing"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:52
+#, fuzzy
+#| msgid "1 year"
+msgid "Under 1 year: Free."
+msgstr "1 year"
+
+#: letters/templates/letters/pricing.html:53
+msgid "1 year or more: $0.50 per year."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:54
+msgid "Minimum balance to unlock 1 year+ schedules: $1.00."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:55
+msgid "Charge timing: deducted once when you save the letter."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:64
+msgid "Price components"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:68
+msgid "Base destination cost"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:69
+msgid "Depends on the recipient country."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:72
+msgid "Per-page fee"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:73
+msgid "$0.50 per printable page."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:76
+msgid "Per-photo fee"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:77
+msgid "$1.00 per attached photo."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:80
+msgid "Per-year fee"
+msgstr ""
+
+# --- Landing: hero ---
+#: letters/templates/letters/pricing.html:81
+#, fuzzy
+#| msgid "Message to the Future"
+msgid "$0.50 per year into the future."
+msgstr "Message to the Future"
+
+#: letters/templates/letters/pricing.html:85
+msgid "Country base prices"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:91
+msgid "Code"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:92
+msgid "Base Price (USD)"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:104
+msgid "No country pricing configured yet."
+msgstr ""
+
 #: letters/templates/letters/privacy.html:4
 msgid "LetterGator | Privacy"
 msgstr ""
 
 #: letters/templates/letters/privacy.html:11
-msgid "How LetterGator protects your data"
+msgid "How LetterGator handles your data"
 msgstr ""
 
 #: letters/templates/letters/privacy.html:14
 msgid ""
-"Your letters are encrypted before storage and decrypted only inside "
-"authorized application flows. We use strict access controls so each user can "
-"only interact with their own letters."
+"This notice explains what information we collect, how we use it, and the "
+"choices you have when using LetterGator. We designed the service to keep "
+"letter content protected while still letting us run the platform, provide "
+"delivery, prevent abuse, and support your account."
 msgstr ""
 
-#: letters/templates/letters/privacy.html:23
-msgid "1. Encrypted storage"
+#: letters/templates/letters/privacy.html:24
+msgid "1. Information we collect"
 msgstr ""
 
-#: letters/templates/letters/privacy.html:25
+#: letters/templates/letters/privacy.html:26
 msgid ""
-"Letter content is encrypted at rest. Database access alone does not reveal "
-"readable message text."
+"We collect information you provide directly, such as your name, email "
+"address, phone number, address, letter content, delivery dates, recipient "
+"details, attachments, account notes, and support requests. We also collect "
+"technical information such as device data, log data, usage events, and other "
+"information needed to keep the platform secure and reliable."
 msgstr ""
 
-#: letters/templates/letters/privacy.html:33
-msgid "2. Ownership checks"
+#: letters/templates/letters/privacy.html:38
+msgid "2. How we use information"
 msgstr ""
 
-#: letters/templates/letters/privacy.html:35
+#: letters/templates/letters/privacy.html:40
 msgid ""
-"Letters are linked to your user account by user ID. Access to list, edit, "
-"and delete operations is validated against ownership."
+"We use information to create and manage your account, process and deliver "
+"letters, verify addresses, send notifications, provide customer support, "
+"detect fraud or abuse, improve the product, and comply with legal or "
+"accounting obligations. We may also use aggregated or de-identified "
+"information for analytics and service improvements."
 msgstr ""
 
-#: letters/templates/letters/privacy.html:43
-msgid "3. Controlled preview"
+#: letters/templates/letters/privacy.html:52
+msgid "3. Letter content and encryption"
 msgstr ""
 
-#: letters/templates/letters/privacy.html:45
+#: letters/templates/letters/privacy.html:54
 msgid ""
-"Message previews are available only when your letter settings allow sender "
-"preview, or after delivery according to application rules."
+"Letter content is encrypted before it is stored. Decryption is performed "
+"only inside controlled application flows when required to render, validate, "
+"or deliver a letter. We do not intend for plaintext letter content to be "
+"exposed through normal database access alone."
 msgstr ""
 
-#: letters/templates/letters/privacy.html:53
-msgid "4. Operational security"
+#: letters/templates/letters/privacy.html:65
+msgid "4. Sharing and disclosure"
 msgstr ""
 
-#: letters/templates/letters/privacy.html:55
+#: letters/templates/letters/privacy.html:67
 msgid ""
-"Encryption keys are managed through server configuration and are not stored "
-"in the database alongside encrypted messages."
+"We do not sell your personal information. We may share data with service "
+"providers that help us host the application, send email, store backups, "
+"process payments, or monitor security. We may also disclose information if "
+"required by law, to enforce our terms, or to protect users, our systems, or "
+"the public."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:78
+msgid "5. Retention and backups"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:80
+msgid ""
+"We retain account data, letter data, payment records, and support history "
+"for as long as reasonably necessary to operate the service, meet legal "
+"obligations, resolve disputes, and enforce our agreements. Some encrypted "
+"data may be backed up or archived to improve durability and recovery options."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:91
+msgid "6. Your choices and controls"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:93
+msgid ""
+"You can update certain profile details in your account, such as your email "
+"address, phone number, and address where available. You may also contact us "
+"with questions about your data, request help with account access, or ask "
+"about deletion options where legally and operationally possible."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:104
+msgid "7. Security"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:106
+msgid ""
+"We use technical and organizational safeguards intended to reduce "
+"unauthorized access, misuse, loss, or alteration of data. No system is "
+"completely secure, so you should use a strong password, keep your account "
+"credentials private, and notify us quickly if you suspect unauthorized "
+"access."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:117
+#, fuzzy
+#| msgid "Contact"
+msgid "8. Contact"
+msgstr "Contact"
+
+#: letters/templates/letters/privacy.html:119
+msgid ""
+"If you have questions about this privacy notice or want to contact us about "
+"your data, please use the"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:121
+msgid "page."
 msgstr ""
 
 #: letters/templates/letters/terms.html:4
@@ -2603,163 +2523,190 @@ msgid "Terms of Service"
 msgstr ""
 
 #: letters/templates/letters/terms.html:13
-msgid "Last updated: May 2026"
+msgid "Effective date: May 18, 2026"
 msgstr ""
 
 #: letters/templates/letters/terms.html:15
 msgid ""
-"By creating an account or using LetterGator, you agree to the following "
-"terms. Please read them carefully before using the service."
-msgstr ""
-
-#: letters/templates/letters/terms.html:24
-msgid "1. Service description"
+"By creating an account, purchasing credit, or using LetterGator in any way, "
+"you agree to these terms. Please read them carefully before using the "
+"service. If you do not agree with any part of these terms, you should not "
+"use the platform."
 msgstr ""
 
 #: letters/templates/letters/terms.html:26
+msgid "1. What LetterGator does"
+msgstr ""
+
+#: letters/templates/letters/terms.html:28
 msgid ""
-"LetterGator is a time-delayed letter delivery service. You compose a "
-"message, choose a future delivery date, and the platform delivers it to the "
-"specified recipients when that date arrives. The service is intended for "
-"personal, family, and professional use only."
+"LetterGator is a scheduled letter platform. You can write email letters now "
+"and set them to be delivered on a future date. The service is designed for "
+"personal reflection, family messages, professional reminders, and other "
+"lawful communications where delayed delivery is useful. We may also offer "
+"related features such as physical letter creation, attachments, contact "
+"tickets, account management tools, and delivery controls."
 msgstr ""
 
-#: letters/templates/letters/terms.html:36
-msgid "2. Account eligibility"
+#: letters/templates/letters/terms.html:41
+msgid "2. Account eligibility and responsibility"
 msgstr ""
 
-#: letters/templates/letters/terms.html:38
+#: letters/templates/letters/terms.html:43
 msgid ""
-"You must be at least 18 years old to create an account. You are responsible "
-"for keeping your login credentials confidential and for all activity that "
-"occurs under your account."
+"You must be legally able to enter into a binding agreement to use "
+"LetterGator. If you use the service on behalf of a business or organization, "
+"you confirm that you have authority to accept these terms for that entity. "
+"You are responsible for keeping your login credentials confidential and for "
+"all activity that happens under your account."
 msgstr ""
 
-#: letters/templates/letters/terms.html:47
+#: letters/templates/letters/terms.html:55
 msgid "3. Acceptable use"
 msgstr ""
 
-#: letters/templates/letters/terms.html:49
+#: letters/templates/letters/terms.html:57
 msgid ""
-"You agree not to use LetterGator to send spam, harassing content, illegal "
-"material, or any content that violates the rights of others. Letters sent "
-"through the platform must have a legitimate, consented recipient. We reserve "
-"the right to terminate accounts that violate these rules."
+"You agree not to use LetterGator to send spam, phishing attempts, malware, "
+"harassing content, illegal material, or any message that violates the rights "
+"of others. You may only send letters to recipients you are reasonably "
+"entitled to contact. You are also responsible for obtaining any permissions "
+"needed for the content, attachments, or delivery details you provide."
 msgstr ""
 
-#: letters/templates/letters/terms.html:60
-msgid "4. Pricing and billing"
+#: letters/templates/letters/terms.html:69
+msgid "4. Pricing, balance, and billing"
 msgstr ""
 
-#: letters/templates/letters/terms.html:62
+#: letters/templates/letters/terms.html:71
 msgid ""
-"Letters scheduled for delivery within 1 year of creation are free. Letters "
-"scheduled 1 year or more in the future incur a fee of $0.50 per year of the "
-"schedule. This charge is deducted once from your balance when you confirm "
-"the letter. There are no recurring subscription fees; you only pay for what "
-"you schedule."
+"Some letters can be created without charge, while long-term scheduling may "
+"require payment from your account balance. Any fee shown before confirmation "
+"is the amount you agree to pay when the letter is scheduled. Balances are "
+"tied to your account and may be used for eligible service charges, refunds, "
+"or adjustments where applicable. We may change pricing in the future, but "
+"any change will only apply to new actions after the update is published."
 msgstr ""
 
-#: letters/templates/letters/terms.html:73
+#: letters/templates/letters/terms.html:84
 #, fuzzy
-#| msgid "Delivery Date"
-msgid "5. Delivery commitment"
-msgstr "Delivery Date"
+#| msgid "Delivery Date And Time"
+msgid "5. Delivery timing and limits"
+msgstr "Delivery Date And Time"
 
-#: letters/templates/letters/terms.html:75
+#: letters/templates/letters/terms.html:86
 msgid ""
 "We make reasonable efforts to deliver letters on the scheduled date using "
-"automated systems with retry logic. However, we cannot guarantee delivery in "
-"cases where a recipient's email address is no longer valid, their inbox "
-"rejects messages, or extraordinary technical circumstances arise. We will "
-"flag delivery issues in your account."
+"automated systems and retry logic. Delivery can be affected by invalid "
+"addresses, recipient-side filtering, mailbox limits, third-party service "
+"outages, legal restrictions, or technical events outside our control. When "
+"possible, we will surface delivery problems in your account so you can "
+"review them."
 msgstr ""
 
-#: letters/templates/letters/terms.html:87
-msgid "6. Message content and encryption"
+#: letters/templates/letters/terms.html:98
+msgid "6. Message content, encryption, and storage"
 msgstr ""
 
-#: letters/templates/letters/terms.html:89
+#: letters/templates/letters/terms.html:100
 msgid ""
-"Your message content is encrypted before storage. LetterGator staff cannot "
-"read the contents of your letters. You remain solely responsible for the "
-"content you write. Additionally, encrypted letter data is backed up to "
-"Arweave, a permanent decentralised blockchain storage network, to ensure "
-"long-term availability of your letters even in unexpected situations."
+"Letter content is encrypted before storage and is intended to be readable "
+"only through authorized application flows. We do not design the service so "
+"staff can casually browse personal letter content. You remain solely "
+"responsible for the text you write, the files you attach, and any claims you "
+"make inside the letter. Some encrypted letter data may also be backed up for "
+"durability, recovery, or long-term availability, including through external "
+"archival systems where enabled."
 msgstr ""
 
-#: letters/templates/letters/terms.html:101
-msgid "7. Edit and deletion rights"
+#: letters/templates/letters/terms.html:114
+msgid "7. Editing, deletion, and lock periods"
 msgstr ""
 
-#: letters/templates/letters/terms.html:103
+#: letters/templates/letters/terms.html:116
 msgid ""
-"If you enable the Allow Edit or Allow Delete options when creating a letter, "
-"those actions are available only during the first 30 days after creation. "
-"Once the window expires, or if the options were not enabled, the letter is "
-"permanently locked until delivery."
+"If edit or delete controls are available for a letter, they may be limited "
+"by a lock period or other service rule. Once a letter is locked, it cannot "
+"be changed or removed except where the product specifically allows it. These "
+"controls are part of the service design and may vary by letter type, "
+"delivery date, or account status."
 msgstr ""
 
-#: letters/templates/letters/terms.html:113
-msgid "8. Account and email validity"
+#: letters/templates/letters/terms.html:128
+msgid "8. Account, email, and contact information"
 msgstr ""
 
-#: letters/templates/letters/terms.html:115
+#: letters/templates/letters/terms.html:130
 msgid ""
-"To keep your letters deliverable over long timeframes, we send an annual re-"
-"confirmation email to verify your address is still active. You can update "
-"your email address in your profile at any time; the new address must be "
-"confirmed before it becomes active for delivery. You may also provide a "
-"phone number and address in your profile as supplementary contact "
-"information."
+"To keep your account and letters usable over long timeframes, we may ask you "
+"to confirm your email address from time to time. You should keep your "
+"account information current, including your email, phone number, and address "
+"where relevant. If you change your email, the new address may need to be "
+"verified before it becomes active for delivery or account notices."
 msgstr ""
 
-#: letters/templates/letters/terms.html:127
-msgid "9. Termination"
+#: letters/templates/letters/terms.html:142
+msgid "9. Your submissions and rights"
 msgstr ""
 
-#: letters/templates/letters/terms.html:129
+#: letters/templates/letters/terms.html:144
 msgid ""
-"You may close your account at any time by contacting us. Upon account "
-"closure, undelivered letters will no longer be dispatched. We reserve the "
-"right to suspend or terminate accounts that breach these terms without prior "
-"notice."
+"You retain ownership of the content you submit, but you grant us a limited "
+"license to host, process, transmit, display, and deliver it as necessary to "
+"operate the service. This includes the technical right to store your letter "
+"data, schedule delivery, create backups, generate previews where enabled, "
+"and show letter status in your account."
 msgstr ""
 
-#: letters/templates/letters/terms.html:139
-msgid "10. Limitation of liability"
+#: letters/templates/letters/terms.html:156
+msgid "10. Suspension and termination"
 msgstr ""
 
-#: letters/templates/letters/terms.html:141
+#: letters/templates/letters/terms.html:158
 msgid ""
-"LetterGator is provided \"as is\". To the maximum extent permitted by "
-"applicable law, we are not liable for indirect, incidental, or consequential "
-"damages arising from your use of the service, including missed deliveries or "
-"loss of content beyond our reasonable control."
+"You may stop using LetterGator at any time. We may suspend, restrict, or "
+"terminate access to any account that appears to violate these terms, create "
+"security risk, interfere with the platform, or expose us or other users to "
+"harm. If your account is closed, undelivered letters may no longer be "
+"dispatched."
 msgstr ""
 
-#: letters/templates/letters/terms.html:152
-msgid "11. Changes to these terms"
+#: letters/templates/letters/terms.html:169
+msgid "11. No guarantee and limitation of liability"
 msgstr ""
 
-#: letters/templates/letters/terms.html:154
+#: letters/templates/letters/terms.html:171
+msgid ""
+"LetterGator is provided on an \"as is\" and \"as available\" basis. To the "
+"maximum extent allowed by law, we are not responsible for indirect, "
+"incidental, special, or consequential damages, including delays, missed "
+"delivery dates, data loss caused by events outside our reasonable control, "
+"or business losses that result from your use of the service."
+msgstr ""
+
+#: letters/templates/letters/terms.html:183
+msgid "12. Changes to these terms"
+msgstr ""
+
+#: letters/templates/letters/terms.html:185
 msgid ""
 "We may update these terms from time to time. If material changes are made, "
-"we will notify you by email. Continued use of the service after such notice "
-"constitutes acceptance of the updated terms."
+"we may notify you by email, a notice in the product, or another reasonable "
+"method. Continued use of the service after the effective date of an updated "
+"version means you accept the revised terms."
 msgstr ""
 
-#: letters/templates/letters/terms.html:163
+#: letters/templates/letters/terms.html:196
 #, fuzzy
 #| msgid "Contact"
-msgid "12. Contact"
+msgid "13. Contact"
 msgstr "Contact"
 
-#: letters/templates/letters/terms.html:165
+#: letters/templates/letters/terms.html:198
 msgid "If you have questions about these terms, please use the"
 msgstr ""
 
-#: letters/templates/letters/terms.html:167
+#: letters/templates/letters/terms.html:200
 msgid "page to get in touch with us."
 msgstr ""
 
@@ -2878,6 +2825,67 @@ msgstr "No letters yet"
 #: letters/templates/letters/vault.html:208
 msgid "Create your first letter to start building your timeline."
 msgstr "Create your first letter to start building your timeline."
+
+#, fuzzy
+#~| msgid "Update your account password."
+#~ msgid "Auto-saved to your account dashboard"
+#~ msgstr "Update your account password."
+
+#, fuzzy
+#~| msgid "Content"
+#~ msgid "Content fields"
+#~ msgstr "Content"
+
+#, fuzzy
+#~| msgid "Subject"
+#~ msgid "Subject:"
+#~ msgstr "Subject"
+
+#, fuzzy
+#~| msgid "Message"
+#~ msgid "Message:"
+#~ msgstr "Message"
+
+#, fuzzy
+#~| msgid "Recipients"
+#~ msgid "Recipient fields"
+#~ msgstr "Recipients"
+
+#, fuzzy
+#~| msgid "Send To Me"
+#~ msgid "Send To Me:"
+#~ msgstr "Send To Me"
+
+#, fuzzy
+#~| msgid "Recipient Emails (max 5)"
+#~ msgid "Recipient Emails:"
+#~ msgstr "Recipient Emails (max 5)"
+
+#, fuzzy
+#~| msgid "Allow Delete (1 Month Window)"
+#~ msgid "Allow Delete (1 Month Window):"
+#~ msgstr "Allow Delete (1 Month Window)"
+
+#, fuzzy
+#~| msgid "Allow Edit (1 Month Window)"
+#~ msgid "Allow Edit (1 Month Window):"
+#~ msgstr "Allow Edit (1 Month Window)"
+
+#, fuzzy
+#~| msgid "See Message Before Delivery"
+#~ msgid "See Message Before Delivery:"
+#~ msgstr "See Message Before Delivery"
+
+#, fuzzy
+#~| msgid "If enabled, you can preview your message before it is delivered."
+#~ msgid ""
+#~ "If enabled, you can preview your own message before its delivery time."
+#~ msgstr "If enabled, you can preview your message before it is delivered."
+
+#, fuzzy
+#~| msgid "Delivery Date"
+#~ msgid "5. Delivery commitment"
+#~ msgstr "Delivery Date"
 
 #~ msgid "How pricing works"
 #~ msgstr "How pricing works"

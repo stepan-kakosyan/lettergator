@@ -1,4 +1,4 @@
-﻿import hashlib
+import hashlib
 import hmac
 import json
 import logging
@@ -113,8 +113,13 @@ def calculator_countries_fragment(request):
     return HttpResponse(options_html, content_type='text/html')
 
 
+def pricing_page(request):
+    country_pricing = CountryPricing.objects.all().order_by("country_name")
+    context = {"country_pricing": country_pricing}
+    return render(request, "letters/pricing.html", context)
+
+
 def how_page(request):
-    # Add countries pricing for calculator
     countries_data = {}
     for item in CountryPricing.objects.all():
         countries_data[str(item.id)] = {
@@ -126,22 +131,12 @@ def how_page(request):
     return render(request, "letters/how.html", context)
 
 
-def pricing_page(request):
-    country_pricing = CountryPricing.objects.all().order_by("country_name")
-    context = {"country_pricing": country_pricing}
-    return render(request, "letters/pricing.html", context)
-
-
 def faq_page(request):
     return render(request, "letters/faq.html")
 
 
 def terms_page(request):
     return render(request, "letters/terms.html")
-
-
-def _get_visible_letters_for_request(request):
-    return Letter.objects.filter(user=request.user).order_by("-created_at")
 
 
 def _can_access_letter(request, letter):
@@ -207,13 +202,13 @@ def letters_page(request):
 
     if not guest_mode:
         email_verification_required = not request.user.email_verified
-        email_letters = list(_get_visible_letters_for_request(request))
+        email_letters = list(Letter.objects.filter(
+            user=request.user).order_by("-created_at"))
         physical_letters = list(
             PhysicalLetter.objects.filter(user=request.user)
             .select_related("country")
             .order_by("-created_at")
         )
-        print(physical_letters)
         for letter in email_letters:
             if letter.can_view_content:
                 plain_message = letter.get_message()
@@ -1252,10 +1247,6 @@ def get_deletion_info_view(request):
         )
 
 
-def concept_page(request):
-    return render(request, "letters/concept.html")
-
-
 def privacy_page(request):
     return render(request, "letters/privacy.html")
 
@@ -1500,4 +1491,3 @@ def dashboard_view(request):
         "pending_primary_email": request.user.pending_email,
     }
     return render(request, "letters/dashboard.html", context)
-

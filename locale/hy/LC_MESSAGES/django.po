@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-17 07:23+0000\n"
+"POT-Creation-Date: 2026-05-19 09:16+0000\n"
 "Language: hy\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,8 +31,8 @@ msgstr ""
 #: accounts/templates/accounts/login.html:4
 #: accounts/templates/accounts/login.html:85
 #: accounts/templates/accounts/register.html:148
-#: accounts/templates/partials/header.html:52
-#: accounts/templates/partials/header.html:121
+#: accounts/templates/partials/header.html:39
+#: accounts/templates/partials/header.html:108
 #: letters/templates/letters/vault.html:66
 #: letters/templates/letters/vault.html:148
 msgid "Login"
@@ -70,15 +70,16 @@ msgstr "Ձեր հաշիվը հաջողությամբ ակտիվացվել է"
 msgid ""
 "Email verification is complete. You can now create and schedule letters."
 msgstr ""
-"Էլ. հասցեի հաստատումն ավարտված է։ Այժմ կարող եք ստեղծել և պլանավորել նամակներ։"
+"Էլ. հասցեի հաստատումն ավարտված է։ Այժմ կարող եք ստեղծել և պլանավորել "
+"նամակներ։"
 
 #: accounts/templates/accounts/activation_success.html:33
 msgid "Create your first letter"
 msgstr "Ստեղծեք ձեր առաջին նամակը"
 
 #: accounts/templates/accounts/activation_success.html:39
-#: letters/templates/letters/privacy.html:68
-#: letters/templates/letters/terms.html:178
+#: letters/templates/letters/privacy.html:131
+#: letters/templates/letters/terms.html:211
 msgid "Go to Letters"
 msgstr "Անցնել նամակներին"
 
@@ -94,8 +95,114 @@ msgstr "Մուտք գործեք՝ ձեր նամակներին հասանելիո
 #: accounts/templates/accounts/password_reset_form.html:26
 #: accounts/templates/accounts/register.html:46
 #: accounts/templates/partials/calculator_modal.html:38
-msgid "Price"
-msgstr "Գին"
+#: letters/templates/letters/contact.html:39
+#: letters/templates/letters/vault.html:167
+#, fuzzy
+#| msgid "Add Email"
+msgid "Email"
+msgstr "Ավելացնել էլ. հասցե"
+
+#: accounts/templates/accounts/login.html:46
+#: accounts/templates/accounts/register.html:64
+#, fuzzy
+#| msgid "Forgot Password"
+msgid "Password"
+msgstr "Մոռացե՞լ եք գաղտնաբառը"
+
+#: accounts/templates/accounts/login.html:61
+#: accounts/templates/accounts/register.html:79
+#: accounts/templates/accounts/register.html:106
+#, fuzzy
+#| msgid "Change password"
+msgid "Show password"
+msgstr "Փոխել գաղտնաբառը"
+
+#: accounts/templates/accounts/login.html:63
+#: accounts/templates/accounts/register.html:81
+#: accounts/templates/accounts/register.html:108
+msgid "Show"
+msgstr ""
+
+#: accounts/templates/accounts/login.html:73
+#, fuzzy
+#| msgid "Forgot Password"
+msgid "Forgot password?"
+msgstr "Մոռացե՞լ եք գաղտնաբառը"
+
+#: accounts/templates/accounts/login.html:90
+#, fuzzy
+#| msgid "Sort"
+msgid "or"
+msgstr "Տեսակավորել"
+
+#: accounts/templates/accounts/login.html:104
+#: accounts/templates/accounts/register.html:143
+#, fuzzy
+#| msgid "Continue Editing"
+msgid "Continue with Google"
+msgstr "Շարունակել խմբագրումը"
+
+#: accounts/templates/accounts/login.html:108
+#, fuzzy
+#| msgid "Already have an account?"
+msgid "Need an account?"
+msgstr "Արդեն ունե՞ք հաշիվ"
+
+#: accounts/templates/accounts/login.html:109
+#: accounts/templates/accounts/register.html:4
+#: accounts/templates/accounts/register.html:124
+#: letters/templates/letters/vault.html:72
+#: letters/templates/letters/vault.html:151
+msgid "Register"
+msgstr ""
+
+#: accounts/templates/accounts/password_reset_confirm.html:4
+#, fuzzy
+#| msgid "Forgot Password"
+msgid "Set New Password"
+msgstr "Մոռացե՞լ եք գաղտնաբառը"
+
+#: accounts/templates/accounts/password_reset_confirm.html:11
+#, fuzzy
+#| msgid "Change password"
+msgid "Create a new password"
+msgstr "Փոխել գաղտնաբառը"
+
+#: accounts/templates/accounts/password_reset_confirm.html:14
+msgid "Set your new password, then sign in with it."
+msgstr ""
+
+#: accounts/templates/accounts/password_reset_confirm.html:27
+#: letters/templates/letters/partials/password_change_panel.html:54
+#, fuzzy
+#| msgid "Change password"
+msgid "New password"
+msgstr "Փոխել գաղտնաբառը"
+
+#: accounts/templates/accounts/password_reset_confirm.html:40
+#: accounts/templates/accounts/register.html:91
+#: letters/templates/letters/partials/password_change_panel.html:71
+#, fuzzy
+#| msgid "Change password"
+msgid "Confirm password"
+msgstr "Փոխել գաղտնաբառը"
+
+#: accounts/templates/accounts/password_reset_confirm.html:56
+#: letters/templates/letters/partials/password_change_panel.html:104
+#, fuzzy
+#| msgid "Change password"
+msgid "Update password"
+msgstr "Փոխել գաղտնաբառը"
+
+#: accounts/templates/accounts/password_reset_confirm.html:61
+#, fuzzy
+#| msgid "This activation link is invalid or expired"
+msgid "This recovery link is invalid or already used."
+msgstr "Այս ակտիվացման հղումն անվավեր է կամ ժամկետանց"
+
+#: accounts/templates/accounts/password_reset_confirm.html:63
+msgid "Request a new reset link"
+msgstr ""
 
 #: accounts/templates/accounts/password_reset_done.html:4
 msgid "Recovery Email Sent"
@@ -110,7 +217,8 @@ msgid ""
 "We sent password recovery instructions. Open the email and click the "
 "recovery button to continue."
 msgstr ""
-"Մենք ուղարկել ենք գաղտնաբառի վերականգնման հրահանգներ: Բացեք նամակը և սեղմեք վերականգնման կոճակը՝ շարունակելու համար:"
+"Մենք ուղարկել ենք գաղտնաբառի վերականգնման հրահանգներ: Բացեք նամակը և սեղմեք "
+"վերականգնման կոճակը՝ շարունակելու համար:"
 
 #: accounts/templates/accounts/password_reset_done.html:19
 #: accounts/templates/accounts/password_reset_form.html:48
@@ -127,7 +235,9 @@ msgstr "Վերականգնել գաղտնաբառը"
 
 #: accounts/templates/accounts/password_reset_form.html:14
 msgid "Enter your email and we will send password recovery instructions."
-msgstr "Մուտքագրեք ձեր էլ. հասցեն, և մենք կուղարկենք գաղտնաբառի վերականգնման հրահանգներ:"
+msgstr ""
+"Մուտքագրեք ձեր էլ. հասցեն, և մենք կուղարկենք գաղտնաբառի վերականգնման "
+"հրահանգներ:"
 
 #: accounts/templates/accounts/password_reset_form.html:42
 msgid "Send recovery email"
@@ -165,7 +275,9 @@ msgstr "Թեստային նամակների ուղարկիչ"
 
 #: accounts/templates/accounts/test_email.html:14
 msgid "Send a test message to confirm SMTP/email delivery is working."
-msgstr "Ուղարկեք թեստային հաղորդագրություն՝ ստուգելու համար SMTP/էլ․ փոստի առաքման աշխատանքը։"
+msgstr ""
+"Ուղարկեք թեստային հաղորդագրություն՝ ստուգելու համար SMTP/էլ․ փոստի առաքման "
+"աշխատանքը։"
 
 #: accounts/templates/accounts/test_email.html:41
 msgid "Recipient email"
@@ -191,21 +303,21 @@ msgstr "Վերադառնալ վահանակ"
 msgid "Send test email"
 msgstr "Ուղարկել թեստային նամակ"
 
-#: accounts/templates/base.html:170
+#: accounts/templates/base.html:186
 msgid "Confirm Deletion"
 msgstr "Հաստատել ջնջումը"
 
-#: accounts/templates/base.html:185
+#: accounts/templates/base.html:201
 msgid "No, cancel"
 msgstr "Ոչ, չեղարկել"
 
-#: accounts/templates/base.html:192
+#: accounts/templates/base.html:208
 msgid "Yes, delete"
 msgstr "Այո, ջնջել"
 
 #: accounts/templates/partials/calculator_modal.html:9
 #: letters/templates/letters/balance.html:55
-#: letters/templates/letters/how.html:354
+#: letters/templates/letters/how.html:324
 #: letters/templates/letters/landing.html:136
 #: letters/templates/letters/vault.html:97
 msgid "Price Calculator"
@@ -244,7 +356,9 @@ msgstr "Առաքում տարիներ անց"
 
 #: accounts/templates/partials/calculator_modal.html:59
 msgid "Scheduling under 1 year is free. Each additional year costs $0.50."
-msgstr "Մինչև 1 տարի ժամկետով պլանավորումն անվճար է: Յուրաքանչյուր հավելյալ տարին արժե $0.50:"
+msgstr ""
+"Մինչև 1 տարի ժամկետով պլանավորումն անվճար է: Յուրաքանչյուր հավելյալ տարին "
+"արժե $0.50:"
 
 #: accounts/templates/partials/calculator_modal.html:65
 #: accounts/templates/partials/calculator_modal.html:137
@@ -327,48 +441,41 @@ msgstr "Գաղտնիություն"
 msgid "FAQ"
 msgstr "ՀՏՀ"
 
-#: accounts/templates/partials/header.html:11
-msgid "BETA: This is a beta version. Everything you do on this"
-msgstr "ԲԵՏԱ. Սա բետա տարբերակ է: Այն ամենը, ինչ անում եք այս"
-
-#: accounts/templates/partials/header.html:12
-msgid "website may be erased after the official launch."
-msgstr "կայքում, կարող է ջնջվել պաշտոնական գործարկումից հետո:"
-
-#: accounts/templates/partials/header.html:23
-#: accounts/templates/partials/header.html:117
-#: letters/templates/letters/landing.html:160
-msgid "See why"
-msgstr "Ինչո՞ւ"
-
-#: accounts/templates/partials/header.html:24
-#: accounts/templates/partials/header.html:118
-#: letters/templates/letters/landing.html:210
-msgid "See how"
-msgstr "Ինչպե՞ս"
-
-#: accounts/templates/partials/header.html:25
-#: accounts/templates/partials/header.html:115
+#: accounts/templates/partials/header.html:10
+#: accounts/templates/partials/header.html:102
 #: letters/templates/letters/letter_create.html:15
 #: letters/templates/letters/vault.html:4
 msgid "Letters"
 msgstr "Նամակներ"
 
-#: accounts/templates/partials/header.html:26
-#: accounts/templates/partials/header.html:116
-#: letters/templates/letters/terms.html:166
+#: accounts/templates/partials/header.html:11
+#: accounts/templates/partials/header.html:103
+#: letters/templates/letters/privacy.html:120
+#: letters/templates/letters/terms.html:199
 msgid "Contact"
 msgstr "Կապ"
 
-#: lettergator_backend/settings.py:128
+#: accounts/templates/partials/header.html:12
+#: accounts/templates/partials/header.html:104
+#: letters/templates/letters/how.html:19
+msgid "How it works"
+msgstr "Ինչպես է այն աշխատում"
+
+#: accounts/templates/partials/header.html:13
+#: accounts/templates/partials/header.html:105
+#: letters/templates/letters/pricing.html:9
+msgid "Piricng"
+msgstr ""
+
+#: lettergator_backend/settings.py:129
 msgid "English"
 msgstr "Անգլերեն"
 
-#: lettergator_backend/settings.py:129
+#: lettergator_backend/settings.py:130
 msgid "Russian"
 msgstr "Русский"
 
-#: lettergator_backend/settings.py:130
+#: lettergator_backend/settings.py:131
 msgid "Armenian"
 msgstr "Հայերեն"
 
@@ -425,124 +532,145 @@ msgstr "Գործարքներ դեռ չկան։"
 msgid "LetterGator | See why"
 msgstr "LetterGator | Ինչո՞ւ"
 
-#: letters/templates/letters/concept.html:18
+#: letters/templates/letters/concept.html:20
 msgid "LetterGator See why"
 msgstr "LetterGator Ինչո՞ւ"
 
-#: letters/templates/letters/concept.html:20
+#: letters/templates/letters/concept.html:22
+#: letters/templates/letters/how.html:44
 msgid "Why people send letters"
 msgstr "Ինչու են մարդիկ նամակներ ուղարկում"
 
-#: letters/templates/letters/concept.html:21
+#: letters/templates/letters/concept.html:23
+#: letters/templates/letters/how.html:45
 msgid "into the future."
 msgstr "դեպի ապագա:"
 
-#: letters/templates/letters/concept.html:24
+#: letters/templates/letters/concept.html:26
+#: letters/templates/letters/how.html:48
 msgid ""
 "Explore scenarios across categories. Send digital letters by email or "
 "physical letters by mail— each form of expression has its own power for the "
 "right moment."
 msgstr ""
-"Բացահայտեք տարբերակներ ըստ կատեգորիաների: Ուղարկեք թվային նամակներ էլ. փոստով կամ "
-"ֆիզիկական նամակներ սովորական փոստով. յուրաքանչյուր արտահայտչամիջոց ունի իր ուժը ճիշտ պահին:"
+"Բացահայտեք տարբերակներ ըստ կատեգորիաների: Ուղարկեք թվային նամակներ էլ. "
+"փոստով կամ ֆիզիկական նամակներ սովորական փոստով. յուրաքանչյուր "
+"արտահայտչամիջոց ունի իր ուժը ճիշտ պահին:"
 
-#: letters/templates/letters/concept.html:41
+#: letters/templates/letters/concept.html:43
+#: letters/templates/letters/how.html:62
 #: letters/templates/letters/landing.html:173
 msgid "Personal"
 msgstr "Անձնական"
 
-#: letters/templates/letters/concept.html:42
+#: letters/templates/letters/concept.html:44
+#: letters/templates/letters/how.html:63
 msgid ""
 "Write to who you'll become. Capture doubt, clarity, and conviction before "
 "life rewrites the memory."
 msgstr ""
-"Գրեք նրան, թե ով եք դառնալու: Ֆիքսեք կասկածները, հստակությունն ու համոզմունքները, քանի դեռ կյանքը չի վերագրել հիշողությունը:"
+"Գրեք նրան, թե ով եք դառնալու: Ֆիքսեք կասկածները, հստակությունն ու "
+"համոզմունքները, քանի դեռ կյանքը չի վերագրել հիշողությունը:"
 
-#: letters/templates/letters/concept.html:44
+#: letters/templates/letters/concept.html:46
+#: letters/templates/letters/how.html:66
 msgid "4 scenarios"
 msgstr "4 տարբերակ"
 
-#: letters/templates/letters/concept.html:57
+#: letters/templates/letters/concept.html:59
+#: letters/templates/letters/how.html:79
 #: letters/templates/letters/landing.html:179
 msgid "Family"
 msgstr "Ընտանեկան"
 
-#: letters/templates/letters/concept.html:58
+#: letters/templates/letters/concept.html:60
+#: letters/templates/letters/how.html:80
 msgid ""
 "Bridge the distance. Send words that will land on an anniversary, a "
 "birthday, or a day that needs them most."
 msgstr ""
-"Կրճատեք հեռավորությունը: Ուղարկեք խոսքեր, որոնք տեղ կհասնեն հոբելյանի, ծննդյան օրվա կամ այն օրը, երբ դրանց կարիքն ամենաշատը կլինի:"
+"Կրճատեք հեռավորությունը: Ուղարկեք խոսքեր, որոնք տեղ կհասնեն հոբելյանի, "
+"ծննդյան օրվա կամ այն օրը, երբ դրանց կարիքն ամենաշատը կլինի:"
 
-#: letters/templates/letters/concept.html:60
-#: letters/templates/letters/concept.html:76
-#: letters/templates/letters/concept.html:92
+#: letters/templates/letters/concept.html:62
+#: letters/templates/letters/concept.html:78
+#: letters/templates/letters/concept.html:94
+#: letters/templates/letters/how.html:83 letters/templates/letters/how.html:100
+#: letters/templates/letters/how.html:117
 msgid "3 scenarios"
 msgstr "3 տարբերակ"
 
-#: letters/templates/letters/concept.html:73
+#: letters/templates/letters/concept.html:75
+#: letters/templates/letters/how.html:96
 #: letters/templates/letters/landing.html:185
 msgid "Team"
 msgstr "Թիմային"
 
-#: letters/templates/letters/concept.html:74
+#: letters/templates/letters/concept.html:76
+#: letters/templates/letters/how.html:97
 msgid ""
 "Preserve what the team knows today. Deliver it to the team that needs it "
 "tomorrow."
 msgstr ""
-"Պահպանեք այն, ինչ թիմը գիտի այսօր: Փոխանցեք այն թիմին, որն ունի դրա կարիքը վաղը:"
+"Պահպանեք այն, ինչ թիմը գիտի այսօր: Փոխանցեք այն թիմին, որն ունի դրա կարիքը "
+"վաղը:"
 
-#: letters/templates/letters/concept.html:89
+#: letters/templates/letters/concept.html:91
+#: letters/templates/letters/how.html:113
 #: letters/templates/letters/landing.html:191
 msgid "Milestone"
 msgstr "Իրադարձային"
 
-#: letters/templates/letters/concept.html:90
+#: letters/templates/letters/concept.html:92
+#: letters/templates/letters/how.html:114
 msgid "Mark the moments that matter. Retirement, relocations, difficult dates"
 msgstr "Նշեք կարևոր պահերը. անցում թոշակի, տեղափոխություններ, դժվարին օրեր՝"
 
-#: letters/templates/letters/concept.html:90
+#: letters/templates/letters/concept.html:92
+#: letters/templates/letters/how.html:114
 msgid "preserved and delivered when they count."
 msgstr "պահպանված և առաքված այն ժամանակ, երբ դրանք ամենից շատն են արժևորվում:"
 
-#: letters/templates/letters/concept.html:105
-#: letters/templates/letters/how.html:224
+#: letters/templates/letters/concept.html:107
+#: letters/templates/letters/how.html:201
 #: letters/templates/letters/landing.html:248
 #: letters/templates/letters/physical_letter_create.html:16
+#: letters/templates/letters/pricing.html:63
 msgid "Physical Letters"
 msgstr "Ֆիզիկական նամակներ"
 
-#: letters/templates/letters/concept.html:106
+#: letters/templates/letters/concept.html:108
 msgid ""
 "Tangible keepsakes. Send printed letters with attachments, documents, and "
 "photos—for moments that deserve to be held."
 msgstr ""
-"Շոշափելի հուշեր: Ուղարկեք տպագիր նամակներ կցված ֆայլերով, փաստաթղթերով և լուսանկարներով՝ "
-"այնպիսի պահերի համար, որոնք արժանի են ձեռքում պահվելու:"
+"Շոշափելի հուշեր: Ուղարկեք տպագիր նամակներ կցված ֆայլերով, փաստաթղթերով և "
+"լուսանկարներով՝ այնպիսի պահերի համար, որոնք արժանի են ձեռքում պահվելու:"
 
-#: letters/templates/letters/concept.html:113
+#: letters/templates/letters/concept.html:115
 msgid "Printed memory for a life moment"
 msgstr "Տպագիր հիշողություն կյանքի կարևոր պահի համար"
 
-#: letters/templates/letters/concept.html:115
+#: letters/templates/letters/concept.html:117
 msgid ""
 "A handwritten or typed message printed and mailed to a loved one—with photos "
 "from a meaningful moment, documents, or artwork. Arrives as a beautiful, "
 "tangible keepsake they can hold and treasure forever."
 msgstr ""
-"Ձեռագիր կամ մեքենագիր հաղորդագրություն՝ տպագրված և փոստով ուղարկված սիրելիին, ներառյալ "
-"նշանակալի պահի լուսանկարներ, փաստաթղթեր կամ արվեստի գործեր: Այն տեղ է հասնում որպես "
-"գեղեցիկ, շոշափելի հուշ, որը նրանք կարող են պահել և փայփայել հավերժ:"
+"Ձեռագիր կամ մեքենագիր հաղորդագրություն՝ տպագրված և փոստով ուղարկված "
+"սիրելիին, ներառյալ նշանակալի պահի լուսանկարներ, փաստաթղթեր կամ արվեստի "
+"գործեր: Այն տեղ է հասնում որպես գեղեցիկ, շոշափելի հուշ, որը նրանք կարող են "
+"պահել և փայփայել հավերժ:"
 
-#: letters/templates/letters/concept.html:121
+#: letters/templates/letters/concept.html:123
 msgid "When to use:"
 msgstr "Երբ օգտագործել."
 
-#: letters/templates/letters/concept.html:126
+#: letters/templates/letters/concept.html:128
 msgid "Letters to a newborn—for their 18th birthday"
 msgstr "Նամակներ նորածնին՝ նրա 18-ամյակի համար"
 
-#: letters/templates/letters/concept.html:128
+#: letters/templates/letters/concept.html:130
 msgid ""
 "A physical letter scheduled to arrive on your child's 18th birthday, "
 "complete with photos from their early years, your handwritten words, and "
@@ -550,74 +678,78 @@ msgid ""
 "they were born."
 msgstr ""
 "Ֆիքսված օրով ֆիզիկական նամակ, որը տեղ կհասնի ձեր երեխայի 18-ամյակին՝ լրացված "
-"նրա վաղ տարիների լուսանկարներով, ձեր ձեռագիր խոսքերով և հիշողություններով: Նրանք "
-"կբացեն շոշափելի կապն այն մարդու հետ, ով դուք էիք իրենց ծնվելու պահին:"
+"նրա վաղ տարիների լուսանկարներով, ձեր ձեռագիր խոսքերով և հիշողություններով: "
+"Նրանք կբացեն շոշափելի կապն այն մարդու հետ, ով դուք էիք իրենց ծնվելու պահին:"
 
-#: letters/templates/letters/concept.html:134
+#: letters/templates/letters/concept.html:136
 msgid "Time to delivery:"
 msgstr "Առաքման ժամանակը."
 
-#: letters/templates/letters/concept.html:139
+#: letters/templates/letters/concept.html:141
 msgid "A printed manifesto or values statement"
 msgstr "Տպագիր մանիֆեստ կամ արժեքների հայտարարագիր"
 
-#: letters/templates/letters/concept.html:141
+#: letters/templates/letters/concept.html:143
 msgid ""
 "Write your personal beliefs, life values, or a heartfelt letter and have it "
 "beautifully printed and framed for a loved one. Include your handwriting, "
 "signatures, and design elements that can't be captured in email."
 msgstr ""
-"Գրեք ձեր անձնական համոզմունքները, կյանքի արժեքները կամ անկեղծ նամակ և այն գեղեցիկ "
-"տպագրեք ու շրջանակեք սիրելիի համար: Ներառեք ձեր ձեռագիրը, ստորագրությունները և դիզայնի "
-"տարրեր, որոնք հնարավոր չէ փոխանցել էլ. փոստով:"
+"Գրեք ձեր անձնական համոզմունքները, կյանքի արժեքները կամ անկեղծ նամակ և այն "
+"գեղեցիկ տպագրեք ու շրջանակեք սիրելիի համար: Ներառեք ձեր ձեռագիրը, "
+"ստորագրությունները և դիզայնի տարրեր, որոնք հնարավոր չէ փոխանցել էլ. փոստով:"
 
-#: letters/templates/letters/concept.html:147
+#: letters/templates/letters/concept.html:149
 msgid "When to send:"
 msgstr "Երբ ուղարկել."
 
-#: letters/templates/letters/concept.html:152
+#: letters/templates/letters/concept.html:154
 msgid "Team or company milestone book"
 msgstr "Թիմի կամ ընկերության հոբելյանական գիրք"
 
-#: letters/templates/letters/concept.html:154
+#: letters/templates/letters/concept.html:156
 msgid ""
 "Collect printed letters from team members, partners, or family about a "
 "shared milestone—a company anniversary, a team launch, or a collective "
 "achievement. Deliver them all bound together as a lasting memento."
 msgstr ""
-"Հավաքեք տպագիր նամակներ թիմի անդամներից, գործընկերներից կամ ընտանիքից ընդհանուր "
-"նշանակալի իրադարձության մասին (ընկերության տարեդարձ, թիմի մեկնարկ կամ հավաքական "
-"ձեռքբերում): Առաքեք դրանք բոլորը միասին կապված՝ որպես մնայուն հուշ:"
+"Հավաքեք տպագիր նամակներ թիմի անդամներից, գործընկերներից կամ ընտանիքից "
+"ընդհանուր նշանակալի իրադարձության մասին (ընկերության տարեդարձ, թիմի մեկնարկ "
+"կամ հավաքական ձեռքբերում): Առաքեք դրանք բոլորը միասին կապված՝ որպես մնայուն "
+"հուշ:"
 
-#: letters/templates/letters/concept.html:160
+#: letters/templates/letters/concept.html:162
 msgid "Perfect for:"
 msgstr "Կատարյալ է."
 
-#: letters/templates/letters/concept.html:165
+#: letters/templates/letters/concept.html:167
 msgid "Why choose a physical letter?"
 msgstr "Ինչո՞ւ ընտրել ֆիզիկական նամակ:"
 
-#: letters/templates/letters/concept.html:169
+#: letters/templates/letters/concept.html:171
 msgid "Tangible and memorable—something to hold, display, or share."
 msgstr "Շոշափելի և հիշվող. մի բան, որ կարելի է պահել, ցուցադրել կամ կիսվել:"
 
-#: letters/templates/letters/concept.html:173
+#: letters/templates/letters/concept.html:175
 msgid "Include photos, documents, and artwork alongside your message."
-msgstr "Ձեր հաղորդագրության հետ միասին ներառեք լուսանկարներ, փաստաթղթեր և արվեստի գործեր:"
+msgstr ""
+"Ձեր հաղորդագրության հետ միասին ներառեք լուսանկարներ, փաստաթղթեր և արվեստի "
+"գործեր:"
 
-#: letters/templates/letters/concept.html:177
+#: letters/templates/letters/concept.html:179
 msgid "Arrives as a surprise in the mailbox—not an email notification."
-msgstr "Տեղ է հասնում որպես անակնկալ փոստարկղում, այլ ոչ թե էլ. փոստի ծանուցում:"
+msgstr ""
+"Տեղ է հասնում որպես անակնկալ փոստարկղում, այլ ոչ թե էլ. փոստի ծանուցում:"
 
-#: letters/templates/letters/concept.html:181
+#: letters/templates/letters/concept.html:183
 msgid "Personal touches like handwriting or custom formatting."
 msgstr "Անձնական նրբերանգներ, ինչպիսիք են ձեռագիրը կամ հատուկ ձևաչափումը:"
 
-#: letters/templates/letters/concept.html:185
+#: letters/templates/letters/concept.html:187
 msgid "Becomes a keepsake to be treasured for years."
 msgstr "Դառնում է մասունք, որը կփայփայվի տարիներ շարունակ:"
 
-#: letters/templates/letters/concept.html:195
+#: letters/templates/letters/concept.html:197
 #: letters/templates/letters/letter_create.html:29
 msgid "Create a Physical Letter"
 msgstr "Ստեղծել ֆիզիկական նամակ"
@@ -666,7 +798,8 @@ msgstr "Պրոֆիլի վահանակ"
 
 #: letters/templates/letters/dashboard.html:15
 msgid "Manage your primary profile details and backup email list."
-msgstr "Կառավարեք հիմնական պրոֆիլի տվյալները և պահուստային էլ. հասցեների ցանկը։"
+msgstr ""
+"Կառավարեք հիմնական պրոֆիլի տվյալները և պահուստային էլ. հասցեների ցանկը։"
 
 #: letters/templates/letters/dashboard.html:25
 #: letters/templates/letters/dashboard.html:26
@@ -695,8 +828,8 @@ msgid ""
 "A confirmation link was sent to <strong>%(email)s</strong>. Your primary "
 "email will not change until you click that link."
 msgstr ""
-"Հաստատման հղումն ուղարկվել է <strong>%(email)s</strong> հասցեին: Ձեր հիմնական "
-"էլ․ փոստը չի փոխվի, մինչև չսեղմեք այդ հղմանը:"
+"Հաստատման հղումն ուղարկվել է <strong>%(email)s</strong> հասցեին: Ձեր "
+"հիմնական էլ․ փոստը չի փոխվի, մինչև չսեղմեք այդ հղմանը:"
 
 #: letters/templates/letters/dashboard.html:88
 msgid "Resend confirmation email"
@@ -778,614 +911,154 @@ msgid ""
 msgstr ""
 "Այն ամենը, ինչ կցանկանայիք իմանալ նախքան ձեր առաջին ապագայի նամակն ուղարկելը:"
 
-#: letters/templates/letters/faq.html:29
-msgid "1. How much does LetterGator cost, and when is it charged?"
-msgstr "1. Որքա՞ն արժե LetterGator-ը և ե՞րբ է գանձվում վճարը:"
-
-#: letters/templates/letters/faq.html:34
-msgid ""
-"<strong>Email letters:</strong> Delivery under 1 year is free. At 1 year or "
-"beyond, the cost is $0.50 per year, charged once when you save the letter. "
-"To unlock 1 year+ scheduling, keep at least $1.00 in your balance.<br/><br/> "
-"<strong>Physical letters:</strong> Pricing includes the destination "
-"country's base cost, $0.50 per printable page, $0.50 per photo, and $0.50 "
-"per year into the future. The full amount is charged once when you pay and "
-"submit the order."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Մինչև 1 տարի ժամկետով առաքումն անվճար է: "
-"1 տարի կամ ավելի ժամկետի դեպքում արժեքը կազմում է տարեկան $0.50, որը գանձվում է "
-"մեկ անգամ՝ նամակը պահպանելիս: 1 տարուց ավելի պլանավորումն ակտիվացնելու համար "
-"ձեր հաշվեկշռին պահեք առնվազն $1.00:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> "
-"Գինը ներառում է նպատակակետ երկրի բազային արժեքը, $0.50 յուրաքանչյուր տպագրվող "
-"էջի համար, $0.50 յուրաքանչյուր լուսանկարի համար և $0.50 յուրաքանչյուր ապագա տարվա "
-"համար: Ամբողջ գումարը գանձվում է մեկ անգամ՝ պատվերը վճարելիս:"
-
-#: letters/templates/letters/faq.html:47
-msgid "2. How reliable is delivery, and what backup details can I provide?"
-msgstr "2. Որքա՞ն հուսալի է առաքումը, և ի՞նչ պահուստային տվյալներ կարող եմ տրամադրել:"
-
-#: letters/templates/letters/faq.html:52
-msgid ""
-"<strong>Email letters:</strong> Delivery includes retry logic if a first "
-"email attempt fails. You can send to yourself or to other recipients, and "
-"add up to 5 recipient emails per letter.<br/><br/> <strong>Physical letters:"
-"</strong> Delivery depends on the recipient address, destination country, "
-"and postal service timing. Your account details, plus the full mailing "
-"address you enter for the order, help us prepare and route the letter "
-"correctly."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Առաքումը ներառում է կրկնակի փորձի տրամաբանություն, "
-"եթե էլ. փոստի առաջին փորձը ձախողվի: Դուք կարող եք նամակն ուղարկել ինքներդ ձեզ կամ "
-"այլ ստացողների՝ ավելացնելով մինչև 5 էլ. հասցե մեկ նամակի համար:<br/><br/> "
-"<strong>Ֆիզիկական նամակներ.</strong> Առաքումը կախված է ստացողի հասցեից, նպատակակետ "
-"երկրից և փոստային ծառայության ժամկետներից: Ձեր հաշվի տվյալները, ինչպես նաև պատվերի "
-"համար ձեր մուտքագրած փոստային հասցեն, օգնում են մեզ ճիշտ պատրաստել և ուղղորդել նամակը:"
-
-#: letters/templates/letters/faq.html:66
-msgid "3. Can I change, delete, or preview a letter after I create it?"
-msgstr "3. Կարո՞ղ եմ փոխել, ջնջել կամ նախադիտել նամակն այն ստեղծելուց հետո:"
-
-#: letters/templates/letters/faq.html:71
-msgid ""
-"<strong>Email letters:</strong> You control edit, delete, and preview rules "
-"at creation time. If Allow Edit and/or Allow Delete are enabled, those "
-"actions are available only during the first 30 days. Preview works the same "
-"way: if See Message Before Delivery is enabled, you can view the message "
-"before delivery.<br/><br/> <strong>Physical letters:</strong> You can save "
-"drafts before paying. Paid physical letters can still be updated while they "
-"remain in Paid status, and you can delete Draft or Paid letters. Physical "
-"letters do not use the same preview controls as email letters because they "
-"are prepared for printing and shipping."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Դուք վերահսկում եք խմբագրման, ջնջման և "
-"նախադիտման կանոնները ստեղծման պահին: Եթե «Թույլատրել խմբագրումը» և/կամ «Թույլատրել ջնջումը» "
-"ակտիվ են, այդ գործողությունները հասանելի են միայն առաջին 30 օրվա ընթացքում: Նախադիտումն "
-"աշխատում է նույն կերպ. եթե «Տեսնել հաղորդագրությունն առաքումից առաջ» տարբերակն ակտիվ է, "
-"դուք կարող եք դիտել այն նախքան առաքումը:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> "
-"Դուք կարող եք պահպանել սևագրերը նախքան վճարելը: Վճարված ֆիզիկական նամակները կարող են "
-"թարմացվել միայն մինչև տպագրության գնալը, և դուք կարող եք ջնջել «Սևագիր» կամ «Վճարված» "
-"նամակները: Ֆիզիկական նամակները չունեն նախադիտման նույն համակարգը, քանի որ պատրաստվում են տպագրության:"
-
-#: letters/templates/letters/faq.html:86
-msgid "4. How do you make sure my email is still valid in future years?"
-msgstr "4. Ինչպե՞ս եք ապահովում, որ իմ էլ. հասցեն վավեր մնա ապագայում:"
-
-#: letters/templates/letters/faq.html:91
-msgid ""
-"<strong>Email letters:</strong> We send a re-confirmation email roughly once "
-"a year so you can confirm your address and update your account if your email "
-"ever changes.<br/><br/> <strong>Physical letters:</strong> The most "
-"important detail is the recipient's mailing address on the order. Review the "
-"address carefully before paying, and if you need to change a paid physical "
-"letter later, update it before the letter moves beyond Paid status."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Մենք մոտավորապես տարին մեկ անգամ ուղարկում ենք "
-"վերահաստատման նամակ, որպեսզի կարողանաք թարմացնել ձեր հաշիվը, եթե էլ. հասցեն փոխվի:<br/><br/> "
-"<strong>Ֆիզիկական նամակներ.</strong> Ամենակարևոր մանրամասնությունը պատվերի վրա նշված "
-"ստացողի փոստային հասցեն է: Ուշադիր ստուգեք հասցեն նախքան վճարելը:"
-
-#: letters/templates/letters/faq.html:105
-msgid ""
-"5. Is my message content private, and what happens if your database is lost?"
-msgstr "5. Արդյո՞ք իմ հաղորդագրությունը գաղտնի է, և ի՞նչ կլինի, եթե ձեր տվյալների բազան կորչի:"
-
-#: letters/templates/letters/faq.html:110
-msgid ""
-"<strong>Email letters:</strong> Message content is encrypted before storage "
-"and written to Arweave for long-term resilience. Even if our own database "
-"were lost, the encrypted email-letter payload remains preserved.<br/><br/> "
-"<strong>Physical letters:</strong> Your message text, uploaded files, and "
-"shipping details are stored with the order so the letter can be prepared for "
-"printing and mailing. Physical letters follow a different operational flow "
-"than sealed email delivery, so they are not handled with the same delivery-"
-"only decryption model."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Հաղորդագրության բովանդակությունը կոդավորվում է "
-"նախքան պահպանումը և գրվում Arweave-ում՝ երկարաժամկետ պահպանման համար: Նույնիսկ եթե "
-"մեր տվյալների բազան կորչի, կոդավորված նամակը կպահպանվի:<br/><br/> "
-"<strong>Ֆիզիկական նամակներ.</strong> Ձեր հաղորդագրությունը, ֆայլերը և առաքման տվյալները "
-"պահվում են պատվերի հետ, որպեսզի նամակը պատրաստվի տպագրության: Դրանք չեն մշակվում նույն "
-"վերծանման մոդելով:"
-
-#: letters/templates/letters/faq.html:125
-msgid "6. What's the difference between email letters and physical letters?"
-msgstr "6. Ո՞րն է տարբերությունը էլեկտրոնային և ֆիզիկական նամակների միջև:"
-
-#: letters/templates/letters/faq.html:130
-msgid ""
-"<strong>Email Letters:</strong> Scheduled messages that arrive in an inbox "
-"at a specific date and time. You choose when to deliver (up to 10 years "
-"ahead), and can optionally edit or delete during the first 30 days. Perfect "
-"for digital-only messages and milestone reminders.<br/><br/> "
-"<strong>Physical Letters:</strong> Printed and mailed to a recipient's "
-"address. You select a desired delivery date, and can attach documents (PDFs, "
-"TXT) and photos (JPG, PNG) that will be printed with your message. Perfect "
-"for tangible keepsakes, gifts, and memorable occasions."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Պլանավորված հաղորդագրություններ, որոնք տեղ են "
-"հասնում որոշակի օր և ժամ: Կատարյալ են միայն թվային հաղորդագրությունների համար:<br/><br/> "
-"<strong>Ֆիզիկական նամակներ.</strong> Տպագրվում և փոստով ուղարկվում են ստացողի հասցեով: "
-"Դուք կարող եք կցել փաստաթղթեր և լուսանկարներ: Կատարյալ են շոշափելի հուշերի համար:"
-
-#: letters/templates/letters/faq.html:143
-msgid "7. Can I attach files to email letters?"
-msgstr "7. Կարո՞ղ եմ ֆայլեր կցել էլեկտրոնային նամակներին:"
-
-#: letters/templates/letters/faq.html:148
-msgid ""
-"No, email letters support only text content. However, if you want to share "
-"documents, images, or photos, you can create a <strong>physical letter</"
-"strong> instead, which supports attaching PDFs, Word documents, text files, "
-"and photos that will be printed together."
-msgstr ""
-"Ոչ, էլեկտրոնային նամակներն աջակցում են միայն տեքստային բովանդակություն: Սակայն, եթե "
-"ցանկանում եք կիսվել փաստաթղթերով կամ լուսանկարներով, կարող եք ստեղծել <strong>ֆիզիկական նամակ</strong>, "
-"որը թույլ է տալիս կցել և տպագրել ֆայլերը միասին:"
-
-#: letters/templates/letters/faq.html:158
-msgid "8. What file types can I attach to physical letters?"
-msgstr "8. Ի՞նչ տեսակի ֆայլեր կարող եմ կցել ֆիզիկական նամակներին:"
-
-#: letters/templates/letters/faq.html:163
-msgid ""
-"<strong>Documents:</strong> PDF, Word (.DOCX), and Text (.TXT) files are "
-"supported and will be printed.<br/> <strong>Photos:</strong> JPG and PNG "
-"images are supported and will be printed in color or black &amp; white.<br/> "
-"You can attach up to 3 documents and 3 photos per letter. Each page of your "
-"documents is calculated into the total price."
-msgstr ""
-"<strong>Փաստաթղթեր.</strong> Տպագրության համար աջակցվում են PDF, Word (.DOCX) և "
-"Text (.TXT) ֆայլեր:<br/> <strong>Լուսանկարներ.</strong> JPG և PNG պատկերները "
-"կտպագրվեն գունավոր կամ սև ու սպիտակ:<br/> Մեկ նամակի համար կարող եք կցել մինչև "
-"3 փաստաթուղթ և 3 լուսանկար:"
-
-#: letters/templates/letters/faq.html:173
-msgid "9. How are refunds handled if I delete a letter?"
-msgstr "9. Ինչպե՞ս է կատարվում գումարի վերադարձը, եթե ես ջնջեմ նամակը:"
-
-#: letters/templates/letters/faq.html:178
-msgid ""
-"<strong>Email letters:</strong> Free letters have no refund because no "
-"payment was made. Paid email letters keep a fixed $0.50 processing fee, and "
-"the rest is returned to your balance if deletion is still allowed.<br/><br/> "
-"<strong>Physical letters:</strong> Drafts have no refund because they were "
-"never paid. Paid physical letters refund the remaining balance after a "
-"deletion fee of $1.00 plus $0.50 for each full year since the order was "
-"created."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Վճարված նամակներից պահվում է հաստատուն "
-"$0.50 մշակման վճար, իսկ մնացածը վերադարձվում է:<br/><br/> "
-"<strong>Ֆիզիկական նամակներ.</strong> Սևագրերը վերադարձ չունեն: Վճարված ֆիզիկական "
-"նամակներից վերադարձվում է մնացորդը՝ ջնջման $1.00 և յուրաքանչյուր տարվա համար "
-"$0.50 վճարը պահելուց հետո:"
-
-#: letters/templates/letters/faq.html:191
-msgid "10. How long does delivery take for each letter type?"
-msgstr "10. Որքա՞ն ժամանակ է տևում առաքումը յուրաքանչյուր նամակի համար:"
-
-#: letters/templates/letters/faq.html:196
-msgid ""
-"<strong>Email letters:</strong> Delivery happens at the exact future date "
-"and time you choose.<br/><br/> <strong>Physical letters:</strong> You choose "
-"a requested delivery date, and the order is then prepared for shipping. "
-"Delivery depends on the destination country and can occur around 1 to 4 days "
-"after your requested date, with later arrival possible depending on postal "
-"conditions."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Առաքումը կատարվում է ձեր ընտրած կոնկրետ "
-"օրը և ժամին:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> Առաքումը կախված է "
-"նպատակակետ երկրից և կարող է տեղի ունենալ ձեր նախընտրած ամսաթվից 1-4 օր անց:"
-
-#: letters/templates/letters/faq.html:209
-msgid "11. Can I save a physical letter as a draft before paying?"
-msgstr "11. Կարո՞ղ եմ ֆիզիկական նամակը պահպանել որպես սևագիր նախքան վճարելը:"
-
-#: letters/templates/letters/faq.html:214
-msgid ""
-"Yes. Physical letters can be saved as drafts first, which is useful when you "
-"still need to refine the address, message, or attachments. Drafts are "
-"unpaid. Once you are ready, you can return to the draft, review the final "
-"price, and pay to move it into Paid status."
-msgstr ""
-"Այո: Ֆիզիկական նամակները կարելի է նախապես պահպանել որպես չվճարված սևագիր: Երբ պատրաստ "
-"լինեք, կարող եք վերանայել գինը և վճարել:"
-
-#: letters/templates/letters/faq.html:225
-msgid "12. Can I track the status of a physical letter after I pay?"
-msgstr "12. Կարո՞ղ եմ հետևել ֆիզիկական նամակի կարգավիճակին վճարումից հետո:"
-
-#: letters/templates/letters/faq.html:230
-msgid ""
-"Yes. In your Letters workspace, physical letters move through statuses such "
-"as Draft, Paid, Printing, Shipped, and Delivered. This helps you understand "
-"whether the order is still editable, being prepared, or already on its way."
-msgstr ""
-"Այո: Ձեր Նամակներ բաժնում ֆիզիկական նամակներն ունեն կարգավիճակներ՝ Սևագիր, Վճարված, "
-"Տպագրվող, Առաքված: Սա կօգնի ձեզ հասկանալ պատվերի ընթացքը:"
-
-#: letters/templates/letters/faq.html:240
-msgid "13. How do I choose between an email letter and a physical letter?"
-msgstr "13. Ինչպե՞ս ընտրություն կատարել էլեկտրոնային և ֆիզիկական նամակների միջև:"
-
-#: letters/templates/letters/faq.html:245
-msgid ""
-"Choose <strong>email letters</strong> when precise timing, privacy controls, "
-"and inbox delivery matter most. Choose <strong>physical letters</strong> "
-"when you want a tangible keepsake, printed photos or documents, and a more "
-"ceremonial mailbox experience for the recipient."
-msgstr ""
-"Ընտրեք <strong>էլեկտրոնային նամակներ</strong>, երբ ճշգրիտ ժամանակը և գաղտնիությունն "
-"ամենակարևորն են: Ընտրեք <strong>ֆիզիկական նամակներ</strong>, երբ ցանկանում եք շոշափելի "
-"հուշ կամ տպագիր լուսանկարներ նվիրել:"
-
-#: letters/templates/letters/faq.html:259
+#: letters/templates/letters/faq.html:30
 msgid "Anything else we should know?"
 msgstr "Կա՞ որևէ այլ բան, որ պետք է իմանանք:"
 
-#: letters/templates/letters/faq.html:264
+#: letters/templates/letters/faq.html:35
 msgid "Send us a message"
 msgstr "Ուղարկեք մեզ հաղորդագրություն"
 
-#: letters/templates/letters/how.html:5
-msgid "LetterGator | See how"
-msgstr "LetterGator | Ինչպե՞ս"
+#: letters/templates/letters/how.html:4
+#, fuzzy
+#| msgid "LetterGator | See why"
+msgid "LetterGator | How it works"
+msgstr "LetterGator | Ինչո՞ւ"
 
-#: letters/templates/letters/how.html:15
-msgid "How it works"
-msgstr "Ինչպես է այն աշխատում"
-
-#: letters/templates/letters/how.html:17
-msgid "Deliver your message"
-msgstr "Առաքեք ձեր հաղորդագրությունը"
-
-#: letters/templates/letters/how.html:17
-msgid "your way."
-msgstr "ձեր նախընտրած եղանակով:"
-
-#: letters/templates/letters/how.html:20
-msgid ""
-"Choose email for digital delivery or physical letters for tangible "
-"keepsakes. Both can be scheduled for exactly when they matter most."
+#: letters/templates/letters/how.html:21
+msgid "Why and how"
 msgstr ""
-"Ընտրեք էլ. փոստ թվային առաքման համար կամ ֆիզիկական նամակներ շոշափելի հուշերի համար: "
-"Երկուսն էլ կարող են պլանավորվել այն պահի համար, երբ ամենից շատն են կարևոր:"
 
-#: letters/templates/letters/how.html:42 letters/templates/letters/how.html:57
-msgid "Compose"
-msgstr "Գրել"
+#: letters/templates/letters/how.html:22
+#, fuzzy
+#| msgid "Secure your future letters."
+msgid "future letters work."
+msgstr "Ապահովագրեք ձեր ապագա նամակները:"
 
-#: letters/templates/letters/how.html:43
-msgid "Create a meaningful letter in minutes."
-msgstr "Ստեղծեք իմաստալից նամակ րոպեների ընթացքում:"
-
-#: letters/templates/letters/how.html:45
+#: letters/templates/letters/how.html:25
 msgid ""
-"Write your subject line and full message body. There are no character limits "
-"— pour in as much as you need. The letter is immediately attached to your "
-"account, safely stored, and ready for the next step."
+"Explore why people write letters to the future and exactly how email and "
+"physical delivery work from start to finish."
 msgstr ""
-"Գրեք ձեր թեման և հաղորդագրության տեքստը: Նշանների սահմանափակում չկա: Նամակն անմիջապես "
-"կապվում է ձեր հաշվին և պատրաստ է հաջորդ քայլին:"
 
-#: letters/templates/letters/how.html:52
-msgid "Rich message body with full text support"
-msgstr "Հարուստ տեքստային հնարավորություններ"
-
-#: letters/templates/letters/how.html:53
-msgid "Clear subject line for recipient context"
-msgstr "Հստակ թեմա՝ ստացողին համատեքստը փոխանցելու համար"
-
-#: letters/templates/letters/how.html:54
-msgid "Auto-saved to your account dashboard"
-msgstr "Ավտոմատ պահպանվում է ձեր հաշվի վահանակում"
-
-#: letters/templates/letters/how.html:71 letters/templates/letters/how.html:87
-msgid "Seal"
-msgstr "Կնքել"
-
-#: letters/templates/letters/how.html:72
-msgid "Choose privacy and ownership controls."
-msgstr "Ընտրեք գաղտնիության և սեփականության վերահսկման կարգավորումները:"
-
-#: letters/templates/letters/how.html:74
-msgid ""
-"Before scheduling, decide the rules that govern your letter. Can you peek at "
-"the content before delivery? Should edits be blocked once scheduled? These "
-"controls lock in your intentions and prevent second-guessing."
-msgstr ""
-"Նախքան պլանավորելը որոշեք այն կանոնները, որոնք կվերահսկեն ձեր նամակը: Կարո՞ղ եք "
-"նախադիտել այն առաքումից առաջ: Այս կարգավորումներն ամրագրում են ձեր մտադրությունները:"
-
-#: letters/templates/letters/how.html:82
-msgid "Toggle content preview on or off"
-msgstr "Միացնել կամ անջատել բովանդակության նախադիտումը"
-
-#: letters/templates/letters/how.html:83
-msgid "Allow or block edits in the first month"
-msgstr "Թույլատրել կամ արգելափակել խմբագրումներն առաջին ամսում"
-
-#: letters/templates/letters/how.html:84
-msgid "Enable or disable early deletion"
-msgstr "Միացնել կամ անջատել վաղաժամ ջնջումը"
-
-#: letters/templates/letters/how.html:101
-#: letters/templates/letters/how.html:117
-msgid "Schedule"
-msgstr "Պլանավորել"
-
-#: letters/templates/letters/how.html:102
-msgid "Set exact timing for emotional impact."
-msgstr "Սահմանեք ճշգրիտ ժամանակ՝ հուզական ազդեցության համար:"
-
-#: letters/templates/letters/how.html:104
-msgid ""
-"Pick the precise date and time your message should land. Use quick-select "
-"presets — 1 month, 1 year, 5 years, 10 years — or dial in a custom moment: a "
-"birthday, anniversary, or milestone you already know is coming."
-msgstr ""
-"Ընտրեք ճշգրիտ ամսաթիվը և ժամը: Օգտագործեք արագ ընտրության տարբերակներ կամ նշեք հատուկ պահ՝ "
-"ծննդյան օր կամ հոբելյան:"
-
-#: letters/templates/letters/how.html:112
-msgid "Preset slots for common future milestones"
-msgstr "Պատրաստի տարբերակներ ընդհանուր իրադարձությունների համար"
-
-#: letters/templates/letters/how.html:113
-msgid "Custom date-and-time picker for exact moments"
-msgstr "Ամսաթվի և ժամի անհատական ընտրություն"
-
-#: letters/templates/letters/how.html:114
-msgid "Delivery time locked after confirmation"
-msgstr "Առաքման ժամանակն արգելափակվում է հաստատումից հետո"
-
-#: letters/templates/letters/how.html:130
-#: letters/templates/letters/how.html:146
-msgid "Deliver"
-msgstr "Առաքել"
+#: letters/templates/letters/how.html:42
+#: letters/templates/letters/landing.html:160
+msgid "See why"
+msgstr "Ինչո՞ւ"
 
 #: letters/templates/letters/how.html:131
-msgid "Automatic delivery with fallback reliability."
-msgstr "Ավտոմատ առաքում՝ պահուստային հուսալիությամբ:"
-
-#: letters/templates/letters/how.html:133
-msgid ""
-"When the clock hits your chosen moment, LetterGator dispatches your message "
-"to every selected recipient simultaneously. Built-in retry logic protects "
-"against delivery failures so your words arrive — no matter what happens "
-"between now and then."
-msgstr ""
-"Երբ լրանա ձեր ընտրած պահը, LetterGator-ը միաժամանակ կուղարկի ձեր հաղորդագրությունը "
-"բոլոր ստացողներին: Կրկնակի փորձերի տրամաբանությունը պաշտպանում է առաքման ձախողումներից:"
-
-#: letters/templates/letters/how.html:141
-msgid "Sends to all selected recipients at once"
-msgstr "Ուղարկում է բոլոր ընտրված ստացողներին միաժամանակ"
-
-#: letters/templates/letters/how.html:142
-msgid "Retry logic guards against delivery failures"
-msgstr "Կրկնակի փորձերը պաշտպանում են առաքման ձախողումներից"
-
-#: letters/templates/letters/how.html:143
-msgid "Confirmation logged to your account history"
-msgstr "Հաստատումը գրանցվում է ձեր հաշվի պատմության մեջ"
-
-#: letters/templates/letters/how.html:159
 #: letters/templates/letters/landing.html:224
+#: letters/templates/letters/pricing.html:49
 msgid "Email Letters"
 msgstr "Էլեկտրոնային նամակներ"
 
-#: letters/templates/letters/how.html:160
-msgid "Creation form fields explained"
-msgstr "Ստեղծման ձևի դաշտերի բացատրությունը"
+#: letters/templates/letters/how.html:132
+msgid "Deliver your message"
+msgstr "Առաքեք ձեր հաղորդագրությունը"
 
-#: letters/templates/letters/how.html:162
+#: letters/templates/letters/how.html:132
+msgid "your way."
+msgstr "ձեր նախընտրած եղանակով:"
+
+#: letters/templates/letters/how.html:134
 msgid ""
-"This is a full guide to every setting in the Create Email Letter page, "
-"including what each field controls and how pricing is calculated."
+"Create your message now, lock delivery rules, and let LetterGator deliver it "
+"at the exact future moment you choose."
 msgstr ""
-"Սա ամբողջական ուղեցույց է էլեկտրոնային նամակների ստեղծման բոլոր կարգավորումների վերաբերյալ:"
+
+#: letters/templates/letters/how.html:145
+msgid "Compose"
+msgstr "Գրել"
+
+#: letters/templates/letters/how.html:147
+#, fuzzy
+#| msgid ""
+#| "Write your message with no character limits and save it to your account."
+msgid ""
+"Write your subject and message with full text support, then save it directly "
+"to your account dashboard."
+msgstr "Գրեք ձեր ուղերձն առանց նշանների սահմանափակման և պահպանեք ձեր հաշվում:"
+
+#: letters/templates/letters/how.html:158
+msgid "Seal"
+msgstr "Կնքել"
+
+#: letters/templates/letters/how.html:160
+msgid ""
+"Choose privacy and control settings, including preview, edit window, and "
+"early deletion permissions."
+msgstr ""
 
 #: letters/templates/letters/how.html:171
-msgid "Content fields"
-msgstr "Բովանդակության դաշտեր"
+msgid "Schedule"
+msgstr "Պլանավորել"
 
 #: letters/templates/letters/how.html:173
-msgid "Subject:"
-msgstr "Թեմա:"
-
-#: letters/templates/letters/how.html:173
+#, fuzzy
+#| msgid ""
+#| "Pick the exact date and time — presets or custom moments up to 10 years "
+#| "ahead."
 msgid ""
-"The title of your letter, used for quick identification in your list and "
-"confirmation messages."
+"Pick an exact future date and time using presets or a custom moment up to 10 "
+"years ahead."
 msgstr ""
-"Ձեր նամակի վերնագիրը, որն օգտագործվում է արագ նույնականացման համար:"
-
-#: letters/templates/letters/how.html:174
-msgid "Message:"
-msgstr "Հաղորդագրություն:"
-
-#: letters/templates/letters/how.html:174
-msgid ""
-"The full text body that will be stored securely and delivered at the "
-"scheduled time."
-msgstr ""
-"Ամբողջական տեքստը, որն ապահով կպահպանվի և կառաքվի նշված ժամանակին:"
-
-#: letters/templates/letters/how.html:175
-msgid "Delivery Date and Time:"
-msgstr "Առաքման ամսաթիվը և ժամը:"
-
-#: letters/templates/letters/how.html:175
-msgid "The exact future moment when LetterGator sends your message."
-msgstr "Ապագայի հստակ պահը, երբ LetterGator-ը կուղարկի ձեր նամակը:"
-
-#: letters/templates/letters/how.html:180
-msgid "Recipient fields"
-msgstr "Ստացողի դաշտեր"
-
-#: letters/templates/letters/how.html:182
-msgid "Send To Me:"
-msgstr "Ուղարկել ինձ:"
-
-#: letters/templates/letters/how.html:182
-msgid "If Yes, the letter is sent to your account email."
-msgstr "Եթե Այո, նամակն ուղարկվում է ձեր հաշվի էլ. հասցեին:"
-
-#: letters/templates/letters/how.html:183
-msgid "Recipient Emails:"
-msgstr "Ստացողների էլ. հասցեներ:"
-
-#: letters/templates/letters/how.html:183
-msgid "Shown when Send To Me is No. Add up to 5 valid recipient emails."
-msgstr "Ցուցադրվում է, երբ «Ուղարկել ինձ»-ը Ոչ է: Ավելացրեք մինչև 5 վավեր էլ. հասցե:"
+"Ընտրեք ճշգրիտ ամսաթիվը և ժամը՝ նախապես սահմանված կամ հատուկ պահ մինչև 10 "
+"տարի առաջ:"
 
 #: letters/templates/letters/how.html:184
-msgid "Browser timezone:"
-msgstr "Բրաուզերի ժամային գոտին:"
+msgid "Deliver"
+msgstr "Առաքել"
 
-#: letters/templates/letters/how.html:184
+#: letters/templates/letters/how.html:186
 msgid ""
-"Captured automatically so your selected delivery time is interpreted "
-"correctly."
+"LetterGator sends your letter at the scheduled time with retry protection "
+"and confirmation in your account history."
 msgstr ""
-"Ֆիքսվում է ավտոմատ, որպեսզի ընտրված ժամանակը ճիշտ մեկնաբանվի:"
-
-#: letters/templates/letters/how.html:189
-msgid "Control settings"
-msgstr "Վերահսկման կարգավորումներ"
-
-#: letters/templates/letters/how.html:191
-msgid "Allow Delete (1 Month Window):"
-msgstr "Թույլատրել ջնջումը (1 ամսվա ընթացքում):"
-
-#: letters/templates/letters/how.html:191
-msgid ""
-"Lets you delete the letter only during the first 30 days after creation. If "
-"this is disabled, the letter cannot be deleted after creation at all."
-msgstr ""
-"Թույլ է տալիս ջնջել նամակը միայն առաջին 30 օրվա ընթացքում: Անջատելու դեպքում նամակն ընդհանրապես հնարավոր չէ ջնջել:"
-
-#: letters/templates/letters/how.html:192
-msgid "Allow Edit (1 Month Window):"
-msgstr "Թույլատրել խմբագրումը (1 ամսվա ընթացքում):"
-
-#: letters/templates/letters/how.html:192
-msgid ""
-"Lets you edit the message only during the first 30 days after creation. If "
-"this is disabled, the message cannot be edited after creation at all."
-msgstr ""
-"Թույլ է տալիս խմբագրել նամակը միայն առաջին 30 օրվա ընթացքում: Անջատելու դեպքում այն անփոփոխ է մնում:"
-
-#: letters/templates/letters/how.html:193
-msgid "See Message Before Delivery:"
-msgstr "Տեսնել հաղորդագրությունն առաքումից առաջ:"
-
-#: letters/templates/letters/how.html:193
-msgid "If enabled, you can preview your own message before its delivery time."
-msgstr "Եթե միացված է, դուք կարող եք նախադիտել ձեր նամակը նախքան առաքման ժամանակը:"
-
-#: letters/templates/letters/how.html:198
-msgid "Pricing and balance"
-msgstr "Գնագոյացում և հաշվեկշիռ"
-
-#: letters/templates/letters/how.html:200
-msgid "Under 1 year:"
-msgstr "Մինչև 1 տարի:"
-
-#: letters/templates/letters/how.html:200
-msgid "Free."
-msgstr "Անվճար:"
-
-#: letters/templates/letters/how.html:201
-msgid "1 year or more:"
-msgstr "1 տարի կամ ավելի:"
-
-#: letters/templates/letters/how.html:201
-msgid "$0.50 per year."
-msgstr "Տարեկան $0.50:"
 
 #: letters/templates/letters/how.html:202
-msgid "Minimum balance to unlock 1 year+ dates:"
-msgstr "Նվազագույն հաշվեկշիռը 1+ տարի ժամկետների համար:"
-
-#: letters/templates/letters/how.html:202
-msgid "$1.00."
-msgstr "$1.00:"
-
-#: letters/templates/letters/how.html:203
-msgid "Charge timing:"
-msgstr "Գանձման ժամանակը:"
-
-#: letters/templates/letters/how.html:203
-msgid "The scheduling cost is deducted once when you save (Seal and Store)."
-msgstr "Պլանավորման արժեքը գանձվում է մեկ անգամ՝ պահպանելիս (Կնքել և պահել):"
-
-#: letters/templates/letters/how.html:209
-msgid "What happens when you submit"
-msgstr "Ինչ է տեղի ունենում հաստատելիս"
-
-#: letters/templates/letters/how.html:211
-msgid ""
-"The form validates required fields, recipient emails, and future delivery "
-"time."
-msgstr ""
-"Ձևաչափը ստուգում է պարտադիր դաշտերը, էլ. հասցեները և ապագա առաքման ժամանակը:"
-
-#: letters/templates/letters/how.html:212
-msgid ""
-"If your selected schedule has a cost, your balance is checked before "
-"creation."
-msgstr ""
-"Եթե ձեր ընտրած պլանն ունի արժեք, ստեղծումից առաջ ստուգվում է ձեր հաշվեկշիռը:"
-
-#: letters/templates/letters/how.html:213
-msgid ""
-"On success, the letter is sealed and stored, and the scheduling charge (if "
-"any) is logged in your balance history."
-msgstr ""
-"Հաջողության դեպքում նամակը կնքվում և պահպանվում է, իսկ գանձումը (եթե կա) գրանցվում է պատմության մեջ:"
-
-#: letters/templates/letters/how.html:225
 msgid "From message to mailbox"
 msgstr "Հաղորդագրությունից դեպի փոստարկղ"
 
-#: letters/templates/letters/how.html:227
+#: letters/templates/letters/how.html:204
 msgid ""
 "Physical letters combine your message with attachments (documents and "
 "photos), then get printed and mailed to the recipient's address. Here's how "
 "the process works."
 msgstr ""
-"Ֆիզիկական նամակները միավորում են ձեր ուղերձը կցված ֆայլերի հետ, ապա տպագրվում և ուղարկվում ստացողին:"
+"Ֆիզիկական նամակները միավորում են ձեր ուղերձը կցված ֆայլերի հետ, ապա "
+"տպագրվում և ուղարկվում ստացողին:"
 
-#: letters/templates/letters/how.html:239
+#: letters/templates/letters/how.html:216
 msgid "Compose with attachments"
 msgstr "Գրել՝ կցված ֆայլերով"
 
-#: letters/templates/letters/how.html:241
+#: letters/templates/letters/how.html:218
 msgid ""
 "Write your message and optionally attach files: up to 3 documents (PDF, "
 "DOCX, TXT) and up to 3 photos (JPG, PNG). Everything will be printed "
 "together in one envelope."
 msgstr ""
-"Գրեք հաղորդագրությունը և կցեք ֆայլեր՝ մինչև 3 փաստաթուղթ և մինչև 3 լուսանկար: Ամեն ինչ կտպագրվի մեկ ծրարում:"
+"Գրեք հաղորդագրությունը և կցեք ֆայլեր՝ մինչև 3 փաստաթուղթ և մինչև 3 "
+"լուսանկար: Ամեն ինչ կտպագրվի մեկ ծրարում:"
 
-#: letters/templates/letters/how.html:253
+#: letters/templates/letters/how.html:230
 msgid "Add recipient address"
 msgstr "Ավելացնել ստացողի հասցեն"
 
-#: letters/templates/letters/how.html:255
+#: letters/templates/letters/how.html:232
 msgid ""
 "Enter the recipient's name, street address, city, state/province, postal "
 "code, and country. The price is calculated based on your document pages, "
 "photos, and destination country."
 msgstr ""
-"Մուտքագրեք ստացողի անունը, փողոցը, քաղաքը և երկիրը: Գինը հաշվարկվում է ըստ էջերի և երկրի:"
+"Մուտքագրեք ստացողի անունը, փողոցը, քաղաքը և երկիրը: Գինը հաշվարկվում է ըստ "
+"էջերի և երկրի:"
 
-#: letters/templates/letters/how.html:267
+#: letters/templates/letters/how.html:245
 msgid "Set desired delivery date"
 msgstr "Սահմանել առաքման ցանկալի ամսաթիվ"
 
-#: letters/templates/letters/how.html:269
+#: letters/templates/letters/how.html:247
 msgid ""
 "Choose the date you'd like the letter to arrive. We'll print it on your "
 "requested date and begin shipping. You can schedule up to 10 years in "
@@ -1393,81 +1066,44 @@ msgid ""
 msgstr ""
 "Ընտրեք նամակի հասնելու ամսաթիվը: Դուք կարող եք պլանավորել մինչև 10 տարի առաջ:"
 
-#: letters/templates/letters/how.html:281
+#: letters/templates/letters/how.html:259
 msgid "Pay and confirm"
 msgstr "Վճարել և հաստատել"
 
-#: letters/templates/letters/how.html:283
+#: letters/templates/letters/how.html:261
 msgid ""
 "The total price is deducted from your account balance when you confirm. Your "
 "account balance must cover the full cost of the letter."
-msgstr ""
-"Հաստատելիս ընդհանուր արժեքը գանձվում է ձեր հաշվեկշռից:"
+msgstr "Հաստատելիս ընդհանուր արժեքը գանձվում է ձեր հաշվեկշռից:"
 
-#: letters/templates/letters/how.html:295
+#: letters/templates/letters/how.html:273
 msgid "Print and ship"
 msgstr "Տպել և առաքել"
 
-#: letters/templates/letters/how.html:297
+#: letters/templates/letters/how.html:275
 msgid ""
 "On your requested delivery date, the letter is printed and shipped via "
 "postal service. Delivery times vary by country (typically 2-6 weeks). Track "
 "its status in your account dashboard."
 msgstr ""
-"Ձեր պահանջած ամսաթվին նամակը տպագրվում է և ուղարկվում փոստով (սովորաբար 2-6 շաբաթ):"
+"Ձեր պահանջած ամսաթվին նամակը տպագրվում է և ուղարկվում փոստով (սովորաբար 2-6 "
+"շաբաթ):"
 
-#: letters/templates/letters/how.html:309
+#: letters/templates/letters/how.html:288
 msgid "Recipient receives it"
 msgstr "Ստացողը ստանում է այն"
 
-#: letters/templates/letters/how.html:311
+#: letters/templates/letters/how.html:290
 msgid ""
 "The letter arrives in your recipient's mailbox — a tangible, memorable "
 "keepsake that they can hold in their hands and share with others."
-msgstr ""
-"Նամակը հասնում է ստացողի փոստարկղ՝ որպես շոշափելի, հիշարժան հուշ:"
+msgstr "Նամակը հասնում է ստացողի փոստարկղ՝ որպես շոշափելի, հիշարժան հուշ:"
 
-#: letters/templates/letters/how.html:321
-msgid "Pricing"
-msgstr "Գնագոյացում"
-
-#: letters/templates/letters/how.html:323
-msgid "Base cost:"
-msgstr "Բազային արժեքը:"
-
-#: letters/templates/letters/how.html:323
-msgid "Depends on destination country."
-msgstr "Կախված է նպատակակետ երկրից:"
-
-#: letters/templates/letters/how.html:324
-msgid "Per-page fee:"
-msgstr "Յուրաքանչյուր էջի վճարը:"
-
-#: letters/templates/letters/how.html:324
-msgid "$0.50 per printed page (documents + message)."
-msgstr "$0.50 յուրաքանչյուր տպագրված էջի համար:"
-
-#: letters/templates/letters/how.html:325
-msgid "Per-photo fee:"
-msgstr "Յուրաքանչյուր լուսանկարի վճարը:"
-
-#: letters/templates/letters/how.html:325
-msgid "$1.00 per attached photo."
-msgstr "$1.00 յուրաքանչյուր կցված լուսանկարի համար:"
-
-#: letters/templates/letters/how.html:326
-msgid "Per-year fee:"
-msgstr "Տարեկան վճարը:"
-
-#: letters/templates/letters/how.html:326
-msgid "$0.50 per year into the future (same as email letters)."
-msgstr "Ապագայի յուրաքանչյուր տարվա համար $0.50:"
-
-#: letters/templates/letters/how.html:335
+#: letters/templates/letters/how.html:305
 msgid "Ready to write your first letter?"
 msgstr "Պատրա՞ստ եք գրել ձեր առաջին նամակը:"
 
-#: letters/templates/letters/how.html:341
+#: letters/templates/letters/how.html:311
 #: letters/templates/letters/landing.html:148
 msgid "Open Letters"
 msgstr "Բացել նամակները"
@@ -1574,8 +1210,8 @@ msgid ""
 "From personal milestones to team rituals — here are the moments people most "
 "often choose to write a letter for later."
 msgstr ""
-"Անձնական նվաճումներից մինչև թիմային ավանդույթներ. ահա այն պահերը, երբ "
-"մարդիկ ամենից հաճախ նամակ են գրում ապագայի համար:"
+"Անձնական նվաճումներից մինչև թիմային ավանդույթներ. ահա այն պահերը, երբ մարդիկ "
+"ամենից հաճախ նամակ են գրում ապագայի համար:"
 
 #: letters/templates/letters/landing.html:174
 msgid ""
@@ -1612,6 +1248,10 @@ msgstr ""
 #: letters/templates/letters/landing.html:198
 msgid "Explore all scenarios"
 msgstr "Բացահայտել բոլոր տարբերակները"
+
+#: letters/templates/letters/landing.html:210
+msgid "See how"
+msgstr "Ինչպե՞ս"
 
 #: letters/templates/letters/landing.html:212
 msgid "Choose your delivery method"
@@ -1669,7 +1309,8 @@ msgstr "Հասնում է ստացողի փոստարկղ՝ կրկնակի փո�
 #: letters/templates/letters/landing.html:252
 msgid ""
 "Write your message and attach documents or photos to be printed together."
-msgstr "Գրեք ձեր ուղերձը և կցեք փաստաթղթեր կամ լուսանկարներ՝ միասին տպագրելու համար:"
+msgstr ""
+"Գրեք ձեր ուղերձը և կցեք փաստաթղթեր կամ լուսանկարներ՝ միասին տպագրելու համար:"
 
 #: letters/templates/letters/landing.html:255
 msgid "2. Address"
@@ -1677,7 +1318,8 @@ msgstr "2. Հասցե"
 
 #: letters/templates/letters/landing.html:256
 msgid "Enter recipient's name, address, and select country for pricing."
-msgstr "Մուտքագրեք ստացողի անունը, հասցեն և ընտրեք երկիրը գնի հաշվարկման համար:"
+msgstr ""
+"Մուտքագրեք ստացողի անունը, հասցեն և ընտրեք երկիրը գնի հաշվարկման համար:"
 
 #: letters/templates/letters/landing.html:260
 msgid "Set your desired delivery date. Printing starts on that date."
@@ -1698,26 +1340,8 @@ msgstr "Իմանալ ավելին երկու տեսակների մասին"
 #: letters/templates/letters/landing.html:289
 msgid "Everything users usually ask before sending their first future letter."
 msgstr ""
-"Այն ամենը, ինչ սովորաբար հարցնում են օգտատերերը նախքան իրենց առաջին "
-"ապագայի նամակն ուղարկելը:"
-
-#: letters/templates/letters/landing.html:376
-msgid "What's the difference between email and physical letters?"
-msgstr "Ո՞րն է տարբերությունը էլեկտրոնային և ֆիզիկական նամակների միջև:"
-
-#: letters/templates/letters/landing.html:381
-msgid ""
-"<strong>Email Letters:</strong> Scheduled messages that arrive in an inbox "
-"at a specific date and time. You control editing and deletion windows. "
-"Perfect for messages to yourself or loved ones.<br/><br/> <strong>Physical "
-"Letters:</strong> Printed and mailed to a recipient's address. You can "
-"attach documents and photos that will be printed with your message. Perfect "
-"for tangible keepsakes and gifts."
-msgstr ""
-"<strong>Էլեկտրոնային նամակներ.</strong> Պլանավորված հաղորդագրություններ, "
-"որոնք տեղ են հասնում որոշակի օր և ժամ: Կատարյալ է ինքներդ ձեզ կամ "
-"մտերիմներին գրելու համար:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> "
-"Տպագրվում և ուղարկվում են ստացողի հասցեով: Կատարյալ է շոշափելի հուշերի համար:"
+"Այն ամենը, ինչ սովորաբար հարցնում են օգտատերերը նախքան իրենց առաջին ապագայի "
+"նամակն ուղարկելը:"
 
 #: letters/templates/letters/letter_create.html:4
 #: letters/templates/letters/letter_create.html:20
@@ -1730,7 +1354,8 @@ msgstr "Խմբագրել էլեկտրոնային նամակը"
 
 #: letters/templates/letters/letter_create.html:24
 msgid "Configure delivery, privacy, and control options for email delivery."
-msgstr "Կարգավորեք առաքման, գաղտնիության և վերահսկման պարամետրերը էլ. առաքման համար:"
+msgstr ""
+"Կարգավորեք առաքման, գաղտնիության և վերահսկման պարամետրերը էլ. առաքման համար:"
 
 #: letters/templates/letters/letter_create.html:28
 msgid "Want to send a printed letter instead?"
@@ -1750,7 +1375,8 @@ msgstr "Ուղարկել ինձ"
 
 #: letters/templates/letters/letter_create.html:82
 msgid "Selected by default. Choose No to send to other recipients."
-msgstr "Լռելյայն ընտրված է։ Ընտրեք «Ոչ», եթե ցանկանում եք ուղարկել այլ ստացողների։"
+msgstr ""
+"Լռելյայն ընտրված է։ Ընտրեք «Ոչ», եթե ցանկանում եք ուղարկել այլ ստացողների։"
 
 #: letters/templates/letters/letter_create.html:87
 #: letters/templates/letters/letter_create.html:101
@@ -1867,7 +1493,9 @@ msgstr "Արժեքի ամփոփում"
 
 #: letters/templates/letters/letter_create.html:225
 msgid "Final charge is validated on server after exact schedule analysis."
-msgstr "Վերջնական գանձումը հաստատվում է սերվերի վրա ճշգրիտ ժամանակացույցի վերլուծությունից հետո:"
+msgstr ""
+"Վերջնական գանձումը հաստատվում է սերվերի վրա ճշգրիտ ժամանակացույցի "
+"վերլուծությունից հետո:"
 
 #: letters/templates/letters/letter_create.html:230
 msgid "Your balance is not enough for this schedule."
@@ -1952,6 +1580,10 @@ msgstr "Առաքում"
 msgid "Status"
 msgstr "Կարգավիճակ"
 
+#: letters/templates/letters/letter_detail_email.html:49
+#: letters/templates/letters/vault.html:194
+msgid "Price"
+msgstr "Գին"
 
 #: letters/templates/letters/letter_detail_email.html:56
 msgid "Recipients"
@@ -2050,7 +1682,9 @@ msgstr "Գործողությունը հաջողությամբ ավարտվեց"
 #: letters/templates/letters/partials/operation_success.html:14
 msgid ""
 "This is a draft letter. You can edit it anytime before paying and submitting."
-msgstr "Սա սևագիր նամակ է: Դուք կարող եք խմբագրել այն ցանկացած ժամանակ մինչև վճարելն ու հաստատելը:"
+msgstr ""
+"Սա սևագիր նամակ է: Դուք կարող եք խմբագրել այն ցանկացած ժամանակ մինչև վճարելն "
+"ու հաստատելը:"
 
 #: letters/templates/letters/operation_success.html:32
 #: letters/templates/letters/partials/operation_success.html:28
@@ -2082,6 +1716,258 @@ msgstr "Ավելացնել մեկնաբանություն"
 #: letters/templates/letters/partials/contact_ticket_card.html:59
 msgid "Write your comment..."
 msgstr "Գրեք ձեր մեկնաբանությունը..."
+
+#: letters/templates/letters/partials/faq.html:6
+msgid "1. How much does LetterGator cost, and when is it charged?"
+msgstr "1. Որքա՞ն արժե LetterGator-ը և ե՞րբ է գանձվում վճարը:"
+
+#: letters/templates/letters/partials/faq.html:11
+msgid ""
+"<strong>Email letters:</strong> Delivery under 1 year is free. At 1 year or "
+"beyond, the cost is $0.50 per year, charged once when you save the letter. "
+"To unlock 1 year+ scheduling, keep at least $1.00 in your balance.<br/><br/> "
+"<strong>Physical letters:</strong> Pricing includes the destination "
+"country's base cost, $0.50 per printable page, $0.50 per photo, and $0.50 "
+"per year into the future. The full amount is charged once when you pay and "
+"submit the order."
+msgstr ""
+"<strong>Էլեկտրոնային նամակներ.</strong> Մինչև 1 տարի ժամկետով առաքումն "
+"անվճար է: 1 տարի կամ ավելի ժամկետի դեպքում արժեքը կազմում է տարեկան $0.50, "
+"որը գանձվում է մեկ անգամ՝ նամակը պահպանելիս: 1 տարուց ավելի պլանավորումն "
+"ակտիվացնելու համար ձեր հաշվեկշռին պահեք առնվազն $1.00:<br/><br/> "
+"<strong>Ֆիզիկական նամակներ.</strong> Գինը ներառում է նպատակակետ երկրի "
+"բազային արժեքը, $0.50 յուրաքանչյուր տպագրվող էջի համար, $0.50 յուրաքանչյուր "
+"լուսանկարի համար և $0.50 յուրաքանչյուր ապագա տարվա համար: Ամբողջ գումարը "
+"գանձվում է մեկ անգամ՝ պատվերը վճարելիս:"
+
+#: letters/templates/letters/partials/faq.html:24
+msgid "2. How reliable is delivery, and what backup details can I provide?"
+msgstr ""
+"2. Որքա՞ն հուսալի է առաքումը, և ի՞նչ պահուստային տվյալներ կարող եմ տրամադրել:"
+
+#: letters/templates/letters/partials/faq.html:29
+msgid ""
+"<strong>Email letters:</strong> Delivery includes retry logic if a first "
+"email attempt fails. You can send to yourself or to other recipients, and "
+"add up to 5 recipient emails per letter.<br/><br/> <strong>Physical letters:"
+"</strong> Delivery depends on the recipient address, destination country, "
+"and postal service timing. Your account details, plus the full mailing "
+"address you enter for the order, help us prepare and route the letter "
+"correctly."
+msgstr ""
+"<strong>Էլեկտրոնային նամակներ.</strong> Առաքումը ներառում է կրկնակի փորձի "
+"տրամաբանություն, եթե էլ. փոստի առաջին փորձը ձախողվի: Դուք կարող եք նամակն "
+"ուղարկել ինքներդ ձեզ կամ այլ ստացողների՝ ավելացնելով մինչև 5 էլ. հասցե մեկ "
+"նամակի համար:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> Առաքումը կախված "
+"է ստացողի հասցեից, նպատակակետ երկրից և փոստային ծառայության ժամկետներից: Ձեր "
+"հաշվի տվյալները, ինչպես նաև պատվերի համար ձեր մուտքագրած փոստային հասցեն, "
+"օգնում են մեզ ճիշտ պատրաստել և ուղղորդել նամակը:"
+
+#: letters/templates/letters/partials/faq.html:43
+msgid "3. Can I change, delete, or preview a letter after I create it?"
+msgstr "3. Կարո՞ղ եմ փոխել, ջնջել կամ նախադիտել նամակն այն ստեղծելուց հետո:"
+
+#: letters/templates/letters/partials/faq.html:48
+msgid ""
+"<strong>Email letters:</strong> You control edit, delete, and preview rules "
+"at creation time. If Allow Edit and/or Allow Delete are enabled, those "
+"actions are available only during the first 30 days. Preview works the same "
+"way: if See Message Before Delivery is enabled, you can view the message "
+"before delivery.<br/><br/> <strong>Physical letters:</strong> You can save "
+"drafts before paying. Paid physical letters can still be updated while they "
+"remain in Paid status, and you can delete Draft or Paid letters. Physical "
+"letters do not use the same preview controls as email letters because they "
+"are prepared for printing and shipping."
+msgstr ""
+"<strong>Էլեկտրոնային նամակներ.</strong> Դուք վերահսկում եք խմբագրման, ջնջման "
+"և նախադիտման կանոնները ստեղծման պահին: Եթե «Թույլատրել խմբագրումը» և/կամ "
+"«Թույլատրել ջնջումը» ակտիվ են, այդ գործողությունները հասանելի են միայն "
+"առաջին 30 օրվա ընթացքում: Նախադիտումն աշխատում է նույն կերպ. եթե «Տեսնել "
+"հաղորդագրությունն առաքումից առաջ» տարբերակն ակտիվ է, դուք կարող եք դիտել այն "
+"նախքան առաքումը:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> Դուք կարող "
+"եք պահպանել սևագրերը նախքան վճարելը: Վճարված ֆիզիկական նամակները կարող են "
+"թարմացվել միայն մինչև տպագրության գնալը, և դուք կարող եք ջնջել «Սևագիր» կամ "
+"«Վճարված» նամակները: Ֆիզիկական նամակները չունեն նախադիտման նույն համակարգը, "
+"քանի որ պատրաստվում են տպագրության:"
+
+#: letters/templates/letters/partials/faq.html:63
+msgid "4. How do you make sure my email is still valid in future years?"
+msgstr "4. Ինչպե՞ս եք ապահովում, որ իմ էլ. հասցեն վավեր մնա ապագայում:"
+
+#: letters/templates/letters/partials/faq.html:68
+msgid ""
+"<strong>Email letters:</strong> We send a re-confirmation email roughly once "
+"a year so you can confirm your address and update your account if your email "
+"ever changes.<br/><br/> <strong>Physical letters:</strong> The most "
+"important detail is the recipient's mailing address on the order. Review the "
+"address carefully before paying, and if you need to change a paid physical "
+"letter later, update it before the letter moves beyond Paid status."
+msgstr ""
+"<strong>Էլեկտրոնային նամակներ.</strong> Մենք մոտավորապես տարին մեկ անգամ "
+"ուղարկում ենք վերահաստատման նամակ, որպեսզի կարողանաք թարմացնել ձեր հաշիվը, "
+"եթե էլ. հասցեն փոխվի:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> "
+"Ամենակարևոր մանրամասնությունը պատվերի վրա նշված ստացողի փոստային հասցեն է: "
+"Ուշադիր ստուգեք հասցեն նախքան վճարելը:"
+
+#: letters/templates/letters/partials/faq.html:82
+msgid ""
+"5. Is my message content private, and what happens if your database is lost?"
+msgstr ""
+"5. Արդյո՞ք իմ հաղորդագրությունը գաղտնի է, և ի՞նչ կլինի, եթե ձեր տվյալների "
+"բազան կորչի:"
+
+#: letters/templates/letters/partials/faq.html:87
+msgid ""
+"<strong>Email letters:</strong> Message content is encrypted before storage "
+"and written to Arweave for long-term resilience. Even if our own database "
+"were lost, the encrypted email-letter payload remains preserved.<br/><br/> "
+"<strong>Physical letters:</strong> Your message text, uploaded files, and "
+"shipping details are stored with the order so the letter can be prepared for "
+"printing and mailing. Physical letters follow a different operational flow "
+"than sealed email delivery, so they are not handled with the same delivery-"
+"only decryption model."
+msgstr ""
+"<strong>Էլեկտրոնային նամակներ.</strong> Հաղորդագրության բովանդակությունը "
+"կոդավորվում է նախքան պահպանումը և գրվում Arweave-ում՝ երկարաժամկետ պահպանման "
+"համար: Նույնիսկ եթե մեր տվյալների բազան կորչի, կոդավորված նամակը կպահպանվի:"
+"<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> Ձեր հաղորդագրությունը, "
+"ֆայլերը և առաքման տվյալները պահվում են պատվերի հետ, որպեսզի նամակը պատրաստվի "
+"տպագրության: Դրանք չեն մշակվում նույն վերծանման մոդելով:"
+
+#: letters/templates/letters/partials/faq.html:102
+msgid "6. What's the difference between email letters and physical letters?"
+msgstr "6. Ո՞րն է տարբերությունը էլեկտրոնային և ֆիզիկական նամակների միջև:"
+
+#: letters/templates/letters/partials/faq.html:107
+msgid ""
+"<strong>Email Letters:</strong> Scheduled messages that arrive in an inbox "
+"at a specific date and time. You choose when to deliver (up to 10 years "
+"ahead), and can optionally edit or delete during the first 30 days. Perfect "
+"for digital-only messages and milestone reminders.<br/><br/> "
+"<strong>Physical Letters:</strong> Printed and mailed to a recipient's "
+"address. You select a desired delivery date, and can attach documents (PDFs, "
+"TXT) and photos (JPG, PNG) that will be printed with your message. Perfect "
+"for tangible keepsakes, gifts, and memorable occasions."
+msgstr ""
+"<strong>Էլեկտրոնային նամակներ.</strong> Պլանավորված հաղորդագրություններ, "
+"որոնք տեղ են հասնում որոշակի օր և ժամ: Կատարյալ են միայն թվային "
+"հաղորդագրությունների համար:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> "
+"Տպագրվում և փոստով ուղարկվում են ստացողի հասցեով: Դուք կարող եք կցել "
+"փաստաթղթեր և լուսանկարներ: Կատարյալ են շոշափելի հուշերի համար:"
+
+#: letters/templates/letters/partials/faq.html:120
+msgid "7. Can I attach files to email letters?"
+msgstr "7. Կարո՞ղ եմ ֆայլեր կցել էլեկտրոնային նամակներին:"
+
+#: letters/templates/letters/partials/faq.html:125
+msgid ""
+"No, email letters support only text content. However, if you want to share "
+"documents, images, or photos, you can create a <strong>physical letter</"
+"strong> instead, which supports attaching PDFs, Word documents, text files, "
+"and photos that will be printed together."
+msgstr ""
+"Ոչ, էլեկտրոնային նամակներն աջակցում են միայն տեքստային բովանդակություն: "
+"Սակայն, եթե ցանկանում եք կիսվել փաստաթղթերով կամ լուսանկարներով, կարող եք "
+"ստեղծել <strong>ֆիզիկական նամակ</strong>, որը թույլ է տալիս կցել և տպագրել "
+"ֆայլերը միասին:"
+
+#: letters/templates/letters/partials/faq.html:135
+msgid "8. What file types can I attach to physical letters?"
+msgstr "8. Ի՞նչ տեսակի ֆայլեր կարող եմ կցել ֆիզիկական նամակներին:"
+
+#: letters/templates/letters/partials/faq.html:140
+msgid ""
+"<strong>Documents:</strong> PDF, Word (.DOCX), and Text (.TXT) files are "
+"supported and will be printed.<br/> <strong>Photos:</strong> JPG and PNG "
+"images are supported and will be printed in color or black &amp; white.<br/> "
+"You can attach up to 3 documents and 3 photos per letter. Each page of your "
+"documents is calculated into the total price."
+msgstr ""
+"<strong>Փաստաթղթեր.</strong> Տպագրության համար աջակցվում են PDF, Word (."
+"DOCX) և Text (.TXT) ֆայլեր:<br/> <strong>Լուսանկարներ.</strong> JPG և PNG "
+"պատկերները կտպագրվեն գունավոր կամ սև ու սպիտակ:<br/> Մեկ նամակի համար կարող "
+"եք կցել մինչև 3 փաստաթուղթ և 3 լուսանկար:"
+
+#: letters/templates/letters/partials/faq.html:150
+msgid "9. How are refunds handled if I delete a letter?"
+msgstr "9. Ինչպե՞ս է կատարվում գումարի վերադարձը, եթե ես ջնջեմ նամակը:"
+
+#: letters/templates/letters/partials/faq.html:155
+msgid ""
+"<strong>Email letters:</strong> Free letters have no refund because no "
+"payment was made. Paid email letters keep a fixed $0.50 processing fee, and "
+"the rest is returned to your balance if deletion is still allowed.<br/><br/> "
+"<strong>Physical letters:</strong> Drafts have no refund because they were "
+"never paid. Paid physical letters refund the remaining balance after a "
+"deletion fee of $1.00 plus $0.50 for each full year since the order was "
+"created."
+msgstr ""
+"<strong>Էլեկտրոնային նամակներ.</strong> Վճարված նամակներից պահվում է "
+"հաստատուն $0.50 մշակման վճար, իսկ մնացածը վերադարձվում է:<br/><br/> "
+"<strong>Ֆիզիկական նամակներ.</strong> Սևագրերը վերադարձ չունեն: Վճարված "
+"ֆիզիկական նամակներից վերադարձվում է մնացորդը՝ ջնջման $1.00 և յուրաքանչյուր "
+"տարվա համար $0.50 վճարը պահելուց հետո:"
+
+#: letters/templates/letters/partials/faq.html:168
+msgid "10. How long does delivery take for each letter type?"
+msgstr "10. Որքա՞ն ժամանակ է տևում առաքումը յուրաքանչյուր նամակի համար:"
+
+#: letters/templates/letters/partials/faq.html:173
+msgid ""
+"<strong>Email letters:</strong> Delivery happens at the exact future date "
+"and time you choose.<br/><br/> <strong>Physical letters:</strong> You choose "
+"a requested delivery date, and the order is then prepared for shipping. "
+"Delivery depends on the destination country and can occur around 1 to 4 days "
+"after your requested date, with later arrival possible depending on postal "
+"conditions."
+msgstr ""
+"<strong>Էլեկտրոնային նամակներ.</strong> Առաքումը կատարվում է ձեր ընտրած "
+"կոնկրետ օրը և ժամին:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> Առաքումը "
+"կախված է նպատակակետ երկրից և կարող է տեղի ունենալ ձեր նախընտրած ամսաթվից 1-4 "
+"օր անց:"
+
+#: letters/templates/letters/partials/faq.html:186
+msgid "11. Can I save a physical letter as a draft before paying?"
+msgstr "11. Կարո՞ղ եմ ֆիզիկական նամակը պահպանել որպես սևագիր նախքան վճարելը:"
+
+#: letters/templates/letters/partials/faq.html:191
+msgid ""
+"Yes. Physical letters can be saved as drafts first, which is useful when you "
+"still need to refine the address, message, or attachments. Drafts are "
+"unpaid. Once you are ready, you can return to the draft, review the final "
+"price, and pay to move it into Paid status."
+msgstr ""
+"Այո: Ֆիզիկական նամակները կարելի է նախապես պահպանել որպես չվճարված սևագիր: "
+"Երբ պատրաստ լինեք, կարող եք վերանայել գինը և վճարել:"
+
+#: letters/templates/letters/partials/faq.html:202
+msgid "12. Can I track the status of a physical letter after I pay?"
+msgstr "12. Կարո՞ղ եմ հետևել ֆիզիկական նամակի կարգավիճակին վճարումից հետո:"
+
+#: letters/templates/letters/partials/faq.html:207
+msgid ""
+"Yes. In your Letters workspace, physical letters move through statuses such "
+"as Draft, Paid, Printing, Shipped, and Delivered. This helps you understand "
+"whether the order is still editable, being prepared, or already on its way."
+msgstr ""
+"Այո: Ձեր Նամակներ բաժնում ֆիզիկական նամակներն ունեն կարգավիճակներ՝ Սևագիր, "
+"Վճարված, Տպագրվող, Առաքված: Սա կօգնի ձեզ հասկանալ պատվերի ընթացքը:"
+
+#: letters/templates/letters/partials/faq.html:217
+msgid "13. How do I choose between an email letter and a physical letter?"
+msgstr ""
+"13. Ինչպե՞ս ընտրություն կատարել էլեկտրոնային և ֆիզիկական նամակների միջև:"
+
+#: letters/templates/letters/partials/faq.html:222
+msgid ""
+"Choose <strong>email letters</strong> when precise timing, privacy controls, "
+"and inbox delivery matter most. Choose <strong>physical letters</strong> "
+"when you want a tangible keepsake, printed photos or documents, and a more "
+"ceremonial mailbox experience for the recipient."
+msgstr ""
+"Ընտրեք <strong>էլեկտրոնային նամակներ</strong>, երբ ճշգրիտ ժամանակը և "
+"գաղտնիությունն ամենակարևորն են: Ընտրեք <strong>ֆիզիկական նամակներ</strong>, "
+"երբ ցանկանում եք շոշափելի հուշ կամ տպագիր լուսանկարներ նվիրել:"
 
 #: letters/templates/letters/partials/letter_saved_modal.html:11
 msgid "Letter sealed and stored!"
@@ -2209,12 +2095,16 @@ msgstr "Վճարումը հաջողությամբ կատարվեց"
 msgid ""
 "Thanks. Your payment is being processed and your balance should update "
 "within a few moments."
-msgstr "Շնորհակալություն: Ձեր վճարումը մշակվում է, և ձեր հաշվեկշիռը կթարմացվի մի քանի րոպեի ընթացքում:"
+msgstr ""
+"Շնորհակալություն: Ձեր վճարումը մշակվում է, և ձեր հաշվեկշիռը կթարմացվի մի "
+"քանի րոպեի ընթացքում:"
 
 #: letters/templates/letters/payment_success.html:17
 msgid ""
 "To unlock 1 year+ scheduling, make sure your balance reaches at least $1.00."
-msgstr "1+ տարի ժամկետների ապակողպման համար համոզվեք, որ ձեր հաշվեկշիռը կազմում է առնվազն $1.00:"
+msgstr ""
+"1+ տարի ժամկետների ապակողպման համար համոզվեք, որ ձեր հաշվեկշիռը կազմում է "
+"առնվազն $1.00:"
 
 #: letters/templates/letters/payment_success.html:21
 msgid "Back to Balance"
@@ -2228,13 +2118,17 @@ msgstr "Տպագրման և փոստով առաքման հարցում"
 msgid ""
 "Submit text/files and destination details for manual admin printing and "
 "shipping."
-msgstr "Ուղարկեք տեքստը/ֆայլերը և նպատակակետի տվյալները ձեռքով տպագրելու և առաքելու համար:"
+msgstr ""
+"Ուղարկեք տեքստը/ֆայլերը և նպատակակետի տվյալները ձեռքով տպագրելու և առաքելու "
+"համար:"
 
 #: letters/templates/letters/physical_letter_create.html:25
 msgid ""
 "Delivery depends on destination country and usually happens 1-4 days after "
 "your requested date."
-msgstr "Առաքումը կախված է նպատակակետ երկրից և սովորաբար տևում է ձեր նախընտրած ամսաթվից հետո 1-4 օր:"
+msgstr ""
+"Առաքումը կախված է նպատակակետ երկրից և սովորաբար տևում է ձեր նախընտրած "
+"ամսաթվից հետո 1-4 օր:"
 
 #: letters/templates/letters/physical_letter_create.html:33
 msgid "Draft saved successfully."
@@ -2257,6 +2151,7 @@ msgid "Recipient Name"
 msgstr "Ստացողի անուն"
 
 #: letters/templates/letters/physical_letter_create.html:98
+#: letters/templates/letters/pricing.html:90
 msgid "Country"
 msgstr "Երկիր"
 
@@ -2282,7 +2177,9 @@ msgid ""
 "\n"
 "                        Allowed range: today to %(years)s years ahead.\n"
 "                        "
-msgstr "\n Թույլատրված միջակայք. այսօրվանից մինչև %(years)s տարի առաջ:"
+msgstr ""
+"\n"
+" Թույլատրված միջակայք. այսօրվանից մինչև %(years)s տարի առաջ:"
 
 #: letters/templates/letters/physical_letter_create.html:150
 msgid "Optional when files are uploaded."
@@ -2341,11 +2238,15 @@ msgstr "էջեր"
 #: letters/templates/letters/physical_letter_create.html:218
 msgid ""
 "Auto minimum equals uploaded text files count. You can increase it manually."
-msgstr "Ավտոմատ նվազագույնը հավասար է վերբեռնված տեքստային ֆայլերի քանակին: Դուք կարող եք այն ավելացնել ձեռքով:"
+msgstr ""
+"Ավտոմատ նվազագույնը հավասար է վերբեռնված տեքստային ֆայլերի քանակին: Դուք "
+"կարող եք այն ավելացնել ձեռքով:"
 
 #: letters/templates/letters/physical_letter_create.html:261
 msgid "Final charge is validated on server after exact page analysis."
-msgstr "Վերջնական գանձումը հաստատվում է սերվերի վրա ճշգրիտ էջերի վերլուծությունից հետո:"
+msgstr ""
+"Վերջնական գանձումը հաստատվում է սերվերի վրա ճշգրիտ էջերի վերլուծությունից "
+"հետո:"
 
 #: letters/templates/letters/physical_letter_create.html:273
 msgid "Delete this draft permanently?"
@@ -2363,60 +2264,287 @@ msgstr "Վճարել և հաստատել"
 msgid "Save Draft"
 msgstr "Պահպանել սևագիրը"
 
+#: letters/templates/letters/pricing.html:4
+#, fuzzy
+#| msgid "LetterGator | Privacy"
+msgid "LetterGator | Piricng"
+msgstr "LetterGator | Գաղտնիություն"
+
+#: letters/templates/letters/pricing.html:11
+#, fuzzy
+#| msgid "Pricing and balance"
+msgid "Pricing and Balance"
+msgstr "Գնագոյացում և հաշվեկշիռ"
+
+#: letters/templates/letters/pricing.html:14
+msgid ""
+"Learn how to top up your balance and how pricing is calculated for both "
+"email and physical letters."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:25
+#, fuzzy
+#| msgid "Back to Balance"
+msgid "How to Fill Balance"
+msgstr "Վերադառնալ հաշվեկշիռ"
+
+#: letters/templates/letters/pricing.html:26
+msgid "Top up in a few steps"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:29
+#, fuzzy
+#| msgid "Your Balance"
+msgid "Open your Balance page."
+msgstr "Ձեր հաշվեկշիռը"
+
+#: letters/templates/letters/pricing.html:32
+msgid "Enter your amount in USD."
+msgstr ""
+
+#: letters/templates/letters/pricing.html:35
+#, fuzzy
+#| msgid "Proceed to Secure Checkout"
+msgid "Proceed to secure checkout and complete payment."
+msgstr "Անցնել անվտանգ վճարման"
+
+#: letters/templates/letters/pricing.html:38
+#, fuzzy
+#| msgid ""
+#| "Use your balance for long-term email scheduling and paid physical letter "
+#| "orders."
+msgid "Your balance becomes available for scheduling paid letters."
+msgstr ""
+"Օգտագործեք ձեր հաշվեկշիռը նամակների երկարաժամկետ պլանավորման և վճարովի "
+"ֆիզիկական պատվերների համար:"
+
+#: letters/templates/letters/pricing.html:43
+#, fuzzy
+#| msgid "Back to Balance"
+msgid "Go to Balance"
+msgstr "Վերադառնալ հաշվեկշիռ"
+
+#: letters/templates/letters/pricing.html:50
+msgid "Simple schedule-based pricing"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:52
+#, fuzzy
+#| msgid "Under 1 year:"
+msgid "Under 1 year: Free."
+msgstr "Մինչև 1 տարի:"
+
+#: letters/templates/letters/pricing.html:53
+#, fuzzy
+#| msgid "1 year or more:"
+msgid "1 year or more: $0.50 per year."
+msgstr "1 տարի կամ ավելի:"
+
+#: letters/templates/letters/pricing.html:54
+#, fuzzy
+#| msgid "Minimum balance to unlock 1 year+ dates:"
+msgid "Minimum balance to unlock 1 year+ schedules: $1.00."
+msgstr "Նվազագույն հաշվեկշիռը 1+ տարի ժամկետների համար:"
+
+#: letters/templates/letters/pricing.html:55
+#, fuzzy
+#| msgid "The scheduling cost is deducted once when you save (Seal and Store)."
+msgid "Charge timing: deducted once when you save the letter."
+msgstr "Պլանավորման արժեքը գանձվում է մեկ անգամ՝ պահպանելիս (Կնքել և պահել):"
+
+#: letters/templates/letters/pricing.html:64
+msgid "Price components"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:68
+#, fuzzy
+#| msgid "Depends on destination country."
+msgid "Base destination cost"
+msgstr "Կախված է նպատակակետ երկրից:"
+
+#: letters/templates/letters/pricing.html:69
+#, fuzzy
+#| msgid "Depends on destination country."
+msgid "Depends on the recipient country."
+msgstr "Կախված է նպատակակետ երկրից:"
+
+#: letters/templates/letters/pricing.html:72
+#, fuzzy
+#| msgid "Per-page fee:"
+msgid "Per-page fee"
+msgstr "Յուրաքանչյուր էջի վճարը:"
+
+#: letters/templates/letters/pricing.html:73
+#, fuzzy
+#| msgid "Printable pages"
+msgid "$0.50 per printable page."
+msgstr "Տպագրվող էջեր"
+
+#: letters/templates/letters/pricing.html:76
+#, fuzzy
+#| msgid "Per-photo fee:"
+msgid "Per-photo fee"
+msgstr "Յուրաքանչյուր լուսանկարի վճարը:"
+
+#: letters/templates/letters/pricing.html:77
+msgid "$1.00 per attached photo."
+msgstr "$1.00 յուրաքանչյուր կցված լուսանկարի համար:"
+
+#: letters/templates/letters/pricing.html:80
+#, fuzzy
+#| msgid "Per-year fee:"
+msgid "Per-year fee"
+msgstr "Տարեկան վճարը:"
+
+#: letters/templates/letters/pricing.html:81
+#, fuzzy
+#| msgid "$0.50 per year into the future (same as email letters)."
+msgid "$0.50 per year into the future."
+msgstr "Ապագայի յուրաքանչյուր տարվա համար $0.50:"
+
+#: letters/templates/letters/pricing.html:85
+msgid "Country base prices"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:91
+msgid "Code"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:92
+msgid "Base Price (USD)"
+msgstr ""
+
+#: letters/templates/letters/pricing.html:104
+msgid "No country pricing configured yet."
+msgstr ""
+
 #: letters/templates/letters/privacy.html:4
 msgid "LetterGator | Privacy"
 msgstr "LetterGator | Գաղտնիություն"
 
 #: letters/templates/letters/privacy.html:11
-msgid "How LetterGator protects your data"
+#, fuzzy
+#| msgid "How LetterGator protects your data"
+msgid "How LetterGator handles your data"
 msgstr "Ինչպես է LetterGator-ը պաշտպանում ձեր տվյալները"
 
 #: letters/templates/letters/privacy.html:14
 msgid ""
-"Your letters are encrypted before storage and decrypted only inside "
-"authorized application flows. We use strict access controls so each user can "
-"only interact with their own letters."
-msgstr "Ձեր նամակները կոդավորվում են նախքան պահպանելը և վերծանվում միայն լիազորված հավելվածներում: Մենք օգտագործում ենք մուտքի խիստ վերահսկողություն:"
+"This notice explains what information we collect, how we use it, and the "
+"choices you have when using LetterGator. We designed the service to keep "
+"letter content protected while still letting us run the platform, provide "
+"delivery, prevent abuse, and support your account."
+msgstr ""
 
-#: letters/templates/letters/privacy.html:23
-msgid "1. Encrypted storage"
-msgstr "1. Կոդավորված պահպանում"
+#: letters/templates/letters/privacy.html:24
+msgid "1. Information we collect"
+msgstr ""
 
-#: letters/templates/letters/privacy.html:25
+#: letters/templates/letters/privacy.html:26
 msgid ""
-"Letter content is encrypted at rest. Database access alone does not reveal "
-"readable message text."
-msgstr "Նամակի բովանդակությունը կոդավորվում է պահոցում: Միայն տվյալների բազայի մուտքը չի բացահայտում հաղորդագրությունը:"
+"We collect information you provide directly, such as your name, email "
+"address, phone number, address, letter content, delivery dates, recipient "
+"details, attachments, account notes, and support requests. We also collect "
+"technical information such as device data, log data, usage events, and other "
+"information needed to keep the platform secure and reliable."
+msgstr ""
 
-#: letters/templates/letters/privacy.html:33
-msgid "2. Ownership checks"
-msgstr "2. Սեփականության ստուգումներ"
+#: letters/templates/letters/privacy.html:38
+msgid "2. How we use information"
+msgstr ""
 
-#: letters/templates/letters/privacy.html:35
+#: letters/templates/letters/privacy.html:40
 msgid ""
-"Letters are linked to your user account by user ID. Access to list, edit, "
-"and delete operations is validated against ownership."
-msgstr "Նամակները կապված են ձեր հաշվի ID-ի հետ: Մուտքը վերահսկվում է՝ ելնելով սեփականությունից:"
+"We use information to create and manage your account, process and deliver "
+"letters, verify addresses, send notifications, provide customer support, "
+"detect fraud or abuse, improve the product, and comply with legal or "
+"accounting obligations. We may also use aggregated or de-identified "
+"information for analytics and service improvements."
+msgstr ""
 
-#: letters/templates/letters/privacy.html:43
-msgid "3. Controlled preview"
-msgstr "3. Վերահսկվող նախադիտում"
+#: letters/templates/letters/privacy.html:52
+#, fuzzy
+#| msgid "6. Message content and encryption"
+msgid "3. Letter content and encryption"
+msgstr "6. Հաղորդագրության բովանդակություն և կոդավորում"
 
-#: letters/templates/letters/privacy.html:45
+#: letters/templates/letters/privacy.html:54
 msgid ""
-"Message previews are available only when your letter settings allow sender "
-"preview, or after delivery according to application rules."
-msgstr "Հաղորդագրության նախադիտումները հասանելի են միայն, երբ կարգավորումները թույլ են տալիս դա անել ուղարկողին:"
+"Letter content is encrypted before it is stored. Decryption is performed "
+"only inside controlled application flows when required to render, validate, "
+"or deliver a letter. We do not intend for plaintext letter content to be "
+"exposed through normal database access alone."
+msgstr ""
 
-#: letters/templates/letters/privacy.html:53
-msgid "4. Operational security"
-msgstr "4. Գործառնական անվտանգություն"
+#: letters/templates/letters/privacy.html:65
+msgid "4. Sharing and disclosure"
+msgstr ""
 
-#: letters/templates/letters/privacy.html:55
+#: letters/templates/letters/privacy.html:67
 msgid ""
-"Encryption keys are managed through server configuration and are not stored "
-"in the database alongside encrypted messages."
-msgstr "Կոդավորման բանալիները կառավարվում են սերվերի կազմաձևման միջոցով և չեն պահվում տվյալների բազայում:"
+"We do not sell your personal information. We may share data with service "
+"providers that help us host the application, send email, store backups, "
+"process payments, or monitor security. We may also disclose information if "
+"required by law, to enforce our terms, or to protect users, our systems, or "
+"the public."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:78
+msgid "5. Retention and backups"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:80
+msgid ""
+"We retain account data, letter data, payment records, and support history "
+"for as long as reasonably necessary to operate the service, meet legal "
+"obligations, resolve disputes, and enforce our agreements. Some encrypted "
+"data may be backed up or archived to improve durability and recovery options."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:91
+msgid "6. Your choices and controls"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:93
+msgid ""
+"You can update certain profile details in your account, such as your email "
+"address, phone number, and address where available. You may also contact us "
+"with questions about your data, request help with account access, or ask "
+"about deletion options where legally and operationally possible."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:104
+msgid "7. Security"
+msgstr ""
+
+#: letters/templates/letters/privacy.html:106
+msgid ""
+"We use technical and organizational safeguards intended to reduce "
+"unauthorized access, misuse, loss, or alteration of data. No system is "
+"completely secure, so you should use a strong password, keep your account "
+"credentials private, and notify us quickly if you suspect unauthorized "
+"access."
+msgstr ""
+
+#: letters/templates/letters/privacy.html:117
+#, fuzzy
+#| msgid "12. Contact"
+msgid "8. Contact"
+msgstr "12. Կապ"
+
+#: letters/templates/letters/privacy.html:119
+#, fuzzy
+#| msgid "If you have questions about these terms, please use the"
+msgid ""
+"If you have questions about this privacy notice or want to contact us about "
+"your data, please use the"
+msgstr "Այս պայմանների վերաբերյալ հարցերի դեպքում խնդրում ենք օգտագործել"
+
+#: letters/templates/letters/privacy.html:121
+#, fuzzy
+#| msgid "pages"
+msgid "page."
+msgstr "էջեր"
 
 #: letters/templates/letters/terms.html:4
 msgid "LetterGator | Terms of Service"
@@ -2431,159 +2559,249 @@ msgid "Terms of Service"
 msgstr "Ծառայության պայմաններ"
 
 #: letters/templates/letters/terms.html:13
-msgid "Last updated: May 2026"
+#, fuzzy
+#| msgid "Last updated: May 2026"
+msgid "Effective date: May 18, 2026"
 msgstr "Վերջին թարմացում. Մայիս 2026"
 
 #: letters/templates/letters/terms.html:15
+#, fuzzy
+#| msgid ""
+#| "By creating an account or using LetterGator, you agree to the following "
+#| "terms. Please read them carefully before using the service."
 msgid ""
-"By creating an account or using LetterGator, you agree to the following "
-"terms. Please read them carefully before using the service."
-msgstr "Ստեղծելով հաշիվ կամ օգտագործելով LetterGator-ը՝ դուք ընդունում եք հետևյալ պայմանները:"
-
-#: letters/templates/letters/terms.html:24
-msgid "1. Service description"
-msgstr "1. Ծառայության նկարագրություն"
+"By creating an account, purchasing credit, or using LetterGator in any way, "
+"you agree to these terms. Please read them carefully before using the "
+"service. If you do not agree with any part of these terms, you should not "
+"use the platform."
+msgstr ""
+"Ստեղծելով հաշիվ կամ օգտագործելով LetterGator-ը՝ դուք ընդունում եք հետևյալ "
+"պայմանները:"
 
 #: letters/templates/letters/terms.html:26
-msgid ""
-"LetterGator is a time-delayed letter delivery service. You compose a "
-"message, choose a future delivery date, and the platform delivers it to the "
-"specified recipients when that date arrives. The service is intended for "
-"personal, family, and professional use only."
-msgstr "LetterGator-ը նամակների հետաձգված առաքման ծառայություն է: Այն նախատեսված է միայն անձնական, ընտանեկան և մասնագիտական օգտագործման համար:"
+#, fuzzy
+#| msgid "LetterGator See why"
+msgid "1. What LetterGator does"
+msgstr "LetterGator Ինչո՞ւ"
 
-#: letters/templates/letters/terms.html:36
-msgid "2. Account eligibility"
+#: letters/templates/letters/terms.html:28
+msgid ""
+"LetterGator is a scheduled letter platform. You can write email letters now "
+"and set them to be delivered on a future date. The service is designed for "
+"personal reflection, family messages, professional reminders, and other "
+"lawful communications where delayed delivery is useful. We may also offer "
+"related features such as physical letter creation, attachments, contact "
+"tickets, account management tools, and delivery controls."
+msgstr ""
+
+#: letters/templates/letters/terms.html:41
+#, fuzzy
+#| msgid "2. Account eligibility"
+msgid "2. Account eligibility and responsibility"
 msgstr "2. Հաշվի իրավասություն"
 
-#: letters/templates/letters/terms.html:38
+#: letters/templates/letters/terms.html:43
+#, fuzzy
+#| msgid ""
+#| "You must be at least 18 years old to create an account. You are "
+#| "responsible for keeping your login credentials confidential and for all "
+#| "activity that occurs under your account."
 msgid ""
-"You must be at least 18 years old to create an account. You are responsible "
-"for keeping your login credentials confidential and for all activity that "
-"occurs under your account."
-msgstr "Հաշիվ ստեղծելու համար դուք պետք է լինեք առնվազն 18 տարեկան: Դուք պատասխանատու եք ձեր մուտքի տվյալների գաղտնիության համար:"
+"You must be legally able to enter into a binding agreement to use "
+"LetterGator. If you use the service on behalf of a business or organization, "
+"you confirm that you have authority to accept these terms for that entity. "
+"You are responsible for keeping your login credentials confidential and for "
+"all activity that happens under your account."
+msgstr ""
+"Հաշիվ ստեղծելու համար դուք պետք է լինեք առնվազն 18 տարեկան: Դուք "
+"պատասխանատու եք ձեր մուտքի տվյալների գաղտնիության համար:"
 
-#: letters/templates/letters/terms.html:47
+#: letters/templates/letters/terms.html:55
 msgid "3. Acceptable use"
 msgstr "3. Ընդունելի օգտագործում"
 
-#: letters/templates/letters/terms.html:49
+#: letters/templates/letters/terms.html:57
+#, fuzzy
+#| msgid ""
+#| "You agree not to use LetterGator to send spam, harassing content, illegal "
+#| "material, or any content that violates the rights of others. Letters sent "
+#| "through the platform must have a legitimate, consented recipient. We "
+#| "reserve the right to terminate accounts that violate these rules."
 msgid ""
-"You agree not to use LetterGator to send spam, harassing content, illegal "
-"material, or any content that violates the rights of others. Letters sent "
-"through the platform must have a legitimate, consented recipient. We reserve "
-"the right to terminate accounts that violate these rules."
-msgstr "Դուք համաձայնում եք չօգտագործել LetterGator-ը սպամ կամ վիրավորական բովանդակություն ուղարկելու համար:"
+"You agree not to use LetterGator to send spam, phishing attempts, malware, "
+"harassing content, illegal material, or any message that violates the rights "
+"of others. You may only send letters to recipients you are reasonably "
+"entitled to contact. You are also responsible for obtaining any permissions "
+"needed for the content, attachments, or delivery details you provide."
+msgstr ""
+"Դուք համաձայնում եք չօգտագործել LetterGator-ը սպամ կամ վիրավորական "
+"բովանդակություն ուղարկելու համար:"
 
-#: letters/templates/letters/terms.html:60
-msgid "4. Pricing and billing"
+#: letters/templates/letters/terms.html:69
+#, fuzzy
+#| msgid "4. Pricing and billing"
+msgid "4. Pricing, balance, and billing"
 msgstr "4. Գնագոյացում և վճարում"
 
-#: letters/templates/letters/terms.html:62
+#: letters/templates/letters/terms.html:71
 msgid ""
-"Letters scheduled for delivery within 1 year of creation are free. Letters "
-"scheduled 1 year or more in the future incur a fee of $0.50 per year of the "
-"schedule. This charge is deducted once from your balance when you confirm "
-"the letter. There are no recurring subscription fees; you only pay for what "
-"you schedule."
-msgstr "Մինչև 1 տարի ժամկետով նամակներն անվճար են: 1 տարի կամ ավելի ժամկետով նամակների արժեքը կազմում է տարեկան $0.50:"
+"Some letters can be created without charge, while long-term scheduling may "
+"require payment from your account balance. Any fee shown before confirmation "
+"is the amount you agree to pay when the letter is scheduled. Balances are "
+"tied to your account and may be used for eligible service charges, refunds, "
+"or adjustments where applicable. We may change pricing in the future, but "
+"any change will only apply to new actions after the update is published."
+msgstr ""
 
-#: letters/templates/letters/terms.html:73
-msgid "5. Delivery commitment"
-msgstr "5. Առաքման պարտավորություն"
+#: letters/templates/letters/terms.html:84
+#, fuzzy
+#| msgid "Delivery Date and Time:"
+msgid "5. Delivery timing and limits"
+msgstr "Առաքման ամսաթիվը և ժամը:"
 
-#: letters/templates/letters/terms.html:75
+#: letters/templates/letters/terms.html:86
+#, fuzzy
+#| msgid ""
+#| "We make reasonable efforts to deliver letters on the scheduled date using "
+#| "automated systems with retry logic. However, we cannot guarantee delivery "
+#| "in cases where a recipient's email address is no longer valid, their "
+#| "inbox rejects messages, or extraordinary technical circumstances arise. "
+#| "We will flag delivery issues in your account."
 msgid ""
 "We make reasonable efforts to deliver letters on the scheduled date using "
-"automated systems with retry logic. However, we cannot guarantee delivery in "
-"cases where a recipient's email address is no longer valid, their inbox "
-"rejects messages, or extraordinary technical circumstances arise. We will "
-"flag delivery issues in your account."
-msgstr "Մենք ողջամիտ ջանքեր ենք գործադրում նամակները ժամանակին առաքելու համար, սակայն չենք երաշխավորում անսպասելի տեխնիկական խնդիրների դեպքում:"
+"automated systems and retry logic. Delivery can be affected by invalid "
+"addresses, recipient-side filtering, mailbox limits, third-party service "
+"outages, legal restrictions, or technical events outside our control. When "
+"possible, we will surface delivery problems in your account so you can "
+"review them."
+msgstr ""
+"Մենք ողջամիտ ջանքեր ենք գործադրում նամակները ժամանակին առաքելու համար, "
+"սակայն չենք երաշխավորում անսպասելի տեխնիկական խնդիրների դեպքում:"
 
-#: letters/templates/letters/terms.html:87
-msgid "6. Message content and encryption"
+#: letters/templates/letters/terms.html:98
+#, fuzzy
+#| msgid "6. Message content and encryption"
+msgid "6. Message content, encryption, and storage"
 msgstr "6. Հաղորդագրության բովանդակություն և կոդավորում"
 
-#: letters/templates/letters/terms.html:89
+#: letters/templates/letters/terms.html:100
 msgid ""
-"Your message content is encrypted before storage. LetterGator staff cannot "
-"read the contents of your letters. You remain solely responsible for the "
-"content you write. Additionally, encrypted letter data is backed up to "
-"Arweave, a permanent decentralised blockchain storage network, to ensure "
-"long-term availability of your letters even in unexpected situations."
-msgstr "Ձեր ուղերձի բովանդակությունը կոդավորվում է նախքան պահպանումը: Այն պահուստավորվում է Arweave ցանցում՝ երկարաժամկետ պահպանման համար:"
+"Letter content is encrypted before storage and is intended to be readable "
+"only through authorized application flows. We do not design the service so "
+"staff can casually browse personal letter content. You remain solely "
+"responsible for the text you write, the files you attach, and any claims you "
+"make inside the letter. Some encrypted letter data may also be backed up for "
+"durability, recovery, or long-term availability, including through external "
+"archival systems where enabled."
+msgstr ""
 
-#: letters/templates/letters/terms.html:101
-msgid "7. Edit and deletion rights"
+#: letters/templates/letters/terms.html:114
+#, fuzzy
+#| msgid "7. Edit and deletion rights"
+msgid "7. Editing, deletion, and lock periods"
 msgstr "7. Խմբագրման և ջնջման իրավունքներ"
 
-#: letters/templates/letters/terms.html:103
+#: letters/templates/letters/terms.html:116
 msgid ""
-"If you enable the Allow Edit or Allow Delete options when creating a letter, "
-"those actions are available only during the first 30 days after creation. "
-"Once the window expires, or if the options were not enabled, the letter is "
-"permanently locked until delivery."
-msgstr "Եթե միացնեք «Թույլատրել խմբագրումը» կամ «Թույլատրել ջնջումը», դրանք հասանելի կլինեն միայն առաջին 30 օրվա ընթացքում:"
+"If edit or delete controls are available for a letter, they may be limited "
+"by a lock period or other service rule. Once a letter is locked, it cannot "
+"be changed or removed except where the product specifically allows it. These "
+"controls are part of the service design and may vary by letter type, "
+"delivery date, or account status."
+msgstr ""
 
-#: letters/templates/letters/terms.html:113
-msgid "8. Account and email validity"
-msgstr "8. Հաշվի և էլ. հասցեի վավերականություն"
+#: letters/templates/letters/terms.html:128
+msgid "8. Account, email, and contact information"
+msgstr ""
 
-#: letters/templates/letters/terms.html:115
+#: letters/templates/letters/terms.html:130
 msgid ""
-"To keep your letters deliverable over long timeframes, we send an annual re-"
-"confirmation email to verify your address is still active. You can update "
-"your email address in your profile at any time; the new address must be "
-"confirmed before it becomes active for delivery. You may also provide a "
-"phone number and address in your profile as supplementary contact "
-"information."
-msgstr "Երկարաժամկետ առաքումն ապահովելու համար մենք տարեկան վերահաստատման նամակ ենք ուղարկում:"
+"To keep your account and letters usable over long timeframes, we may ask you "
+"to confirm your email address from time to time. You should keep your "
+"account information current, including your email, phone number, and address "
+"where relevant. If you change your email, the new address may need to be "
+"verified before it becomes active for delivery or account notices."
+msgstr ""
 
-#: letters/templates/letters/terms.html:127
-msgid "9. Termination"
-msgstr "9. Դադարեցում"
+#: letters/templates/letters/terms.html:142
+msgid "9. Your submissions and rights"
+msgstr ""
 
-#: letters/templates/letters/terms.html:129
+#: letters/templates/letters/terms.html:144
 msgid ""
-"You may close your account at any time by contacting us. Upon account "
-"closure, undelivered letters will no longer be dispatched. We reserve the "
-"right to suspend or terminate accounts that breach these terms without prior "
-"notice."
-msgstr "Դուք կարող եք ցանկացած ժամանակ փակել ձեր հաշիվը:"
+"You retain ownership of the content you submit, but you grant us a limited "
+"license to host, process, transmit, display, and deliver it as necessary to "
+"operate the service. This includes the technical right to store your letter "
+"data, schedule delivery, create backups, generate previews where enabled, "
+"and show letter status in your account."
+msgstr ""
 
-#: letters/templates/letters/terms.html:139
-msgid "10. Limitation of liability"
+#: letters/templates/letters/terms.html:156
+msgid "10. Suspension and termination"
+msgstr ""
+
+#: letters/templates/letters/terms.html:158
+msgid ""
+"You may stop using LetterGator at any time. We may suspend, restrict, or "
+"terminate access to any account that appears to violate these terms, create "
+"security risk, interfere with the platform, or expose us or other users to "
+"harm. If your account is closed, undelivered letters may no longer be "
+"dispatched."
+msgstr ""
+
+#: letters/templates/letters/terms.html:169
+#, fuzzy
+#| msgid "10. Limitation of liability"
+msgid "11. No guarantee and limitation of liability"
 msgstr "10. Պատասխանատվության սահմանափակում"
 
-#: letters/templates/letters/terms.html:141
+#: letters/templates/letters/terms.html:171
+#, fuzzy
+#| msgid ""
+#| "LetterGator is provided \"as is\". To the maximum extent permitted by "
+#| "applicable law, we are not liable for indirect, incidental, or "
+#| "consequential damages arising from your use of the service, including "
+#| "missed deliveries or loss of content beyond our reasonable control."
 msgid ""
-"LetterGator is provided \"as is\". To the maximum extent permitted by "
-"applicable law, we are not liable for indirect, incidental, or consequential "
-"damages arising from your use of the service, including missed deliveries or "
-"loss of content beyond our reasonable control."
-msgstr "LetterGator-ը տրամադրվում է «ինչպես կա»: Մենք պատասխանատվություն չենք կրում անուղղակի վնասների համար:"
+"LetterGator is provided on an \"as is\" and \"as available\" basis. To the "
+"maximum extent allowed by law, we are not responsible for indirect, "
+"incidental, special, or consequential damages, including delays, missed "
+"delivery dates, data loss caused by events outside our reasonable control, "
+"or business losses that result from your use of the service."
+msgstr ""
+"LetterGator-ը տրամադրվում է «ինչպես կա»: Մենք պատասխանատվություն չենք կրում "
+"անուղղակի վնասների համար:"
 
-#: letters/templates/letters/terms.html:152
-msgid "11. Changes to these terms"
+#: letters/templates/letters/terms.html:183
+#, fuzzy
+#| msgid "11. Changes to these terms"
+msgid "12. Changes to these terms"
 msgstr "11. Այս պայմանների փոփոխություններ"
 
-#: letters/templates/letters/terms.html:154
+#: letters/templates/letters/terms.html:185
+#, fuzzy
+#| msgid ""
+#| "We may update these terms from time to time. If material changes are "
+#| "made, we will notify you by email. Continued use of the service after "
+#| "such notice constitutes acceptance of the updated terms."
 msgid ""
 "We may update these terms from time to time. If material changes are made, "
-"we will notify you by email. Continued use of the service after such notice "
-"constitutes acceptance of the updated terms."
+"we may notify you by email, a notice in the product, or another reasonable "
+"method. Continued use of the service after the effective date of an updated "
+"version means you accept the revised terms."
 msgstr "Մենք կարող ենք ժամանակ առ ժամանակ թարմացնել այս պայմանները:"
 
-#: letters/templates/letters/terms.html:163
-msgid "12. Contact"
+#: letters/templates/letters/terms.html:196
+#, fuzzy
+#| msgid "12. Contact"
+msgid "13. Contact"
 msgstr "12. Կապ"
 
-#: letters/templates/letters/terms.html:165
+#: letters/templates/letters/terms.html:198
 msgid "If you have questions about these terms, please use the"
 msgstr "Այս պայմանների վերաբերյալ հարցերի դեպքում խնդրում ենք օգտագործել"
 
-#: letters/templates/letters/terms.html:167
+#: letters/templates/letters/terms.html:200
 msgid "page to get in touch with us."
 msgstr "էջը՝ մեզ հետ կապվելու համար:"
 
@@ -2609,7 +2827,8 @@ msgid ""
 "timing, visibility, and perform edit/delete actions where they are still "
 "permitted."
 msgstr ""
-"Կառավարեք պլանավորված նամակները մեկ վայրից։ Կարող եք դիտել ստացողներին և կատարել խմբագրման/ջնջման գործողություններ։"
+"Կառավարեք պլանավորված նամակները մեկ վայրից։ Կարող եք դիտել ստացողներին և "
+"կատարել խմբագրման/ջնջման գործողություններ։"
 
 #: letters/templates/letters/vault.html:28
 msgid "Long-term schedule policy"
@@ -2667,7 +2886,8 @@ msgstr "Պահանջվում է հասանելիություն"
 
 #: letters/templates/letters/vault.html:144
 msgid "To view your letters, please log in or create an account."
-msgstr "Ձեր նամակները դիտելու համար խնդրում ենք մուտք գործել կամ ստեղծել հաշիվ:"
+msgstr ""
+"Ձեր նամակները դիտելու համար խնդրում ենք մուտք գործել կամ ստեղծել հաշիվ:"
 
 #: letters/templates/letters/vault.html:184
 msgid "Draft"
@@ -2688,6 +2908,374 @@ msgstr "Նամակներ դեռ չկան"
 #: letters/templates/letters/vault.html:208
 msgid "Create your first letter to start building your timeline."
 msgstr "Ստեղծեք ձեր առաջին նամակը՝ ձեր ժամանակագիծը ստեղծելու համար։"
+
+#~ msgid "BETA: This is a beta version. Everything you do on this"
+#~ msgstr "ԲԵՏԱ. Սա բետա տարբերակ է: Այն ամենը, ինչ անում եք այս"
+
+#~ msgid "website may be erased after the official launch."
+#~ msgstr "կայքում, կարող է ջնջվել պաշտոնական գործարկումից հետո:"
+
+#~ msgid "LetterGator | See how"
+#~ msgstr "LetterGator | Ինչպե՞ս"
+
+#~ msgid ""
+#~ "Choose email for digital delivery or physical letters for tangible "
+#~ "keepsakes. Both can be scheduled for exactly when they matter most."
+#~ msgstr ""
+#~ "Ընտրեք էլ. փոստ թվային առաքման համար կամ ֆիզիկական նամակներ շոշափելի "
+#~ "հուշերի համար: Երկուսն էլ կարող են պլանավորվել այն պահի համար, երբ ամենից "
+#~ "շատն են կարևոր:"
+
+#~ msgid "Create a meaningful letter in minutes."
+#~ msgstr "Ստեղծեք իմաստալից նամակ րոպեների ընթացքում:"
+
+#~ msgid ""
+#~ "Write your subject line and full message body. There are no character "
+#~ "limits — pour in as much as you need. The letter is immediately attached "
+#~ "to your account, safely stored, and ready for the next step."
+#~ msgstr ""
+#~ "Գրեք ձեր թեման և հաղորդագրության տեքստը: Նշանների սահմանափակում չկա: "
+#~ "Նամակն անմիջապես կապվում է ձեր հաշվին և պատրաստ է հաջորդ քայլին:"
+
+#~ msgid "Rich message body with full text support"
+#~ msgstr "Հարուստ տեքստային հնարավորություններ"
+
+#~ msgid "Clear subject line for recipient context"
+#~ msgstr "Հստակ թեմա՝ ստացողին համատեքստը փոխանցելու համար"
+
+#~ msgid "Auto-saved to your account dashboard"
+#~ msgstr "Ավտոմատ պահպանվում է ձեր հաշվի վահանակում"
+
+#~ msgid "Choose privacy and ownership controls."
+#~ msgstr "Ընտրեք գաղտնիության և սեփականության վերահսկման կարգավորումները:"
+
+#~ msgid ""
+#~ "Before scheduling, decide the rules that govern your letter. Can you peek "
+#~ "at the content before delivery? Should edits be blocked once scheduled? "
+#~ "These controls lock in your intentions and prevent second-guessing."
+#~ msgstr ""
+#~ "Նախքան պլանավորելը որոշեք այն կանոնները, որոնք կվերահսկեն ձեր նամակը: "
+#~ "Կարո՞ղ եք նախադիտել այն առաքումից առաջ: Այս կարգավորումներն ամրագրում են "
+#~ "ձեր մտադրությունները:"
+
+#~ msgid "Toggle content preview on or off"
+#~ msgstr "Միացնել կամ անջատել բովանդակության նախադիտումը"
+
+#~ msgid "Allow or block edits in the first month"
+#~ msgstr "Թույլատրել կամ արգելափակել խմբագրումներն առաջին ամսում"
+
+#~ msgid "Enable or disable early deletion"
+#~ msgstr "Միացնել կամ անջատել վաղաժամ ջնջումը"
+
+#~ msgid "Set exact timing for emotional impact."
+#~ msgstr "Սահմանեք ճշգրիտ ժամանակ՝ հուզական ազդեցության համար:"
+
+#~ msgid ""
+#~ "Pick the precise date and time your message should land. Use quick-select "
+#~ "presets — 1 month, 1 year, 5 years, 10 years — or dial in a custom "
+#~ "moment: a birthday, anniversary, or milestone you already know is coming."
+#~ msgstr ""
+#~ "Ընտրեք ճշգրիտ ամսաթիվը և ժամը: Օգտագործեք արագ ընտրության տարբերակներ կամ "
+#~ "նշեք հատուկ պահ՝ ծննդյան օր կամ հոբելյան:"
+
+#~ msgid "Preset slots for common future milestones"
+#~ msgstr "Պատրաստի տարբերակներ ընդհանուր իրադարձությունների համար"
+
+#~ msgid "Custom date-and-time picker for exact moments"
+#~ msgstr "Ամսաթվի և ժամի անհատական ընտրություն"
+
+#~ msgid "Delivery time locked after confirmation"
+#~ msgstr "Առաքման ժամանակն արգելափակվում է հաստատումից հետո"
+
+#~ msgid "Automatic delivery with fallback reliability."
+#~ msgstr "Ավտոմատ առաքում՝ պահուստային հուսալիությամբ:"
+
+#~ msgid ""
+#~ "When the clock hits your chosen moment, LetterGator dispatches your "
+#~ "message to every selected recipient simultaneously. Built-in retry logic "
+#~ "protects against delivery failures so your words arrive — no matter what "
+#~ "happens between now and then."
+#~ msgstr ""
+#~ "Երբ լրանա ձեր ընտրած պահը, LetterGator-ը միաժամանակ կուղարկի ձեր "
+#~ "հաղորդագրությունը բոլոր ստացողներին: Կրկնակի փորձերի տրամաբանությունը "
+#~ "պաշտպանում է առաքման ձախողումներից:"
+
+#~ msgid "Sends to all selected recipients at once"
+#~ msgstr "Ուղարկում է բոլոր ընտրված ստացողներին միաժամանակ"
+
+#~ msgid "Retry logic guards against delivery failures"
+#~ msgstr "Կրկնակի փորձերը պաշտպանում են առաքման ձախողումներից"
+
+#~ msgid "Confirmation logged to your account history"
+#~ msgstr "Հաստատումը գրանցվում է ձեր հաշվի պատմության մեջ"
+
+#~ msgid "Creation form fields explained"
+#~ msgstr "Ստեղծման ձևի դաշտերի բացատրությունը"
+
+#~ msgid ""
+#~ "This is a full guide to every setting in the Create Email Letter page, "
+#~ "including what each field controls and how pricing is calculated."
+#~ msgstr ""
+#~ "Սա ամբողջական ուղեցույց է էլեկտրոնային նամակների ստեղծման բոլոր "
+#~ "կարգավորումների վերաբերյալ:"
+
+#~ msgid "Content fields"
+#~ msgstr "Բովանդակության դաշտեր"
+
+#~ msgid "Subject:"
+#~ msgstr "Թեմա:"
+
+#~ msgid ""
+#~ "The title of your letter, used for quick identification in your list and "
+#~ "confirmation messages."
+#~ msgstr "Ձեր նամակի վերնագիրը, որն օգտագործվում է արագ նույնականացման համար:"
+
+#~ msgid "Message:"
+#~ msgstr "Հաղորդագրություն:"
+
+#~ msgid ""
+#~ "The full text body that will be stored securely and delivered at the "
+#~ "scheduled time."
+#~ msgstr "Ամբողջական տեքստը, որն ապահով կպահպանվի և կառաքվի նշված ժամանակին:"
+
+#~ msgid "The exact future moment when LetterGator sends your message."
+#~ msgstr "Ապագայի հստակ պահը, երբ LetterGator-ը կուղարկի ձեր նամակը:"
+
+#~ msgid "Recipient fields"
+#~ msgstr "Ստացողի դաշտեր"
+
+#~ msgid "Send To Me:"
+#~ msgstr "Ուղարկել ինձ:"
+
+#~ msgid "If Yes, the letter is sent to your account email."
+#~ msgstr "Եթե Այո, նամակն ուղարկվում է ձեր հաշվի էլ. հասցեին:"
+
+#~ msgid "Recipient Emails:"
+#~ msgstr "Ստացողների էլ. հասցեներ:"
+
+#~ msgid "Shown when Send To Me is No. Add up to 5 valid recipient emails."
+#~ msgstr ""
+#~ "Ցուցադրվում է, երբ «Ուղարկել ինձ»-ը Ոչ է: Ավելացրեք մինչև 5 վավեր էլ. "
+#~ "հասցե:"
+
+#~ msgid "Browser timezone:"
+#~ msgstr "Բրաուզերի ժամային գոտին:"
+
+#~ msgid ""
+#~ "Captured automatically so your selected delivery time is interpreted "
+#~ "correctly."
+#~ msgstr "Ֆիքսվում է ավտոմատ, որպեսզի ընտրված ժամանակը ճիշտ մեկնաբանվի:"
+
+#~ msgid "Control settings"
+#~ msgstr "Վերահսկման կարգավորումներ"
+
+#~ msgid "Allow Delete (1 Month Window):"
+#~ msgstr "Թույլատրել ջնջումը (1 ամսվա ընթացքում):"
+
+#~ msgid ""
+#~ "Lets you delete the letter only during the first 30 days after creation. "
+#~ "If this is disabled, the letter cannot be deleted after creation at all."
+#~ msgstr ""
+#~ "Թույլ է տալիս ջնջել նամակը միայն առաջին 30 օրվա ընթացքում: Անջատելու "
+#~ "դեպքում նամակն ընդհանրապես հնարավոր չէ ջնջել:"
+
+#~ msgid "Allow Edit (1 Month Window):"
+#~ msgstr "Թույլատրել խմբագրումը (1 ամսվա ընթացքում):"
+
+#~ msgid ""
+#~ "Lets you edit the message only during the first 30 days after creation. "
+#~ "If this is disabled, the message cannot be edited after creation at all."
+#~ msgstr ""
+#~ "Թույլ է տալիս խմբագրել նամակը միայն առաջին 30 օրվա ընթացքում: Անջատելու "
+#~ "դեպքում այն անփոփոխ է մնում:"
+
+#~ msgid "See Message Before Delivery:"
+#~ msgstr "Տեսնել հաղորդագրությունն առաքումից առաջ:"
+
+#~ msgid ""
+#~ "If enabled, you can preview your own message before its delivery time."
+#~ msgstr ""
+#~ "Եթե միացված է, դուք կարող եք նախադիտել ձեր նամակը նախքան առաքման ժամանակը:"
+
+#~ msgid "Free."
+#~ msgstr "Անվճար:"
+
+#~ msgid "$0.50 per year."
+#~ msgstr "Տարեկան $0.50:"
+
+#~ msgid "$1.00."
+#~ msgstr "$1.00:"
+
+#~ msgid "Charge timing:"
+#~ msgstr "Գանձման ժամանակը:"
+
+#~ msgid "What happens when you submit"
+#~ msgstr "Ինչ է տեղի ունենում հաստատելիս"
+
+#~ msgid ""
+#~ "The form validates required fields, recipient emails, and future delivery "
+#~ "time."
+#~ msgstr ""
+#~ "Ձևաչափը ստուգում է պարտադիր դաշտերը, էլ. հասցեները և ապագա առաքման "
+#~ "ժամանակը:"
+
+#~ msgid ""
+#~ "If your selected schedule has a cost, your balance is checked before "
+#~ "creation."
+#~ msgstr ""
+#~ "Եթե ձեր ընտրած պլանն ունի արժեք, ստեղծումից առաջ ստուգվում է ձեր "
+#~ "հաշվեկշիռը:"
+
+#~ msgid ""
+#~ "On success, the letter is sealed and stored, and the scheduling charge "
+#~ "(if any) is logged in your balance history."
+#~ msgstr ""
+#~ "Հաջողության դեպքում նամակը կնքվում և պահպանվում է, իսկ գանձումը (եթե կա) "
+#~ "գրանցվում է պատմության մեջ:"
+
+#~ msgid "Pricing"
+#~ msgstr "Գնագոյացում"
+
+#~ msgid "Base cost:"
+#~ msgstr "Բազային արժեքը:"
+
+#~ msgid "$0.50 per printed page (documents + message)."
+#~ msgstr "$0.50 յուրաքանչյուր տպագրված էջի համար:"
+
+#~ msgid "What's the difference between email and physical letters?"
+#~ msgstr "Ո՞րն է տարբերությունը էլեկտրոնային և ֆիզիկական նամակների միջև:"
+
+#~ msgid ""
+#~ "<strong>Email Letters:</strong> Scheduled messages that arrive in an "
+#~ "inbox at a specific date and time. You control editing and deletion "
+#~ "windows. Perfect for messages to yourself or loved ones.<br/><br/> "
+#~ "<strong>Physical Letters:</strong> Printed and mailed to a recipient's "
+#~ "address. You can attach documents and photos that will be printed with "
+#~ "your message. Perfect for tangible keepsakes and gifts."
+#~ msgstr ""
+#~ "<strong>Էլեկտրոնային նամակներ.</strong> Պլանավորված հաղորդագրություններ, "
+#~ "որոնք տեղ են հասնում որոշակի օր և ժամ: Կատարյալ է ինքներդ ձեզ կամ "
+#~ "մտերիմներին գրելու համար:<br/><br/> <strong>Ֆիզիկական նամակներ.</strong> "
+#~ "Տպագրվում և ուղարկվում են ստացողի հասցեով: Կատարյալ է շոշափելի հուշերի "
+#~ "համար:"
+
+#~ msgid ""
+#~ "Your letters are encrypted before storage and decrypted only inside "
+#~ "authorized application flows. We use strict access controls so each user "
+#~ "can only interact with their own letters."
+#~ msgstr ""
+#~ "Ձեր նամակները կոդավորվում են նախքան պահպանելը և վերծանվում միայն "
+#~ "լիազորված հավելվածներում: Մենք օգտագործում ենք մուտքի խիստ "
+#~ "վերահսկողություն:"
+
+#~ msgid "1. Encrypted storage"
+#~ msgstr "1. Կոդավորված պահպանում"
+
+#~ msgid ""
+#~ "Letter content is encrypted at rest. Database access alone does not "
+#~ "reveal readable message text."
+#~ msgstr ""
+#~ "Նամակի բովանդակությունը կոդավորվում է պահոցում: Միայն տվյալների բազայի "
+#~ "մուտքը չի բացահայտում հաղորդագրությունը:"
+
+#~ msgid "2. Ownership checks"
+#~ msgstr "2. Սեփականության ստուգումներ"
+
+#~ msgid ""
+#~ "Letters are linked to your user account by user ID. Access to list, edit, "
+#~ "and delete operations is validated against ownership."
+#~ msgstr ""
+#~ "Նամակները կապված են ձեր հաշվի ID-ի հետ: Մուտքը վերահսկվում է՝ ելնելով "
+#~ "սեփականությունից:"
+
+#~ msgid "3. Controlled preview"
+#~ msgstr "3. Վերահսկվող նախադիտում"
+
+#~ msgid ""
+#~ "Message previews are available only when your letter settings allow "
+#~ "sender preview, or after delivery according to application rules."
+#~ msgstr ""
+#~ "Հաղորդագրության նախադիտումները հասանելի են միայն, երբ կարգավորումները "
+#~ "թույլ են տալիս դա անել ուղարկողին:"
+
+#~ msgid "4. Operational security"
+#~ msgstr "4. Գործառնական անվտանգություն"
+
+#~ msgid ""
+#~ "Encryption keys are managed through server configuration and are not "
+#~ "stored in the database alongside encrypted messages."
+#~ msgstr ""
+#~ "Կոդավորման բանալիները կառավարվում են սերվերի կազմաձևման միջոցով և չեն "
+#~ "պահվում տվյալների բազայում:"
+
+#~ msgid "1. Service description"
+#~ msgstr "1. Ծառայության նկարագրություն"
+
+#~ msgid ""
+#~ "LetterGator is a time-delayed letter delivery service. You compose a "
+#~ "message, choose a future delivery date, and the platform delivers it to "
+#~ "the specified recipients when that date arrives. The service is intended "
+#~ "for personal, family, and professional use only."
+#~ msgstr ""
+#~ "LetterGator-ը նամակների հետաձգված առաքման ծառայություն է: Այն նախատեսված "
+#~ "է միայն անձնական, ընտանեկան և մասնագիտական օգտագործման համար:"
+
+#~ msgid ""
+#~ "Letters scheduled for delivery within 1 year of creation are free. "
+#~ "Letters scheduled 1 year or more in the future incur a fee of $0.50 per "
+#~ "year of the schedule. This charge is deducted once from your balance when "
+#~ "you confirm the letter. There are no recurring subscription fees; you "
+#~ "only pay for what you schedule."
+#~ msgstr ""
+#~ "Մինչև 1 տարի ժամկետով նամակներն անվճար են: 1 տարի կամ ավելի ժամկետով "
+#~ "նամակների արժեքը կազմում է տարեկան $0.50:"
+
+#~ msgid "5. Delivery commitment"
+#~ msgstr "5. Առաքման պարտավորություն"
+
+#~ msgid ""
+#~ "Your message content is encrypted before storage. LetterGator staff "
+#~ "cannot read the contents of your letters. You remain solely responsible "
+#~ "for the content you write. Additionally, encrypted letter data is backed "
+#~ "up to Arweave, a permanent decentralised blockchain storage network, to "
+#~ "ensure long-term availability of your letters even in unexpected "
+#~ "situations."
+#~ msgstr ""
+#~ "Ձեր ուղերձի բովանդակությունը կոդավորվում է նախքան պահպանումը: Այն "
+#~ "պահուստավորվում է Arweave ցանցում՝ երկարաժամկետ պահպանման համար:"
+
+#~ msgid ""
+#~ "If you enable the Allow Edit or Allow Delete options when creating a "
+#~ "letter, those actions are available only during the first 30 days after "
+#~ "creation. Once the window expires, or if the options were not enabled, "
+#~ "the letter is permanently locked until delivery."
+#~ msgstr ""
+#~ "Եթե միացնեք «Թույլատրել խմբագրումը» կամ «Թույլատրել ջնջումը», դրանք "
+#~ "հասանելի կլինեն միայն առաջին 30 օրվա ընթացքում:"
+
+#~ msgid "8. Account and email validity"
+#~ msgstr "8. Հաշվի և էլ. հասցեի վավերականություն"
+
+#~ msgid ""
+#~ "To keep your letters deliverable over long timeframes, we send an annual "
+#~ "re-confirmation email to verify your address is still active. You can "
+#~ "update your email address in your profile at any time; the new address "
+#~ "must be confirmed before it becomes active for delivery. You may also "
+#~ "provide a phone number and address in your profile as supplementary "
+#~ "contact information."
+#~ msgstr ""
+#~ "Երկարաժամկետ առաքումն ապահովելու համար մենք տարեկան վերահաստատման նամակ "
+#~ "ենք ուղարկում:"
+
+#~ msgid "9. Termination"
+#~ msgstr "9. Դադարեցում"
+
+#~ msgid ""
+#~ "You may close your account at any time by contacting us. Upon account "
+#~ "closure, undelivered letters will no longer be dispatched. We reserve the "
+#~ "right to suspend or terminate accounts that breach these terms without "
+#~ "prior notice."
+#~ msgstr "Դուք կարող եք ցանկացած ժամանակ փակել ձեր հաշիվը:"
 
 #~ msgid "Add Funds — Coming Soon"
 #~ msgstr "Լրացնել հաշվեկշիռը — Շուտով"
