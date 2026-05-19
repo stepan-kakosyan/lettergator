@@ -7,6 +7,10 @@ from django.utils import timezone
 RATE_PER_YEAR_USD = Decimal("0.50")
 MIN_LONG_SCHEDULE_BALANCE_USD = Decimal("1.00")
 
+# SMS pricing
+SMS_BASE_PRICE_USD = Decimal("1.00")
+SMS_EXTRA_YEAR_PRICE_USD = Decimal("0.20")
+
 
 def _replace_year_safely(dt, year):
     try:
@@ -35,3 +39,17 @@ def compute_schedule_cost(delivery_at, now=None):
     if candidate < delivery_date:
         years += 1
     return RATE_PER_YEAR_USD * Decimal(years)
+
+
+def compute_sms_price(scheduled_at, now=None):
+    """1 USD base + 0.20 USD per year beyond the first year."""
+    current_date = (now or timezone.now()).date()
+    delivery_date = scheduled_at.date()
+
+    years = delivery_date.year - current_date.year
+    candidate = _replace_year_safely(current_date, current_date.year + years)
+    if candidate < delivery_date:
+        years += 1
+    years = max(years, 1)
+    extra_years = max(0, years - 1)
+    return SMS_BASE_PRICE_USD + SMS_EXTRA_YEAR_PRICE_USD * Decimal(extra_years)

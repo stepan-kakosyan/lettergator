@@ -34,50 +34,84 @@
         {% endif %}
         {% if request.user.is_authenticated %}
         <div class="w-full max-w-4xl fade-in-up delay-200">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-left">
                 <div class="rounded-2xl border border-gray-200 bg-white p-4">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
-                        {% trans "Total letters" %}
-                    </p>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-700">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </span>
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
+                            {% trans "Email letters" %}
+                        </p>
+                    </div>
                     <p class="text-3xl font-black text-gray-900 mt-2">
-                        {{ total_letters_count }}
+                        {{ email_letters_count|default:0 }}
                     </p>
-                    <p class="text-sm text-gray-500 mt-1">
-                        {% trans "Email and physical combined" %}
+                    <p class="text-sm text-gray-500 mt-1">{% trans "Total" %}</p>
+                    <p class="text-sm text-gray-700 mt-2">
+                        <span class="font-semibold">{% trans "Delivered" %}:</span>
+                        {{ email_completed_count|default:0 }}
                     </p>
+                    <a
+                        href="{% url 'letter-create-page' %}"
+                        class="mt-3 inline-flex items-center justify-center px-3 py-2 rounded-lg border border-[#014421] text-[#014421] text-sm font-semibold hover:bg-emerald-50 transition-colors"
+                    >
+                        {% trans "Create" %}
+                    </a>
                 </div>
                 <div class="rounded-2xl border border-gray-200 bg-white p-4">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
-                        {% trans "Email letters" %}
-                    </p>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 text-blue-700">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8m-8 4h8m-9 8h10a2 2 0 002-2V7l-4-4H7a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </span>
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
+                            {% trans "Physical letters" %}
+                        </p>
+                    </div>
                     <p class="text-3xl font-black text-gray-900 mt-2">
-                        {{ email_letters_count }}
+                        {{ physical_letters_count|default:0 }}
                     </p>
-                    <p class="text-sm text-gray-500 mt-1">
-                        {% trans "Scheduled to inboxes" %}
+                    <p class="text-sm text-gray-500 mt-1">{% trans "Total" %}</p>
+                    <p class="text-sm text-gray-700 mt-2">
+                        <span class="font-semibold">{% trans "Delivered" %}:</span>
+                        {{ physical_completed_count|default:0 }}
                     </p>
+                    <a
+                        href="{% url 'physical-letter-create' %}"
+                        class="mt-3 inline-flex items-center justify-center px-3 py-2 rounded-lg border border-[#014421] text-[#014421] text-sm font-semibold hover:bg-emerald-50 transition-colors"
+                    >
+                        {% trans "Create" %}
+                    </a>
                 </div>
                 <div class="rounded-2xl border border-gray-200 bg-white p-4">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
-                        {% trans "Physical letters" %}
-                    </p>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-purple-100 text-purple-700">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h8m-8 4h5m-9 6l2.2-2.2A2 2 0 006 16.4V7a2 2 0 012-2h8a2 2 0 012 2v9a2 2 0 01-2 2H8"></path>
+                            </svg>
+                        </span>
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
+                            {% trans "SMS" %}
+                        </p>
+                    </div>
                     <p class="text-3xl font-black text-gray-900 mt-2">
-                        {{ physical_letters_count }}
+                        {{ sms_letters_count|default:0 }}
                     </p>
-                    <p class="text-sm text-gray-500 mt-1">
-                        {% trans "Print and mail orders" %}
+                    <p class="text-sm text-gray-500 mt-1">{% trans "Total" %}</p>
+                    <p class="text-sm text-gray-700 mt-2">
+                        <span class="font-semibold">{% trans "Delivered" %}:</span>
+                        {{ sms_completed_count|default:0 }}
                     </p>
-                </div>
-                <div class="rounded-2xl border border-gray-200 bg-white p-4">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">
-                        {% trans "Completed" %}
-                    </p>
-                    <p class="text-3xl font-black text-gray-900 mt-2">
-                        {{ completed_letters_count }}
-                    </p>
-                    <p class="text-sm text-gray-500 mt-1">
-                        {% trans "Already delivered" %}
-                    </p>
+                    <a
+                        href="{% url 'sms-create' %}"
+                        class="mt-3 inline-flex items-center justify-center px-3 py-2 rounded-lg border border-[#014421] text-[#014421] text-sm font-semibold hover:bg-emerald-50 transition-colors"
+                    >
+                        {% trans "Create" %}
+                    </a>
                 </div>
             </div>
 

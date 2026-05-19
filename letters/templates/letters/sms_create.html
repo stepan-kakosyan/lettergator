@@ -1,0 +1,464 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}LetterGator | {% if current_sms %}{% trans "Edit SMS" %}{% else %}{% trans "Schedule SMS" %}{% endif %}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="px-6 py-20">
+    <div class="w-full max-w-2xl mx-auto">
+        <div class="text-center mb-8">
+            <p class="text-xs uppercase tracking-[0.2em] text-[#1d4835] font-semibold">{% trans "SMS" %}</p>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mt-2">
+                {% if current_sms %}
+                    {% trans "Edit Scheduled SMS" %}
+                {% else %}
+                    {% trans "Schedule an SMS" %}
+                {% endif %}
+            </h1>
+            <p class="text-gray-600 mt-2 text-sm">
+                {% trans "Schedule a plain-text SMS (max 160 characters, no emoji) for delivery up to 10 years ahead." %}
+            </p>
+            <div class="mt-4 p-3 bg-[#f7fbf8] border border-[#d8e4dc] rounded-xl text-sm text-[#1d4835]">
+                <strong>{% trans "Pricing:" %}</strong>
+                {% trans "$1.00 base for up to 1 year. +$0.20 for each additional year." %}
+            </div>
+            <div class="mt-3 flex flex-col sm:flex-row gap-2 justify-center text-sm">
+                <a href="{% url 'letter-create-page' %}" class="text-[#1d4835] font-semibold hover:underline">{% trans "Create Email Letter instead" %}</a>
+                <span class="text-gray-400 hidden sm:inline">·</span>
+                <a href="{% url 'physical-letter-create' %}" class="text-[#1d4835] font-semibold hover:underline">{% trans "Create Physical Letter instead" %}</a>
+            </div>
+            <a href="{% url 'letters-page' %}" class="inline-flex items-center mt-3 text-sm font-semibold text-[#648451] hover:underline">
+                ← {% trans "Back to Letters" %}
+            </a>
+        </div>
+
+        <form
+            method="post"
+            action="{% if current_sms %}{% url 'sms-create' %}?sms={{ current_sms.id }}{% else %}{% url 'sms-create' %}{% endif %}"
+            class="bg-white border border-gray-200 rounded-3xl p-8 space-y-6"
+            id="sms-create-form"
+            data-is-edit-mode="{% if current_sms %}1{% else %}0{% endif %}"
+            data-original-total-price="{{ original_total_price|floatformat:'2' }}"
+            data-user-balance="{{ user_balance|floatformat:'2' }}"
+        >
+            {% csrf_token %}
+            <input type="hidden" name="idempotency_key" value="{{ sms_idempotency_key }}">
+            {% if current_sms %}
+            <input type="hidden" name="sms" value="{{ current_sms.id }}">
+            {% endif %}
+
+            {% if form.non_field_errors %}
+            <div class="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-800">
+                {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {# Title #}
+            <div>
+                <label for="{{ form.title.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-1">
+                    {% trans "Title" %} <span class="text-red-500">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="{{ form.title.id_for_label }}"
+                    name="{{ form.title.html_name }}"
+                    value="{{ form.title.value|default:'' }}"
+                    maxlength="200"
+                    placeholder="{% trans 'e.g. Happy Birthday!' %}"
+                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1d4835]"
+                    required
+                >
+                {% for error in form.title.errors %}
+                <p class="text-xs text-red-600 mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {# Message #}
+            <div>
+                <label for="sms-message-input" class="block text-sm font-semibold text-gray-700 mb-1">
+                    {% trans "Message" %} <span class="text-red-500">*</span>
+                    <span class="font-normal text-gray-500">— {% trans "max 160 characters, no emoji" %}</span>
+                </label>
+                <textarea
+                    id="sms-message-input"
+                    name="{{ form.message.html_name }}"
+                    maxlength="160"
+                    rows="4"
+                    placeholder="{% trans 'Your SMS text here...' %}"
+                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1d4835] resize-none"
+                    required
+                >{{ form.message.value|default:'' }}</textarea>
+                <div class="flex justify-between mt-1">
+                    <div>
+                        {% for error in form.message.errors %}
+                        <p class="text-xs text-red-600">{{ error }}</p>
+                        {% endfor %}
+                        <p id="sms-emoji-warning" class="text-xs text-red-600 hidden">{% trans "Emoji are not allowed in SMS messages." %}</p>
+                    </div>
+                    <p id="sms-char-count" class="text-xs text-gray-500 text-right">
+                        <span id="sms-char-used">{{ form.message.value|default:''|length }}</span>/160
+                    </p>
+                </div>
+            </div>
+
+            {# Recipient phone #}
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    {% trans "Recipient phone number" %} <span class="text-red-500">*</span>
+                </label>
+                <div class="flex gap-2">
+                    <select
+                        id="{{ form.recipient_country_code.id_for_label }}"
+                        name="{{ form.recipient_country_code.html_name }}"
+                        class="border border-gray-300 rounded-xl px-3 py-3 text-sm focus:outline-none focus:border-[#1d4835] w-52"
+                        required
+                    >
+                        {% for value, label in form.fields.recipient_country_code.choices %}
+                        <option value="{{ value }}" {% if form.recipient_country_code.value == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <input
+                        type="tel"
+                        id="{{ form.recipient_local_number.id_for_label }}"
+                        name="{{ form.recipient_local_number.html_name }}"
+                        value="{{ form.recipient_local_number.value|default:'' }}"
+                        maxlength="20"
+                        inputmode="tel"
+                        placeholder="{% trans '2025551234' %}"
+                        class="flex-1 border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1d4835]"
+                        required
+                    >
+                </div>
+                {% for error in form.recipient_country_code.errors %}
+                <p class="text-xs text-red-600 mt-1">{{ error }}</p>
+                {% endfor %}
+                {% for error in form.recipient_local_number.errors %}
+                <p class="text-xs text-red-600 mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {# Scheduled date #}
+            <div>
+                <label for="{{ form.scheduled_at.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-1">
+                    {% trans "Scheduled date & time" %} <span class="text-red-500">*</span>
+                </label>
+                <input
+                    type="datetime-local"
+                    id="{{ form.scheduled_at.id_for_label }}"
+                    name="{{ form.scheduled_at.html_name }}"
+                    value="{% if form.is_bound %}{{ form.scheduled_at.value|default:'' }}{% elif current_sms and current_sms.scheduled_at %}{{ current_sms.scheduled_at|date:'Y-m-d\\TH:i' }}{% else %}{{ form.scheduled_at.value|default:'' }}{% endif %}"
+                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1d4835]"
+                    required
+                >
+                <p class="text-xs text-gray-500 mt-1">{% trans "Maximum 10 years ahead." %}</p>
+                {% for error in form.scheduled_at.errors %}
+                <p class="text-xs text-red-600 mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {# Privacy controls #}
+            <div class="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-3">
+                <p class="text-sm font-semibold text-gray-700">{% trans "Privacy & Control" %}</p>
+                <label class="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" name="{{ form.can_edit_early.html_name }}" {% if form.can_edit_early.value %}checked{% endif %}
+                        class="mt-0.5 accent-[#1d4835]">
+                    <span class="text-sm text-gray-700">
+                        <strong>{% trans "Allow editing and deletion" %}</strong> — {% trans "manage this SMS anytime before delivery" %}
+                    </span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" name="{{ form.allow_sender_preview.html_name }}" {% if form.allow_sender_preview.value %}checked{% endif %}
+                        class="mt-0.5 accent-[#1d4835]">
+                    <span class="text-sm text-gray-700">
+                        <strong>{% trans "Preview" %}</strong> — {% trans "allow yourself to view message content before delivery" %}
+                    </span>
+                </label>
+            </div>
+
+            <div id="pricing-summary-card" class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border border-slate-200 p-6 shadow-sm overflow-hidden relative">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-emerald-400 opacity-5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-emerald-300 opacity-5 rounded-full blur-3xl -ml-16 -mb-16"></div>
+
+                <div class="relative z-10">
+                    <div class="mb-6 pb-6 border-b border-slate-200">
+                        <p class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">
+                            {% trans "Cost Summary" %}
+                        </p>
+                        <div class="flex items-baseline justify-between">
+                            <div>
+                                <p class="text-xs text-slate-600 mb-1">{% trans "Estimated Total" %}</p>
+                                <p class="text-4xl font-black text-slate-900 tracking-tight">
+                                    <span id="total-price">$0.00</span>
+                                </p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-slate-600 mb-1">{% trans "Your Balance" %}</p>
+                                <p class="text-2xl font-bold text-emerald-600">
+                                    ${{ user_balance|floatformat:2 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pricing-breakdown-container" class="mb-4">
+                        <p id="pricing-breakdown" class="text-xs text-slate-700 leading-relaxed"></p>
+                    </div>
+
+                    <p class="text-xs text-slate-500 italic">
+                        💡 {% trans "Final charge is validated on server after exact schedule analysis." %}
+                    </p>
+                </div>
+            </div>
+
+            {# Submit #}
+            <div class="pt-2">
+                {% if current_sms %}
+                <div class="flex gap-3">
+                    <a
+                        href="{% url 'sms-detail' current_sms.id %}"
+                        class="flex-1 inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                        {% trans "Cancel" %}
+                    </a>
+                    <button
+                        type="submit"
+                        id="sms-save-btn"
+                        class="flex-1 inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#1d4835] text-white font-semibold hover:bg-[#16372a] transition-colors"
+                    >
+                        {% trans "Save Changes" %}
+                    </button>
+                </div>
+                {% else %}
+                <button
+                    type="submit"
+                    class="w-full inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#1d4835] text-white font-semibold hover:bg-[#16372a] transition-colors"
+                >
+                    {% trans "Schedule SMS" %}
+                </button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</section>
+
+{% if current_sms %}
+<div id="sms-edit-confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">{% trans "Confirm Changes" %}</h3>
+        <p class="text-sm text-gray-600 mb-4" id="sms-edit-confirm-text"></p>
+        <div class="flex gap-3 justify-end">
+            <button type="button" id="sms-edit-cancel-btn" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                {% trans "Cancel" %}
+            </button>
+            <button type="button" id="sms-edit-confirm-btn" class="px-4 py-2 rounded-lg bg-[#1d4835] text-white font-medium hover:bg-[#16372a] transition-colors">
+                {% trans "Confirm" %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="sms-edit-balance-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+        <h3 class="text-lg font-semibold text-red-700 mb-2">{% trans "Your balance is not enough" %}</h3>
+        <p class="text-sm text-gray-600 mb-4" id="sms-edit-balance-text"></p>
+        <div class="flex gap-3 justify-end">
+            <button type="button" id="sms-edit-balance-close-btn" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                {% trans "Close" %}
+            </button>
+            <a href="{% url 'balance-page' %}" class="px-4 py-2 rounded-lg bg-[#1d4835] text-white font-medium hover:bg-[#16372a] transition-colors">
+                {% trans "Top Up Balance" %}
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    var EMOJI_RE = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{10000}-\u{10FFFF}]/u;
+
+    var msgInput = document.getElementById('sms-message-input');
+    var charUsed = document.getElementById('sms-char-used');
+    var emojiWarn = document.getElementById('sms-emoji-warning');
+
+    function updateMessageMeta() {
+        if (!msgInput) {
+            return;
+        }
+        var val = msgInput.value || '';
+        if (charUsed) {
+            charUsed.textContent = val.length;
+        }
+        if (emojiWarn) {
+            if (EMOJI_RE.test(val)) {
+                emojiWarn.classList.remove('hidden');
+            } else {
+                emojiWarn.classList.add('hidden');
+            }
+        }
+    }
+
+    if (msgInput) {
+        msgInput.addEventListener('input', updateMessageMeta);
+        updateMessageMeta();
+    }
+
+    var dateInput = document.querySelector('input[type="datetime-local"]');
+    var totalPrice = document.getElementById('total-price');
+    var pricingBreakdown = document.getElementById('pricing-breakdown');
+
+    function computeSmsPrice(dt) {
+        var now = new Date();
+        var target = new Date(dt);
+        if (isNaN(target) || target <= now) return null;
+        var years = target.getFullYear() - now.getFullYear();
+        var candidate = new Date(now);
+        candidate.setFullYear(now.getFullYear() + years);
+        if (candidate < target) years += 1;
+        years = Math.max(years, 1);
+        var extraYears = Math.max(0, years - 1);
+        return (1.0 + extraYears * 0.20).toFixed(2);
+    }
+
+    function updatePricingSummary() {
+        if (!totalPrice || !pricingBreakdown) {
+            return;
+        }
+
+        var price = dateInput ? computeSmsPrice(dateInput.value) : null;
+        if (price === null) {
+            totalPrice.textContent = '$0.00';
+            pricingBreakdown.textContent = 'Choose a valid future delivery date to calculate SMS price.';
+            return;
+        }
+
+        var numericPrice = parseFloat(price);
+        var extraYears = Math.max(0, Math.round((numericPrice - 1.0) / 0.2));
+        totalPrice.textContent = '$' + numericPrice.toFixed(2);
+        if (extraYears > 0) {
+            pricingBreakdown.textContent =
+                'Base $1.00 + ' + extraYears + ' extra year(s) × $0.20 = $' + numericPrice.toFixed(2) + '.';
+        } else {
+            pricingBreakdown.textContent = 'Base SMS price applies: $1.00.';
+        }
+    }
+
+    if (dateInput) {
+        dateInput.addEventListener('change', updatePricingSummary);
+    }
+    updatePricingSummary();
+
+    // Prevent form submit if emoji detected
+    var form = document.getElementById('sms-create-form');
+    if (form && msgInput) {
+        form.addEventListener('submit', function (e) {
+            if (EMOJI_RE.test(msgInput.value)) {
+                e.preventDefault();
+                emojiWarn.classList.remove('hidden');
+                msgInput.focus();
+            }
+        });
+    }
+
+    // Edit-mode: intercept submit to show confirm/balance modal
+    var isEditMode = form && form.dataset.isEditMode === '1';
+    if (form && isEditMode) {
+        var saveBtn = document.getElementById('sms-save-btn');
+        var confirmModal = document.getElementById('sms-edit-confirm-modal');
+        var confirmText = document.getElementById('sms-edit-confirm-text');
+        var confirmBtn = document.getElementById('sms-edit-confirm-btn');
+        var cancelBtn = document.getElementById('sms-edit-cancel-btn');
+        var balanceModal = document.getElementById('sms-edit-balance-modal');
+        var balanceText = document.getElementById('sms-edit-balance-text');
+        var closeBalanceBtn = document.getElementById('sms-edit-balance-close-btn');
+
+        var currentBalance = parseFloat(form.dataset.userBalance || '0');
+        var originalTotal = parseFloat(form.dataset.originalTotalPrice || '0');
+
+        function showModal(modal) {
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function hideModal(modal) {
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        if (saveBtn) {
+            saveBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (msgInput && EMOJI_RE.test(msgInput.value)) {
+                    emojiWarn.classList.remove('hidden');
+                    msgInput.focus();
+                    return;
+                }
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+                var newTotal = 0;
+                if (dateInput && dateInput.value) {
+                    var price = computeSmsPrice(dateInput.value);
+                    newTotal = price !== null ? parseFloat(price) : originalTotal;
+                } else {
+                    newTotal = originalTotal;
+                }
+                var delta = newTotal - originalTotal;
+                if (delta > 0 && currentBalance < delta) {
+                    if (balanceText) {
+                        balanceText.textContent =
+                            'Additional charge required: $' + delta.toFixed(2)
+                            + '. Available balance: $' + currentBalance.toFixed(2) + '.';
+                    }
+                    showModal(balanceModal);
+                    return;
+                }
+                var resultingBalance = (currentBalance - delta).toFixed(2);
+                var deltaText = 'No pricing difference.';
+                if (delta > 0) {
+                    deltaText = 'Additional charge $' + delta.toFixed(2) + ' will be deducted.';
+                } else if (delta < 0) {
+                    deltaText = 'Refund $' + (-delta).toFixed(2) + ' will be credited to your balance.';
+                }
+                if (confirmText) {
+                    confirmText.textContent =
+                        'Old total: $' + originalTotal.toFixed(2)
+                        + ' | New total: $' + newTotal.toFixed(2) + '. '
+                        + 'Price difference: $' + Math.abs(delta).toFixed(2) + '. '
+                        + deltaText
+                        + ' Resulting balance: $' + resultingBalance + '.';
+                }
+                showModal(confirmModal);
+            });
+        }
+
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function () {
+                hideModal(confirmModal);
+                form.submit();
+            });
+        }
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', function () {
+                hideModal(confirmModal);
+            });
+        }
+        if (closeBalanceBtn) {
+            closeBalanceBtn.addEventListener('click', function () {
+                hideModal(balanceModal);
+            });
+        }
+    }
+}());
+</script>
+{% endblock %}

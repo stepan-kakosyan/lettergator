@@ -55,14 +55,10 @@
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
                     {% trans "Recipients" %}
                 </p>
-                {% if letter.send_to_me %}
-                <p class="text-gray-800 font-semibold">{% trans "Only me" %}</p>
-                {% else %}
                 <p class="text-gray-800">{{ letter.recipient_email }}</p>
                 {% for extra in letter.recipient_emails %}
                 <p class="text-gray-800">{{ extra }}</p>
                 {% endfor %}
-                {% endif %}
             </div>
 
             <div class="mt-6 rounded-xl border border-gray-200 p-4">
@@ -70,9 +66,7 @@
                     {% trans "Settings" %}
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                    <p class="text-gray-700"><span class="font-semibold">{% trans "Send To Me" %}:</span> {% if letter.send_to_me %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
-                    <p class="text-gray-700"><span class="font-semibold">{% trans "Allow Delete Early" %}:</span> {% if letter.can_delete_early %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
-                    <p class="text-gray-700"><span class="font-semibold">{% trans "Allow Edit Early" %}:</span> {% if letter.can_edit_early %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
+                    <p class="text-gray-700"><span class="font-semibold">{% trans "Allow edit and delete" %}:</span> {% if letter.can_edit_early or letter.can_delete_early %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
                     <p class="text-gray-700"><span class="font-semibold">{% trans "Allow Sender Preview" %}:</span> {% if letter.allow_sender_preview %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
                 </div>
             </div>

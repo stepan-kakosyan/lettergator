@@ -125,3 +125,64 @@ def delete_letter_schedule(letter_id):
         _schedules_table().delete_item(Key={"letter_id": str(letter_id)})
     except ClientError as exc:
         _log_dynamodb_client_error("delete_item", exc)
+
+
+# ---------------------------------------------------------------------------
+# SMS DynamoDB sync  (table: Scheduled-SMS-Messages)
+# ---------------------------------------------------------------------------
+
+DEFAULT_SMS_TABLE = "Scheduled-SMS-Messages"
+
+
+def _sms_table_name():
+    return getattr(settings, "DYNAMODB_SMS_TABLE_NAME", DEFAULT_SMS_TABLE)
+
+
+def _sms_table():
+    return _dynamodb_resource().Table(_sms_table_name())
+
+
+def _status_for_sms(sms):
+    if getattr(sms, "has_delivery_issue", False):
+        return "issue"
+    if getattr(sms, "is_delivered", False):
+        return "delivered"
+    return "scheduled"
+
+
+def build_sms_item(sms):
+    return {
+        "sms_id": str(sms.delivery_worker_id),
+        "title": sms.title or "",
+        "message": sms.message or "",
+        "recipient_phone": sms.recipient_phone,
+        "scheduled_at": _serialize_delivery_at(sms.scheduled_at),
+        "status": _status_for_sms(sms),
+        "total_price": str(sms.total_price),
+    }
+
+
+def upsert_sms_schedule(sms):
+    try:
+        _sms_table().put_item(Item=build_sms_item(sms))
+    except ClientError as exc:
+        error = exc.response.get("Error", {})
+        logger.warning(
+            "DynamoDB put_item failed for SMS table %s: %s - %s",
+            _sms_table_name(),
+            error.get("Code", "UnknownError"),
+            error.get("Message", str(exc)),
+        )
+
+
+def delete_sms_schedule(sms_worker_id):
+    try:
+        _sms_table().delete_item(Key={"sms_id": str(sms_worker_id)})
+    except ClientError as exc:
+        error = exc.response.get("Error", {})
+        logger.warning(
+            "DynamoDB delete_item failed for SMS table %s: %s - %s",
+            _sms_table_name(),
+            error.get("Code", "UnknownError"),
+            error.get("Message", str(exc)),
+        )
