@@ -7,13 +7,14 @@ from .models import (
     LetterAttachment,
     Letter,
     PhysicalLetter,
+    ScheduledSMS,
 )
 
 
 @admin.register(Letter)
 class LetterAdmin(admin.ModelAdmin):
     list_display = ("sender_email", "recipient_email", "delivery_at", "is_delivered")
-    list_filter = ("is_delivered", "delivery_at", "send_to_me")
+    list_filter = ("is_delivered", "delivery_at")
     search_fields = ("sender_email", "recipient_email")
 
 
@@ -162,3 +163,25 @@ class LetterAttachmentAdmin(admin.ModelAdmin):
         "physical_letter__id",
         "physical_letter__user__email",
     )
+
+
+@admin.register(ScheduledSMS)
+class ScheduledSMSAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user",
+        "title",
+        "recipient_phone",
+        "scheduled_at",
+        "status",
+        "total_price",
+        "created_at",
+    )
+    list_filter = ("status", "scheduled_at", "created_at")
+    search_fields = (
+        "user__email",
+        "title",
+        "recipient_country_code",
+        "recipient_local_number",
+    )
+    readonly_fields = ("delivery_worker_id", "created_at", "updated_at")

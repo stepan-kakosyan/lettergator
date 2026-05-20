@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import json
 import logging
+import uuid
 from decimal import Decimal, InvalidOperation
 
 import requests
@@ -39,12 +40,16 @@ from django.utils import timezone
 from .billing import (
     MIN_LONG_SCHEDULE_BALANCE_USD,
     RATE_PER_YEAR_USD,
+    compute_sms_price,
+    SMS_BASE_PRICE_USD,
+    SMS_EXTRA_YEAR_PRICE_USD,
 )
 from .forms import (
     ContactTicketCommentForm,
     ContactTicketForm,
     LetterForm,
     PhysicalLetterCreateForm,
+    ScheduledSMSForm,
 )
 from .models import (
     ContactTicket,
@@ -52,6 +57,7 @@ from .models import (
     Letter,
     LetterAttachment,
     PhysicalLetter,
+    ScheduledSMS,
 )
 from .dynamodb_sync import delete_letter_schedule
 
@@ -68,6 +74,9 @@ def landing_page(request):
         physical_letters_count = PhysicalLetter.objects.filter(
             user=request.user,
         ).count()
+        sms_letters_count = ScheduledSMS.objects.filter(
+            user=request.user,
+        ).count()
         email_completed_count = Letter.objects.filter(
             user=request.user,
             is_delivered=True,
@@ -76,14 +85,27 @@ def landing_page(request):
             user=request.user,
             status=PhysicalLetter.STATUS_DELIVERED,
         ).count()
+        sms_completed_count = ScheduledSMS.objects.filter(
+            user=request.user,
+        ).filter(
+            Q(is_delivered=True) | Q(status=ScheduledSMS.STATUS_DELIVERED),
+        ).count()
         context.update({
             "total_letters_count": (
-                email_letters_count + physical_letters_count
+                email_letters_count
+                + physical_letters_count
+                + sms_letters_count
             ),
             "email_letters_count": email_letters_count,
             "physical_letters_count": physical_letters_count,
+            "sms_letters_count": sms_letters_count,
+            "email_completed_count": email_completed_count,
+            "physical_completed_count": physical_completed_count,
+            "sms_completed_count": sms_completed_count,
             "completed_letters_count": (
-                email_completed_count + physical_completed_count
+                email_completed_count
+                + physical_completed_count
+                + sms_completed_count
             ),
         })
     # Add countries pricing for calculator
@@ -193,11 +215,8 @@ def _calculate_email_letter_deletion_info(letter):
 
 def letters_page(request):
     guest_mode = not request.user.is_authenticated
-    letters = []
-    sort_by = (request.GET.get("sort") or "newest").strip().lower()
-    valid_sorts = {"newest", "oldest", "price_low", "price_high"}
-    if sort_by not in valid_sorts:
-        sort_by = "newest"
+    email_items = []
+    physical_items = []
     email_verification_required = False
 
     if not guest_mode:
@@ -220,9 +239,8 @@ def letters_page(request):
                 letter.display_message = ""
                 letter.display_excerpt = "**********"
 
-        letters = []
         for letter in email_letters:
-            letters.append(
+            email_items.append(
                 {
                     "type": "email",
                     "id": letter.id,
@@ -231,11 +249,7 @@ def letters_page(request):
                     "status_value": "",
                     "created_at": letter.created_at,
                     "price": letter.total_price,
-                    "destination": (
-                        "Only me"
-                        if letter.send_to_me
-                        else letter.recipient_email
-                    ),
+                    "destination": letter.recipient_email,
                     "detail_url": reverse(
                         "letter-detail",
                         kwargs={"kind": "email", "item_id": letter.id},
@@ -251,7 +265,7 @@ def letters_page(request):
             if letter.status == PhysicalLetter.STATUS_DRAFT:
                 detail_url = f"{reverse('physical-letter-create')}?draft={letter.id}"
 
-            letters.append(
+            physical_items.append(
                 {
                     "type": "physical",
                     "id": letter.id,
@@ -272,32 +286,18 @@ def letters_page(request):
                 }
             )
 
-        if sort_by == "newest":
-            letters.sort(key=lambda x: x["created_at"], reverse=True)
-        elif sort_by == "oldest":
-            letters.sort(key=lambda x: x["created_at"])
-        elif sort_by == "price_low":
-            letters.sort(
-                key=lambda x: (
-                    x["price"],
-                    -x["created_at"].timestamp(),
-                )
-            )
-        elif sort_by == "price_high":
-            letters.sort(
-                key=lambda x: (
-                    -x["price"],
-                    -x["created_at"].timestamp(),
-                )
-            )
-
     context = {
-        "letters": letters,
-        "sort_by": sort_by,
+        "email_items": email_items,
+        "physical_items": physical_items,
         "guest_mode": guest_mode,
         "email_verification_required": email_verification_required,
         "min_long_schedule_balance": MIN_LONG_SCHEDULE_BALANCE_USD,
     }
+    # Add SMS messages for authenticated users
+    if not guest_mode:
+        context["sms_messages"] = ScheduledSMS.objects.filter(
+            user=request.user
+        ).order_by("-created_at")
     # Add countries pricing for calculator
     countries_data = {}
     for item in CountryPricing.objects.all():
@@ -1491,3 +1491,252 @@ def dashboard_view(request):
         "pending_primary_email": request.user.pending_email,
     }
     return render(request, "letters/dashboard.html", context)
+
+
+# ---------------------------------------------------------------------------
+# SMS views
+# ---------------------------------------------------------------------------
+
+@login_required
+def sms_create_view(request):
+    if not request.user.email_verified:
+        return render(request, "letters/letter_create_blocked.html", {
+            "email_verification_required": True,
+        })
+
+    sms_id = request.GET.get("sms") or request.POST.get("sms")
+    current_sms = None
+    if sms_id:
+        try:
+            current_sms = ScheduledSMS.objects.get(
+                id=int(sms_id),
+                user=request.user,
+            )
+        except (ValueError, ScheduledSMS.DoesNotExist):
+            messages.error(request, "SMS not found.")
+            return redirect("letters-page")
+
+        if not current_sms.can_be_edited_now():
+            messages.error(request, "This SMS can no longer be edited.")
+            return redirect(
+                reverse("sms-detail", kwargs={"sms_id": current_sms.id})
+            )
+
+    form = ScheduledSMSForm(
+        request.POST or None,
+        instance=current_sms,
+    )
+
+    if request.method == "POST" and form.is_valid():
+        posted_idempotency_key = (
+            request.POST.get("idempotency_key", "").strip()
+        )
+        if current_sms is None and posted_idempotency_key:
+            existing_sms = ScheduledSMS.objects.filter(
+                user=request.user,
+                idempotency_key=posted_idempotency_key,
+                is_delivered=False,
+            ).first()
+            if existing_sms is not None:
+                messages.info(
+                    request,
+                    "This SMS was already scheduled previously.",
+                )
+                return redirect(
+                    reverse("sms-detail", kwargs={"sms_id": existing_sms.id})
+                )
+
+        try:
+            with transaction.atomic():
+                locked_user = get_user_model().objects.select_for_update().get(
+                    pk=request.user.pk
+                )
+                sms = form.save(commit=False)
+                sms.user = locked_user
+                is_create = current_sms is None
+
+                old_price = Decimal("0.00")
+                if current_sms is not None:
+                    old_price = current_sms.total_price or Decimal("0.00")
+
+                new_price = compute_sms_price(sms.scheduled_at)
+                adjustment_amount = new_price - old_price
+                if adjustment_amount > 0 and locked_user.balance < adjustment_amount:
+                    raise ValidationError(
+                        "Insufficient balance for this SMS schedule. "
+                        f"Required: ${adjustment_amount:.2f}. "
+                        f"Available: ${locked_user.balance:.2f}."
+                    )
+
+                sms.total_price = new_price
+                if current_sms is None:
+                    sms.idempotency_key = posted_idempotency_key or uuid.uuid4().hex
+                elif not sms.idempotency_key:
+                    sms.idempotency_key = current_sms.idempotency_key or uuid.uuid4().hex
+
+                sms.save()
+
+                if is_create:
+                    charge_amount = sms.total_price or Decimal("0.00")
+                    if charge_amount > 0:
+                        if locked_user.balance < charge_amount:
+                            raise ValidationError(
+                                "Insufficient balance for this SMS schedule. "
+                                f"Required: ${charge_amount:.2f}. "
+                                f"Available: ${locked_user.balance:.2f}."
+                            )
+
+                        locked_user.balance -= charge_amount
+                        locked_user.save(update_fields=["balance"])
+                        request.user.balance = locked_user.balance
+
+                        BalanceTransaction.objects.create(
+                            user=locked_user,
+                            amount=-charge_amount,
+                            transaction_type=BalanceTransaction.TYPE_DEBIT,
+                            external_id=(
+                                f"sms-create:{sms.idempotency_key}"
+                            ),
+                            reason=(
+                                "Scheduled SMS charge "
+                                f"for '{sms.title[:80]}'"
+                            ),
+                        )
+                elif adjustment_amount != 0:
+                    if adjustment_amount > 0:
+                        locked_user.balance -= adjustment_amount
+                        transaction_type = BalanceTransaction.TYPE_DEBIT
+                        transaction_amount = -adjustment_amount
+                    else:
+                        refund_amount = -adjustment_amount
+                        locked_user.balance += refund_amount
+                        transaction_type = BalanceTransaction.TYPE_CREDIT
+                        transaction_amount = refund_amount
+
+                    locked_user.save(update_fields=["balance"])
+                    request.user.balance = locked_user.balance
+
+                    BalanceTransaction.objects.create(
+                        user=locked_user,
+                        amount=transaction_amount,
+                        transaction_type=transaction_type,
+                        external_id=(
+                            f"sms-update:{sms.id}:{sms.updated_at.timestamp()}"
+                        ),
+                        reason=(
+                            "Scheduled SMS pricing adjustment "
+                            f"for '{sms.title[:80]}'"
+                        ),
+                    )
+        except ValidationError as exc:
+            form.add_error(None, str(exc))
+        else:
+            if current_sms is None:
+                messages.success(request, "SMS scheduled successfully.")
+            else:
+                messages.success(request, "SMS updated.")
+            return redirect("letters-page")
+
+    preview_price = None
+    if current_sms:
+        preview_price = current_sms.total_price
+    sms_idempotency_key = (
+        request.POST.get("idempotency_key", "").strip()
+        or (current_sms.idempotency_key if current_sms else "")
+        or uuid.uuid4().hex
+    )
+    context = {
+        "form": form,
+        "current_sms": current_sms,
+        "preview_price": preview_price,
+        "sms_base_price": SMS_BASE_PRICE_USD,
+        "sms_extra_year_price": SMS_EXTRA_YEAR_PRICE_USD,
+        "sms_idempotency_key": sms_idempotency_key,
+        "user_balance": request.user.balance,
+        "original_total_price": (
+            current_sms.total_price
+            if current_sms is not None
+            else Decimal("0.00")
+        ),
+    }
+    return render(request, "letters/sms_create.html", context)
+
+
+SMS_DELETION_FEE_USD = Decimal("0.20")
+
+
+@login_required
+def sms_detail_view(request, sms_id):
+    sms = get_object_or_404(ScheduledSMS, id=sms_id)
+    if sms.user_id != request.user.id:
+        raise Http404()
+
+    total_price = sms.total_price or Decimal("0.00")
+    deletion_fee = SMS_DELETION_FEE_USD
+    deletion_refund = max(Decimal("0.00"), total_price - deletion_fee)
+
+    context = {
+        "sms": sms,
+        "deletion_fee": deletion_fee,
+        "deletion_refund": deletion_refund,
+    }
+    return render(request, "letters/sms_detail.html", context)
+
+
+@login_required
+@require_POST
+def sms_delete_view(request, sms_id):
+    sms = get_object_or_404(ScheduledSMS, id=sms_id)
+    if sms.user_id != request.user.id:
+        raise Http404()
+
+    if not sms.can_be_deleted_now():
+        messages.error(request, "This SMS can no longer be deleted.")
+        return redirect(reverse("sms-detail", kwargs={"sms_id": sms.id}))
+
+    total_price = sms.total_price or Decimal("0.00")
+    fee = SMS_DELETION_FEE_USD
+    refund_amount = max(Decimal("0.00"), total_price - fee)
+    sms_title = sms.title[:80]
+
+    with transaction.atomic():
+        if refund_amount > 0:
+            locked_user = get_user_model().objects.select_for_update().get(
+                pk=request.user.pk
+            )
+            locked_user.balance += refund_amount
+            locked_user.save(update_fields=["balance"])
+            request.user.balance = locked_user.balance
+            BalanceTransaction.objects.create(
+                user=locked_user,
+                amount=refund_amount,
+                transaction_type=BalanceTransaction.TYPE_CREDIT,
+                reason=(
+                    f"Refund for deleted SMS '{sms_title}' "
+                    f"(kept ${fee:.2f} cancellation fee)"
+                ),
+            )
+        sms.delete()
+
+    if refund_amount > 0:
+        success_message = (
+            f"SMS deleted. We kept ${fee:.2f} as a cancellation fee and "
+            f"refunded ${refund_amount:.2f} to your balance."
+        )
+    else:
+        success_message = "SMS deleted."
+
+    if request.headers.get("HX-Request") == "true":
+        return render(
+            request,
+            "letters/partials/operation_success.html",
+            {
+                "operation_type": "SMS",
+                "title": "SMS Deleted",
+                "message": success_message,
+                "show_create_button": True,
+            },
+        )
+
+    messages.success(request, success_message)
+    return redirect("letters-page")

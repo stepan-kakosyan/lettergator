@@ -35,7 +35,7 @@
                     </div>
                     <div class="rounded-2xl border border-[#d8e4dc] bg-white/90 px-4 py-3">
                         <p class="text-xs uppercase tracking-wide text-[#648451] font-semibold">{% trans "Types" %}</p>
-                        <p class="text-sm text-gray-700 mt-1">{% trans "Email and physical letters in one timeline." %}</p>
+                        <p class="text-sm text-gray-700 mt-1">{% trans "Email, physical letters, and SMS in one timeline." %}</p>
                     </div>
                     <div class="rounded-2xl border border-[#d8e4dc] bg-white/90 px-4 py-3">
                         <p class="text-xs uppercase tracking-wide text-[#648451] font-semibold">{% trans "Control" %}</p>
@@ -98,7 +98,7 @@
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div class="max-w-2xl">
                         <p class="text-sm font-semibold text-[#1d4835]">{% trans "Choose your letter format and schedule now" %}</p>
-                        <p class="text-sm text-gray-600 mt-1">{% trans "Start with digital delivery, physical delivery, or estimate the final cost first." %}</p>
+                        <p class="text-sm text-gray-600 mt-1">{% trans "Start with digital delivery, physical delivery, SMS, or estimate the final cost first." %}</p>
                     </div>
                     <div class="flex flex-col sm:flex-row gap-3">
                         <a
@@ -112,6 +112,12 @@
                             class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#648451] text-white font-semibold hover:bg-[#536f43] transition-colors"
                         >
                             {% trans "Create Physical Letter" %}
+                        </a>
+                        <a
+                            href="{% url 'sms-create' %}"
+                            class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#1d4835] text-[#1d4835] font-semibold hover:bg-[#edf3ee] transition-colors"
+                        >
+                            {% trans "Schedule SMS" %}
                         </a>
                         <button
                             id="open-calculator-btn"
@@ -135,37 +141,10 @@
                     {% if guest_mode %}
                     {% trans "Why Sign In" %}
                     {% else %}
-                    {% trans "All Letters" %}
+                    {% trans "Letters" %}
                     {% endif %}
                 </h2>
-                {% if not guest_mode %}
-                <form method="get" class="flex items-center gap-2">
-                    <label for="sort" class="text-sm text-gray-600">
-                        {% trans "Sort" %}
-                    </label>
-                    <select
-                        id="sort"
-                        name="sort"
-                        class="rounded-xl border border-gray-300 px-3 py-2 text-sm"
-                        onchange="this.form.submit()"
-                    >
-                        <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>
-                            {% trans "Creation date (latest first)" %}
-                        </option>
-                        <option value="oldest" {% if sort_by == 'oldest' %}selected{% endif %}>
-                            {% trans "Creation date (oldest first)" %}
-                        </option>
-                        <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>
-                            {% trans "Lowest price" %}
-                        </option>
-                        <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>
-                            {% trans "Highest price" %}
-                        </option>
-                    </select>
-                </form>
-                {% endif %}
             </div>
-
             {% if guest_mode %}
             <div class="mt-6 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
                 <h3 class="text-lg font-bold text-gray-900">{% trans "Access required" %}</h3>
@@ -181,71 +160,167 @@
                     </a>
                 </div>
             </div>
-            {% elif letters %}
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                {% for item in letters %}
-                <a
-                    href="{{ item.detail_url }}"
-                    class="block rounded-2xl border border-gray-200 p-5 hover:border-[#014421] hover:shadow-sm transition-all"
-                >
-                    <div class="flex items-center justify-between gap-3">
-                        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold {% if item.type == 'physical' %}bg-blue-100 text-blue-800{% else %}bg-emerald-100 text-emerald-800{% endif %}">
-                            {% if item.type == 'physical' %}
-                            {% trans "Physical" %}
-                            {% else %}
-                            {% trans "Email" %}
-                            {% endif %}
-                        </span>
-                        <span class="text-xs text-gray-500 local-date" data-utc="{{ item.created_at|date:'c' }}">
-                            {{ item.created_at|date:"M d, Y H:i" }}
-                        </span>
-                    </div>
-
-                    <h3 class="text-lg font-bold text-gray-900 mt-3">{{ item.title }}</h3>
-
-                    <dl class="mt-3 space-y-1 text-sm text-gray-700">
-                        <div class="flex justify-between gap-3">
-                            <dt class="text-gray-500">{% trans "Status" %}</dt>
-                            <dd class="font-semibold">
-                                {{ item.status }}
-                                {% if item.status_value == 'draft' %}
-                                <span class="ml-2 inline-flex items-center rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-xs font-semibold">
-                                    {% trans "Draft" %}
+            {% elif email_items or physical_items %}
+            <div class="mt-6 space-y-7">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">{% trans "Digital Email Letters" %}</h3>
+                    {% if email_items %}
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% for item in email_items %}
+                        <a
+                            href="{{ item.detail_url }}"
+                            class="block rounded-2xl border border-gray-200 p-5 hover:border-[#014421] hover:shadow-sm transition-all"
+                        >
+                            <div class="flex items-center justify-between gap-3">
+                                <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-emerald-100 text-emerald-800">
+                                    {% trans "Email" %}
                                 </span>
-                                {% endif %}
-                            </dd>
-                        </div>
-                        <div class="flex justify-between gap-3">
-                            <dt class="text-gray-500">{% trans "Destination" %}</dt>
-                            <dd class="font-medium text-right">{{ item.destination }}</dd>
-                        </div>
-                        <div class="flex justify-between gap-3">
-                            <dt class="text-gray-500">{% trans "Price" %}</dt>
-                            <dd class="font-semibold">${{ item.price|floatformat:2 }}</dd>
-                        </div>
-                    </dl>
+                                <span class="text-xs text-gray-500 local-date" data-utc="{{ item.created_at|date:'c' }}">
+                                    {{ item.created_at|date:"M d, Y H:i" }}
+                                </span>
+                            </div>
 
-                    <p class="mt-4 text-sm font-semibold text-[#014421]">
-                        {% trans "Open details" %} →
-                    </p>
-                </a>
-                {% endfor %}
+                            <h4 class="text-lg font-bold text-gray-900 mt-3">{{ item.title }}</h4>
+
+                            <dl class="mt-3 space-y-1 text-sm text-gray-700">
+                                <div class="flex justify-between gap-3">
+                                    <dt class="text-gray-500">{% trans "Status" %}</dt>
+                                    <dd class="font-semibold">{{ item.status }}</dd>
+                                </div>
+                                <div class="flex justify-between gap-3">
+                                    <dt class="text-gray-500">{% trans "Destination" %}</dt>
+                                    <dd class="font-medium text-right">{{ item.destination }}</dd>
+                                </div>
+                                <div class="flex justify-between gap-3">
+                                    <dt class="text-gray-500">{% trans "Price" %}</dt>
+                                    <dd class="font-semibold">${{ item.price|floatformat:2 }}</dd>
+                                </div>
+                            </dl>
+
+                            <p class="mt-4 text-sm font-semibold text-[#014421]">
+                                {% trans "Open details" %} →
+                            </p>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="mt-3 text-sm text-gray-600">{% trans "No digital email letters yet." %}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">{% trans "Physical Letters" %}</h3>
+                    {% if physical_items %}
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% for item in physical_items %}
+                        <a
+                            href="{{ item.detail_url }}"
+                            class="block rounded-2xl border border-gray-200 p-5 hover:border-[#014421] hover:shadow-sm transition-all"
+                        >
+                            <div class="flex items-center justify-between gap-3">
+                                <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800">
+                                    {% trans "Physical" %}
+                                </span>
+                                <span class="text-xs text-gray-500 local-date" data-utc="{{ item.created_at|date:'c' }}">
+                                    {{ item.created_at|date:"M d, Y H:i" }}
+                                </span>
+                            </div>
+
+                            <h4 class="text-lg font-bold text-gray-900 mt-3">{{ item.title }}</h4>
+
+                            <dl class="mt-3 space-y-1 text-sm text-gray-700">
+                                <div class="flex justify-between gap-3">
+                                    <dt class="text-gray-500">{% trans "Status" %}</dt>
+                                    <dd class="font-semibold">
+                                        {{ item.status }}
+                                        {% if item.status_value == 'draft' %}
+                                        <span class="ml-2 inline-flex items-center rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-xs font-semibold">
+                                            {% trans "Draft" %}
+                                        </span>
+                                        {% endif %}
+                                    </dd>
+                                </div>
+                                <div class="flex justify-between gap-3">
+                                    <dt class="text-gray-500">{% trans "Destination" %}</dt>
+                                    <dd class="font-medium text-right">{{ item.destination }}</dd>
+                                </div>
+                                <div class="flex justify-between gap-3">
+                                    <dt class="text-gray-500">{% trans "Price" %}</dt>
+                                    <dd class="font-semibold">${{ item.price|floatformat:2 }}</dd>
+                                </div>
+                            </dl>
+
+                            <p class="mt-4 text-sm font-semibold text-[#014421]">
+                                {% trans "Open details" %} →
+                            </p>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="mt-3 text-sm text-gray-600">{% trans "No physical letters yet." %}</p>
+                    {% endif %}
+                </div>
             </div>
             {% else %}
             <div class="mt-6 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
                 <h3 class="text-lg font-bold text-gray-900">{% trans "No letters yet" %}</h3>
-                <p class="text-gray-600 mt-2">{% trans "Create your first letter to start building your timeline." %}</p>
+                <p class="text-gray-600 mt-2">{% trans "Create your first letter or SMS to start building your timeline." %}</p>
                 <div class="mt-5 flex flex-wrap justify-center gap-3">
-                    <a href="{% url 'letter-create-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#014421] text-white font-semibold hover:bg-[#023319] transition-colors">
-                        {% trans "Create Email Letters" %}
+                    <a href="{% url 'letter-create-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#1d4835] text-white font-semibold hover:bg-[#16372a] transition-colors">
+                        {% trans "Create Email Letter" %}
                     </a>
-                    <a href="{% url 'physical-letter-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-[#014421] text-[#014421] font-semibold hover:bg-[#ecfdf3] transition-colors">
+                    <a href="{% url 'physical-letter-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#648451] text-white font-semibold hover:bg-[#536f43] transition-colors">
                         {% trans "Create Physical Letter" %}
+                    </a>
+                    <a href="{% url 'sms-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-[#1d4835] text-[#1d4835] font-semibold hover:bg-[#edf3ee] transition-colors">
+                        {% trans "Schedule SMS" %}
                     </a>
                 </div>
             </div>
             {% endif %}
         </div>
+
+        {% if not guest_mode and sms_messages %}
+        <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-6 md:p-8">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-5">
+                <h2 class="text-2xl font-black tracking-tight text-gray-900">{% trans "Scheduled SMS" %}</h2>
+                <a href="{% url 'sms-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#1d4835] text-white text-sm font-semibold hover:bg-[#16372a] transition-colors">
+                    + {% trans "Schedule SMS" %}
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for sms in sms_messages %}
+                <a
+                    href="{% url 'sms-detail' sms.id %}"
+                    class="block rounded-2xl border border-gray-200 p-5 hover:border-[#1d4835] hover:shadow-sm transition-all"
+                >
+                    <div class="flex items-center justify-between gap-3">
+                        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-purple-100 text-purple-800">{% trans "SMS" %}</span>
+                        <span class="text-xs text-gray-500 local-date" data-utc="{{ sms.created_at|date:'c' }}">
+                            {{ sms.created_at|date:"M d, Y H:i" }}
+                        </span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mt-3">{{ sms.title }}</h3>
+                    <dl class="mt-3 space-y-1 text-sm text-gray-700">
+                        <div class="flex justify-between gap-3">
+                            <dt class="text-gray-500">{% trans "Status" %}</dt>
+                            <dd class="font-semibold">{{ sms.status_label }}</dd>
+                        </div>
+                        <div class="flex justify-between gap-3">
+                            <dt class="text-gray-500">{% trans "Recipient" %}</dt>
+                            <dd class="font-medium text-right">{{ sms.recipient_phone }}</dd>
+                        </div>
+                        <div class="flex justify-between gap-3">
+                            <dt class="text-gray-500">{% trans "Price" %}</dt>
+                            <dd class="font-semibold">${{ sms.total_price|floatformat:2 }}</dd>
+                        </div>
+                    </dl>
+                    <p class="mt-4 text-sm font-semibold text-[#1d4835]">{% trans "Open details" %} →</p>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 
     </div>
 

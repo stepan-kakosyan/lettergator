@@ -24,6 +24,9 @@ from .views import (
     PhysicalLetterCreateView,
     pricing_page,
     privacy_page,
+    sms_create_view,
+    sms_delete_view,
+    sms_detail_view,
     terms_page,
 )
 from .views_attachment import AttachmentAccessView
@@ -87,4 +90,8 @@ urlpatterns = [
         contact_ticket_comment_view,
         name="contact-ticket-comment",
     ),
+    # SMS
+    path("sms/create/", sms_create_view, name="sms-create"),
+    path("sms/<int:sms_id>/", sms_detail_view, name="sms-detail"),
+    path("sms/<int:sms_id>/delete/", sms_delete_view, name="sms-delete"),
 ]

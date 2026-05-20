@@ -74,65 +74,7 @@
                     {{ form.subject.errors }}
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="option-row">
-                        <div class="option-copy">
-                            <p class="option-title">{% trans "Send To Me" %}</p>
-                            <p class="option-desc">
-                                {% trans "Selected by default. Choose No to send to other recipients." %}
-                            </p>
-                        </div>
-                        <div class="binary-toggle" data-toggle-field="id_send_to_me">
-                            {{ form.send_to_me }}
-                            <button type="button" class="toggle-btn" data-toggle-value="true">{% trans "Yes" %}</button>
-                            <button type="button" class="toggle-btn" data-toggle-value="false">{% trans "No" %}</button>
-                        </div>
-                    </div>
-
-                    <div class="option-row">
-                        <div class="option-copy">
-                            <p class="option-title">{% trans "Allow Delete (1 Month Window)" %}</p>
-                            <p class="option-desc">
-                                {% trans "If enabled, deletion is available only in the first month after creation." %}
-                            </p>
-                        </div>
-                        <div class="binary-toggle" data-toggle-field="id_can_delete_early">
-                            {{ form.can_delete_early }}
-                            <button type="button" class="toggle-btn" data-toggle-value="true">{% trans "Yes" %}</button>
-                            <button type="button" class="toggle-btn" data-toggle-value="false">{% trans "No" %}</button>
-                        </div>
-                    </div>
-
-                    <div class="option-row">
-                        <div class="option-copy">
-                            <p class="option-title">{% trans "Allow Edit (1 Month Window)" %}</p>
-                            <p class="option-desc">
-                                {% trans "If enabled, editing is available only in the first month after creation." %}
-                            </p>
-                        </div>
-                        <div class="binary-toggle" data-toggle-field="id_can_edit_early">
-                            {{ form.can_edit_early }}
-                            <button type="button" class="toggle-btn" data-toggle-value="true">{% trans "Yes" %}</button>
-                            <button type="button" class="toggle-btn" data-toggle-value="false">{% trans "No" %}</button>
-                        </div>
-                    </div>
-
-                    <div class="option-row">
-                        <div class="option-copy">
-                            <p class="option-title">{% trans "See Message Before Delivery" %}</p>
-                            <p class="option-desc">
-                                {% trans "If enabled, you can preview your message before it is delivered." %}
-                            </p>
-                        </div>
-                        <div class="binary-toggle" data-toggle-field="id_allow_sender_preview">
-                            {{ form.allow_sender_preview }}
-                            <button type="button" class="toggle-btn" data-toggle-value="true">{% trans "Yes" %}</button>
-                            <button type="button" class="toggle-btn" data-toggle-value="false">{% trans "No" %}</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="recipient-panel" class="recipient-panel hidden">
+                <div id="recipient-panel" class="recipient-panel">
                     <div class="flex items-center justify-between gap-3 mb-3">
                         <p class="text-sm font-semibold text-gray-700">{% trans "Recipient Emails (max 5)" %}</p>
                         <button
@@ -145,7 +87,7 @@
                     </div>
                     <div id="recipient-inputs" class="flex flex-col gap-3"></div>
                     <p id="recipient-helper" class="text-xs text-gray-500 mt-2">
-                        {% trans 'Add at least one recipient when "Send to me" is disabled.' %}
+                        {% trans "Primary account email is pre-filled as the first recipient." %}
                     </p>
                 </div>
 
@@ -175,23 +117,24 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end">
-                    {% if current_letter %}
-                    <a href="{% url 'letter-detail' 'email' current_letter.id %}" class="inline-flex items-center justify-center bg-white border border-gray-300 text-gray-700 font-medium px-6 py-3 rounded-xl hover:bg-gray-50 transition-all mr-3">
-                        {% trans "Cancel Changes" %}
-                    </a>
-                    {% endif %}
-                    <button id="seal-btn" type="submit" class="bg-[#014421] text-white font-medium px-8 py-3 rounded-xl hover:bg-[#023319] hover:shadow-lg transform hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                        <span>
-                            {% if current_letter %}
-                                {% trans "Confirm Changes" %}
-                            {% else %}
-                                {% trans "Seal and Store" %}
-                            {% endif %}
+                <div class="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-3">
+                    <p class="text-sm font-semibold text-gray-700">{% trans "Privacy & Control" %}</p>
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" name="{{ form.can_edit_early.html_name }}" {% if form.can_edit_early.value %}checked{% endif %}
+                            class="mt-0.5 accent-[#1d4835]">
+                        <span class="text-sm text-gray-700">
+                            <strong>{% trans "Allow editing and deletion" %}</strong> — {% trans "manage this letter anytime before delivery" %}
                         </span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    </button>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" name="{{ form.allow_sender_preview.html_name }}" {% if form.allow_sender_preview.value %}checked{% endif %}
+                            class="mt-0.5 accent-[#1d4835]">
+                        <span class="text-sm text-gray-700">
+                            <strong>{% trans "Preview" %}</strong> — {% trans "allow yourself to view message content before delivery" %}
+                        </span>
+                    </label>
                 </div>
+
                 <div id="pricing-summary-card" class="mt-8 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border border-slate-200 p-6 shadow-sm overflow-hidden relative">
                     <div class="absolute top-0 right-0 w-40 h-40 bg-emerald-400 opacity-5 rounded-full blur-3xl -mr-20 -mt-20"></div>
                     <div class="absolute bottom-0 left-0 w-32 h-32 bg-emerald-300 opacity-5 rounded-full blur-3xl -ml-16 -mb-16"></div>
@@ -229,6 +172,24 @@
                 <div id="balance-warning" class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-semibold flex items-center justify-between gap-3">
                     <span>{% trans "Your balance is not enough for this schedule." %}</span>
                     <a href="{% url 'balance-page' %}" class="underline whitespace-nowrap">{% trans "Top up balance" %}</a>
+                </div>
+
+                <div class="flex justify-end">
+                    {% if current_letter %}
+                    <a href="{% url 'letter-detail' 'email' current_letter.id %}" class="inline-flex items-center justify-center bg-white border border-gray-300 text-gray-700 font-medium px-6 py-3 rounded-xl hover:bg-gray-50 transition-all mr-3">
+                        {% trans "Cancel Changes" %}
+                    </a>
+                    {% endif %}
+                    <button id="seal-btn" type="submit" class="bg-[#014421] text-white font-medium px-8 py-3 rounded-xl hover:bg-[#023319] hover:shadow-lg transform hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                        <span>
+                            {% if current_letter %}
+                                {% trans "Confirm Changes" %}
+                            {% else %}
+                                {% trans "Seal and Store" %}
+                            {% endif %}
+                        </span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </button>
                 </div>
             </div>
         </form>

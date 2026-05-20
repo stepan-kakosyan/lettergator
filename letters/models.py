@@ -1,15 +1,15 @@
 import logging
+import re as _re
 import uuid
-from datetime import timedelta
 
 from django.conf import settings
 from django.db import models, transaction
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
-from django.utils import timezone
 
 from .crypto import decrypt_message, is_encrypted_message
 from .dynamodb_sync import delete_letter_schedule, upsert_letter_schedule
+from .dynamodb_sync import upsert_sms_schedule, delete_sms_schedule
 
 
 logger = logging.getLogger(__name__)
@@ -28,7 +28,6 @@ class Letter(models.Model):
     sender_email = models.EmailField()
     recipient_email = models.EmailField()
     recipient_emails = models.JSONField(default=list, blank=True)
-    send_to_me = models.BooleanField(default=True)
     delivery_at = models.DateTimeField()
     can_delete_early = models.BooleanField(default=False)
     can_edit_early = models.BooleanField(default=False)
@@ -72,24 +71,21 @@ class Letter(models.Model):
     def message_is_encrypted(self):
         return is_encrypted_message(self.message or "")
 
-    def _window_deadline(self):
-        return self.created_at + timedelta(days=30)
-
     def delete_until(self):
-        return self._window_deadline()
+        return None
 
     def edit_until(self):
-        return self._window_deadline()
+        return None
 
     def can_be_deleted_now(self):
-        if not self.can_delete_early or self.is_delivered:
+        if not (self.can_edit_early or self.can_delete_early):
             return False
-        return timezone.now() <= self._window_deadline()
+        return not self.is_delivered
 
     def can_be_edited_now(self):
-        if not self.can_edit_early or self.is_delivered:
+        if not (self.can_edit_early or self.can_delete_early):
             return False
-        return timezone.now() <= self._window_deadline()
+        return not self.is_delivered
 
     @property
     def can_view_content(self):
@@ -308,3 +304,150 @@ class LetterAttachment(models.Model):
 
     def __str__(self):
         return f"{self.get_attachment_type_display()}: {self.original_filename}"
+
+
+# ---------------------------------------------------------------------------
+# SMS
+# ---------------------------------------------------------------------------
+
+_EMOJI_RE = _re.compile(
+    "[\U00010000-\U0010ffff"
+    "\U0001F600-\U0001F64F"
+    "\U0001F300-\U0001F5FF"
+    "\U0001F680-\U0001F6FF"
+    "\U0001F1E0-\U0001F1FF"
+    "\u2600-\u26FF"
+    "\u2700-\u27BF"
+    "]+",
+    flags=_re.UNICODE,
+)
+
+
+def _has_emoji(text):
+    return bool(_EMOJI_RE.search(text or ""))
+
+
+class ScheduledSMS(models.Model):
+    STATUS_SCHEDULED = "scheduled"
+    STATUS_DELIVERED = "delivered"
+    STATUS_ISSUE = "issue"
+    STATUS_CHOICES = [
+        (STATUS_SCHEDULED, "Scheduled"),
+        (STATUS_DELIVERED, "Delivered"),
+        (STATUS_ISSUE, "Issue"),
+    ]
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="scheduled_sms",
+    )
+    title = models.CharField(max_length=200)
+    message = models.CharField(max_length=160)
+    recipient_country_code = models.CharField(
+        max_length=8,
+        help_text="Dial code including + sign, e.g. +1",
+    )
+    recipient_local_number = models.CharField(
+        max_length=20,
+        help_text="Local phone number without country code",
+    )
+    scheduled_at = models.DateTimeField()
+    can_delete_early = models.BooleanField(default=False)
+    can_edit_early = models.BooleanField(default=False)
+    allow_sender_preview = models.BooleanField(default=False)
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_SCHEDULED,
+    )
+    is_delivered = models.BooleanField(default=False)
+    has_delivery_issue = models.BooleanField(default=False)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    idempotency_key = models.CharField(
+        max_length=64, blank=True, default="", db_index=True
+    )
+    delivery_worker_id = models.CharField(
+        max_length=36,
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+        db_index=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"SMS #{self.id} to {self.recipient_phone} on {self.scheduled_at}"
+
+    @property
+    def recipient_phone(self):
+        return f"{self.recipient_country_code}{self.recipient_local_number}"
+
+    @property
+    def status_label(self):
+        if self.has_delivery_issue:
+            return "Issue"
+        if self.is_delivered:
+            return "Delivered"
+        return "Scheduled"
+
+    def can_be_deleted_now(self):
+        if not (self.can_edit_early or self.can_delete_early):
+            return False
+        return not (self.is_delivered or self.status == self.STATUS_DELIVERED)
+
+    def can_be_edited_now(self):
+        if not (self.can_edit_early or self.can_delete_early):
+            return False
+        return not (self.is_delivered or self.status == self.STATUS_DELIVERED)
+
+    @property
+    def can_view_content(self):
+        return self.allow_sender_preview or self.is_delivered
+
+    def _safe_sync_upsert(self):
+        try:
+            upsert_sms_schedule(self)
+        except Exception:
+            logger.exception(
+                "Failed to upsert SMS %s into DynamoDB.",
+                self.id,
+            )
+
+    @staticmethod
+    def _safe_sync_delete(worker_id):
+        try:
+            delete_sms_schedule(worker_id)
+        except Exception:
+            logger.exception(
+                "Failed to delete SMS %s from DynamoDB.",
+                worker_id,
+            )
+
+    def _queue_upsert(self, using):
+        transaction.on_commit(
+            lambda: self._safe_sync_upsert(),
+            using=using,
+        )
+
+    def save(self, *args, **kwargs):
+        if not self.idempotency_key:
+            self.idempotency_key = uuid.uuid4().hex
+        if not self.delivery_worker_id:
+            self.delivery_worker_id = str(uuid.uuid4())
+        else:
+            self.delivery_worker_id = str(uuid.UUID(str(self.delivery_worker_id)))
+        using = kwargs.get("using") or self._state.db
+        super().save(*args, **kwargs)
+        self._queue_upsert(using)
+
+
+@receiver(pre_delete, sender=ScheduledSMS)
+def remove_sms_schedule_on_delete(sender, instance, using, **kwargs):
+    if not instance.id:
+        return
+    ScheduledSMS._safe_sync_delete(instance.delivery_worker_id)

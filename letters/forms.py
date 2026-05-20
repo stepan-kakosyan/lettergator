@@ -25,7 +25,7 @@ from .billing import (
     long_schedule_cutoff,
 )
 from .models import ContactTicket, ContactTicketComment, Letter
-from .models import CountryPricing, LetterAttachment, PhysicalLetter
+from .models import CountryPricing, LetterAttachment, PhysicalLetter, ScheduledSMS
 
 
 logger = logging.getLogger(__name__)
@@ -160,9 +160,7 @@ class LetterForm(forms.ModelForm):
         model = Letter
         fields = [
             "subject",
-            "send_to_me",
             "delivery_at",
-            "can_delete_early",
             "can_edit_early",
             "allow_sender_preview",
             "message",
@@ -195,8 +193,6 @@ class LetterForm(forms.ModelForm):
         self.user = user
 
         if not (self.instance and self.instance.pk):
-            self.fields["send_to_me"].initial = True
-            self.fields["can_delete_early"].initial = False
             self.fields["can_edit_early"].initial = False
             self.fields["allow_sender_preview"].initial = False
 
@@ -206,12 +202,20 @@ class LetterForm(forms.ModelForm):
             self.initial["delivery_at"] = local_delivery.strftime(
                 "%Y-%m-%dT%H:%M"
             )
-            if not self.instance.send_to_me:
-                recipients = [self.instance.recipient_email]
-                recipients.extend(self.instance.recipient_emails or [])
-                self.initial["recipient_list"] = ",".join(
-                    item for item in recipients if item
-                )
+            recipients = [self.instance.recipient_email]
+            recipients.extend(self.instance.recipient_emails or [])
+            self.initial["recipient_list"] = ",".join(
+                item for item in recipients if item
+            )
+
+        if (
+            not self.is_bound
+            and self.user
+            and self.user.is_authenticated
+            and self.user.email
+            and not self.initial.get("recipient_list")
+        ):
+            self.initial["recipient_list"] = self.user.email.strip().lower()
 
     def _get_browser_timezone(self):
         tz_name = self.data.get(self.add_prefix("browser_timezone"), "").strip()
@@ -247,7 +251,7 @@ class LetterForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        send_to_me = cleaned_data.get("send_to_me", True)
+        cleaned_data["can_delete_early"] = cleaned_data.get("can_edit_early", False)
         sender_email = ""
         if self.user and self.user.is_authenticated and self.user.email:
             sender_email = self.user.email.strip().lower()
@@ -259,24 +263,20 @@ class LetterForm(forms.ModelForm):
 
         recipient_list = cleaned_data.get("recipient_list", "")
 
-        recipients = []
-        if send_to_me:
-            recipients = [sender_email] if sender_email else []
-        else:
-            raw_emails = [
-                value.strip().lower()
-                for value in recipient_list.split(",")
-                if value.strip()
-            ]
-            unique_emails = []
-            for email in raw_emails:
-                if email not in unique_emails:
-                    unique_emails.append(email)
-            recipients = unique_emails
+        raw_emails = [
+            value.strip().lower()
+            for value in recipient_list.split(",")
+            if value.strip()
+        ]
+        unique_emails = []
+        for email in raw_emails:
+            if email not in unique_emails:
+                unique_emails.append(email)
+        recipients = unique_emails
 
         if not recipients:
             raise forms.ValidationError(
-                "Add at least one recipient email or keep 'Send to me' enabled."
+                "Add at least one recipient email."
             )
         if len(recipients) > 5:
             raise forms.ValidationError("You can add a maximum of 5 recipient emails.")
@@ -360,7 +360,7 @@ class LetterForm(forms.ModelForm):
         # Copy over model fields from cleaned data when updating an existing record
         if existing:
             for field in [
-                "subject", "send_to_me", "delivery_at",
+                "subject", "delivery_at",
                 "can_delete_early", "can_edit_early", "allow_sender_preview",
             ]:
                 setattr(instance, field, self.cleaned_data[field])
@@ -942,3 +942,281 @@ class ContactTicketCommentForm(forms.ModelForm):
                 )
             }
         )
+
+
+# ---------------------------------------------------------------------------
+# Phone dial codes
+# ---------------------------------------------------------------------------
+
+PHONE_DIAL_CODES = [
+    ("", "Select country code"),
+    ("+1", "+1 USA / Canada"),
+    ("+7", "+7 Russia / Kazakhstan"),
+    ("+20", "+20 Egypt"),
+    ("+27", "+27 South Africa"),
+    ("+30", "+30 Greece"),
+    ("+31", "+31 Netherlands"),
+    ("+32", "+32 Belgium"),
+    ("+33", "+33 France"),
+    ("+34", "+34 Spain"),
+    ("+36", "+36 Hungary"),
+    ("+39", "+39 Italy"),
+    ("+40", "+40 Romania"),
+    ("+41", "+41 Switzerland"),
+    ("+43", "+43 Austria"),
+    ("+44", "+44 United Kingdom"),
+    ("+45", "+45 Denmark"),
+    ("+46", "+46 Sweden"),
+    ("+47", "+47 Norway"),
+    ("+48", "+48 Poland"),
+    ("+49", "+49 Germany"),
+    ("+51", "+51 Peru"),
+    ("+52", "+52 Mexico"),
+    ("+53", "+53 Cuba"),
+    ("+54", "+54 Argentina"),
+    ("+55", "+55 Brazil"),
+    ("+56", "+56 Chile"),
+    ("+57", "+57 Colombia"),
+    ("+58", "+58 Venezuela"),
+    ("+60", "+60 Malaysia"),
+    ("+61", "+61 Australia"),
+    ("+62", "+62 Indonesia"),
+    ("+63", "+63 Philippines"),
+    ("+64", "+64 New Zealand"),
+    ("+65", "+65 Singapore"),
+    ("+66", "+66 Thailand"),
+    ("+74", "+74 Russia"),
+    ("+77", "+77 Kazakhstan"),
+    ("+81", "+81 Japan"),
+    ("+82", "+82 South Korea"),
+    ("+84", "+84 Vietnam"),
+    ("+86", "+86 China"),
+    ("+90", "+90 Turkey"),
+    ("+91", "+91 India"),
+    ("+92", "+92 Pakistan"),
+    ("+93", "+93 Afghanistan"),
+    ("+94", "+94 Sri Lanka"),
+    ("+95", "+95 Myanmar"),
+    ("+98", "+98 Iran"),
+    ("+212", "+212 Morocco"),
+    ("+213", "+213 Algeria"),
+    ("+216", "+216 Tunisia"),
+    ("+218", "+218 Libya"),
+    ("+220", "+220 Gambia"),
+    ("+221", "+221 Senegal"),
+    ("+225", "+225 Ivory Coast"),
+    ("+233", "+233 Ghana"),
+    ("+234", "+234 Nigeria"),
+    ("+237", "+237 Cameroon"),
+    ("+251", "+251 Ethiopia"),
+    ("+254", "+254 Kenya"),
+    ("+255", "+255 Tanzania"),
+    ("+256", "+256 Uganda"),
+    ("+260", "+260 Zambia"),
+    ("+261", "+261 Madagascar"),
+    ("+263", "+263 Zimbabwe"),
+    ("+351", "+351 Portugal"),
+    ("+352", "+352 Luxembourg"),
+    ("+353", "+353 Ireland"),
+    ("+354", "+354 Iceland"),
+    ("+355", "+355 Albania"),
+    ("+356", "+356 Malta"),
+    ("+357", "+357 Cyprus"),
+    ("+358", "+358 Finland"),
+    ("+359", "+359 Bulgaria"),
+    ("+370", "+370 Lithuania"),
+    ("+371", "+371 Latvia"),
+    ("+372", "+372 Estonia"),
+    ("+373", "+373 Moldova"),
+    ("+374", "+374 Armenia"),
+    ("+375", "+375 Belarus"),
+    ("+376", "+376 Andorra"),
+    ("+380", "+380 Ukraine"),
+    ("+381", "+381 Serbia"),
+    ("+382", "+382 Montenegro"),
+    ("+385", "+385 Croatia"),
+    ("+386", "+386 Slovenia"),
+    ("+387", "+387 Bosnia and Herzegovina"),
+    ("+389", "+389 North Macedonia"),
+    ("+420", "+420 Czech Republic"),
+    ("+421", "+421 Slovakia"),
+    ("+423", "+423 Liechtenstein"),
+    ("+502", "+502 Guatemala"),
+    ("+503", "+503 El Salvador"),
+    ("+504", "+504 Honduras"),
+    ("+505", "+505 Nicaragua"),
+    ("+506", "+506 Costa Rica"),
+    ("+507", "+507 Panama"),
+    ("+591", "+591 Bolivia"),
+    ("+593", "+593 Ecuador"),
+    ("+595", "+595 Paraguay"),
+    ("+598", "+598 Uruguay"),
+    ("+880", "+880 Bangladesh"),
+    ("+886", "+886 Taiwan"),
+    ("+960", "+960 Maldives"),
+    ("+961", "+961 Lebanon"),
+    ("+962", "+962 Jordan"),
+    ("+963", "+963 Syria"),
+    ("+964", "+964 Iraq"),
+    ("+965", "+965 Kuwait"),
+    ("+966", "+966 Saudi Arabia"),
+    ("+967", "+967 Yemen"),
+    ("+968", "+968 Oman"),
+    ("+970", "+970 Palestine"),
+    ("+971", "+971 UAE"),
+    ("+972", "+972 Israel"),
+    ("+973", "+973 Bahrain"),
+    ("+974", "+974 Qatar"),
+    ("+975", "+975 Bhutan"),
+    ("+976", "+976 Mongolia"),
+    ("+977", "+977 Nepal"),
+    ("+992", "+992 Tajikistan"),
+    ("+993", "+993 Turkmenistan"),
+    ("+994", "+994 Azerbaijan"),
+    ("+995", "+995 Georgia"),
+    ("+996", "+996 Kyrgyzstan"),
+    ("+998", "+998 Uzbekistan"),
+]
+
+
+def _normalize_phone_dial_codes(raw_choices):
+    normalized = [("", "Select country")]
+    for code, label in raw_choices:
+        if not code:
+            continue
+
+        country_name = (label or "").strip()
+        prefix = f"{code} "
+        if country_name.startswith(prefix):
+            country_name = country_name[len(prefix):].strip()
+
+        if not country_name:
+            country_name = code
+
+        normalized.append((code, f"{country_name} ({code})"))
+
+    normalized[1:] = sorted(
+        normalized[1:],
+        key=lambda item: item[1].casefold(),
+    )
+    return normalized
+
+
+PHONE_DIAL_CODES = _normalize_phone_dial_codes(PHONE_DIAL_CODES)
+
+_EMOJI_RE = re.compile(
+    r"[\U00010000-\U0010ffff"
+    r"\U0001F600-\U0001F64F"
+    r"\U0001F300-\U0001F5FF"
+    r"\U0001F680-\U0001F6FF"
+    r"\U0001F1E0-\U0001F1FF"
+    r"\u2600-\u26FF"
+    r"\u2700-\u27BF"
+    r"]+",
+    flags=re.UNICODE,
+)
+
+SMS_MAX_YEARS = 10
+
+
+class ScheduledSMSForm(forms.ModelForm):
+    recipient_country_code = forms.ChoiceField(
+        choices=PHONE_DIAL_CODES,
+        label="Country code",
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["recipient_country_code"].choices = PHONE_DIAL_CODES
+
+        # Pre-format scheduled_at for datetime-local in edit mode.
+        if (
+            not self.is_bound
+            and self.instance
+            and self.instance.pk
+            and self.instance.scheduled_at
+        ):
+            dt = self.instance.scheduled_at
+            if timezone.is_aware(dt):
+                dt = timezone.localtime(dt)
+            self.initial["scheduled_at"] = dt.strftime("%Y-%m-%dT%H:%M")
+    recipient_local_number = forms.CharField(
+        max_length=20,
+        label="Phone number",
+        widget=forms.TextInput(
+            attrs={"placeholder": "e.g. 2025551234", "inputmode": "tel"}
+        ),
+    )
+    scheduled_at = forms.DateTimeField(
+        widget=forms.DateTimeInput(
+            attrs={"type": "datetime-local"},
+            format="%Y-%m-%dT%H:%M",
+        ),
+        input_formats=["%Y-%m-%dT%H:%M"],
+        label="Schedule date & time",
+    )
+
+    class Meta:
+        model = ScheduledSMS
+        fields = [
+            "title",
+            "message",
+            "recipient_country_code",
+            "recipient_local_number",
+            "scheduled_at",
+            "can_edit_early",
+            "allow_sender_preview",
+        ]
+        widgets = {
+            "title": forms.TextInput(
+                attrs={"placeholder": "e.g. Happy Birthday!"}
+            ),
+            "message": forms.Textarea(
+                attrs={
+                    "rows": 4,
+                    "maxlength": "160",
+                    "placeholder": "Your SMS message (max 160 characters, no emoji)",
+                }
+            ),
+        }
+
+    def clean_message(self):
+        msg = self.cleaned_data.get("message", "")
+        if len(msg) > 160:
+            raise ValidationError("SMS message must not exceed 160 characters.")
+        if _EMOJI_RE.search(msg):
+            raise ValidationError("SMS messages cannot contain emoji characters.")
+        return msg
+
+    def clean_recipient_country_code(self):
+        code = self.cleaned_data.get("recipient_country_code", "").strip()
+        if not code:
+            raise ValidationError("Please select a country code.")
+        return code
+
+    def clean_recipient_local_number(self):
+        number = re.sub(r"[\s\-\(\)\.]+", "", self.cleaned_data.get("recipient_local_number", ""))
+        if not re.fullmatch(r"\d{4,15}", number):
+            raise ValidationError(
+                "Enter a valid local phone number (digits only, 4-15 digits)."
+            )
+        return number
+
+    def clean_scheduled_at(self):
+        dt = self.cleaned_data.get("scheduled_at")
+        if dt is None:
+            return dt
+        now = timezone.now()
+        if dt <= now:
+            raise ValidationError("Scheduled date must be in the future.")
+        max_date = now.replace(year=now.year + SMS_MAX_YEARS)
+        if dt > max_date:
+            raise ValidationError(
+                f"Scheduled date cannot be more than {SMS_MAX_YEARS} years ahead."
+            )
+        return dt
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cleaned_data["can_delete_early"] = cleaned_data.get("can_edit_early", False)
+        return cleaned_data

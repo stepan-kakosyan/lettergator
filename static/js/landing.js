@@ -63,7 +63,6 @@
 
   function initCreateLetterForm() {
     const form = document.getElementById("vault-form");
-    const sendToMe = document.getElementById("id_send_to_me");
     const deliveryAt = document.getElementById("id_delivery_at");
     const recipientPanel = document.getElementById("recipient-panel");
     const recipientInputs = document.getElementById("recipient-inputs");
@@ -75,7 +74,6 @@
 
     if (
       !form
-      || !sendToMe
       || !recipientPanel
       || !recipientInputs
       || !recipientList
@@ -208,7 +206,7 @@
       input.dataset.recipient = "1";
       input.placeholder = "recipient@example.com";
       input.value = value || "";
-      input.required = !sendToMe.checked;
+      input.required = true;
 
       const removeButton = document.createElement("button");
       removeButton.type = "button";
@@ -232,7 +230,7 @@
 
     function ensureOneRecipientWhenNeeded() {
       const hasRecipient = recipientInputs.querySelector("input[data-recipient]");
-      if (!sendToMe.checked && !hasRecipient) {
+      if (!hasRecipient) {
         createRecipientInput("");
       }
     }
@@ -256,14 +254,11 @@
     }
 
     function toggleRecipientPanel() {
-      const isSendToMe = sendToMe.checked;
-      recipientPanel.classList.toggle("hidden", isSendToMe);
-      helper.textContent = isSendToMe
-        ? ""
-        : "Add at least one recipient when 'Send to me' is disabled.";
+      recipientPanel.classList.remove("hidden");
+      helper.textContent = "Primary account email is pre-filled as the first recipient.";
 
       recipientInputs.querySelectorAll("input[data-recipient]").forEach((input) => {
-        input.required = !isSendToMe;
+        input.required = true;
       });
 
       ensureOneRecipientWhenNeeded();
@@ -275,8 +270,6 @@
       syncRecipientList();
     });
 
-    sendToMe.addEventListener("change", toggleRecipientPanel);
-
     form.addEventListener("submit", function (event) {
       syncRecipientList();
 
@@ -284,7 +277,7 @@
         ? recipientList.value.split(",").filter(Boolean).length
         : 0;
 
-      if (!sendToMe.checked && recipientsCount === 0) {
+      if (recipientsCount === 0) {
         event.preventDefault();
         helper.textContent = "Please add at least one recipient email.";
         return;

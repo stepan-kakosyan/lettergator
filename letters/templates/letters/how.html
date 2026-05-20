@@ -209,10 +209,13 @@
                 <a href="{% url 'physical-letter-create' %}" class="inline-flex items-center justify-center px-6 py-3 border border-[#648451] text-base font-medium rounded-xl text-white bg-[#648451] hover:bg-[#536f43] shadow-sm transition-colors duration-200">
                     {% trans "Create Physical Letter" %}
                 </a>
+                <a href="{% url 'sms-create' %}" class="inline-flex items-center justify-center px-6 py-3 border border-white/40 text-base font-medium rounded-xl text-white bg-transparent hover:bg-white/10 shadow-sm transition-colors duration-200">
+                    {% trans "Schedule SMS" %}
+                </a>
             </div>
         </div>
 
-        <div class="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-6">
             <article class="rounded-3xl border border-emerald-100 bg-emerald-50/60 p-6 md:p-8">
                 <div class="flex items-center gap-3 mb-4">
                     <span class="h-10 w-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xl">✉️</span>
@@ -243,6 +246,23 @@
                     <li>{% trans "Pick your requested date (up to 10 years)." %}</li>
                     <li>{% trans "We print and ship to the recipient." %}</li>
                 </ol>
+            </article>
+
+            <article class="rounded-3xl border border-purple-100 bg-purple-50/60 p-6 md:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="h-10 w-10 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xl">💬</span>
+                    <h3 class="text-2xl font-bold text-gray-900">{% trans "SMS Messages" %}</h3>
+                </div>
+                <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-5">
+                    {% trans "Best for short, personal moments delivered directly to a mobile number. 160 characters, no emoji, always paid. Ideal for quick reminders or surprise notes." %}
+                </p>
+                <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
+                    <li>{% trans "Write a short message (max 160 chars)." %}</li>
+                    <li>{% trans "Enter recipient phone number." %}</li>
+                    <li>{% trans "Schedule up to 10 years ahead." %}</li>
+                    <li>{% trans "Delivered by SMS at the chosen time." %}</li>
+                </ol>
+                <p class="mt-4 text-xs text-gray-500">{% trans "Pricing: $1.00 + $0.20 per year beyond year 1." %}</p>
             </article>
         </div>
     </div>
