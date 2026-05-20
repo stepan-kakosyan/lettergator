@@ -128,11 +128,6 @@ class Letter(models.Model):
         self.delete()
 
     def save(self, *args, **kwargs):
-        print(f"Saving letter with delivery_worker_id: {self.delivery_worker_id}")
-        print(str(uuid.uuid4()))
-        print(str(
-                uuid.UUID(str(self.delivery_worker_id))
-            ))
         # Ensure delivery_worker_id is always a canonical UUID
         if not self.delivery_worker_id:
             self.delivery_worker_id = str(uuid.uuid4())

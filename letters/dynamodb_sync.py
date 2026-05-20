@@ -70,7 +70,12 @@ def _serialize_delivery_at(delivery_at):
             delivery_at,
             timezone.get_current_timezone(),
         )
-    return delivery_at.isoformat()
+    print(f"Serializing delivery_at: {delivery_at} (tzinfo={delivery_at.tzinfo})")
+    # Always convert to UTC before serializing
+    delivery_at_utc = delivery_at.astimezone(timezone.utc)
+    print(delivery_at_utc.isoformat())
+    print("------------------------------------")
+    return delivery_at_utc.isoformat()
 
 
 def _status_for_letter(letter):

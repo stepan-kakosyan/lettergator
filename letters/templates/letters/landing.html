@@ -34,7 +34,7 @@
         {% endif %}
         {% if request.user.is_authenticated %}
         <div class="w-full max-w-4xl fade-in-up delay-200">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-left">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
                 <div class="rounded-2xl border border-gray-200 bg-white p-4">
                     <div class="flex items-center gap-2">
                         <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-700">
@@ -87,7 +87,7 @@
                         {% trans "Create" %}
                     </a>
                 </div>
-                <div class="rounded-2xl border border-gray-200 bg-white p-4">
+                {% comment %} <div class="rounded-2xl border border-gray-200 bg-white p-4">
                     <div class="flex items-center gap-2">
                         <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-purple-100 text-purple-700">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -112,7 +112,7 @@
                     >
                         {% trans "Create" %}
                     </a>
-                </div>
+                </div> {% endcomment %}
             </div>
 
             <!-- Primary CTA Button -->

@@ -35,7 +35,7 @@
                     </div>
                     <div class="rounded-2xl border border-[#d8e4dc] bg-white/90 px-4 py-3">
                         <p class="text-xs uppercase tracking-wide text-[#648451] font-semibold">{% trans "Types" %}</p>
-                        <p class="text-sm text-gray-700 mt-1">{% trans "Email, physical letters, and SMS in one timeline." %}</p>
+                        <p class="text-sm text-gray-700 mt-1">{% trans "Email and physical letters in one timeline." %}</p>
                     </div>
                     <div class="rounded-2xl border border-[#d8e4dc] bg-white/90 px-4 py-3">
                         <p class="text-xs uppercase tracking-wide text-[#648451] font-semibold">{% trans "Control" %}</p>
@@ -98,7 +98,7 @@
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div class="max-w-2xl">
                         <p class="text-sm font-semibold text-[#1d4835]">{% trans "Choose your letter format and schedule now" %}</p>
-                        <p class="text-sm text-gray-600 mt-1">{% trans "Start with digital delivery, physical delivery, SMS, or estimate the final cost first." %}</p>
+                        <p class="text-sm text-gray-600 mt-1">{% trans "Start with digital delivery and physical delivery, or estimate the final cost first." %}</p>
                     </div>
                     <div class="flex flex-col sm:flex-row gap-3">
                         <a
@@ -112,12 +112,6 @@
                             class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#648451] text-white font-semibold hover:bg-[#536f43] transition-colors"
                         >
                             {% trans "Create Physical Letter" %}
-                        </a>
-                        <a
-                            href="{% url 'sms-create' %}"
-                            class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-[#1d4835] text-[#1d4835] font-semibold hover:bg-[#edf3ee] transition-colors"
-                        >
-                            {% trans "Schedule SMS" %}
                         </a>
                         <button
                             id="open-calculator-btn"
@@ -264,7 +258,7 @@
             {% else %}
             <div class="mt-6 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
                 <h3 class="text-lg font-bold text-gray-900">{% trans "No letters yet" %}</h3>
-                <p class="text-gray-600 mt-2">{% trans "Create your first letter or SMS to start building your timeline." %}</p>
+                <p class="text-gray-600 mt-2">{% trans "Create your first letter to start building your timeline." %}</p>
                 <div class="mt-5 flex flex-wrap justify-center gap-3">
                     <a href="{% url 'letter-create-page' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#1d4835] text-white font-semibold hover:bg-[#16372a] transition-colors">
                         {% trans "Create Email Letter" %}
@@ -272,15 +266,12 @@
                     <a href="{% url 'physical-letter-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#648451] text-white font-semibold hover:bg-[#536f43] transition-colors">
                         {% trans "Create Physical Letter" %}
                     </a>
-                    <a href="{% url 'sms-create' %}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-[#1d4835] text-[#1d4835] font-semibold hover:bg-[#edf3ee] transition-colors">
-                        {% trans "Schedule SMS" %}
-                    </a>
                 </div>
             </div>
             {% endif %}
         </div>
 
-        {% if not guest_mode and sms_messages %}
+        {% comment %} {% if not guest_mode and sms_messages %}
         <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-6 md:p-8">
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-5">
                 <h2 class="text-2xl font-black tracking-tight text-gray-900">{% trans "Scheduled SMS" %}</h2>
@@ -320,7 +311,7 @@
                 {% endfor %}
             </div>
         </div>
-        {% endif %}
+        {% endif %} {% endcomment %}
 
     </div>
 

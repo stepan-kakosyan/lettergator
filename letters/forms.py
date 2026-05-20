@@ -196,18 +196,35 @@ class LetterForm(forms.ModelForm):
             self.fields["can_edit_early"].initial = False
             self.fields["allow_sender_preview"].initial = False
 
+        # Always display delivery_at in user's timezone for editing
         if self.instance and self.instance.pk and not self.is_bound:
             self.initial["message"] = self.instance.get_message()
-            local_delivery = timezone.localtime(self.instance.delivery_at)
-            self.initial["delivery_at"] = local_delivery.strftime(
-                "%Y-%m-%dT%H:%M"
-            )
+            tz_name = self.initial.get("browser_timezone") or self.data.get(self.add_prefix("browser_timezone"), "").strip()
+            print(f"[LetterForm] browser_timezone initial: {tz_name}")
+            try:
+                if tz_name:
+                    from zoneinfo import ZoneInfo
+                    try:
+                        tz = ZoneInfo(tz_name)
+                        print(f"[LetterForm] Using browser timezone: {tz}")
+                        local_delivery = self.instance.delivery_at.astimezone(tz)
+                    except Exception as e:
+                        print(f"[LetterForm] Failed to use browser timezone {tz_name}: {e}")
+                        local_delivery = timezone.localtime(self.instance.delivery_at)
+                else:
+                    print("[LetterForm] No browser timezone, using server localtime")
+                    local_delivery = timezone.localtime(self.instance.delivery_at)
+            except Exception as e:
+                print(f"[LetterForm] Exception in timezone conversion: {e}")
+                local_delivery = timezone.localtime(self.instance.delivery_at)
+            formatted_value = local_delivery.strftime("%Y-%m-%dT%H:%M")
+            print(f"[LetterForm] Final delivery_at for initial: {local_delivery} (input value: {formatted_value})")
+            self.initial["delivery_at"] = formatted_value
             recipients = [self.instance.recipient_email]
             recipients.extend(self.instance.recipient_emails or [])
             self.initial["recipient_list"] = ",".join(
                 item for item in recipients if item
             )
-
         if (
             not self.is_bound
             and self.user
@@ -240,14 +257,16 @@ class LetterForm(forms.ModelForm):
                 "Enter a valid delivery date and time."
             ) from exc
 
+        # Always treat input as user's local time, convert to UTC for storage
         if delivery_at.tzinfo is None:
             delivery_at = timezone.make_aware(delivery_at, ZoneInfo(tz_name))
+        delivery_at_utc = delivery_at.astimezone(timezone.utc)
 
-        if delivery_at <= timezone.now():
+        if delivery_at_utc <= timezone.now():
             raise forms.ValidationError(
                 "Delivery date and time must be in the future."
             )
-        return delivery_at
+        return delivery_at_utc
 
     def clean(self):
         cleaned_data = super().clean()

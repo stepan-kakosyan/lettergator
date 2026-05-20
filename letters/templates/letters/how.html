@@ -209,9 +209,9 @@
                 <a href="{% url 'physical-letter-create' %}" class="inline-flex items-center justify-center px-6 py-3 border border-[#648451] text-base font-medium rounded-xl text-white bg-[#648451] hover:bg-[#536f43] shadow-sm transition-colors duration-200">
                     {% trans "Create Physical Letter" %}
                 </a>
-                <a href="{% url 'sms-create' %}" class="inline-flex items-center justify-center px-6 py-3 border border-white/40 text-base font-medium rounded-xl text-white bg-transparent hover:bg-white/10 shadow-sm transition-colors duration-200">
+                {% comment %} <a href="{% url 'sms-create' %}" class="inline-flex items-center justify-center px-6 py-3 border border-white/40 text-base font-medium rounded-xl text-white bg-transparent hover:bg-white/10 shadow-sm transition-colors duration-200">
                     {% trans "Schedule SMS" %}
-                </a>
+                </a> {% endcomment %}
             </div>
         </div>
 
@@ -248,7 +248,7 @@
                 </ol>
             </article>
 
-            <article class="rounded-3xl border border-purple-100 bg-purple-50/60 p-6 md:p-8">
+            {% comment %} <article class="rounded-3xl border border-purple-100 bg-purple-50/60 p-6 md:p-8">
                 <div class="flex items-center gap-3 mb-4">
                     <span class="h-10 w-10 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xl">💬</span>
                     <h3 class="text-2xl font-bold text-gray-900">{% trans "SMS Messages" %}</h3>
@@ -263,7 +263,7 @@
                     <li>{% trans "Delivered by SMS at the chosen time." %}</li>
                 </ol>
                 <p class="mt-4 text-xs text-gray-500">{% trans "Pricing: $1.00 + $0.20 per year beyond year 1." %}</p>
-            </article>
+            </article> {% endcomment %}
         </div>
     </div>
 </section>

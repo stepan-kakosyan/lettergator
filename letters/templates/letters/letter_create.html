@@ -233,6 +233,21 @@
 {% block extra_js %}
 <script src="{% static 'js/landing.js' %}"></script>
 <script>
+// Set browser timezone on page load
+document.addEventListener('DOMContentLoaded', function() {
+    var tzInput = document.getElementById('id_browser_timezone');
+    if (tzInput && !tzInput.value) {
+        try {
+            tzInput.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            // Debug print
+            console.log('Set browser_timezone to', tzInput.value);
+        } catch (e) {
+            console.log('Could not set browser_timezone', e);
+        }
+    }
+});
+</script>
+<script>
 (function () {
     var keyField = document.getElementById('id_idempotency_key');
     if (keyField && !keyField.value) {

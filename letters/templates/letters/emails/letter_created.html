@@ -74,43 +74,15 @@
           <tr>
             <td style="padding:16px 26px 0 26px;">
               <p style="margin:0 0 10px 0;font-size:13px;font-weight:700;color:#163222;text-transform:uppercase;letter-spacing:0.1em;">Edit &amp; Delete controls</p>
-              <!-- Delete -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom:10px;border:1px solid #e5ede8;border-radius:10px;">
-                <tr>
-                  <td style="padding:12px 16px;">
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td style="font-size:14px;font-weight:700;color:#163222;">Delete window</td>
-                        <td align="right">
-                          {% if letter.can_delete_early %}
-                            <span style="display:inline-block;background:#d1fae5;color:#065f46;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;">Enabled</span>
-                          {% else %}
-                            <span style="display:inline-block;background:#fee2e2;color:#991b1b;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;">Disabled</span>
-                          {% endif %}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="2" style="padding-top:6px;font-size:13px;color:#496657;line-height:1.5;">
-                          {% if letter.can_delete_early %}
-                            You can delete this letter until {{ letter.delete_until|date:"N j, Y" }}. After that date deletion is permanently locked.
-                          {% else %}
-                            Deletion is permanently locked for this letter. It cannot be removed before or after delivery.
-                          {% endif %}
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-              <!-- Edit -->
+              <!-- Combined Edit & Delete Controls -->
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5ede8;border-radius:10px;">
                 <tr>
                   <td style="padding:12px 16px;">
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                       <tr>
-                        <td style="font-size:14px;font-weight:700;color:#163222;">Edit window</td>
+                        <td style="font-size:14px;font-weight:700;color:#163222;">Edit &amp; Delete window</td>
                         <td align="right">
-                          {% if letter.can_edit_early %}
+                          {% if letter.can_edit_early or letter.can_delete_early %}
                             <span style="display:inline-block;background:#d1fae5;color:#065f46;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;">Enabled</span>
                           {% else %}
                             <span style="display:inline-block;background:#fee2e2;color:#991b1b;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;">Disabled</span>
@@ -119,10 +91,14 @@
                       </tr>
                       <tr>
                         <td colspan="2" style="padding-top:6px;font-size:13px;color:#496657;line-height:1.5;">
-                          {% if letter.can_edit_early %}
-                            You can edit this letter until {{ letter.edit_until|date:"N j, Y" }}. After that date the message is permanently locked.
+                          {% if letter.can_edit_early and letter.can_delete_early %}
+                            You can edit or delete this letter until {{ letter.edit_until|date:"N j, Y" }}. After that date, both actions are permanently locked.
+                          {% elif letter.can_edit_early %}
+                            You can edit this letter until {{ letter.edit_until|date:"N j, Y" }}. Deletion is permanently locked.
+                          {% elif letter.can_delete_early %}
+                            You can delete this letter until {{ letter.delete_until|date:"N j, Y" }}. Editing is permanently locked.
                           {% else %}
-                            Editing is permanently locked for this letter. The message cannot be changed.
+                            Editing and deletion are permanently locked for this letter. No changes or removal are possible.
                           {% endif %}
                         </td>
                       </tr>
