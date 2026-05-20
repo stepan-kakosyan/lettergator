@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Offline | LetterGator{% endblock %}
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-[60vh] text-center">
+  <img src="{% static 'img/logo.png' %}" alt="LetterGator Logo" class="w-24 h-24 mb-4">
+  <h1 class="text-2xl font-bold mb-2">You are offline</h1>
+  <p class="text-gray-600 mb-4">Some features may be unavailable. Please check your internet connection.</p>
+  <a href="/" class="text-green-700 underline">Go to Home</a>
+</div>
+{% endblock %}
