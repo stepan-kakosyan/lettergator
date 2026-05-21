@@ -84,9 +84,22 @@
       return;
     }
 
+
     function setBrowserTimezone() {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
       browserTimezone.value = tz;
+    }
+
+    // On page load, if deliveryAt has a value, treat as UTC, convert to local, and display in 24-hour format
+    function convertDeliveryAtToLocal() {
+      if (deliveryAt && deliveryAt.value) {
+        // Parse as UTC
+        const utcDate = new Date(deliveryAt.value + 'Z');
+        if (!isNaN(utcDate.getTime())) {
+          // Convert to local and format for datetime-local input
+          deliveryAt.value = formatForDateTimeLocal(utcDate);
+        }
+      }
     }
 
     const MAX_RECIPIENTS = 5;
@@ -376,6 +389,7 @@
 
     initBinaryToggles();
     setBrowserTimezone();
+    convertDeliveryAtToLocal();
     initDatePresets();
     initRecipientInputsFromHidden();
     toggleRecipientPanel();

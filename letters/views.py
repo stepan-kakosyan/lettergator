@@ -36,6 +36,7 @@ from accounts.services import (
 )
 from accounts.tasks import send_pending_email_confirmation_task
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .billing import (
     MIN_LONG_SCHEDULE_BALANCE_USD,
@@ -671,11 +672,22 @@ class PhysicalLetterCreateView(FormView):
 def balance_page(request):
     form = BalanceTopUpForm()
 
-    transactions = BalanceTransaction.objects.filter(user=request.user)
+    transactions_qs = BalanceTransaction.objects.filter(user=request.user)
+    paginator = Paginator(transactions_qs, 10)
+    page = request.GET.get("page")
+    try:
+        transactions = paginator.page(page)
+    except PageNotAnInteger:
+        transactions = paginator.page(1)
+    except EmptyPage:
+        transactions = paginator.page(paginator.num_pages)
+
     context = {
         "balance_form": form,
         "transactions": transactions,
     }
+    if request.headers.get("HX-Request") == "true":
+        return render(request, "letters/partials/transactions_table.html", context)
     return render(request, "letters/balance.html", context)
 
 

@@ -1,0 +1,71 @@
+{% load i18n %}
+{% comment %}Partial for HTMX transaction table and pagination{% endcomment %}
+<div class="mt-5 overflow-x-auto">
+    <table class="letters-table w-full">
+        <thead>
+            <tr>
+                <th>{% trans "Amount" %}</th>
+                <th>{% trans "Reason" %}</th>
+                <th>{% trans "Date" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tx in transactions %}
+            <tr>
+                <td>
+                    <span class="font-semibold {% if tx.amount >= 0 %}text-emerald-700{% else %}text-red-700{% endif %}">
+                        {% if tx.amount >= 0 %}+{% endif %}${{ tx.amount|floatformat:2 }}
+                    </span>
+                </td>
+                <td>{{ tx.reason }}</td>
+                <td>
+                    <span class="text-sm font-medium text-gray-900 local-date" data-utc="{{ tx.created_at|date:'c' }}">
+                        {{ tx.created_at|date:"M d, Y" }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- Pagination controls -->
+<div class="flex justify-center mt-6">
+    <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+        {% if transactions.has_previous %}
+            <a hx-get="?page={{ transactions.previous_page_number }}" hx-target="#transactions-table" hx-swap="outerHTML" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-l-md">&laquo; Prev</a>
+        {% else %}
+            <span class="px-3 py-2 border border-gray-200 bg-gray-100 text-gray-400 rounded-l-md">&laquo; Prev</span>
+        {% endif %}
+        {# Simpler logic: always show first, last, current-2..current+2, with dots #}
+        {# Show first, last, current, current-2, current-1, current+1, current+2, with dots, no arithmetic in ifs #}
+        {% with current=transactions.number total=transactions.paginator.num_pages %}
+            {% for num in transactions.paginator.page_range %}
+                {# Show first, last, current, current-1, current-2, current+1, current+2 #}
+                {% if num == 1 or num == total or num == current or num == current|add:'-1' or num == current|add:'-2' or num == current|add:'1' or num == current|add:'2' %}
+                    {% if num == 1 and current > 4 %}
+                        <span class="px-2">...</span>
+                    {% endif %}
+                    {% if num == current %}
+                        <span class="px-3 py-2 border-t border-b border-gray-300 bg-emerald-100 text-emerald-800 font-bold">{{ num }}</span>
+                    {% else %}
+                        <a hx-get="?page={{ num }}" hx-target="#transactions-table" hx-swap="outerHTML" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer">{{ num }}</a>
+                    {% endif %}
+                    {% if num == total and current < total|add:'-3' %}
+                        <span class="px-2">...</span>
+                    {% endif %}
+                {% elif num == 2 and current > 4 %}
+                    {# Show dots after first page if current > 4 #}
+                    <span class="px-2">...</span>
+                {% elif num == total|add:'-1' and current < total|add:'-3' %}
+                    {# Show dots before last page if current < total-3 #}
+                    <span class="px-2">...</span>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
+        {% if transactions.has_next %}
+            <a hx-get="?page={{ transactions.next_page_number }}" hx-target="#transactions-table" hx-swap="outerHTML" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-r-md">Next &raquo;</a>
+        {% else %}
+            <span class="px-3 py-2 border border-gray-200 bg-gray-100 text-gray-400 rounded-r-md">Next &raquo;</span>
+        {% endif %}
+    </nav>
+</div>

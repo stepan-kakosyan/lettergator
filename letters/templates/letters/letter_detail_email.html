@@ -114,11 +114,13 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/flatpickr-loader.js' %}"></script>
 <script>
 (function () {
     var fmt = new Intl.DateTimeFormat(undefined, {
         year: 'numeric', month: 'short', day: '2-digit',
-        hour: '2-digit', minute: '2-digit'
+        hour: '2-digit', minute: '2-digit',
+        hour12: false
     });
     document.querySelectorAll('.local-date[data-utc]').forEach(function (el) {
         var d = new Date(el.dataset.utc);

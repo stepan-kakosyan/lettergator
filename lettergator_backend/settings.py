@@ -133,9 +133,20 @@ LANGUAGES = [
 LANGUAGE_CODE = "en"
 TIME_ZONE = os.getenv("TIME_ZONE", "UTC")
 USE_I18N = True
-USE_L10N = True
+USE_L10N = False
 LOCALE_PATHS = [BASE_DIR / "locale"]
+
 USE_TZ = True
+
+# Enforce 24-hour time format globally
+TIME_FORMAT = "H:i"  # 24-hour format, e.g. 14:30
+DATETIME_FORMAT = "Y-m-d H:i"  # 2026-05-21 14:30
+DATETIME_INPUT_FORMATS = [
+    '%Y-%m-%d %H:%M:%S',    # '2026-05-21 23:59:00'
+    '%Y-%m-%d %H:%M',       # '2026-05-21 23:59'
+    '%Y-%m-%dT%H:%M:%S',    # HTML5 format with seconds
+    '%Y-%m-%dT%H:%M',       # HTML5 format without seconds
+]
 
 STATIC_URL = os.getenv("STATIC_URL", "/static/").strip() or "/static/"
 if not STATIC_URL.endswith("/"):

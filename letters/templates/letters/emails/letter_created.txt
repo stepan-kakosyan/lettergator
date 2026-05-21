@@ -4,12 +4,11 @@ Hi {{ user.full_name }},
 
 Your letter has been sealed and stored. Here is a summary of the details you set. The message content is kept private and will only be delivered on the scheduled date.
 
----
 
 LETTER DETAILS
 
 Subject:           {{ letter.subject }}
-Scheduled delivery: {{ letter.delivery_at|date:"N j, Y \a\t g:i A" }}
+Scheduled delivery: {{ letter.delivery_at|date:"N j, Y H:i" }}
 Recipients:
 {% if letter.send_to_me %}  Yourself ({{ user.email }})
 {% else %}{% for addr in letter.recipient_emails %}  {{ addr }}
@@ -19,7 +18,6 @@ Message preview:
 {% else %}  Disabled — message is sealed and not visible until delivery.
 {% endif %}
 
----
 
 EDIT & DELETE CONTROLS
 
@@ -35,7 +33,6 @@ Edit window: {% if letter.can_edit_early %}Enabled{% else %}Disabled{% endif %}
 {% else %}Editing is permanently locked for this letter. The message cannot be changed.
 {% endif %}
 
----
 
 Because some things are better left for later.
 See you later, Alligator!
