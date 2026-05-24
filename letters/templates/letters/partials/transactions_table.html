@@ -32,7 +32,7 @@
 <div class="flex justify-center mt-6">
     <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
         {% if transactions.has_previous %}
-            <a hx-get="?page={{ transactions.previous_page_number }}" hx-target="#transactions-table" hx-swap="outerHTML" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-l-md">&laquo; Prev</a>
+            <a hx-get="?page={{ transactions.previous_page_number }}" hx-target="#transactions-table" hx-swap="innerHTML" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-l-md">&laquo; Prev</a>
         {% else %}
             <span class="px-3 py-2 border border-gray-200 bg-gray-100 text-gray-400 rounded-l-md">&laquo; Prev</span>
         {% endif %}
@@ -48,7 +48,7 @@
                     {% if num == current %}
                         <span class="px-3 py-2 border-t border-b border-gray-300 bg-emerald-100 text-emerald-800 font-bold">{{ num }}</span>
                     {% else %}
-                        <a hx-get="?page={{ num }}" hx-target="#transactions-table" hx-swap="outerHTML" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer">{{ num }}</a>
+                        <a hx-get="?page={{ num }}" hx-target="#transactions-table" hx-swap="innerHTML" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer">{{ num }}</a>
                     {% endif %}
                     {% if num == total and current < total|add:'-3' %}
                         <span class="px-2">...</span>
@@ -63,7 +63,7 @@
             {% endfor %}
         {% endwith %}
         {% if transactions.has_next %}
-            <a hx-get="?page={{ transactions.next_page_number }}" hx-target="#transactions-table" hx-swap="outerHTML" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-r-md">Next &raquo;</a>
+            <a hx-get="?page={{ transactions.next_page_number }}" hx-target="#transactions-table" hx-swap="innerHTML" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-r-md">Next &raquo;</a>
         {% else %}
             <span class="px-3 py-2 border border-gray-200 bg-gray-100 text-gray-400 rounded-r-md">Next &raquo;</span>
         {% endif %}

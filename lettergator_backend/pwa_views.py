@@ -16,12 +16,12 @@ def manifest(request):
         "description": "Send letters, physical or digital, worldwide.",
         "icons": [
             {
-                "src": "/static/img/logo.png",
+                "src": "/static/img/logo192.png",
                 "sizes": "192x192",
                 "type": "image/png"
             },
             {
-                "src": "/static/img/logo.png",
+                "src": "/static/img/logo512.png",
                 "sizes": "512x512",
                 "type": "image/png"
             }
@@ -32,11 +32,11 @@ def manifest(request):
 @require_GET
 @never_cache
 def service_worker(request):
-    response = render(request, "service-worker.js", content_type="application/javascript")
+    response = render(request, "/static/js/service-worker.js", content_type="application/javascript")
     response["Service-Worker-Allowed"] = "/"
     return response
 
 
 @require_GET
 def offline(request):
-    return render(request, "offline.html")
+    return render(request, "accounts/offline.html")

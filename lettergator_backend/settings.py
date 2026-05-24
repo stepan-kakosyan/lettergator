@@ -127,7 +127,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGES = [
     ("en", _("English")),
-    ("ru", _("Russian")),
     ("hy", _("Armenian")),
 ]
 LANGUAGE_CODE = "en"

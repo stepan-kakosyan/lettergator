@@ -4,7 +4,7 @@ self.addEventListener('install', event => {
       return cache.addAll([
         '/',
         '/offline/',
-        '/static/img/logo.png',
+        '/static/img/logo512.png',
         '/static/img/favicon.png',
       ]);
     })

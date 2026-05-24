@@ -67,10 +67,6 @@
                         <img src="{% static 'img/flags/en.svg' %}" class="w-5 h-4 rounded-sm border border-gray-200" alt="EN">
                         English
                     </a>
-                    <a href="{% url 'set-language' %}?lang=ru" class="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors {% if CURRENT_LANG == 'ru' %}font-semibold text-[#014421]{% endif %}" role="menuitem">
-                        <img src="{% static 'img/flags/ru.svg' %}" class="w-5 h-4 rounded-sm border border-gray-200" alt="RU">
-                        Русский
-                    </a>
                     <a href="{% url 'set-language' %}?lang=hy" class="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors {% if CURRENT_LANG == 'hy' %}font-semibold text-[#014421]{% endif %}" role="menuitem">
                         <img src="{% static 'img/flags/hy.svg' %}" class="w-5 h-4 rounded-sm border border-gray-200" alt="HY">
                         Հայերեն

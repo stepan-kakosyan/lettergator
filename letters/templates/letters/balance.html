@@ -89,7 +89,7 @@
             <div class="order-last md:order-first bg-white border border-gray-200 rounded-3xl p-8 md:p-10">
                 <h2 class="text-2xl font-black tracking-tight text-gray-900">{% trans "Transaction History" %}</h2>
 
-                <div id="transactions-table" hx-get="?page={{ transactions.number }}" hx-trigger="load" hx-target="#transactions-table" hx-swap="outerHTML">
+                <div id="transactions-table" hx-get="?page={{ transactions.number }}" hx-trigger="load" hx-target="#transactions-table" hx-swap="innerHTML">
                     {% include "letters/partials/transactions_table.html" %}
                 </div>
             </div>
